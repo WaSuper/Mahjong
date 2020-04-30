@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp" >
+
+        <ImageView
+            android:id="@+id/ranklist_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/ranklist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:text="@string/ranking_list"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/ranklist_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:text="@string/rank_point"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:drawableRight="@drawable/selector_btn_bottom_arrow"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
+    
+    <ListView
+        android:id="@+id/ranklist_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="1px"
+        android:listSelector="@drawable/selector_listview" >
+    </ListView>    
+    
+</LinearLayout>

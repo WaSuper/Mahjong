@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/result_set_simple_top_ronghe"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="visible" >
+        
+        <Button
+            android:id="@+id/result_set_simple_oppositer"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/oppositer"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+        <Button
+            android:id="@+id/result_set_simple_upper"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="@string/upper"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+        <Button
+            android:id="@+id/result_set_simple_downer"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/downer"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/result_set_simple_top_zimo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone" >
+        
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:text="@string/zimo"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/ic_btn_player_dir" />
+        
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical" >
+    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/count_fan"
+	        android:textSize="18sp"
+	        android:textColor="@color/white" />
+        
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/white"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="20dp" />
+	    
+    </LinearLayout>
+    
+    <com.mahjong.ui.FlowRadioGroup
+        android:id="@+id/result_set_simple_group_fan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="1番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="2番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="3番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="4番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="5番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="6番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="7番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="8番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="9番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="10番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="11番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_fan12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="12番"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="2倍役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="3倍役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="4倍役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="5倍役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/result_set_simple_yiman6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_checkbox_circle2"
+                android:drawablePadding="5dp"
+                android:checked="false"
+                android:text="6倍役满"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </com.mahjong.ui.FlowRadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical" >
+    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/count_fu"
+	        android:textSize="18sp"
+	        android:textColor="@color/white" />
+        
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/white"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="20dp" />
+	    
+    </LinearLayout>
+    
+     <LinearLayout
+        android:id="@+id/result_set_simple_group_fu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/result_set_simple_fu20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="20符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="25符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu30"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="30符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="40符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/result_set_simple_fu50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="50符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu60"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="60符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu70"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="70符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu80"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="80符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/result_set_simple_fu90"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="90符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu100"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="100符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/result_set_simple_fu110"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/ic_checkbox_circle2_nor"
+                android:drawablePadding="5dp"
+                android:text="110符"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="horizontal"
+         android:gravity="center" >
+        
+         <Button
+             android:id="@+id/result_set_simple_ok"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="right"
+             android:paddingTop="6dp"
+             android:paddingRight="10dp"
+             android:text="@string/ok"
+             android:textSize="18sp"
+             android:textColor="@color/white"
+             android:background="@drawable/selector_game_btn_left" />
+         
+         <Button
+             android:id="@+id/result_set_simple_cancel"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="left"
+             android:paddingTop="6dp"
+             android:paddingLeft="10dp"
+             android:layout_marginLeft="40dp"
+             android:text="@string/cancel"
+             android:textSize="18sp"
+             android:textColor="@color/white"
+             android:background="@drawable/selector_game_btn_right" />
+         
+     </LinearLayout> 
+     
+</LinearLayout>

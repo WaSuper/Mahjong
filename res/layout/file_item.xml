@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/file_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/list_ic_folder"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/file_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="名字"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/file_image"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

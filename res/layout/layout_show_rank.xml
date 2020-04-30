@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/rank_bg"
+        android:layout_width="match_parent"
+        android:layout_height="410dp"
+        android:alpha="0.8"
+        android:background="@drawable/bg_show_result" />
+
+    <TextView
+        android:id="@+id/rank_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/final_rank"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/rank_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_game_back" />
+            
+   <com.mahjong.ui.LeanTextView
+        android:id="@+id/rank_wintext"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+		android:layout_alignTop="@id/rank_title"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="30dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="60dp"
+        android:text="胜利宣言"
+        android:textSize="18sp"
+        android:textColor="@color/gold"
+        android:background="@drawable/dialog_win"
+        android:alpha="0.7"
+        android:singleLine="false"
+        app:rotateAngle="-15" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rank_title"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="35dp"
+            android:paddingRight="30dp" >
+
+            <ImageView
+                android:id="@+id/rank_img1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank1_frame"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/rank_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img1"
+                android:gravity="center"
+                android:text="player1"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_score1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rank_name1"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img1"
+                android:gravity="center"
+                android:text="25000"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_mapoint1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/rank_score1"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@id/rank_img1"
+                android:gravity="center"
+                android:text="±0"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            
+            <ImageView
+                android:id="@+id/rank_fly1"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_fly"
+                android:layout_toRightOf="@id/rank_img1"
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:visibility="gone" />
+            
+            <ImageView
+                android:id="@+id/rank_chicken1"
+                android:layout_width="56dp" 
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_chicken"
+                android:layout_toRightOf="@id/rank_img1"
+                android:layout_marginLeft="135dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+            
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="25dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_lizhi"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_lizhi1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_lizhi1_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_blue"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_he"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_he1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_he1_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_red"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_bomb"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_bomb1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_bomb1_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_yellow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="30dp" >
+
+            <ImageView
+                android:id="@+id/rank_img2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank2_frame"                
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/rank_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img2"
+                android:gravity="center"
+                android:text="player2"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_score2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rank_name2"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img2"
+                android:gravity="center"
+                android:text="25000"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_mapoint2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/rank_score2"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@id/rank_img2"
+                android:gravity="center"
+                android:text="±0"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            
+            <ImageView
+                android:id="@+id/rank_fly2"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_fly"
+                android:layout_toRightOf="@id/rank_img2"
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:visibility="gone" />
+            
+            <ImageView
+                android:id="@+id/rank_chicken2"
+                android:layout_width="56dp" 
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_chicken"
+                android:layout_toRightOf="@id/rank_img2"
+                android:layout_marginLeft="135dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="25dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_lizhi"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_lizhi2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_lizhi2_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_blue"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_he"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_he2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_he2_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_red"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_bomb"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_bomb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_bomb2_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_yellow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="30dp" >
+
+            <ImageView
+                android:id="@+id/rank_img3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank3_frame"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/rank_name3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img3"
+                android:gravity="center"
+                android:text="player3"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_score3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rank_name3"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img3"
+                android:gravity="center"
+                android:text="25000"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_mapoint3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/rank_score3"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@id/rank_img3"
+                android:gravity="center"
+                android:text="±0"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            
+            <ImageView
+                android:id="@+id/rank_fly3"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_fly"
+                android:layout_toRightOf="@id/rank_img3"
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:visibility="gone" />
+            
+            <ImageView
+                android:id="@+id/rank_chicken3"
+                android:layout_width="56dp" 
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_chicken"
+                android:layout_toRightOf="@id/rank_img3"
+                android:layout_marginLeft="135dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/rank_img3"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_lizhi"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_lizhi3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_lizhi3_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_blue"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_he"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_he3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_he3_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_red"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_bomb"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_bomb3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_bomb3_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_yellow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="30dp" >
+
+            <ImageView
+                android:id="@+id/rank_img4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank4_frame"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/rank_name4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img4"
+                android:gravity="center"
+                android:text="player4"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_score4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rank_name4"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/rank_img4"
+                android:gravity="center"
+                android:text="25000"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/rank_mapoint4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/rank_score4"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@id/rank_img4"
+                android:gravity="center"
+                android:text="±0"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            
+            <ImageView
+                android:id="@+id/rank_fly4"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_fly"
+                android:layout_toRightOf="@id/rank_img4"
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"
+                android:alpha="0.5"
+                android:visibility="gone" />
+            
+            <ImageView
+                android:id="@+id/rank_chicken4"
+                android:layout_width="56dp" 
+                android:layout_height="40dp"
+                android:background="@drawable/mj_result_chicken"
+                android:layout_toRightOf="@id/rank_img4"
+                android:layout_marginLeft="135dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="25dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_lizhi"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_lizhi4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_lizhi4_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_blue"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_he"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_he4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_he4_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_red"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_bomb"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/rank_bomb4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/rank_bomb4_mvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/mj_mvp_yellow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.mahjong.ui.LineChart
+        android:id="@+id/rank_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/rank_bg"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_chart" />
+
+</RelativeLayout>

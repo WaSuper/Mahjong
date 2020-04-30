@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <TextView
+        android:id="@+id/player_sel_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_player"
+        android:textColor="@color/light_blacktext"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/selector_listview"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/player_sel_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_player"
+        android:textColor="@color/light_blacktext"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/selector_listview"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+    
+
+</LinearLayout>

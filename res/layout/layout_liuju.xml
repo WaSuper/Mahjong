@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/liuju_huangpai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/selector_listview"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="@string/huangpailiuju"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/zhongtuliuju"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/diver_color" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/diver_color" />
+
+            <Button
+                android:id="@+id/liuju_sifenglianda"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/selector_listview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/SiFengLianDa"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/diver_color" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/diver_color" />
+
+            <Button
+                android:id="@+id/liuju_sigangsanle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/selector_listview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/SiGangSanLe"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/diver_color" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/diver_color" />
+
+            <Button
+                android:id="@+id/liuju_jiupaijiuzhong"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/selector_listview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/JiuPaiJiuZhong"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/diver_color" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/diver_color" />
+
+            <Button
+                android:id="@+id/liuju_sijializhi"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/selector_listview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/SiJiaLiZhi"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="15dp"
+                android:background="@color/diver_color" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@color/diver_color" />
+
+            <Button
+                android:id="@+id/liuju_sanjiaheliao"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/selector_listview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/SanJiaHeLiao"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+
+    <Button
+        android:id="@+id/liuju_liujumanguan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/selector_listview"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="@string/LiuJuManGuan"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+</LinearLayout>

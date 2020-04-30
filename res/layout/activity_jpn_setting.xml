@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout        
+        android:id="@+id/mahjong_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main" >
+
+        <ImageView
+            android:id="@+id/mahjong_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/mahjong_japanese"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    
+    <TextView 
+        android:id="@+id/mahjong_tx_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mahjong_rl_top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/guide_setting"
+        android:textSize="16sp" />
+    
+    <Button 
+        android:id="@+id/mahjong_start_game"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/start_game"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@drawable/selector_btn_trans_green"
+        />
+    
+    <LinearLayout 
+        android:id="@+id/mahjong_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mahjong_start_game"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+        
+        <ImageView 
+            android:id="@+id/mahjong_point1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_indicator_sel" />
+        
+        <ImageView 
+            android:id="@+id/mahjong_point2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_indicator_nor"
+            android:layout_marginLeft="20dp" />
+        
+    </LinearLayout>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mahjong_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/mahjong_tx_guide"
+        android:layout_above="@id/mahjong_points" />        
+
+</RelativeLayout>

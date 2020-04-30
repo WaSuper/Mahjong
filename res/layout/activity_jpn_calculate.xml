@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout
+        android:id="@+id/calculate_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main" >
+
+        <ImageView
+            android:id="@+id/calculate_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/calculate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/score_calculator"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/calculate_note"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/calculate_title"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="bottom"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/calculate_rl_line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_rl_top"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <LinearLayout
+            android:id="@+id/calculate_ll_groundwind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ground_wind_"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/calculate_tv_groundwind"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/east"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/base_point"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/calculate_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25000"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/calculate_rl_line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_rl_line1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <LinearLayout
+            android:id="@+id/calculate_ll_selfwind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/self_wind_"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/calculate_tv_selfwind"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/east"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/calculate_dealer_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:button="@null"
+            android:checked="true"
+            android:clickable="false"
+            android:drawableLeft="@drawable/switch_dealer_player"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/calculate_ll_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_rl_line2"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/calculate_lizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/lizhi"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_double_lizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/double_lizhi"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_yifa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/yifa"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_zimo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/zimo"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_qianggang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/QiangKong"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/calculate_first_round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/first_round"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_final_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/final_pick"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_lingshangkaihua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/LingShangKaiHua"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/calculate_ll_checkbox"
+        android:layout_below="@id/calculate_rl_top"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/calculate_ll_bangcount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mj_bang"
+                android:rotation="90" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="x"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/calculate_tv_bangcount"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/calculate_ll_rollcount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mj_roll"
+                android:rotation="90" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="x"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/calculate_tv_rollcount"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.mahjong.ui.MahjongSpectrum
+        android:id="@+id/calculate_mahjongspectrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_ll_checkbox"
+        android:layout_marginTop="10dp"
+        app:singleLine="false"
+        app:touchMode="true" />
+
+    <com.mahjong.ui.MahjongDora
+        android:id="@+id/calculate_mahjongdora_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_mahjongspectrum"
+        app:doraIn="false" />
+
+    <com.mahjong.ui.MahjongDora
+        android:id="@+id/calculate_mahjongdora_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_mahjongspectrum"
+        android:layout_toRightOf="@id/calculate_mahjongdora_out"
+        android:visibility="invisible"
+        app:doraIn="true" />
+
+    <ImageButton
+        android:id="@+id/calculate_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/calculate_mahjongdora_out"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/calculate_mahjongspectrum"
+        android:layout_marginRight="20dp"
+        android:background="@color/transparent"
+        android:src="@drawable/selector_btn_calc_start" />
+
+    <!-- <TextView
+        android:id="@+id/calculate_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculate_mahjongdora_out"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="16sp" /> -->
+
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/calculate_mahjongdora_out"
+        android:layout_margin="10dp" >
+    
+	    <com.mahjong.ui.MjCalcTreeView
+	        android:id="@+id/calculate_tree_result"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+        
+    </ScrollView>
+    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/keyboard_mahjong"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/history_detail_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/history_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:text="@string/detail_log"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+	        android:ellipsize="marquee"
+	        android:singleLine="true"
+	        android:marqueeRepeatLimit="marquee_forever" />
+
+        <ImageView
+            android:id="@+id/history_detail_more"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_more"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/battle_count"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/history_detail_ju"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/battle_two"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cost_time"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/history_detail_cost_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xx小时"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+    	</LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/history_detail_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@drawable/list_item_divider"
+        android:dividerHeight="1px"
+        android:listSelector="@drawable/selector_listview" >
+    </ListView>
+
+    <com.mahjong.ui.LineChart
+        android:id="@+id/history_detail_chart"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+    
+</LinearLayout>

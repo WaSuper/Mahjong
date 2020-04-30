@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/choose_player1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="player1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_player2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="player2"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_player3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="player3"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_player4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="player4"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/choose_ll_tingpai"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+            
+            <CheckBox
+                android:id="@+id/choose_tingpai1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="@string/tingpai"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_tingpai2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="@string/tingpai"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_tingpai3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="@string/tingpai"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/choose_tingpai4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="@string/tingpai"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choose_ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/diver_color" />
+
+        <CheckBox
+            android:id="@+id/choose_additon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_checkbox_rectangle"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:text="@string/rollcount_plus_one"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

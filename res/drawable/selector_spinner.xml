@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true"   
+        android:drawable="@drawable/spinner_press" /><!--按下时效果-->  
+    <item android:state_pressed="false"   
+        android:drawable="@drawable/spinner" /><!--默认效果-->   
+
+</selector>

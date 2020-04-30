@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/dialog_container" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dialog_title_height"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="Title"
+        android:textColor="@color/light_blacktext"
+        android:textSize="@dimen/dialog_textitem_size" />
+
+    <LinearLayout
+        android:id="@+id/contentlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/contentlayout"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/l_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="@color/light_blacktext"
+            android:textSize="@dimen/dialog_textitem_size" />
+        
+        <TextView
+            android:id="@+id/l_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/light_blacktext"
+            android:textSize="@dimen/dialog_textitem_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>

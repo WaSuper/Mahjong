@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >
+    
+    <RelativeLayout
+        android:id="@+id/pairs_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/main"
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/pairs_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/pairs_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/triplet"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:padding="5dp" />
+        
+        <ImageView
+            android:id="@+id/pairs_title_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/selector_btn_bottom_arrow"
+            android:background="@color/transparent"
+            android:layout_toRightOf="@id/pairs_title" />
+        
+        <TextView
+            android:id="@+id/pairs_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:padding="5dp" />
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/pairs_ll_top2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/pairs_rl_top" >
+        
+        <ImageView
+            android:id="@+id/pairs_dir_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/selector_pair_left"
+            android:background="@color/transparent" />
+        
+        <View
+            android:layout_width="1px"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical" />
+        
+        <ImageView
+            android:id="@+id/pairs_dir_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/selector_pair_center"
+            android:background="@color/transparent" />
+        
+        <View
+            android:layout_width="1px"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical" />
+        
+        <ImageView
+            android:id="@+id/pairs_dir_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/selector_pair_right"
+            android:background="@color/transparent" />
+        
+    </LinearLayout>
+    
+    <com.mahjong.ui.MahjongPairs 
+        android:id="@+id/pairs_mahjongpairs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pairs_ll_top2" />
+    
+    <include layout="@layout/keyboard_mahjong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    tools:context=".activity.jpn.MjJpnGameActivity" >
+
+    <com.mahjong.ui.MahjongMainPanel
+        android:id="@+id/game_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+    <com.mahjong.ui.MahjongMainDora
+        android:id="@+id/game_dora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+        	android:id="@+id/game_setting"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_game_btn"
+            android:gravity="right"
+            android:paddingRight="14dp"
+            android:paddingTop="7dp"
+            android:text="@string/setting"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <Button
+        	android:id="@+id/game_exit"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_game_btn"
+            android:gravity="right"
+            android:paddingRight="14dp"
+            android:paddingTop="7dp"
+            android:text="@string/exit"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/game_history"
+        android:layout_width="76dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|top"        
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/ic_game_btn"
+        android:gravity="right"
+        android:paddingRight="14dp"
+        android:paddingTop="7dp"
+        android:text="@string/history"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <ImageButton
+        android:id="@+id/game_more"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical|right"
+        android:background="@drawable/ic_game_more" />
+
+    <com.mahjong.ui.MahjongSpectrum
+        android:id="@+id/game_spectrum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="130dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:singleLine="true"
+        app:touchMode="false"
+        app:showAddRect="false" />
+    
+    <ImageButton
+        android:id="@+id/game_calculate_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/transparent"
+        android:src="@drawable/selector_btn_calc_start" />
+    
+</FrameLayout>

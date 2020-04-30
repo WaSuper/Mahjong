@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/result_set_complex_top_ronghe"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="visible" >
+
+            <Button
+                android:id="@+id/result_set_complex_oppositer"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/oppositer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/result_set_complex_upper"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/upper"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/result_set_complex_downer"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/downer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/result_set_complex_top_zimo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/result_set_complex_btn_zimo"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/zimo"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/result_set_complex_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+        <LinearLayout
+            android:id="@+id/result_set_complex_ll_points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/result_set_complex_point1"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/ic_indicator_sel" />
+
+            <ImageView
+                android:id="@+id/result_set_complex_point2"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_indicator_nor" />
+
+            <ImageView
+                android:id="@+id/result_set_complex_point3"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_indicator_nor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <com.mahjong.ui.MahjongMainDora
+                android:id="@+id/result_set_complex_dora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:doraIn="false"
+                app:touchMode="false" />
+
+            <TextView
+                android:id="@+id/result_set_complex_tv_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <Button
+            android:id="@+id/result_set_complex_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/result_set_complex_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>

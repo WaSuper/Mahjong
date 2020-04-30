@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/result_set_bomb_simple_top_bomb"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" >
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/bomb"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <CheckBox
+                android:id="@+id/result_set_bomb_simple_check_upper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_circle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/upper"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/result_set_bomb_simple_ll_upper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/count_fan"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_upper_fan"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/count_fu"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_upper_fu"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <CheckBox
+                android:id="@+id/result_set_bomb_simple_check_oppositer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_circle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/oppositer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/result_set_bomb_simple_ll_oppositer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/count_fan"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_oppositer_fan"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/count_fu"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_oppositer_fu"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <CheckBox
+                android:id="@+id/result_set_bomb_simple_check_downer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_checkbox_circle"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/downer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/result_set_bomb_simple_ll_downer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/count_fan"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_downer_fan"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/count_fu"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/result_set_bomb_simple_downer_fu"
+                android:layout_width="80dp"
+                android:layout_height="29dp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_spinner"
+                android:gravity="center"
+                android:text="--"
+            	android:textSize="15sp"
+            	android:textColor="@color/black" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <Button
+            android:id="@+id/result_set_bomb_simple_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/result_set_bomb_simple_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="6dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>

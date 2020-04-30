@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fan_bg" >
+
+    <RelativeLayout
+        android:id="@+id/fan_type_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/fan_title_bg" >
+
+        <ImageView
+            android:id="@+id/fan_type_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/fan_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:text="@string/mahjong_japanese"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/fan_type_info"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/information"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/fan_type_ll_sidebar"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fan_type_rl_top"
+        android:layout_marginLeft="3dp"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_one"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_one"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_two"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_two"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_three"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_three"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_six"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_six"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_manguan"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_manguan"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_yiman"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_yiman"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_yiman_double"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_yiman_double"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+
+        <TextView
+            android:id="@+id/fan_type_tv_leave"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/fan_item_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/fan_leave"
+            android:textColor="@color/fan_item_text"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/fan_type_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        android:layout_below="@id/fan_type_rl_top"
+        android:layout_toRightOf="@id/fan_type_ll_sidebar"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#12192d"
+        android:dividerHeight="3dp"
+        android:listSelector="@drawable/selector_listview" >
+    </ListView>
+
+</RelativeLayout>

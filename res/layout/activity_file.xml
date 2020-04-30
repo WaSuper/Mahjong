@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/file_exit"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/selector_btn_back"
+            android:padding="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/file_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="↑"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/file_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/please_select_file"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_toRightOf="@id/file_exit"
+            android:layout_toLeftOf="@id/file_back"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:ellipsize="middle"
+            android:singleLine="true" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/file_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+	    android:listSelector="@drawable/selector_listview"
+	    android:dividerHeight="0.6dp"
+	    android:divider="@drawable/listview_divider" >
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/file_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+        
+        <Button
+        	android:id="@+id/file_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:background="@drawable/selector_button_radius_green"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+        
+        <Button
+        	android:id="@+id/file_ok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:background="@drawable/selector_button_radius_green"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+        
+    </LinearLayout>
+    
+</LinearLayout>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/one"
+        android:textSize="18sp"
+        android:textColor="@color/dark_grey"
+        android:layout_gravity="center_horizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp" >
+        
+        <Button
+            android:id="@+id/mapoint_line1_plus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line1_plus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <EditText
+            android:id="@+id/mapoint_line1_point"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="15"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:editable="false" />
+        
+        <Button
+            android:id="@+id/mapoint_line1_minus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line1_minus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/two"
+        android:textSize="18sp"
+        android:textColor="@color/dark_grey"
+        android:layout_gravity="center_horizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp" >
+        
+        <Button
+            android:id="@+id/mapoint_line2_plus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line2_plus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <EditText
+            android:id="@+id/mapoint_line2_point"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="5"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:editable="false" />
+        
+        <Button
+            android:id="@+id/mapoint_line2_minus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line2_minus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/three"
+        android:textSize="18sp"
+        android:textColor="@color/dark_grey"
+        android:layout_gravity="center_horizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp" >
+        
+        <Button
+            android:id="@+id/mapoint_line3_plus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line3_plus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <EditText
+            android:id="@+id/mapoint_line3_point"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="-5"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:editable="false" />
+        
+        <Button
+            android:id="@+id/mapoint_line3_minus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line3_minus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/four"
+        android:textSize="18sp"
+        android:textColor="@color/dark_grey"
+        android:layout_gravity="center_horizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp" >
+        
+        <Button
+            android:id="@+id/mapoint_line4_plus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line4_plus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <EditText
+            android:id="@+id/mapoint_line4_point"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="-15"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:editable="false" />
+        
+        <Button
+            android:id="@+id/mapoint_line4_minus1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/mapoint_line4_minus5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-5"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/mapoint_invalid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_not_zore"
+        android:textSize="18sp"
+        android:textColor="@color/red"
+        android:layout_marginLeft="10dp"
+        android:visibility="invisible" />
+
+</LinearLayout>

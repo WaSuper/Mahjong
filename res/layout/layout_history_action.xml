@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_radius_white"
+    android:padding="5dp" >
+    
+    <Button
+        android:id="@+id/his_act_copy_to_clipboard"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/copy_to_clipboard"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="left"
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+    
+    <Button
+        android:id="@+id/his_act_export_for_excel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/export_for_excel"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="left"
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+    
+    <Button
+        android:id="@+id/his_act_import_from_excel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/import_from_excel"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="left"
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+    
+    <Button
+        android:id="@+id/his_act_show_all"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/show_all"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="left" 
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+    
+    <Button
+        android:id="@+id/his_act_statistics"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/statistics"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="left" 
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+
+</LinearLayout>

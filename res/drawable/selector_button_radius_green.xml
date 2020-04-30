@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true">
+
+        <!-- 定义当button 处于pressed 状态时的形态。-->
+
+        <shape android:shape="rectangle">
+
+            <!-- 设置按钮的四个角为弧形 -->
+            <!-- android:radius 弧形的半径 -->
+            <corners android:radius="5dip" />
+
+            <solid
+                android:color="#55a121" />
+            
+        </shape>
+
+    </item>
+
+    <item android:state_pressed="false">
+
+        <!-- 定义button默认时的形态-->
+
+        <shape android:shape="rectangle">
+            
+            <!-- 设置按钮的四个角为弧形 -->
+            <!-- android:radius 弧形的半径 -->
+            <corners android:radius="5dip" />
+
+            <solid android:color="#67b72f" />
+            
+        </shape>
+    </item>
+
+</selector>

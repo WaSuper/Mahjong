@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="main">#2c7280</color>
+    <color name="frame">#a7effc</color>
+    <color name="light_blacktext">#333333</color>
+    <color name="diver_color">#A9A9A9</color>
+    <color name="dark_grey">#9D9D9D</color>
+    <color name="grey">#80C0C0C0</color>
+    <color name="bg_click">#509D9D9D</color>
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_gray">#C5C9CC</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#00BFFF</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="gold">#FFD700</color>
+    
+    <color name="fan_bg">#151d33</color>
+    <color name="fan_title_bg">#111c38</color>
+    <color name="fan_item_text">#e0ab67</color>
+    <color name="fan_item_bg">#1b2e54</color>
+    <color name="fan_item_tip">#A0FFFFFF</color>
+    <color name="fan_item_strong">#51f372</color>
+    
+    <color name="fab_black_semi_transparent">#B2000000</color>
+    <color name="fab_background">#e5e5e5</color>
+    <color name="fab_half_black">#808080</color>
+    <color name="fab_white">#fafafa</color>
+    <color name="fab_white_pressed">#f1f1f1</color>
+    <color name="fab_pink">#e91e63</color>
+    <color name="fab_pink_pressed">#ec407a</color>
+    <color name="fab_blue_semi_transparent">#805677fc</color>
+    <color name="fab_blue_semi_transparent_pressed">#80738ffe</color>
+    <color name="fab_red_pressed">#ff00ff</color>
+    <color name="fab_red">#ff0000</color>
+    <color name="fab_green">#a7effc</color>
+    <color name="fab_menu_plus">#0000ff</color>
+    
+    <color name="date_picker_bg">#FFFFFF</color>
+    <color name="date_picker_divider">#11112233</color>
+    <color name="date_picker_text_light">#59B29C</color>
+    <color name="date_picker_text_dark">#333333</color>
+    
+    <color name="ripple_color">#FFFFFF</color>
+    
+</resources>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp" >
+
+        <ImageView
+            android:id="@+id/member_img_north"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/player_frame_north"
+            android:src="@drawable/emo_unknown"
+            android:padding="26dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/member_tv_north"
+            android:layout_width="110dp"
+            android:layout_height="18dp"
+            android:gravity="center|top"
+            android:textSize="15sp"
+            android:text="@string/north"
+            android:textColor="@color/gold"
+            android:background="@drawable/player_frame_name"
+            android:layout_alignBottom="@id/member_img_north" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp" >
+
+        <ImageView
+            android:id="@+id/member_img_south"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/player_frame_south"
+            android:src="@drawable/emo_unknown"
+            android:padding="26dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/member_tv_south"
+            android:layout_width="110dp"
+            android:layout_height="18dp"
+            android:gravity="center|top"
+            android:textSize="15sp"
+            android:text="@string/south"
+            android:textColor="@color/gold"
+            android:background="@drawable/player_frame_name"
+            android:layout_alignBottom="@id/member_img_south" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/member_img_west"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/player_frame_west"
+            android:src="@drawable/emo_unknown"
+            android:padding="26dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/member_tv_west"
+            android:layout_width="110dp"
+            android:layout_height="18dp"
+            android:gravity="center|top"
+            android:textSize="15sp"
+            android:text="@string/west"
+            android:textColor="@color/gold"
+            android:background="@drawable/player_frame_name"
+            android:layout_alignBottom="@id/member_img_west" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" >
+
+        <ImageView
+            android:id="@+id/member_img_east"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/player_frame_east"
+            android:src="@drawable/emo_unknown"
+            android:padding="26dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/member_tv_east"
+            android:layout_width="110dp"
+            android:layout_height="18dp"
+            android:gravity="center|top"
+            android:textSize="15sp"
+            android:text="@string/east"
+            android:textColor="@color/gold"
+            android:background="@drawable/player_frame_name"
+            android:layout_alignBottom="@id/member_img_east" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/member_btn_card"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/card_wind_entrance2"
+        android:scaleType="centerInside" />
+
+    <ImageView
+        android:id="@+id/member_btn_random"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/player_choose_random"
+        android:scaleType="centerInside" />
+    
+    <ImageView
+        android:id="@+id/member_btn_reset"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/player_reset"
+        android:padding="8dp" />
+
+</RelativeLayout>

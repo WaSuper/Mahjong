@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/exit_interrupt_save_temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/interrupt_save_temp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@drawable/selector_listview"
+        android:gravity="center"
+        android:padding="5dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/exit_end_game_save_db"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/end_game_save_db"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@drawable/selector_listview"
+        android:gravity="center"
+        android:padding="5dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/exit_exit_give_up_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_give_up_data"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@drawable/selector_listview"
+        android:gravity="center"
+        android:padding="5dp" />
+
+</LinearLayout>

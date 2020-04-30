@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/dora"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/fanfu_dora_minus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/selector_btn_minus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="···"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/fanfu_dora_count"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/dark_grey"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="···"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/fanfu_dora_plus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/selector_btn_plus" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/fanfu_cb_yifa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:button="@null"
+        android:checked="false"
+        android:drawableLeft="@drawable/selector_checkbox_rectangle"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/yifa"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/fanfu_cb_haidilaoyue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:button="@null"
+        android:checked="false"
+        android:drawableLeft="@drawable/selector_checkbox_rectangle"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/HaiDiLaoYue"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/fanfu_cb_hedimoyu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:button="@null"
+        android:checked="false"
+        android:drawableLeft="@drawable/selector_checkbox_rectangle"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/HeDiMoYu"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+    
+    <TextView
+        android:id="@+id/fanfu_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="error"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:visibility="invisible" />
+
+</LinearLayout>

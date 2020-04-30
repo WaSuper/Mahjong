@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/result_set_complex_lizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/lizhi"
+                android:textSize="12sp"
+                android:textColor="@color/white" />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_double_lizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/double_lizhi"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_yifa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/yifa"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_zimo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/zimo"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_qianggang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/QiangKong"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/result_set_complex_first_round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/first_round"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_final_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/final_pick"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+
+            <CheckBox
+                android:id="@+id/result_set_complex_lingshangkaihua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/LingShangKaiHua"
+                android:textSize="12sp"
+                android:textColor="@color/white"  />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.mahjong.ui.MahjongSpectrum
+        android:id="@+id/result_set_complex_mjspectrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleLine="false"
+        app:touchMode="false"
+        app:showAddRect="false" />
+
+</LinearLayout>

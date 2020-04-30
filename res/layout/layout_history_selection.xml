@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+    
+	    <TextView
+	        android:id="@+id/his_sel_title"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:text="@string/title"
+	        android:textColor="@color/black"
+	        android:textSize="18sp"
+	        android:background="@drawable/selector_listview"
+	        android:gravity="center"
+	        android:padding="5dp" />
+    
+	    <View
+	        android:layout_width="1dp"
+	        android:layout_height="20dp"
+	        android:background="@color/diver_color"
+	        android:layout_gravity="center_vertical" />
+	    
+	    <TextView
+	        android:id="@+id/his_sel_note"
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:text="@string/note"
+	        android:textColor="@color/black"
+	        android:textSize="18sp"
+	        android:background="@drawable/selector_listview"
+	        android:gravity="center"
+	        android:padding="5dp" />
+        
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/his_sel_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view_detail"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@drawable/selector_listview"
+        android:gravity="center"
+        android:padding="5dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/his_sel_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@drawable/selector_listview"
+        android:gravity="center"
+        android:padding="5dp" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+</LinearLayout>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <com.mahjong.ui.MahjongSpectrum
+        android:id="@+id/dialog_page_mjspectrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:showAddRect="false"
+        app:singleLine="true"
+        app:touchMode="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dialog_page_mjspectrum"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/dialog_page_lizhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/lizhi"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_double_lizhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/double_lizhi"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_yifa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/yifa"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_zimo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/zimo"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_qianggang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/QiangKong"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_first_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/first_round"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_final_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/final_pick"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_page_lingshangkaihua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/LingShangKaiHua"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <com.mahjong.ui.RippleButton
+        android:id="@+id/dialog_page_mj_reset"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:normal="@drawable/ic_dialog_reset_nor"
+        app:pressed="@drawable/ic_dialog_reset_sel" />
+
+    <com.mahjong.ui.RippleButton
+        android:id="@+id/dialog_page_mj_add"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        app:normal="@drawable/ic_dialog_add_nor"
+        app:pressed="@drawable/ic_dialog_add_sel" />
+
+    <LinearLayout
+        android:id="@+id/dialog_page_mj_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/dialog_page_mj_back"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:src="@drawable/ic_dialog_back_nor" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/diver_color" />
+
+        <ImageButton
+            android:id="@+id/dialog_page_mj_ok"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:src="@drawable/ic_dialog_ok_nor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@id/dialog_page_mj_bottom" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@color/diver_color" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/diver_color" />
+    </LinearLayout>
+
+</RelativeLayout>

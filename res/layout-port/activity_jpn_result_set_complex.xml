@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/result_set_complex_top_ronghe"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="visible" >
+        
+        <Button
+            android:id="@+id/result_set_complex_oppositer"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/oppositer"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+        <Button
+            android:id="@+id/result_set_complex_upper"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="@string/upper"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+        <Button
+            android:id="@+id/result_set_complex_downer"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/downer"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/selector_btn_player_dir" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/result_set_complex_top_zimo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone" >
+        
+        <Button
+        	android:id="@+id/result_set_complex_btn_zimo"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:text="@string/zimo"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/ic_btn_player_dir" />
+        
+    </RelativeLayout>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/result_set_complex_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
+    
+    <LinearLayout
+        android:id="@+id/result_set_complex_ll_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center" >
+        
+        <ImageView
+        	android:id="@+id/result_set_complex_point1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_indicator_sel" />
+        
+        <ImageView
+        	android:id="@+id/result_set_complex_point2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_indicator_nor"
+            android:layout_marginLeft="20dp" />
+        
+        <ImageView
+        	android:id="@+id/result_set_complex_point3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_indicator_nor"
+            android:layout_marginLeft="20dp" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+        
+        <com.mahjong.ui.MahjongMainDora
+	        android:id="@+id/result_set_complex_dora"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        app:doraIn="false"
+	        app:touchMode="false" />
+        
+        <TextView
+	        android:id="@+id/result_set_complex_tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:singleLine="false" />
+	
+    </LinearLayout>
+    
+    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="horizontal"
+         android:gravity="center_horizontal|bottom"
+         android:paddingBottom="30dp" >
+        
+         <Button
+             android:id="@+id/result_set_complex_ok"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="right"
+             android:paddingTop="6dp"
+             android:paddingRight="10dp"
+             android:text="@string/ok"
+             android:textSize="18sp"
+             android:textColor="@color/white"
+             android:background="@drawable/selector_game_btn_left" />
+         
+         <Button
+             android:id="@+id/result_set_complex_cancel"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="left"
+             android:paddingTop="6dp"
+             android:paddingLeft="10dp"
+             android:layout_marginLeft="40dp"
+             android:text="@string/cancel"
+             android:textSize="18sp"
+             android:textColor="@color/white"
+             android:background="@drawable/selector_game_btn_right" />
+         
+     </LinearLayout> 
+     
+</LinearLayout>

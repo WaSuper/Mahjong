@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mahjong"
+    android:versionCode="1"
+    android:versionName="1.0.0 build 200430" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="23" />
+    
+    <!--  允许程序在手机屏幕关闭后后台进程仍然运行  -->
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<!--  允许程序写入外部存储，如SD卡上写文件  -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<!--  在SDCard中创建与删除文件权限  -->
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+	<!--  网络权限  -->
+	<uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <application
+        android:name="com.mahjong.tools.MahjongApplication"
+        android:allowBackup="true"        
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <meta-data android:name="AA_DB_NAME" android:value="mahjong.db" />  
+        <meta-data android:name="AA_DB_VERSION" android:value="3" />  
+        <meta-data
+    		android:name="AA_MODELS"
+    		android:value="com.mahjong.model.Player,com.mahjong.model.MjResult,com.mahjong.model.MjDetail,com.mahjong.model.AudioItem,com.mahjong.model.Character,com.mahjong.model.CharacterIcon" />
+        
+        <activity
+            android:name="com.mahjong.activity.StartActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.mahjong.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.MjMainSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.CreatePlayerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.EditPlayerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.PlayerSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.HeadIconSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.FileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.MainSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.PairsSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.FanTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.PointFormActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.CalculateActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.PlayerManageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.GameActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.GameSimpleActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.ResultSetSimpleActivity"
+            android:screenOrientation="nosensor" />
+        <activity android:name="com.mahjong.activity.jpn.ResultSetBombSimpleActivity"
+            android:screenOrientation="nosensor" />
+        <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivity"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|screenSize" />        
+        <activity android:name="com.mahjong.activity.jpn.ResultShow"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.HistoryDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.DiceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.ChangeScoreActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.EmoticonActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.EmoticonDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.RankListActivity"
+            android:screenOrientation="portrait" />
+        
+    </application>
+
+</manifest>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/com.mahjong"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >    
+    
+    <RelativeLayout
+        android:id="@+id/emoticon_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main" >
+
+        <ImageView
+            android:id="@+id/emoticon_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/emoticon_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:text="@string/emoticon"
+            android:textColor="@color/white"
+            android:textSize="20sp" />            
+
+        <ImageView
+            android:id="@+id/emoticon_info"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@drawable/information"
+            android:layout_alignParentRight="true" />
+        
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/emoticon_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:listSelector="@drawable/selector_listview"
+        android:layout_below="@id/emoticon_rl_top" >
+    </ListView>
+    
+    <com.mahjong.ui.fab.FloatingActionsMenu
+        android:id="@+id/emoticon_multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_addButtonColorNormal="@color/fab_white"
+        fab:fab_addButtonColorPressed="@color/fab_white_pressed"
+        fab:fab_addButtonPlusIconColor="@color/fab_half_black" >
+
+        <com.mahjong.ui.fab.FloatingActionButton
+            android:id="@+id/emoticon_action_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/fab_white"
+            fab:fab_colorPressed="@color/fab_white_pressed"
+            fab:fab_size="mini"
+            app:fab_icon="@drawable/add_nor"
+            fab:fab_title="@string/create" />
+        
+        <com.mahjong.ui.fab.FloatingActionButton
+            android:id="@+id/emoticon_action_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/fab_white"
+            fab:fab_colorPressed="@color/fab_white_pressed"
+            fab:fab_size="mini"
+            app:fab_icon="@drawable/upload_nor"
+            fab:fab_title="@string/import_from_card" />
+    </com.mahjong.ui.fab.FloatingActionsMenu>
+
+</RelativeLayout>

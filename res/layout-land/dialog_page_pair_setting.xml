@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="@string/please_choose_type"
+        android:textSize="15sp"
+        android:gravity="center" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/dialog_page_pair_setting_triplet"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:text="@string/triplet" />
+        
+        <View 
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/diver_color" />
+        
+        <Button
+            android:id="@+id/dialog_page_pair_setting_sequence"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:text="@string/sequence" />
+        
+        <View 
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/diver_color" />
+        
+        <Button
+            android:id="@+id/dialog_page_pair_setting_addition_kong"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:text="@string/addition_kong" />
+        
+        <View 
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/diver_color" />
+        
+        <Button
+            android:id="@+id/dialog_page_pair_setting_exposed_kong"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:text="@string/exposed_kong" />
+        
+        <View 
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/diver_color" />
+        
+        <Button
+            android:id="@+id/dialog_page_pair_setting_concealed_kong"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_listview"
+            android:text="@string/concealed_kong" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" >
+
+        <com.mahjong.ui.RippleButton
+            android:id="@+id/dialog_page_pair_setting_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            app:normal="@drawable/ic_dialog_back_nor"
+            app:pressed="@drawable/ic_dialog_back_sel" />
+
+        <com.mahjong.ui.RippleButton
+            android:id="@+id/dialog_page_pair_setting_next"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            app:normal="@drawable/ic_dialog_next_nor"
+            app:pressed="@drawable/ic_dialog_next_sel" />
+    </RelativeLayout>
+
+</LinearLayout>

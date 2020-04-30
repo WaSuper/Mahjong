@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+          android:keyHeight="40dip"
+          android:keyWidth="8.33334444%p"
+          android:verticalGap="6dp">
+	<Row>
+        <Key android:codes="1" android:horizontalGap="2dp" android:keyIcon="@drawable/b_man1"
+             android:keyEdgeFlags="left" />
+        <Key android:codes="2" android:horizontalGap="6dp" android:keyLabel="w"/>
+        <Key android:codes="3" android:horizontalGap="6dp" android:keyLabel="e"/>
+        <Key android:codes="4" android:horizontalGap="6dp" android:keyLabel="r"/>
+        <Key android:codes="5" android:horizontalGap="6dp" android:keyLabel="t"/>
+        <Key android:codes="6" android:horizontalGap="6dp" android:keyLabel="y"/>
+        <Key android:codes="7" android:horizontalGap="6dp" android:keyLabel="u"/>
+        <Key android:codes="8" android:horizontalGap="6dp" android:keyLabel="i"/>
+        <Key android:codes="9" android:horizontalGap="6dp" android:keyLabel="o"/>
+        <Key android:codes="10" android:horizontalGap="6dp" android:keyLabel="p"
+             android:keyEdgeFlags="right"/>
+    </Row>
+    
+</Keyboard>

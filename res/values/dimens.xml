@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="dialog_title_height">45dp</dimen>
+    <dimen name="dialog_textitem_size">14.5sp</dimen>
+    <dimen name="dialog_line_margin_left">13dp</dimen>
+
+    <dimen name="WheelItemTextSize">14sp</dimen>
+    <dimen name="WheelSelectedItemTextSize">20sp</dimen>
+    <dimen name="WheelItemSpace">12dp</dimen>
+    <dimen name="WheelIndicatorSize">2dp</dimen>
+    <dimen name="WheelMargins">8dp</dimen>
+    <dimen name="WheelItemHeightSpace">16dp</dimen>
+    <dimen name="WheelItemWidthSpace">32dp</dimen>
+    
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="fab_plus_icon_size">14dp</dimen>
+    <dimen name="fab_plus_icon_stroke">2dp</dimen>
+    <dimen name="fab_shadow_offset">3dp</dimen>
+    <dimen name="fab_shadow_radius">9dp</dimen>
+    <dimen name="fab_stroke_width">1dp</dimen>
+    <dimen name="fab_actions_spacing">16dp</dimen>
+    <dimen name="fab_labels_margin">8dp</dimen>
+    
+    <dimen name="picker_view_height">160dp</dimen>
+    <dimen name="date_unit_text_size">18sp</dimen>
+</resources>

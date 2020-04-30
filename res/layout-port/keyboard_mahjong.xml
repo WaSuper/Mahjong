@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="1dp"
+    android:layout_marginRight="1dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/shape_radius_grey"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/keyboard_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@color/transparent"
+            android:src="@drawable/selector_btn_left_arrow" />
+        
+        <ImageButton
+            android:id="@+id/keyboard_hide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:background="@color/transparent"
+            android:src="@drawable/selector_btn_bottom_arrow" />
+        
+        <ImageButton
+            android:id="@+id/keyboard_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@color/transparent"
+            android:src="@drawable/selector_btn_right_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/keyboard_man1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man1" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man2" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man3" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man4" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man5" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man6" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man7" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man8" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_man9" />
+
+        <ImageButton
+            android:id="@+id/keyboard_man5r"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_red_man5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/keyboard_pin1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin1" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin2" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin3" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin4" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin5" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin6" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin7" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin8" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_pin9" />
+
+        <ImageButton
+            android:id="@+id/keyboard_pin5r"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_red_pin5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo1" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo2" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo3" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo4" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo5" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo6" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo7" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo8" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_bamboo9" />
+
+        <ImageButton
+            android:id="@+id/keyboard_bamboo5r"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_red_bamboo5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/keyboard_wind_east"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_wind_east" />
+
+        <ImageButton
+            android:id="@+id/keyboard_wind_south"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_wind_south" />
+
+        <ImageButton
+            android:id="@+id/keyboard_wind_west"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_wind_west" />
+
+        <ImageButton
+            android:id="@+id/keyboard_wind_north"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_wind_north" />
+
+        <ImageButton
+            android:id="@+id/keyboard_dragon_haku"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_dragon_haku" />
+
+        <ImageButton
+            android:id="@+id/keyboard_dragon_green"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_dragon_green" />
+
+        <ImageButton
+            android:id="@+id/keyboard_dragon_chun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_bg_mahjong_radius"
+            android:src="@drawable/b_dragon_chun" />
+
+        <ImageButton
+            android:id="@+id/keyboard_backspace"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_btn_backspace"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+</LinearLayout>

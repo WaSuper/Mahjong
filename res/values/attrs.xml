@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="halfVisibleItemCount" format="integer"/>
+    <attr name="itemTextSize" format="dimension"/>
+    <attr name="itemMaximumWidthText" format="string"/>
+    <attr name="itemTextColor" format="color"/>
+    <attr name="textGradual" format="boolean"/>
+    <attr name="selectedTextColor" format="color"/>
+    <attr name="selectedTextSize" format="dimension"/>
+    <attr name="currentItemPosition" format="integer"/>
+    <attr name="itemWidthSpace" format="dimension"/>
+    <attr name="itemHeightSpace" format="dimension"/>
+    <attr name="zoomInSelectedItem" format="boolean"/>
+    <attr name="wheelCyclic" format="boolean"/>
+    <attr name="wheelCurtain" format="boolean"/>
+    <attr name="wheelCurtainColor" format="color"/>
+    <attr name="wheelCurtainBorder" format="boolean"/>
+    <attr name="wheelCurtainBorderColor" format="color"/>
+    <attr name="indicatorText" format="string"/>
+    <attr name="indicatorTextSize" format="dimension"/>
+    <attr name="indicatorTextColor" format="color"/>    
+    <attr name="touchMode" format="boolean" /> 
+    <attr name="position">
+        <enum name="bottom" value="0"/>
+        <enum name="right" value="1"/>
+        <enum name="top" value="2"/>
+        <enum name="left" value="3"/>
+    </attr>   
+    <attr name="rotateAngle" format="integer" />
+    <attr name="transX" format="dimension" />
+    <attr name="transY" format="dimension" />
+    <declare-styleable name="RotateTextView">
+        <attr name="rotateAngle" />
+        <attr name="transX" />
+        <attr name="transY" />
+    </declare-styleable>
+    <declare-styleable name="ResultListView">
+        <attr name="position"/>
+    </declare-styleable>
+    <declare-styleable name="ResultView">
+        <attr name="position"/>
+    </declare-styleable>
+    <declare-styleable name="PlayerFuncItem">
+        <attr name="position"/>
+    </declare-styleable>
+    <declare-styleable name="WheelPicker">
+        <attr name="halfVisibleItemCount"/>
+        <attr name="itemTextSize"/>
+        <attr name="itemMaximumWidthText"/>
+        <attr name="itemTextColor"/>
+        <attr name="textGradual"/>
+        <attr name="selectedTextColor"/>
+        <attr name="selectedTextSize"/>
+        <attr name="currentItemPosition"/>
+        <attr name="itemWidthSpace"/>
+        <attr name="itemHeightSpace"/>
+        <attr name="zoomInSelectedItem"/>
+        <attr name="wheelCyclic"/>
+        <attr name="wheelCurtain"/>
+        <attr name="wheelCurtainColor"/>
+        <attr name="wheelCurtainBorder" />
+        <attr name="wheelCurtainBorderColor"/>
+        <attr name="indicatorText"/>
+        <attr name="indicatorTextSize"/>
+        <attr name="indicatorTextColor"/>
+    </declare-styleable>
+     <declare-styleable name="CountPicker">
+        <attr name="startCount" format="integer"/>
+        <attr name="endCount" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="MahjongSpectrum">
+        <attr name="singleLine" format="boolean" />
+        <attr name="touchMode"/>
+        <attr name="showAddRect" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="MahjongDora">
+        <attr name="doraIn" format="boolean" />
+        <attr name="touchMode"/>
+    </declare-styleable>
+    
+    <declare-styleable name="FloatingActionButton">
+        <attr name="fab_colorPressed" format="color"/>
+        <attr name="fab_colorDisabled" format="color"/>
+        <attr name="fab_colorNormal" format="color"/>
+        <attr name="fab_icon" format="reference"/>
+        <attr name="fab_size" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="mini" value="1"/>
+        </attr>
+        <attr name="fab_title" format="string"/>
+        <attr name="fab_stroke_visible" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="AddFloatingActionButton">
+        <attr name="fab_plusIconColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="FloatingActionsMenu">
+        <attr name="fab_addButtonColorPressed" format="color"/>
+        <attr name="fab_addButtonColorNormal" format="color"/>
+        <attr name="fab_addButtonSize" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="mini" value="1"/>
+        </attr>
+        <attr name="fab_addButtonPlusIconColor" format="color"/>
+        <attr name="fab_addButtonStrokeVisible" format="boolean"/>
+        <attr name="fab_labelStyle" format="reference"/>
+        <attr name="fab_labelsPosition" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+        <attr name="fab_expandDirection" format="enum">
+            <enum name="up" value="0"/>
+            <enum name="down" value="1"/>
+            <enum name="left" value="2"/>
+            <enum name="right" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="RippleLayout">
+		<attr name="rv_alpha" format="integer"/>
+		<attr name="rv_framerate" format="integer"/>
+		<attr name="rv_rippleDuration" format="integer"/>
+		<attr name="rv_zoomDuration" format="integer"/>
+		<attr name="rv_color" format="color"/>
+		<attr name="rv_centered" format="boolean"/>
+		<attr name="rv_type" format="enum">
+			<enum name="simpleRipple" value="0"/>
+			<enum name="doubleRipple" value="1"/>
+			<enum name="rectangle" value="2"/>
+		</attr>
+		<attr name="rv_ripplePadding" format="dimension"/>
+		<attr name="rv_zoom" format="boolean"/>
+		<attr name="rv_zoomScale" format="float"/>
+	</declare-styleable>
+	<declare-styleable name="SwipeMenuLayout">
+		<attr name="swipeEnable" format="boolean"/>
+		<attr name="ios" format="boolean"/>
+		<attr name="leftSwipe" format="boolean"/>
+	</declare-styleable>
+	<declare-styleable name="LeanTextView">
+        <attr name="rotateAngle" />
+    </declare-styleable>
+</resources>

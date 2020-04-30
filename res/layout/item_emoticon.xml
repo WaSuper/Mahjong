@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ImageView
+        android:id="@+id/emoticon_item_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/emo_0_1"        
+        android:background="@drawable/folder_bg" />
+
+    <TextView
+        android:id="@+id/emoticon_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/emoticon_item_icon"
+        android:layout_centerVertical="true" />
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selector_btn_right_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_shadow_bottom"
+        android:layout_below="@id/emoticon_item_icon"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="65dp" />
+    
+</RelativeLayout>

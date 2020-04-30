@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_default"  >
+    
+    <RelativeLayout        
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main" >
+
+        <ImageView
+            android:id="@+id/player_setting_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/setting"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/player_setting_audio"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#40ffffff" >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/audio_and_effect"
+            android:textColor="@color/light_blacktext"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/selector_btn_bottom_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lizhi_bgm"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        
+        <CheckBox
+            android:id="@+id/audio_lizhi_bgm_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_switch"
+            android:layout_marginRight="10dp" />
+        
+        <TextView
+            android:id="@+id/audio_lizhi_bgm_dir"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center" 
+            android:singleLine="true"
+            android:ellipsize="middle" />
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lizhi"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        
+        <CheckBox
+            android:id="@+id/audio_lizhi_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_switch"
+            android:layout_marginRight="10dp" />
+        
+        <TextView
+            android:id="@+id/audio_lizhi_dir"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center" 
+            android:singleLine="true"
+            android:ellipsize="middle" />
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zimo"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        
+        <CheckBox
+            android:id="@+id/audio_zimo_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_switch"
+            android:layout_marginRight="10dp" />
+        
+        <TextView
+            android:id="@+id/audio_zimo_dir"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center" 
+            android:singleLine="true"
+            android:ellipsize="middle" />
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ronghe"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        
+        <CheckBox
+            android:id="@+id/audio_ronghe_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_switch"
+            android:layout_marginRight="10dp" />
+        
+        <TextView
+            android:id="@+id/audio_ronghe_dir"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center" 
+            android:singleLine="true"
+            android:ellipsize="middle" />
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/diver_color" />
+    
+</LinearLayout>

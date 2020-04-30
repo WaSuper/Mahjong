@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <LinearLayout
+        android:id="@+id/baopai_tab1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/player_yiman"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/player_baopai"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <CheckBox
+                    android:id="@+id/baopai_player_left1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="player1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/baopai_player_left2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="player2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/baopai_player_left3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="player3"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/baopai_player_left4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/selector_checkbox_rectangle"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="player4"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/baopai_player_right1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/click_to_select"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/baopai_player_right2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/click_to_select"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/baopai_player_right3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/click_to_select"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/baopai_player_right4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/click_to_select"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/baopai_tab2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="@string/please_choose_player"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/baopai_tab2_player1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="player1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+            
+            <TextView
+                android:id="@+id/baopai_tab2_player2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="player2"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+            
+            <TextView
+                android:id="@+id/baopai_tab2_player3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="player3"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

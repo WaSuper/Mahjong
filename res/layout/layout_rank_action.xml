@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_radius_white"
+    android:padding="5dp" >
+    
+    <Button
+        android:id="@+id/rank_act_rank_point"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/rank_point"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/diver_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+    
+    <Button
+        android:id="@+id/rank_act_rank_first"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/rank_first"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="3dp"
+        android:background="@drawable/selector_listview" />    
+
+</LinearLayout>
