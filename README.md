@@ -1,6 +1,6 @@
 # 日麻Saki
 一个小小的日本麻将计分器，仅以陶冶节操（终于上班摸鱼摸出来了...）
-之前看到NGA论坛上有位大神做了个日麻面基用的APP(请移步到https://bbs.nga.cn/read.php?tid=12223436&fav=60414c0a)，感觉有很多改进的空间，于是自己忍不住重新写了一个，很多界面都借鉴了原版，感觉效果还不错，和朋友一边玩一边完善功能，断断续续一年多了，功能都完成得差不多，上传来给大家分享一下。（若要引用请注明原处，谢谢合作)
+之前看到NGA论坛上有位大神做了个日麻面基用的APP，感觉有很多改进的空间，于是自己忍不住重新写了一个，很多界面都借鉴了原版，感觉效果还不错，和朋友一边玩一边完善功能，断断续续一年多了，功能都完成得差不多，上传来给大家分享一下。（若要引用请注明原处，谢谢合作)
 ![image](https://github.com/WaSuper/Mahjong/blob/master/res/drawable-xxhdpi/ic_launcher.png)
 
 主界面
@@ -41,5 +41,6 @@
 
 v1.0.0 安装包下载地址：
 链接: https://pan.baidu.com/s/1wZo3g2N1gltbaG2sUH3HOw 提取码: h2n6
+
 v1.0.0 源代码下载地址：
 链接: https://pan.baidu.com/s/1ce86m8MnjljzIr8cZK22uw 提取码: nmse
