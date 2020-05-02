@@ -17,7 +17,7 @@
 
 二.历史战绩
 记录历史的神圣的地方，那些不堪回首的往事...
-![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/16_history.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/16_history_detail.jpg)
+![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/16_history.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/17_history_detail.jpg)
 
 三.计分器
 最原始、最核心的功能，可以多用！！！
