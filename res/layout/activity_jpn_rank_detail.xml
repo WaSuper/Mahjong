@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/rank_detail_back"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <ImageView
+            android:id="@+id/rank_detail_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="5dp"
+            android:src="@drawable/emo_0_1" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/rank1_frame" />
+        
+        <TextView
+            android:id="@+id/rank_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/rank_detail_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:text="玩家名"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp" >
+	            
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/history_max_spectrum"
+	                android:textSize="20sp"
+	                android:textColor="@color/white" />
+	            
+	            <TextView
+	                android:id="@+id/rank_detail_fan"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/fan_yiman"
+	                android:textSize="20sp"
+	                android:textColor="@color/gold"
+	                android:layout_alignParentRight="true" />
+	            
+			    <com.mahjong.ui.MahjongSpectrum
+			        android:id="@+id/rank_detail_spectrum"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/rank_detail_fan" />
+	            
+	        </RelativeLayout>
+        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:padding="5dp" >
+	            
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/recent_rank_list"
+	                android:textSize="20sp"
+	                android:textColor="@color/white" />
+	            
+			    <com.mahjong.ui.RankChart
+			        android:id="@+id/rank_detail_chart"
+			        android:layout_width="match_parent"
+			        android:layout_height="100dp" />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:padding="10dp" >
+	            
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical" >
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/total_battle_count"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_battle_count"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/rank_first_data"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_rank_first"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/rank_second_data"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_rank_second"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/rank_third_data"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_rank_third"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/rank_forth_data"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_rank_forth"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/average_rank"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_rank_average"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/max_banker"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_max_banker"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	            </LinearLayout>
+	            
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical"
+	                android:layout_marginLeft="40dp" >
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/rank_point_data"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_point"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_lizhi"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_lizhi"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_hepai"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_hepai"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_zimo"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_zimo"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_bomb"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_bomb"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_fly"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_fly"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/percent_chicken"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_chicken"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+            
+        </LinearLayout>
+        
+    </ScrollView>
+
+</LinearLayout>

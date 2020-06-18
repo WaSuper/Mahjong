@@ -155,7 +155,8 @@ public class ImageTool {
 		Canvas canvas = new Canvas(target);
 		Xfermode orgMode = paint.getXfermode();
 		// 首先绘制玩家图标
-		canvas.drawCircle(min / 2, min / 2, radius, paint);
+//		canvas.drawCircle(min / 2, min / 2, radius, paint); // 圆形
+		canvas.drawRect(min / 2 - radius, min / 2 - radius, min / 2 + radius, min / 2 + radius, paint); // 方框
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(icon, 0, 0, paint);
 		// 绘制等级图标

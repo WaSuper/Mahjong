@@ -11,6 +11,7 @@ import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ValueTool;
 import com.mahjong.ui.LeanTextView;
 import com.mahjong.ui.LineChart;
+import com.mahjong.ui.MjWinTextView;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -43,7 +44,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 	private LineChart mLineChart;
 	private ImageView[] mChickenViews;
 	private ImageView[] mFlyViews;
-	private LeanTextView mWinTextView;
+	private MjWinTextView mWinTextView;
 	
 	private OnCancelListener mListener;
 	
@@ -125,7 +126,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 		mFlyViews[2] = (ImageView) findViewById(R.id.rank_fly3);
 		mFlyViews[3] = (ImageView) findViewById(R.id.rank_fly4);
 		mLineChart = (LineChart) findViewById(R.id.rank_chart);
-		mWinTextView = (LeanTextView) findViewById(R.id.rank_wintext);
+		mWinTextView = (MjWinTextView) findViewById(R.id.rank_wintext);
 		
 		mBackView.setOnClickListener(this);
 		mIconViews[0].setOnClickListener(this);

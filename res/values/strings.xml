@@ -315,9 +315,12 @@
 	<string name="no_yaku">玩家无役，请确认输入牌谱！</string>
 	<string name="sign_none">无言的胜利！无敌的寂寞！</string>
 	<string name="rank_point">点数榜</string>
-	<string name="rank_point_data">总点数：%s</string>
+	<string name="rank_point_data">总点数</string>
 	<string name="rank_first">一位榜</string>
-	<string name="rank_first_data">一位率：%s</string>
+	<string name="rank_first_data">一位率</string>
+	<string name="rank_second_data">二位率</string>
+	<string name="rank_third_data">三位率</string>
+	<string name="rank_forth_data">四位率</string>
 	<string name="rule_to_calc_fu">符数计算规则</string>
 	<string name="rule_to_calc_fu_detail">1).基本符数20符；
 	    \n2).自摸+2符；
@@ -328,5 +331,18 @@
 	    \n7).特殊役标准符数：七对子25符，平和自摸20符、平和荣和30符；
 	    \n8).特殊牌型标准符数：非门清平和牌型荣和30符；
 	    \n[最终符数]个位不为0时十位进一取整数为最终符数（如32符最终计40符）</string>
+	<string name="player_name">玩家：%s</string>
+	<string name="recent_max_spectrum">最近大牌</string>
+	<string name="history_max_spectrum">历史大牌</string>
+	<string name="recent_rank_list">最近走势</string>
+	<string name="total_battle_count">总对局数</string>
+	<string name="average_rank">平均顺位</string>
+	<string name="max_banker">最大连庄</string>
+	<string name="percent_lizhi">立直率</string>
+	<string name="percent_hepai">和牌率</string>
+	<string name="percent_zimo">自摸率</string>
+	<string name="percent_bomb">放铳率</string>
+	<string name="percent_fly">起飞率</string>
+	<string name="percent_chicken">烧鸡率</string>
 	    
 </resources>

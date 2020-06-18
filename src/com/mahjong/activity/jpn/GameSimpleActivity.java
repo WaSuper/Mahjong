@@ -15,6 +15,7 @@ import com.mahjong.dialog.MjHistoryDialog;
 import com.mahjong.model.MjAction;
 import com.mahjong.model.MjDetail;
 import com.mahjong.model.Player;
+import com.mahjong.model.RankItem;
 import com.mahjong.tools.AnalysisTool;
 import com.mahjong.tools.AudioTool;
 import com.mahjong.tools.LightTool;
@@ -879,6 +880,22 @@ public class GameSimpleActivity extends Activity implements
 			}
 			startActivity(intent);
 		}
+		
+		@Override
+		public void onClickPoint(int pos) {
+			switch (pos) {
+			case 0: // 下方				
+				break;
+			case 1: // 右方
+				break;
+			case 2: // 上方
+				break;
+			case 3: // 左方
+				break;
+			default:
+				break;
+			}
+		};
 	};
 	
 	private void revokeLastRound(boolean isShowDialog) {
@@ -1070,6 +1087,7 @@ public class GameSimpleActivity extends Activity implements
 		@Override
 		public void onResult(Player[] players, int[] scores, int[] ranks, float[] mas) {
 			showRankDialog(players, scores, ranks, mas);
+			ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
 		}
 		
 	};

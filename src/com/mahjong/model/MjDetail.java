@@ -405,7 +405,7 @@ public class MjDetail extends Model {
 			if (yiman == 1) {
 				return context.getString(R.string.accumulate_yiman);
 			} else {
-				return yiman + context.getString(R.string.accumulate_yiman);
+				return yiman + context.getString(R.string.accumulate_yiman_times);
 			}			
 		}
 	}

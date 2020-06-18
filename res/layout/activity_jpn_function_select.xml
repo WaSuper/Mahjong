@@ -221,7 +221,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center_horizontal" >
+            android:gravity="center_horizontal"
+            android:visibility="invisible" >
         
 	        <ImageButton
 	            android:id="@+id/jpn_select_btn_wlan_battle"

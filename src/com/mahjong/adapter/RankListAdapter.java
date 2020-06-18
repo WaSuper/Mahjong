@@ -84,12 +84,12 @@ public class RankListAdapter extends BaseAdapter {
 		EmoticonTool.showEmoticon(data.player, holder.icon, options);
 		switch (mType) {
 		case 0:
-			holder.data.setText(mContext.getString(R.string.rank_point_data, 
-					pointFormat.format(data.pointData)));
+			holder.data.setText(mContext.getString(R.string.rank_point_data) + ":" 
+					+ pointFormat.format(data.rankItem.getTotalPoint()));
 			break;
 		case 1:
-			holder.data.setText(mContext.getString(R.string.rank_first_data, 
-					firstFormat.format((float)data.firstCount / (float)data.gameCount)));
+			holder.data.setText(mContext.getString(R.string.rank_first_data) + ":"
+					+ firstFormat.format(data.rankItem.getRank1Percent()));
 			break;
 		default:
 			break;

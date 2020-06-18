@@ -30,7 +30,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/ic_game_back" />
             
-   <com.mahjong.ui.LeanTextView
+  <!--  <com.mahjong.ui.LeanTextView
         android:id="@+id/rank_wintext"
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -45,7 +45,16 @@
         android:background="@drawable/dialog_win"
         android:alpha="0.7"
         android:singleLine="false"
-        app:rotateAngle="-15" />
+        app:rotateAngle="-15" /> -->
+   
+   <com.mahjong.ui.MjWinTextView        
+        android:id="@+id/rank_wintext"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+		android:layout_alignTop="@id/rank_title"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="30dp"
+        android:alpha="0.8" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,12 +70,21 @@
             android:paddingRight="30dp" >
 
             <ImageView
+                android:id="@+id/rank_num1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank1_num"
+                android:scaleType="fitCenter" />
+
+            <ImageView
                 android:id="@+id/rank_img1"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rank1_frame"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:layout_toRightOf="@id/rank_num1" />
 
             <TextView
                 android:id="@+id/rank_name1"
@@ -238,12 +256,21 @@
             android:paddingRight="30dp" >
 
             <ImageView
+                android:id="@+id/rank_num2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank2_num"
+                android:scaleType="fitCenter" />
+
+            <ImageView
                 android:id="@+id/rank_img2"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rank2_frame"                
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:layout_toRightOf="@id/rank_num2" />
 
             <TextView
                 android:id="@+id/rank_name2"
@@ -414,12 +441,22 @@
             android:paddingRight="30dp" >
 
             <ImageView
+                android:id="@+id/rank_num3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank3_num"
+                android:scaleType="fitCenter" />
+            
+
+            <ImageView
                 android:id="@+id/rank_img3"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rank3_frame"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:layout_toRightOf="@id/rank_num3" />
 
             <TextView
                 android:id="@+id/rank_name3"
@@ -591,12 +628,21 @@
             android:paddingRight="30dp" >
 
             <ImageView
+                android:id="@+id/rank_num4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/rank4_num"
+                android:scaleType="fitCenter" />
+
+            <ImageView
                 android:id="@+id/rank_img4"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rank4_frame"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:layout_toRightOf="@id/rank_num4" />
 
             <TextView
                 android:id="@+id/rank_name4"

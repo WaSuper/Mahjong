@@ -6,7 +6,6 @@ import com.mahjong.activity.EmoticonActivity;
 import com.mahjong.activity.PlayerManageActivity;
 import com.mahjong.activity.jpn.CalculateActivity;
 import com.mahjong.activity.jpn.SettingActivity;
-import com.mahjong.tools.FileTools;
 import com.mahjong.tools.ToastTool;
 
 import android.app.Activity;
@@ -84,7 +83,6 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.jpn_select_btn_wlan_battle:
 			ToastTool.showToast(this, R.string.no_support);
-//			FileTools.getDatabaseFiles(this);
 			break;
 		case R.id.jpn_select_btn_fan_type:
 			startActivity(new Intent(MainSelectActivity.this, FanTypeActivity.class));

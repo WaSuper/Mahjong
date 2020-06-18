@@ -2,6 +2,7 @@ package com.mahjong.activity;
 
 import com.mahjong.R;
 import com.mahjong.anime.SwingAnimation;
+import com.mahjong.tools.FileTools;
 import com.mahjong.tools.PackageUtils;
 
 import android.app.Activity;
@@ -54,6 +55,7 @@ public class AboutActivity extends Activity implements OnClickListener {
         mSwingAnimation.setFillAfter(false);  //是否保持动画结束画面
         mSwingAnimation.setStartOffset(0);   //动画播放延迟
         mAppView.setAnimation(mSwingAnimation);
+        mAppView.setOnClickListener(this);
 	}
 
 	@Override
@@ -61,6 +63,9 @@ public class AboutActivity extends Activity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.about_back:
 			finish();
+			break;
+		case R.id.about_img_app:
+			FileTools.getDatabaseFiles(this);
 			break;
 		case R.id.about_rl_function_introduce:
 			break;

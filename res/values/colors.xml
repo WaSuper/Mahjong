@@ -16,6 +16,11 @@
     <color name="blue">#00BFFF</color>
     <color name="yellow">#FFFF00</color>
     <color name="gold">#FFD700</color>
+    <color name="rank1">#f7d719</color>
+    <color name="rank2">#4c658d</color>
+    <color name="rank3">#965e21</color>
+    <color name="rank4">#bfbfbf</color>
+    <color name="light_blue">#801e90ff</color>
     
     <color name="fan_bg">#151d33</color>
     <color name="fan_title_bg">#111c38</color>

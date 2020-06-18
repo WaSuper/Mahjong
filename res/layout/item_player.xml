@@ -66,7 +66,8 @@
             android:gravity="center_vertical"
             android:text="sign"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:singleLine="true" />
         
     </LinearLayout>
     

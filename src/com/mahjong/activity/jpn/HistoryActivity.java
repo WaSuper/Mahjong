@@ -14,10 +14,12 @@ import com.mahjong.adapter.HistoryAdapter.HistoryItemListener;
 import com.mahjong.adapter.MapointRankAdapter;
 import com.mahjong.model.MjDetail;
 import com.mahjong.model.MjResult;
+import com.mahjong.model.RankItem;
 import com.mahjong.tools.DateFormatUtils;
 import com.mahjong.tools.ExcelUtils;
 import com.mahjong.tools.FileFitVersionTool;
 import com.mahjong.tools.FileTools;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.CustomDatePicker;
@@ -100,6 +102,7 @@ public class HistoryActivity extends Activity
 				if (count > 0) {
 					ToastTool.showToast(mContext, mContext.getString(R.string.add_log_success, count));
 					searchResultList(true);
+					ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
 				} else {
 					ToastTool.showToast(mContext, R.string.add_log_fail);
 				}
@@ -492,6 +495,7 @@ public class HistoryActivity extends Activity
 							.execute();
 					ToastTool.showToast(mContext, R.string.delete_success);
 					searchResultList(true);
+					ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
 				} catch (Exception e) {
 					e.printStackTrace();
 					ToastTool.showToast(mContext, R.string.delete_fail);

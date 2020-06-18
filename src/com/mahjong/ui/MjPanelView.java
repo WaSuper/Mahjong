@@ -23,7 +23,8 @@ public class MjPanelView extends View {
 	private static final String SelectColor = "#4000FFFF"; // 绿色
 	
 	enum PathType {
-		None, LeftTop, LeftBottom, RightTop, RightBottom, Center
+		None, LeftTop, LeftBottom, RightTop, RightBottom, 
+		Center, Left, Top, Right, Bottom
 	}
 	
 	/**
@@ -60,7 +61,7 @@ public class MjPanelView extends View {
 	private Bitmap mImgLizhiCount; // 立直棒计数
 	private Bitmap mImgDice; // 骰子背景
 	private Bitmap[] mImgWinds; // 文字：东、南、西、北
-	private Bitmap[] mImgJuNums; // 文字：一。二、三、四
+	private Bitmap[] mImgJuNums; // 文字：一、二、三、四
 	private Bitmap[] mImgRoundNums; // 0-9、x文字
 	private Bitmap mImgJu; // 文字：局
 	private Bitmap mImgBen; // 文字：本
@@ -71,8 +72,13 @@ public class MjPanelView extends View {
 	private Region mRightTopRegion;		// 右上按钮
 	private Region mRightBottomRegion;	// 右下按钮
 	private RectF mCenterRectF;			// 中心区域
+	private RectF mBottomPointRectF;	// 下方分值区
+	private RectF mRightPointRectF;		// 右方分值区
+	private RectF mTopPointRectF;		// 上方分值区
+	private RectF mLeftPointRectF;		// 左方分值区
 	
 	private PathType mSelectPath = PathType.None;	// 当前点击区域
+	private boolean mPointMode = false;	// 是否显示分差
 	
 	private OnMjPanelViewListener mListener;
 	
@@ -360,7 +366,8 @@ public class MjPanelView extends View {
 		textPadding = (fontMetrics.top + fontMetrics.bottom) / 2;
 		// 下方
 		index = mCurPlayer;
-		score = mScores[index] + "";
+//		score = mScores[index] + "";
+		score = getPointText(index);
 		isLizhi = mLizhis[index] > 0;
 		centerX = (leftP4 + rightP4) / 2;
 		centerY = (bottomP2 + bottomP3) / 2;
@@ -370,9 +377,11 @@ public class MjPanelView extends View {
 					rightP4 - lizhiCorner, bottomP1);
 			canvas.drawBitmap(mImgLizhiH, null, bottomRectF, mBitmapPaint);
 		}
+		mBottomPointRectF = new RectF(leftP4, bottomP3, rightP4, bottomP1);
 		// 右方 
 		index = (index + 1) % 4;
-		score = mScores[index] + "";
+//		score = mScores[index] + "";
+		score = getPointText(index);
 		isLizhi = mLizhis[index] > 0;
 		centerX = (rightP2 + rightP3) / 2;
 		centerY = (topP4 + bottomP4) / 2;
@@ -384,9 +393,11 @@ public class MjPanelView extends View {
 					rightP1, bottomP4 - lizhiCorner);
 			canvas.drawBitmap(mImgLizhiV, null, rightRectF, mBitmapPaint);
 		}
+		mRightPointRectF = new RectF(rightP3, topP4, rightP1, bottomP4);
 		// 上方
 		index = (index + 1) % 4;
-		score = mScores[index] + "";
+//		score = mScores[index] + "";
+		score = getPointText(index);
 		isLizhi = mLizhis[index] > 0;
 		centerX = (leftP4 + rightP4) / 2;
 		centerY = (topP2 + topP3) / 2;
@@ -398,9 +409,11 @@ public class MjPanelView extends View {
 					rightP4 - lizhiCorner, topP2);
 			canvas.drawBitmap(mImgLizhiH, null, topRectF, mBitmapPaint);
 		}
+		mTopPointRectF = new RectF(leftP4, topP1, rightP4, topP3);
 		// 左方
 		index = (index + 1) % 4;
-		score = mScores[index] + "";
+//		score = mScores[index] + "";
+		score = getPointText(index);
 		isLizhi = mLizhis[index] > 0;
 		centerX = (leftP2 + leftP3) / 2;
 		centerY = (topP4 + bottomP4) / 2;
@@ -412,6 +425,7 @@ public class MjPanelView extends View {
 					leftP2, bottomP4 - lizhiCorner);
 			canvas.drawBitmap(mImgLizhiV, null, leftRectF, mBitmapPaint);
 		}
+		mLeftPointRectF = new RectF(leftP1, topP4, leftP3, bottomP4);
 		/*************************************************************************/
 		/**************************** 绘制局数、本场、立直数 *****************************/
 		/*************************************************************************/
@@ -527,6 +541,31 @@ public class MjPanelView extends View {
 		canvas.drawBitmap(mImgRoundNums[lNum], null, lLizhiRectF, mBitmapPaint);
 	}
 	
+	private String getPointText(int index) {
+		String text = "";
+		if (mPointMode) {
+			switch (mSelectPath) {
+			case Bottom:
+				text += (mScores[index] - mScores[mCurPlayer]);
+				break;
+			case Right:
+				text += (mScores[index] - mScores[(mCurPlayer + 1) % 4]);
+				break;
+			case Top:
+				text += (mScores[index] - mScores[(mCurPlayer + 2) % 4]);
+				break;
+			case Left:
+				text += (mScores[index] - mScores[(mCurPlayer + 3) % 4]);
+				break;
+			default:
+				break;
+			}
+		} else {
+			text += mScores[index];
+		}
+		return text;
+	}
+	
 //	private String getJuText() {
 //		String[] feng = {"东", "南", "西", "北"};
 //		String[] ju = {"一", "二", "三", "四"};		
@@ -571,6 +610,7 @@ public class MjPanelView extends View {
 				doTouchItem(type);
 			}
 			mSelectPath = PathType.None;
+			mPointMode = false;
 			invalidate();
 			break;
 			default:
@@ -590,6 +630,18 @@ public class MjPanelView extends View {
 			return PathType.RightBottom;
 		} else if (mCenterRectF.contains(x, y)) {
 			return PathType.Center;
+		} else if (mBottomPointRectF.contains(x, y)) {
+			mPointMode = true;
+			return PathType.Bottom;
+		} else if (mRightPointRectF.contains(x, y)) {
+			mPointMode = true;
+			return PathType.Right;
+		} else if (mTopPointRectF.contains(x, y)) {
+			mPointMode = true;
+			return PathType.Top;
+		} else if (mLeftPointRectF.contains(x, y)) {
+			mPointMode = true;
+			return PathType.Left;
 		}
 		return PathType.None;
 	}
@@ -611,6 +663,18 @@ public class MjPanelView extends View {
 		case Center:
 			if (mListener != null) mListener.onClickCenter();
 			break;
+		case Bottom:
+			if (mListener != null) mListener.onClickPoint(0);
+			break;
+		case Right:
+			if (mListener != null) mListener.onClickPoint(1);
+			break;
+		case Top:
+			if (mListener != null) mListener.onClickPoint(2);
+			break;
+		case Left:
+			if (mListener != null) mListener.onClickPoint(3);
+			break;
 		default:
 			break;
 		}
@@ -626,5 +690,6 @@ public class MjPanelView extends View {
 		public void onClickHistory();
 		public void onClickRevoke();
 		public void onClickCenter();
+		public void onClickPoint(int pos);
 	}
 }
