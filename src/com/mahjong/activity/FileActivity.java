@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -19,13 +21,19 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.adapter.PlayerSimpleAdapter;
+import com.mahjong.item.FileSortModel;
+import com.mahjong.model.AudioItem;
+import com.mahjong.model.Player;
+import com.mahjong.tools.AudioTool;
 import com.mahjong.tools.FileTools;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
+import com.mahjong.ui.CommonDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class FileActivity extends Activity implements View.OnClickListener {
@@ -33,6 +41,10 @@ public class FileActivity extends Activity implements View.OnClickListener {
 	public static final String FileType = "FileType";
 	public static final String FileDir 	= "FileDir";
 	public static final String FileShowBottom = "FileShowBottom";
+	public static final String LastSecletPath = "LastSecletPath";
+	public static final String GlobalSetting = "GlobalSetting";
+	public static final String AudioType = "AudioType";
+	
 	public static final int File_All 			= 0x2001;
 	public static final int File_Music_Only 	= 0x2002;
 	public static final int File_Excel_Only 	= 0x2003;
@@ -59,7 +71,10 @@ public class FileActivity extends Activity implements View.OnClickListener {
     
     private int fileType = 1;
     private String lastSelectPath;
-    boolean isShowBottom = false;
+    private boolean isShowBottom = false;
+    private boolean isGlobalSetting;
+    private int mAudioType;
+    private List<AudioItem> mAudioList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +84,11 @@ public class FileActivity extends Activity implements View.OnClickListener {
         fileType = getIntent().getIntExtra(FileType, File_All);
         lastSelectPath = getIntent().getStringExtra(FileDir);
         isShowBottom = getIntent().getBooleanExtra(FileShowBottom, false);
+        isGlobalSetting = getIntent().getBooleanExtra(GlobalSetting, false);
+        mAudioType = getIntent().getIntExtra(AudioType, 0);
+        if (mAudioType != 0) {
+        	mAudioList = AudioItem.loadItemsByType(mAudioType);
+		}
         initUI();
     }
 
@@ -179,13 +199,69 @@ public class FileActivity extends Activity implements View.OnClickListener {
             mFirstItemFromTop = 0;
         } else {
         	if (!isShowBottom) {
-                Intent intent = new Intent();
-                intent.putExtra(FileDir, file.getAbsolutePath());
-                setResult(RESULT_OK, intent);
-                finish();				
+        		if (isGlobalSetting) {
+        			showPlayerSelectDialog(file);
+				} else {
+					Intent intent = new Intent();
+	                intent.putExtra(FileDir, file.getAbsolutePath());
+	                setResult(RESULT_OK, intent);
+					ShareprefenceTool.getInstance().setString(
+							FileActivity.LastSecletPath, file.getParent(), mContext);
+	                finish();
+				}                			
 			}
         }
     }
+    
+    private void showPlayerSelectDialog(final File file) {
+    	final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle, 0);
+		mDialog.addView(R.layout.listview);
+		mDialog.setCanceledOnTouchOutside(true);
+		mDialog.titleTextView.setText(getString(R.string.please_choose_player));
+		mDialog.ok.setText(getResources().getString(R.string.ok));
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		ListView listView = (ListView) mDialog.getContentView();
+		PlayerSimpleAdapter mAdapter = new PlayerSimpleAdapter(mContext);
+		listView.setAdapter(mAdapter);
+		final List<Player> list = Player.getAllPlayer();
+		mAdapter.setData(list);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Player player = list.get(position);
+				if (mAudioType != 0) {
+					AudioItem audioItem = getAudioItem(player.getUuid());
+					audioItem.setFilePath(file.getAbsolutePath());
+					audioItem.save();
+					ShareprefenceTool.getInstance().setString(
+							FileActivity.LastSecletPath, file.getParent(), mContext);
+					AudioTool.setAudioHistory(mContext, mAudioType, file.getAbsolutePath());
+					ToastTool.showToast(mContext, R.string.success);
+				}
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
+    }    
+	
+	private AudioItem getAudioItem(String playerId) {
+		if (mAudioList != null && mAudioList.size() > 0) {
+			for (AudioItem audioItem : mAudioList) {
+				if (audioItem.getPlayerId().equals(playerId)) {
+					return audioItem;
+				}
+			}
+		}
+		AudioItem item = new AudioItem(playerId, mAudioType, "", false);	
+		mAudioList.add(item);
+		return item;		
+	}
     
     private boolean backToLastLevel() {
     	if (mFileLevel != 0) {
@@ -296,10 +372,10 @@ public class FileActivity extends Activity implements View.OnClickListener {
 					}                    
                 }
             }
-            Collections.sort(dirs);
-            Collections.sort(files);
-            mFileList.addAll(dirs);
-            mFileList.addAll(files);
+            //Collections.sort(dirs);
+            //Collections.sort(files);
+            mFileList.addAll(FileSortModel.sortFile(dirs));
+            mFileList.addAll(FileSortModel.sortFile(files));
             notifyDataSetInvalidated();
         }
 

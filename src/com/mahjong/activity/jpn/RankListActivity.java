@@ -9,6 +9,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.mahjong.R;
 import com.mahjong.adapter.RankListAdapter;
+import com.mahjong.dialog.ProgressDialog;
 import com.mahjong.model.MjAction;
 import com.mahjong.model.MjDetail;
 import com.mahjong.model.MjResult;
@@ -24,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,23 +42,43 @@ public class RankListActivity extends Activity
 	private static final String LAST_SELECT_RANK = "LAST_SELECT_RANK";
 	
 	private Context mContext;
-	private Handler mHandler;
 	
 	private ImageView mBackView;
 	private TextView mMoreView;
 	private ListView mListView;
 	private RankListAdapter mAdapter;
 	private SmartPopupWindow popupWindow;
+	private ProgressDialog mProgressDialog;
 	
 	private Map<String, RankListData> mResultList = new HashMap<String, RankListActivity.RankListData>();
 	private int mLastSelectRank;
+
+	private Handler mHandler = new Handler() {
+		
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.arg1) {
+			case 0:
+				showData();
+				break;
+			case 1:
+				mProgressDialog.setStart(msg.arg2);
+				break;
+			case 2:
+				mProgressDialog.setProgress(msg.arg2);
+				break;					
+			default:
+				break;
+			}
+		};
+	};
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_ranklist);
 		mContext = this;
-		mHandler = new Handler();
 		initUI();
 		checkUpdateData();
 	}
@@ -71,6 +93,8 @@ public class RankListActivity extends Activity
 		
 		mBackView.setOnClickListener(this);
 		mMoreView.setOnClickListener(this);
+		
+		mProgressDialog = new ProgressDialog(mContext);
 	}
 	
 	private void checkUpdateData() {
@@ -101,8 +125,15 @@ public class RankListActivity extends Activity
 			RankItem.resetTable();
 			List<MjResult> results = new Select().from(MjResult.class)
 					.orderBy(MjResult.Col_StartTime + " DESC").execute();
+			if (results != null && results.size() > 0) { // show dialog
+				Message message = new Message();
+				message.arg1 = 1;
+				message.arg2 = results.size();
+				mHandler.sendMessage(message);
+			}
 			Map<String, Player> playerMap = getPlayersWithNPC();
-			for (MjResult result : results) {
+			for (int count = 0; count < results.size(); count++) {
+				MjResult result = results.get(count);
 				RankItem[] rankItems = new RankItem[4];
 				String[] uuids = result.getIds();
 				String[] names = result.getNames();
@@ -212,6 +243,11 @@ public class RankListActivity extends Activity
 							maxFans[i], maxFus[i], maxSepctrums[i], 
 							maxStartTimes[i], maxLogTimes[i]);
 				}
+				// update dialog
+				Message message = new Message();
+				message.arg1 = 2;
+				message.arg2 = count + 1;
+				mHandler.sendMessage(message);
 			}			
 			for (RankListData data : mResultList.values()) {
 				data.rankItem.save();
@@ -224,13 +260,9 @@ public class RankListActivity extends Activity
 			ActiveAndroid.endTransaction();
 		}
 		// update ui
-		mHandler.post(new Runnable() {
-			
-			@Override
-			public void run() {
-				showData();
-			}
-		});
+		Message message = new Message();
+		message.arg1 = 0;
+		mHandler.sendMessage(message);
 	}
 	
 	private Map<String, Player> getPlayersWithNPC() {

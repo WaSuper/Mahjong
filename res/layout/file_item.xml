@@ -20,6 +20,8 @@
         android:textColor="@color/white"
         android:layout_toRightOf="@id/file_image"
         android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:ellipsize="middle" 
+        android:maxLines="2" />
 
 </RelativeLayout>

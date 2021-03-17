@@ -39,7 +39,27 @@ public class Yaku08_YiBeiKou extends Yaku {
 			if (count == null) jMap.put(value, 1);
 			else jMap.put(value, ++count);
 		}
-		if (jMap.size() != junkos.length - 1) return false;
+		//if (jMap.size() != junkos.length - 1) return false;
+		switch (junkos.length) {
+		case 2:
+			if (jMap.size() != 1) return false;
+			break;
+		case 3:
+			if (jMap.size() != 1 && jMap.size() != 2) return false;
+			break;
+		case 4:
+			if (jMap.size() != 2 && jMap.size() != 3) return false;
+			if (jMap.size() == 2) {
+				for (int key : jMap.keySet()) {
+					if (jMap.get(key) == 2) { // 此时为二杯口
+						return false;
+					}
+				}
+			}
+			break;
+		default:
+			return false;
+		}	
 		result.add(YakuValue.FromFanValue(this, "一杯口", 1));
 		return true;
 	}

@@ -30,6 +30,15 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
         
+        <ImageView
+            android:id="@+id/player_setting"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:src="@drawable/selector_btn_setting"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+        
     </RelativeLayout>
 
     <ListView

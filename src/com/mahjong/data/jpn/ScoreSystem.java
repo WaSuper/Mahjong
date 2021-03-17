@@ -119,6 +119,7 @@ public class ScoreSystem {
 
 	public static int compare(Score x, Score y) {
 		int cmp = GetBasePoint(x) - GetBasePoint(y);
+//		System.out.println("x=" + GetBasePoint(x) + ", y=" + GetBasePoint(y));
 		if (cmp != 0)
 			return cmp;
 		cmp = x.AllFanValue() - y.AllFanValue();

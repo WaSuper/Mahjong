@@ -31,7 +31,7 @@ public class Yaku61_DaSixi extends Yaku {
 	@Override
 	protected boolean Test(Collection<YakuValue> result, ITiles tiles, IGroups groups, int env) {
 		for (Group group : groups.PungList()) {
-			if (group.value() < JpnSetting.TON && group.value() > JpnSetting.PEI) {
+			if (group.value() < JpnSetting.TON || group.value() > JpnSetting.PEI) {
 				return false;
 			}
 		}

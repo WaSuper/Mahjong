@@ -93,7 +93,7 @@ public class EmoticonDetailActivity extends Activity
 				break;
 			}
 		} else if (resultCode == RESULT_CANCELED) {
-			mLastSelectPath = "";
+			//mLastSelectPath = "";
 		}
 	}
 	

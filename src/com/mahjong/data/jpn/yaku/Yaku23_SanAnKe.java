@@ -6,6 +6,7 @@ import com.mahjong.data.jpn.GroupState;
 import com.mahjong.data.jpn.IGroups;
 import com.mahjong.data.jpn.ITiles;
 import com.mahjong.data.jpn.Yaku;
+import com.mahjong.data.jpn.YakuEnvironment;
 import com.mahjong.data.jpn.YakuFlag;
 import com.mahjong.data.jpn.YakuValue;
 import com.mahjong.data.jpn.Groups.Group;
@@ -27,7 +28,8 @@ public class Yaku23_SanAnKe extends Yaku {
 		int count = 0;
 		for (Group g : groups.PungList()) {
 			if (g.state() == GroupState.FuLou) continue;
-			if (g.state() == GroupState.HePai && !SelfWindEquals(g.wind(), env)) continue;
+			//if (g.state() == GroupState.HePai && !SelfWindEquals(g.wind(), env)) continue;
+			if (g.state() == GroupState.HePai && ((env & YakuEnvironment.ZiMo) == 0)) continue;
 			count++;
 		}
 		if (count == 3)  {

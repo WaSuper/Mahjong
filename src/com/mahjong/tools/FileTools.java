@@ -207,9 +207,11 @@ public class FileTools {
 
 	public String getFileName(String path) {
 		String nameString = null;
-		if (path != null && path.contains("/"))
+		if (path != null && path.contains("/")) {
 			nameString = path.substring(path.lastIndexOf("/") + 1);
-
+		} else {
+			nameString = path;
+		}
 		return nameString;
 	}
 
@@ -327,11 +329,15 @@ public class FileTools {
 	}
 
 	public static String getFileNameNoEx(String filename) {
-		if ((filename != null) && (filename.length() > 0)) {
-			int dot = filename.lastIndexOf('.');
-			if ((dot > -1) && (dot < (filename.length()))) {
-				return filename.substring(0, dot);
+		if (filename != null && filename.length() > 0) {
+			String name = filename;
+			if (name.contains("/")) {
+				name = name.substring(name.lastIndexOf("/") + 1);
 			}
+			int dot = name.lastIndexOf('.');
+			if (dot > -1 && dot < name.length()) {
+				return name.substring(0, dot);
+			}			
 		}
 		return filename;
 	}

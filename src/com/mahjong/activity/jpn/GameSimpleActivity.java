@@ -116,6 +116,10 @@ public class GameSimpleActivity extends Activity implements
 	
 	private AudioTool mAudioTool; // 音效工具
 	
+	private ImageView[] mRankImageViews = new ImageView[4]; // 排位控件
+	private int[] rankDrawables = {0, R.drawable.rank1_num, R.drawable.rank2_num, 
+			R.drawable.rank3_num, R.drawable.rank4_num }; // 排位图片
+	
 //	private Handler mHandler = new Handler();
 	
 	@Override
@@ -175,6 +179,10 @@ public class GameSimpleActivity extends Activity implements
 		mModeText = (TextView) findViewById(R.id.game_tv_mode);
 		mNoviceView = (ImageView) findViewById(R.id.game_img_novice);
 		mExpertView = (ImageView) findViewById(R.id.game_img_expert);
+		mRankImageViews[0] = (ImageView) findViewById(R.id.game_player_rank_bottom);
+		mRankImageViews[1] = (ImageView) findViewById(R.id.game_player_rank_right);
+		mRankImageViews[2] = (ImageView) findViewById(R.id.game_player_rank_top);
+		mRankImageViews[3] = (ImageView) findViewById(R.id.game_player_rank_left);
 		
 		mTopItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mLeftItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
@@ -182,7 +190,7 @@ public class GameSimpleActivity extends Activity implements
 		mRightItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mPanelView.setOnMjPanelViewListener(mMjPanelViewListener);
 		mLiujuBtn.setOnClickListener(this);
-		mBaopaiBtn.setOnClickListener(this);
+		mBaopaiBtn.setOnClickListener(this);		
 		
 		mPlayerItemList = new ArrayList<PlayerFuncItem>();
 		mPlayerItemList.add(mBottomItem);
@@ -1045,12 +1053,13 @@ public class GameSimpleActivity extends Activity implements
 				mMainVision = mPlayerItemList.get(dir).getOriginalIndex();
 				mPanelView.setCurPlayer(mMainVision);
 				int orgIndex = mMainVision;
-				int[] rank = mManageTool.analysisPlayerRanks(mManageTool.getPlayerScores());
+				int[] ranks = mManageTool.analysisPlayerRanks(mManageTool.getPlayerScores());
 				for (int i = 0; i < mPlayerItemList.size(); i++) {
 					PlayerFuncItem item = mPlayerItemList.get(i);
 					item.setPlayer(mManageTool.getPlayer(orgIndex), orgIndex, i);
 					refreshPlayerFuncItem(item, orgIndex);
-					item.setPlayerRank(rank[orgIndex]);
+					item.setPlayerRank(ranks[orgIndex]);
+					mRankImageViews[i].setImageResource(rankDrawables[ranks[orgIndex]]);
 					orgIndex = (orgIndex + 1) % 4;
 				}
 			}
@@ -1220,11 +1229,13 @@ public class GameSimpleActivity extends Activity implements
 				mManageTool.getLizhiCount(), mManageTool.getRoundCount(), false);
 		mPanelView.setPlayerScore(mManageTool.getPlayerScores());
 		// 更新四个玩家
-		int[] rank = mManageTool.analysisPlayerRanks(mManageTool.getPlayerScores());
+		int[] ranks = mManageTool.analysisPlayerRanks(mManageTool.getPlayerScores());
 		for (int i = 0; i < mPlayerItemList.size(); i++) {
 			PlayerFuncItem item = mPlayerItemList.get(i);
 			refreshPlayerFuncItem(item, item.getOriginalIndex());
-			item.setPlayerRank(rank[item.getOriginalIndex()]);
+			int rank = ranks[item.getOriginalIndex()];
+			item.setPlayerRank(rank);
+			mRankImageViews[i].setImageResource(rankDrawables[rank]);
 		}
 		// 更新包牌
 		if (mBaopaiDialog != null) {

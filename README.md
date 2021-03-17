@@ -38,6 +38,6 @@
 
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
-v1.0.0 安装包下载地址：
-链接: https://pan.baidu.com/s/1SfuVO_2iR0X7kAQfAF5bvg 提取码: 8d8n
+Saki_v1.0.0_build210317 安装包下载地址：
+链接: https://pan.baidu.com/s/1eKUOLN1ZbYqzTZGQRfdQzg 提取码: me89
 

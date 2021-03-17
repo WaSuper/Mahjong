@@ -1,11 +1,13 @@
 package com.mahjong.tools;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import com.mahjong.model.AudioItem;
 import com.mahjong.model.Player;
 
+import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,6 +21,11 @@ public class AudioTool {
 	public static final int Type_Lizhi 		= 0x02;
 	public static final int Type_Zimo 		= 0x03;
 	public static final int Type_Ronghe 	= 0x04;
+	
+	public static final String Histrory_Lizhi_BGM 	= "Histrory_Lizhi_BGM";
+	public static final String Histrory_Lizhi 		= "Histrory_Lizhi";
+	public static final String Histrory_Zimo 		= "Histrory_Zimo";
+	public static final String Histrory_Ronghe 		= "Histrory_Ronghe";
 	
 	private boolean enableAudio = true;
 	
@@ -227,4 +234,70 @@ public class AudioTool {
 	public void stopPlayer() {
 		mMediaPlayer.stop();
 	}
+	
+	public static boolean setAudioHistory(Context context, int type, String path) {
+		if (path == null || path.isEmpty()) return false;
+		String historyKey = "";
+		switch (type) {
+		case Type_Lizhi_BGM:
+			historyKey = Histrory_Lizhi_BGM;
+			break;
+		case Type_Lizhi:
+			historyKey = Histrory_Lizhi;
+			break;
+		case Type_Zimo:
+			historyKey = Histrory_Zimo;
+			break;
+		case Type_Ronghe:
+			historyKey = Histrory_Ronghe;
+			break;
+		default:
+			break;
+		}
+		List<String> historyList = ShareprefenceTool.getInstance()
+				.getSringArray2(historyKey, context);
+		// 寻找相同的文件移除，再将其放到第一
+		Iterator<String> iterator = historyList.iterator();
+		while (iterator.hasNext()) {
+			String tmp = iterator.next();
+			if (tmp.equals(path)) {
+				iterator.remove();
+				break;
+			}
+		}
+		historyList.add(0, path);
+		int maxSize = 10; // 设置最多保存10条历史
+		if (historyList.size() > maxSize) {
+			for (int i = 10; i < historyList.size();) {
+				historyList.remove(i);
+			}
+		}
+		ShareprefenceTool.getInstance().setSringArray2(historyKey, historyList, context);
+		return true;
+	}
+	
+	public static List<String> getAudioHistory(Context context, int type) {
+		String historyKey = "";
+		switch (type) {
+		case Type_Lizhi_BGM:
+			historyKey = Histrory_Lizhi_BGM;
+			break;
+		case Type_Lizhi:
+			historyKey = Histrory_Lizhi;
+			break;
+		case Type_Zimo:
+			historyKey = Histrory_Zimo;
+			break;
+		case Type_Ronghe:
+			historyKey = Histrory_Ronghe;
+			break;
+		default:
+			break;
+		}
+		List<String> historyList = ShareprefenceTool.getInstance()
+				.getSringArray2(historyKey, context);
+		return historyList;
+	}
+	
+	
 }

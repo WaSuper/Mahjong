@@ -36,6 +36,45 @@
         android:padding="3dp"
         app:position="bottom" />
 
+    <ImageView
+        android:id="@+id/game_player_rank_left"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="110dp"
+        android:src="@drawable/rank4_num"
+        android:rotation="90" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_right"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="110dp"
+        android:src="@drawable/rank2_num"
+        android:rotation="-90" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="110dp"
+        android:src="@drawable/rank3_num"
+        android:rotation="180" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_bottom"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="110dp"
+        android:src="@drawable/rank1_num" />
+    
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

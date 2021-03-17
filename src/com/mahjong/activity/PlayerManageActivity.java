@@ -52,6 +52,7 @@ public class PlayerManageActivity extends Activity
 	private FloatingActionButton mActionImport;
 	private ListView mPlayerList;
 	private PlayerManageAdapter mPlayerAdapter;
+	private ImageView mSetting;
 	
 	private String mLastSelectPath = "";
 	
@@ -96,6 +97,8 @@ public class PlayerManageActivity extends Activity
 		mActionExport = (FloatingActionButton) findViewById(R.id.player_action_export);
 		mActionImport = (FloatingActionButton) findViewById(R.id.player_action_import);
 		mPlayerList = (ListView) findViewById(R.id.player_listview);
+		mSetting = (ImageView) findViewById(R.id.player_setting);
+		
 		List<Player> players = Player.getAllPlayer();
 		List<Character> characters = Character.getAllCharacters(mContext);
 		mPlayerAdapter = new PlayerManageAdapter(this, players, characters);
@@ -108,6 +111,7 @@ public class PlayerManageActivity extends Activity
 		mActionSearch.setOnClickListener(this);
 		mActionExport.setOnClickListener(this);
 		mActionImport.setOnClickListener(this);
+		mSetting.setOnClickListener(this);
 	}
 
 	@Override
@@ -135,6 +139,11 @@ public class PlayerManageActivity extends Activity
 			intent.putExtra(FileActivity.FileDir, mLastSelectPath);
 			startActivityForResult(intent, REQUEST_PLAYER_IMPORT);
 			mMenu.collapse();
+			break;
+		case R.id.player_setting:
+			Intent settingIntent = new Intent(PlayerManageActivity.this, PlayerSettingActivity.class);
+			settingIntent.putExtra(Player.Col_Uuid, "");
+			startActivity(settingIntent);
 			break;
 		default:
 			break;

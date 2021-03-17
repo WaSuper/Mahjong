@@ -52,9 +52,22 @@ public class PopWinDownUtil {
 		});
 	}
 
+	public void showAsPopUpFromBottom() {
+		popupWindow.setAnimationStyle(R.style.AnimationBottomFade);  //设置动画
+		// 获得位置 这里的v是目标控件，就是你要放在这个v的上面
+		int[] location = new int[2];
+		relayView.getLocationOnScreen(location);
+		//这里定义在上方
+		popupWindow.getContentView().measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+		int height = popupWindow.getContentView().getMeasuredHeight();
+		if (height > 1000) height = 1000;
+		popupWindow.showAtLocation(relayView, Gravity.NO_GRAVITY, 
+				location[0], location[1] + relayView.getHeight() - height);
+	}
+	
 	public void showAsPopUp() {
 		popupWindow.setAnimationStyle(R.style.AnimationBottomFade);  //设置动画
-		// 获得位置 这里的v是目标控件，就是你要放在这个v的上面还是下面
+		// 获得位置 这里的v是目标控件，就是你要放在这个v的上面
 		int[] location = new int[2];
 		relayView.getLocationOnScreen(location);
 		//这里定义在上方

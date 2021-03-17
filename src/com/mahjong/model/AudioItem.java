@@ -60,6 +60,12 @@ public class AudioItem extends Model {
 		return list;
 	}
 	
+	public static List<AudioItem> loadItemsByType(int type) {
+		List<AudioItem> list = new Select().from(AudioItem.class)
+				.where(Col_Type + "=?", type).execute();
+		return list;
+	}
+	
 	public int getType() {
 		return type;
 	}

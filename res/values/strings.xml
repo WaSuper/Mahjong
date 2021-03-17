@@ -7,7 +7,7 @@
     <string name="power_by">Powered by Summer Studio</string>
   	<string name="about">关于</string>
   	<string name="version">Version %s</string>
-  	<string name="copyright">Copyright © 2019-2020 Summer Studio.\nAll Rights Reserved.</string>
+  	<string name="copyright">Copyright © 2019-2021 Summer Studio.\nAll Rights Reserved.</string>
     <string name="select_text">请选择麻将种类</string>
     <string name="mahjong_japanese">日本麻将</string>
     <string name="mahjong_international">国际麻将</string>
@@ -344,5 +344,9 @@
 	<string name="percent_bomb">放铳率</string>
 	<string name="percent_fly">起飞率</string>
 	<string name="percent_chicken">烧鸡率</string>
+	<string name="please_wait">请稍候...</string>
+	<string name="please_select">请选择</string>
+	<string name="file_all">手机存储</string>
+	<string name="file_music_history">历史音频</string>
 	    
 </resources>

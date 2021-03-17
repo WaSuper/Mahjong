@@ -40,9 +40,15 @@ public class Yaku26_ErBeiKou extends Yaku {
 			else jMap.put(value, ++count);
 		}
 		if (jMap.size() > 2) return false;
-		for (int key : jMap.keySet()) {
-			if (jMap.get(key) != 2) return false;
-		}
+		if (jMap.size() == 1) {
+			for (int key : jMap.keySet()) {
+				if (jMap.get(key) != 4) return false;
+			}
+		} else if (jMap.size() == 2) {
+			for (int key : jMap.keySet()) {
+				if (jMap.get(key) != 2) return false;
+			}
+		}			
 		result.add(YakuValue.FromFanValue(this, "二杯口", 3));
 		return true;
 	}
