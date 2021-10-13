@@ -44,8 +44,12 @@ public class FileSortModel {
 			type = Type_Pinyin;
 			try {
 				String[] temp = PinyinHelper.toHanyuPinyinStringArray(firstChar, PinyinUtil.getDefaultFormat());
-				firstChar = temp[0].charAt(0);
-				firstChar -= 0x20;
+				if (temp != null && temp.length > 0) {
+					firstChar = temp[0].charAt(0);
+					firstChar -= 0x20;
+				} else {
+					type = Type_Other;
+				}
 			} catch (BadHanyuPinyinOutputFormatCombination e) {
 				e.printStackTrace();
 			}

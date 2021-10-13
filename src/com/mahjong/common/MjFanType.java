@@ -150,7 +150,7 @@ public class MjFanType {
 	
 	//public static final int DaCheLun = 64;	
 	public static final String[] DaCheLunText = {"大车轮(古役)", "手牌由2~8筒的七对子组成", "门前清",
-		"22:v,22:v,23:v,23:v,24:v,24:v,25:v,25:v,26:v,26:v,27:v,27:v,28:v,w:28"};
+		"12:v,12:v,13:v,13:v,14:v,14:v,15:v,15:v,16:v,16:v,17:v,17:v,18:v,w:18"};
 	
 	//public static final int GuoShiWuShuang = 65;	
 	public static final String[] GuoShiWuShuangText = {"国士无双", "凑齐12种幺九牌，其中1张成对，听第13种", "门前清",

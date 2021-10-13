@@ -332,46 +332,48 @@ public class FileActivity extends Activity implements View.OnClickListener {
             mFileList.clear();
             List<File> dirs = new ArrayList<File>();
             List<File> files = new ArrayList<File>();
-            for (File file : list) {
-                if (file.isDirectory()) {
-                	if (!file.getName().startsWith(".")) {
-                		dirs.add(file);
-					}                    
-                } else {
-                	switch (fileType) {
-					case File_All:
-						files.add(file);
-						break;
-					case File_Music_Only:
-						for (String s : FileTools.Music_SupportTypeArray) {
-	                        String extm = FileTools.getExtension(file.getName());
-	                        if (extm != null && extm.equalsIgnoreCase(s)) {
-	                        	files.add(file);
+            if (list != null) {
+            	for (File file : list) {
+                    if (file.isDirectory()) {
+                    	if (!file.getName().startsWith(".")) {
+                    		dirs.add(file);
+    					}                    
+                    } else {
+                    	switch (fileType) {
+    					case File_All:
+    						files.add(file);
+    						break;
+    					case File_Music_Only:
+    						for (String s : FileTools.Music_SupportTypeArray) {
+    	                        String extm = FileTools.getExtension(file.getName());
+    	                        if (extm != null && extm.equalsIgnoreCase(s)) {
+    	                        	files.add(file);
+                                    break;
+    	                        }
+    	                    }
+    						break;
+    					case File_Excel_Only:
+    						String ext = FileTools.getExtension(file.getName());
+                            if (ext != null && ext.equalsIgnoreCase("xls")) {
+                            	files.add(file);
                                 break;
-	                        }
-	                    }
-						break;
-					case File_Excel_Only:
-						String ext = FileTools.getExtension(file.getName());
-                        if (ext != null && ext.equalsIgnoreCase("xls")) {
-                        	files.add(file);
-                            break;
-                        }
-						break;
-					case File_Picture_Only:
-						for (String s : FileTools.Picture_SupportTypeArray) {
-	                        String extp = FileTools.getExtension(file.getName());
-	                        if (extp != null && extp.equalsIgnoreCase(s)) {
-	                        	files.add(file);
-                                break;
-	                        }
-	                    }
-						break;
-					default:
-						break;
-					}                    
+                            }
+    						break;
+    					case File_Picture_Only:
+    						for (String s : FileTools.Picture_SupportTypeArray) {
+    	                        String extp = FileTools.getExtension(file.getName());
+    	                        if (extp != null && extp.equalsIgnoreCase(s)) {
+    	                        	files.add(file);
+                                    break;
+    	                        }
+    	                    }
+    						break;
+    					default:
+    						break;
+    					}                    
+                    }
                 }
-            }
+			}            
             //Collections.sort(dirs);
             //Collections.sort(files);
             mFileList.addAll(FileSortModel.sortFile(dirs));
