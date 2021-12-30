@@ -39,7 +39,7 @@ public class ShareprefenceTool {
 	}
 
 	public String[] getSringArray(String key, Context mContext) {
-		String regularEx = "#";
+		String regularEx = "#!#";
 		String[] str = null;
 		SharedPreferences sp = mContext.getSharedPreferences(SETTING,
 				Context.MODE_PRIVATE);
@@ -53,7 +53,7 @@ public class ShareprefenceTool {
 
 	public void setSringArray(String key, String[] values,
 			Context mContext) {
-		String regularEx = "#";
+		String regularEx = "#!#";
 		String str = "";
 		SharedPreferences sp = mContext.getSharedPreferences(SETTING,
 				Context.MODE_PRIVATE);
@@ -69,7 +69,7 @@ public class ShareprefenceTool {
 	}
 
 	public void setSringArray2(String key, List<String> values, Context mContext) {
-		String regularEx = "#";
+		String regularEx = "#!#";
 		String str = "";
 		SharedPreferences sp = mContext.getSharedPreferences(SETTING,
 				Context.MODE_PRIVATE);
@@ -85,7 +85,7 @@ public class ShareprefenceTool {
 	}
 
 	public List<String> getSringArray2(String key, Context mContext) {
-		String regularEx = "#";
+		String regularEx = "#!#";
 		List<String> lists = new ArrayList<String>();
 		SharedPreferences sp = mContext.getSharedPreferences(SETTING,
 				Context.MODE_PRIVATE);

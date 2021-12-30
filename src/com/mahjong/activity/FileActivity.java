@@ -14,6 +14,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,6 +24,9 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,12 +40,20 @@ import com.mahjong.tools.FileTools;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
+import com.mahjong.ui.HorizontalPosition;
+import com.mahjong.ui.SmartPopupWindow;
+import com.mahjong.ui.VerticalPosition;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class FileActivity extends Activity implements View.OnClickListener {
 
+	public static final String FILE_SORT_MODE = "FILE_SORT_MODE";
+	public static final int File_Sort_By_letter = 0;
+	public static final int File_Sort_By_date 	= 1;
+	
 	public static final String FileType = "FileType";
 	public static final String FileDir 	= "FileDir";
+	public static final String FileSelects 	= "FileSelects";
 	public static final String FileShowBottom = "FileShowBottom";
 	public static final String LastSecletPath = "LastSecletPath";
 	public static final String GlobalSetting = "GlobalSetting";
@@ -56,8 +70,11 @@ public class FileActivity extends Activity implements View.OnClickListener {
     private ImageView mCancelView;
     private FileAdapter mFileAdapter;
     private LinearLayout mBottomView;
-    private Button mCancelBtn;
+    private Button mChooseAllBtn;
     private Button mOkBtn;
+    private ImageView mMoreView;
+    private SmartPopupWindow popupWindow;
+    private Button[] popupActions;
 
     private int mFileLevel = 0;
     private List<File> mRootFiles;
@@ -75,6 +92,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
     private boolean isGlobalSetting;
     private int mAudioType;
     private List<AudioItem> mAudioList;
+    private int mSortMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +107,8 @@ public class FileActivity extends Activity implements View.OnClickListener {
         if (mAudioType != 0) {
         	mAudioList = AudioItem.loadItemsByType(mAudioType);
 		}
+        mSortMode = ShareprefenceTool.getInstance()
+        		.getInt(FILE_SORT_MODE, mContext, File_Sort_By_letter);
         initUI();
     }
 
@@ -98,8 +118,9 @@ public class FileActivity extends Activity implements View.OnClickListener {
         mFileView = (ListView) findViewById(R.id.file_list);
         mTitleView = (TextView) findViewById(R.id.file_title);
         mBottomView = (LinearLayout) findViewById(R.id.file_bottom);
-        mCancelBtn = (Button) findViewById(R.id.file_cancel);
+        mChooseAllBtn = (Button) findViewById(R.id.file_choose_all);
         mOkBtn = (Button) findViewById(R.id.file_ok);
+        mMoreView = (ImageView) findViewById(R.id.file_more);
 
         mRootFiles = FileTools.initSDcardList(mContext);
         mFileAdapter = new FileAdapter(mRootFiles);
@@ -107,6 +128,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
 
         mBackView.setOnClickListener(this);
         mCancelView.setOnClickListener(this);
+        mMoreView.setOnClickListener(this);
         mFileView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,7 +141,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
         
         if (isShowBottom) {
 			mBottomView.setVisibility(View.VISIBLE);
-			mCancelBtn.setOnClickListener(this);
+			mChooseAllBtn.setOnClickListener(this);
 			mOkBtn.setOnClickListener(this);
 		}
     }
@@ -161,14 +183,31 @@ public class FileActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.file_exit:
-            case R.id.file_cancel:
             	setResult(RESULT_CANCELED);
                 this.finish();
                 break;
             case R.id.file_back:
                 backToLastLevel();
                 break;
-            case R.id.file_ok:
+            case R.id.file_more:
+            	showMoreDialog();
+            	break;
+            case R.id.file_act_sort_by_letter:
+            	ShareprefenceTool.getInstance()
+            		.setInt(FILE_SORT_MODE, File_Sort_By_letter, mContext);
+            	mFileAdapter.sortData(File_Sort_By_letter, false);
+            	popupWindow.dismiss();
+            	break;
+            case R.id.file_act_sort_by_date:
+            	ShareprefenceTool.getInstance()
+            		.setInt(FILE_SORT_MODE, File_Sort_By_date, mContext);
+            	mFileAdapter.sortData(File_Sort_By_date, false);
+            	popupWindow.dismiss();
+            	break;
+            case R.id.file_choose_all: // isShowBottom==true
+            	mFileAdapter.selectAllorNot();
+            	break;
+            case R.id.file_ok: // isShowBottom==true
             	doSelectDir();
             	break;
             default:
@@ -176,14 +215,50 @@ public class FileActivity extends Activity implements View.OnClickListener {
         }
     }
     
+    private void showMoreDialog() {
+    	if (popupWindow == null) {
+			View view = LayoutInflater.from(mContext).inflate(R.layout.layout_file_action, null);
+			popupWindow = SmartPopupWindow.Builder
+					.build(this, view)
+					.setAlpha(0.8f)
+					.createPopupWindow();
+			popupActions = new Button[2];
+			popupActions[0] = (Button) view.findViewById(R.id.file_act_sort_by_letter);
+			popupActions[1] = (Button) view.findViewById(R.id.file_act_sort_by_date);
+			for (int i = 0; i < popupActions.length; i++) {
+				popupActions[i].setOnClickListener(this);
+			}			
+		}
+    	for (int i = 0; i < popupActions.length; i++) {
+    		if (i == mSortMode) {
+    			popupActions[i].setTextColor(getResources().getColor(R.color.blue));
+			} else {
+				popupActions[i].setTextColor(getResources().getColor(R.color.black));
+			}
+    	}
+		popupWindow.showAtAnchorView(mMoreView, VerticalPosition.BELOW, HorizontalPosition.RIGHT);
+    }
+    
     public void doSelectDir() {
     	if (mFileLevel == 0) {
 			ToastTool.showToast(mContext, R.string.direction_forbidden);
 		} else if (mFileLevel > 0 && mParentFile != null) {
-			Intent intent = new Intent();
-            intent.putExtra(FileDir, mParentFile.getAbsolutePath());
-            setResult(RESULT_OK, intent);
-            finish();
+			List<File> selectFiles = mFileAdapter.getSelectList();
+			if (selectFiles.size() > 0) {
+				Intent intent = new Intent();
+	            intent.putExtra(FileDir, mParentFile.getAbsolutePath());
+	            String regularEx = "#!#";
+	            StringBuffer nameBuffer = new StringBuffer();
+	            for (File file : selectFiles) {
+					nameBuffer.append(file.getName());
+					nameBuffer.append(regularEx);
+				}
+	            intent.putExtra(FileSelects, nameBuffer.toString());
+	            setResult(RESULT_OK, intent);
+	            finish();
+			} else {
+				ToastTool.showToast(mContext, R.string.please_choose_at_least_one);
+			}			
 		}
     }
     
@@ -204,6 +279,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
 				} else {
 					Intent intent = new Intent();
 	                intent.putExtra(FileDir, file.getAbsolutePath());
+	                intent.putExtra(AudioType, mAudioType);
 	                setResult(RESULT_OK, intent);
 					ShareprefenceTool.getInstance().setString(
 							FileActivity.LastSecletPath, file.getParent(), mContext);
@@ -316,38 +392,49 @@ public class FileActivity extends Activity implements View.OnClickListener {
  
 	}
     
-    class FileAdapter extends BaseAdapter {
+    class FileAdapter extends BaseAdapter implements OnCheckedChangeListener {
 
         private List<File> mFileList = new ArrayList<File>();
+        private boolean[] mSelectList;
+        private boolean isSelectAll = false;
+        
+        private List<File> mTmpFiles = new ArrayList<File>();
+        private List<File> mTmpDirs = new ArrayList<File>();
 
         public FileAdapter(List<File> list) {
             for (File file : list) {
                 mFileList.add(file);
             }
+            if (mFileList != null && mFileList.size() != 0) {
+    			mSelectList = new boolean[mFileList.size()];
+    			Arrays.fill(mSelectList, false);
+    		} else {
+    			mSelectList = null;
+    		}
+            isSelectAll = false;
         }
 
         public void setData(File parent) {
             mParentFile = parent;
             File[] list = parent.listFiles();
-            mFileList.clear();
-            List<File> dirs = new ArrayList<File>();
-            List<File> files = new ArrayList<File>();
+            mTmpDirs.clear();
+            mTmpFiles.clear();
             if (list != null) {
             	for (File file : list) {
                     if (file.isDirectory()) {
                     	if (!file.getName().startsWith(".")) {
-                    		dirs.add(file);
+                    		mTmpDirs.add(file);
     					}                    
                     } else {
                     	switch (fileType) {
     					case File_All:
-    						files.add(file);
+    						mTmpFiles.add(file);
     						break;
     					case File_Music_Only:
     						for (String s : FileTools.Music_SupportTypeArray) {
     	                        String extm = FileTools.getExtension(file.getName());
     	                        if (extm != null && extm.equalsIgnoreCase(s)) {
-    	                        	files.add(file);
+    	                        	mTmpFiles.add(file);
                                     break;
     	                        }
     	                    }
@@ -355,7 +442,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
     					case File_Excel_Only:
     						String ext = FileTools.getExtension(file.getName());
                             if (ext != null && ext.equalsIgnoreCase("xls")) {
-                            	files.add(file);
+                            	mTmpFiles.add(file);
                                 break;
                             }
     						break;
@@ -363,7 +450,7 @@ public class FileActivity extends Activity implements View.OnClickListener {
     						for (String s : FileTools.Picture_SupportTypeArray) {
     	                        String extp = FileTools.getExtension(file.getName());
     	                        if (extp != null && extp.equalsIgnoreCase(s)) {
-    	                        	files.add(file);
+    	                        	mTmpFiles.add(file);
                                     break;
     	                        }
     	                    }
@@ -374,11 +461,50 @@ public class FileActivity extends Activity implements View.OnClickListener {
                     }
                 }
 			}            
-            //Collections.sort(dirs);
-            //Collections.sort(files);
-            mFileList.addAll(FileSortModel.sortFile(dirs));
-            mFileList.addAll(FileSortModel.sortFile(files));
-            notifyDataSetInvalidated();
+            sortData(mSortMode, true);
+        }
+        
+        public void sortData(int mode, boolean isReset) {
+        	if (mode != mSortMode || isReset) {
+				mSortMode = mode;				
+				switch (mSortMode) {
+				case File_Sort_By_letter:
+					sortByLetter();
+					break;
+				case File_Sort_By_date:
+					sortByDate();
+					break;
+				default:
+					break;
+				}
+				if (mFileList != null && mFileList.size() != 0) {
+	    			mSelectList = new boolean[mFileList.size()];
+	    			Arrays.fill(mSelectList, false);
+	    		} else {
+	    			mSelectList = null;
+	    		}
+				isSelectAll = false;
+				notifyDataSetInvalidated();
+			}
+        }
+        
+        private void sortByLetter() {
+            mFileList.clear();
+        	mFileList.addAll(FileSortModel.sortFile(mTmpDirs));
+            mFileList.addAll(FileSortModel.sortFile(mTmpFiles));
+        }
+        
+        private void sortByDate() {
+        	mFileList.clear();
+        	mFileList.addAll(mTmpDirs);
+        	mFileList.addAll(mTmpFiles);
+        	Collections.sort(mFileList, new Comparator<File>() {
+
+				@Override
+				public int compare(File f0, File f1) {
+					return (int)(f1.lastModified() - f0.lastModified());
+				}
+			});
         }
 
         public void setRootFiles(List<File> list) {
@@ -402,6 +528,39 @@ public class FileActivity extends Activity implements View.OnClickListener {
         public List<File> getFileList() {
             return mFileList;
         }
+        
+        /**
+    	 * 全选或取消全选
+    	 * 
+    	 * @return 是否全选状态
+    	 */
+    	public boolean selectAllorNot() {
+    		if (mSelectList != null) {
+    			Arrays.fill(mSelectList, !isSelectAll);	
+    			isSelectAll = !isSelectAll;
+				notifyDataSetChanged();
+				return isSelectAll;
+    		} else {
+    			return false;
+    		}		
+    	}
+        
+        /**
+    	 * 获取所有选择项
+    	 * 
+    	 * @return
+    	 */
+    	public List<File> getSelectList() {
+    		List<File> list = new ArrayList<File>();
+    		if (isShowBottom) {
+    			for (int i = 0; i < mSelectList.length; i++) {
+    				if (mSelectList[i]) {
+    					list.add(mFileList.get(i));
+    				}
+    			}
+    		}
+    		return list;
+    	}
 
         @Override
         public int getCount() {
@@ -426,12 +585,24 @@ public class FileActivity extends Activity implements View.OnClickListener {
                 holder = new ViewHolder();
                 holder.mImage = (ImageView) convertView.findViewById(R.id.file_image);
                 holder.mName = (TextView) convertView.findViewById(R.id.file_text);
+                holder.mCheckBox = (CheckBox) convertView.findViewById(R.id.file_checked);  
+                holder.mCheckBox.setTag(position);
+                holder.mCheckBox.setOnCheckedChangeListener(this);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
+                holder.mCheckBox.setTag(position);
             }
             File file = mFileList.get(position);
             int drawableId = R.drawable.list_ic_folder;
+            if (isShowBottom && file.isDirectory()) {
+            	holder.mCheckBox.setVisibility(View.VISIBLE );
+            	if (mSelectList != null && position < mSelectList.length) {
+            		holder.mCheckBox.setChecked(mSelectList[position]);
+				}            	
+			} else {
+				holder.mCheckBox.setVisibility(View.GONE);
+			}
             if (!file.isDirectory()) {
 				switch (fileType) {
 				case File_Music_Only:
@@ -461,7 +632,16 @@ public class FileActivity extends Activity implements View.OnClickListener {
         class ViewHolder {
             ImageView mImage;
             TextView mName;
+            CheckBox mCheckBox;
         }
+
+		@Override
+		public void onCheckedChanged(CompoundButton cbox, boolean checked) {
+			int position = (Integer) cbox.getTag();
+			if (mSelectList != null && position < mSelectList.length) {
+				mSelectList[position] = checked;
+			}
+		}
     }
 
 }

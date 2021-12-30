@@ -7,8 +7,10 @@ import android.content.Context;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+@Table(name = "RankItem")
 public class RankItem extends Model {
 	
 	public static final String IS_NEED_UPDATE = "IS_UPDATE";

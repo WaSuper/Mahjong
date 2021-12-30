@@ -1181,7 +1181,7 @@ public class GameSimpleActivity extends Activity implements
 	private void showRankDialog(Player[] players, int[] scores, int[] ranks, float[] mas) {
 		FinalRankDialog frDialog = new FinalRankDialog(mContext);
 		AnalysisTool aTool = new AnalysisTool(mManageTool.getResult(), mManageTool.getAllDetails());
-		frDialog.setData(players, scores, mas, ranks, aTool);
+		frDialog.setData(players, scores, mas, ranks, aTool, mAudioTool);
 		frDialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override

@@ -5,11 +5,11 @@ import java.util.List;
 import com.mahjong.R;
 import com.mahjong.model.Player;
 import com.mahjong.tools.AnalysisTool;
+import com.mahjong.tools.AudioTool;
 import com.mahjong.tools.EmoticonTool;
 import com.mahjong.tools.ImageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ValueTool;
-import com.mahjong.ui.LeanTextView;
 import com.mahjong.ui.LineChart;
 import com.mahjong.ui.MjWinTextView;
 
@@ -135,7 +135,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 	}
 
 	public void setData(Player[] players, int[] scores, float[] mapoint, int[] ranks,
-			AnalysisTool aTool) {
+			AnalysisTool aTool, AudioTool audioTool) {
 //		String[] names = new String[4];
 //		for (int i = 0; i < names.length; i++) {
 //			names[i] = players[i].getNickName();
@@ -161,6 +161,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 					sign = mContext.getString(R.string.sign_none);
 				}
 				mWinTextView.setText(sign);
+				if (audioTool != null) audioTool.playGameTop(i);
 			}
 			// 头像
 			Bitmap iconBitmap = EmoticonTool.getEmoticonForRank(players[i], ranks[i]);

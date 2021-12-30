@@ -46,6 +46,12 @@ public class Player extends Model {
 	@Column(name = "CharacterId")
 	private long character_id;	// 玩家角色
 	
+	@Column(name = "SoundBoxIcon")
+	private String soundbox_icon;	// 音频头像
+	
+	@Column(name = "SoundBoxId")
+	private long soundbox_id;	// 玩家音频
+	
 	public Player() {
 		super();
 	}
@@ -63,7 +69,7 @@ public class Player extends Model {
 	}
 	
 	public Player(String uuid, String name, String nick_name, char sex, 
-			String sign, String icon, long character_id) {
+			String sign, String icon, long character_id, long soundbox_id) {
 		super();
 		this.uuid = uuid;
 		this.name = name;
@@ -72,6 +78,7 @@ public class Player extends Model {
 		this.sign = sign;
 		this.icon = icon;
 		this.character_id = character_id;
+		this.soundbox_id = soundbox_id;
 	}
 	
 	public void setName(String name) {
@@ -103,6 +110,15 @@ public class Player extends Model {
 		this.character_id = character_id;
 	}
 	
+	public void setSoundBox(SoundBox soundbox) {
+		this.soundbox_id = soundbox.getUuid();
+		this.soundbox_icon = soundbox.getDefaultIcon();
+	}
+	
+	public void setSoundBoxId(long soundbox_id) {
+		this.soundbox_id = soundbox_id;
+	}
+	
 	public String getUuid() {
 		return uuid;
 	}
@@ -131,6 +147,14 @@ public class Player extends Model {
 		return character_id;
 	}
 		
+	public String getSoundBoxIcon() {
+		return soundbox_icon;
+	}
+	
+	public long getSoundBoxId() {
+		return soundbox_id;
+	}
+	
 	public static List<Player> getAllPlayer() {
 		List<Player> list = new Select().from(Player.class).execute();
 		return list;
@@ -144,17 +168,17 @@ public class Player extends Model {
 	public static Player[] getNPCPlayers() {
 		Player[] mNPCs = new Player[NPCsize];
 		mNPCs[0] = new Player("pc-saki", "宫永咲", "宫永咲", 'F', "岭上开火，打麻将真TM开心！", 
-				"drawable://" + R.drawable.head_pc_saki, 0);
+				"drawable://" + R.drawable.head_pc_saki, 0, 0);
 		mNPCs[1] = new Player("pc-nodoka", "原村和", "原村和", 'F', "企鹅桑，欣赏下这群弱者的表情！", 
-				"drawable://"+ R.drawable.head_pc_nodoka, 0);
+				"drawable://"+ R.drawable.head_pc_nodoka, 0, 0);
 		mNPCs[2] = new Player("pc-koromo", "天江衣", "天江衣", 'F', "大海的力量果然深不可测!", 
-				"drawable://"+ R.drawable.head_pc_koromo, 0);
+				"drawable://"+ R.drawable.head_pc_koromo, 0, 0);
 		mNPCs[3] = new Player("pc-komaki", "神代小莳", "神代小莳", 'F', "神灵神灵，快快显灵！", 
-				"drawable://"+ R.drawable.head_pc_komaki, 0);
+				"drawable://"+ R.drawable.head_pc_komaki, 0, 0);
 		mNPCs[4] = new Player("pc-teru", "宫永照", "宫永照", 'F', "让我来\"慢慢\"打败你们！", 
-				"drawable://"+ R.drawable.head_pc_teru, 0);
+				"drawable://"+ R.drawable.head_pc_teru, 0, 0);
 		mNPCs[5] = new Player("pc-shizuno", "高鸭稳乃", "高鸭稳乃", 'F', "这里不是你的领域了！", 
-				"drawable://"+ R.drawable.head_pc_shizuno, 0);
+				"drawable://"+ R.drawable.head_pc_shizuno, 0, 0);
 		return mNPCs;
 	}
 }

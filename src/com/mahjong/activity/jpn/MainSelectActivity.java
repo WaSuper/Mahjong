@@ -4,6 +4,7 @@ import com.mahjong.R;
 import com.mahjong.activity.AboutActivity;
 import com.mahjong.activity.EmoticonActivity;
 import com.mahjong.activity.PlayerManageActivity;
+import com.mahjong.activity.SoundEffectActivity;
 import com.mahjong.activity.jpn.CalculateActivity;
 import com.mahjong.activity.jpn.SettingActivity;
 import com.mahjong.tools.ToastTool;
@@ -25,6 +26,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 	private ImageButton btnRankingList;
 	private ImageButton btnPlayerManage;
 	private ImageButton btnEmoticon;
+	private ImageButton btnSoundEffect;
 	private ImageButton btnWlanBattle;	
 	private Button btnFanType;
 	private Button btnPointForm;
@@ -44,6 +46,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 		btnRankingList = (ImageButton) findViewById(R.id.jpn_select_btn_ranking_list);
 		btnPlayerManage = (ImageButton) findViewById(R.id.jpn_select_btn_player_manage);
 		btnEmoticon = (ImageButton) findViewById(R.id.jpn_select_btn_emoticon);
+		btnSoundEffect = (ImageButton) findViewById(R.id.jpn_select_btn_sound_effect);
 		btnWlanBattle = (ImageButton) findViewById(R.id.jpn_select_btn_wlan_battle);
 		btnFanType = (Button) findViewById(R.id.jpn_select_btn_fan_type);
 		btnPointForm = (Button) findViewById(R.id.jpn_select_btn_point_form);
@@ -56,6 +59,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 		btnPlayerManage.setOnClickListener(this);
 		btnWlanBattle.setOnClickListener(this);
 		btnEmoticon.setOnClickListener(this);
+		btnSoundEffect.setOnClickListener(this);
 		btnFanType.setOnClickListener(this);
 		btnPointForm.setOnClickListener(this);
 		aboutView.setOnClickListener(this);
@@ -80,6 +84,9 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.jpn_select_btn_emoticon:
 			startActivity(new Intent(MainSelectActivity.this, EmoticonActivity.class));
+			break;
+		case R.id.jpn_select_btn_sound_effect:
+			startActivity(new Intent(MainSelectActivity.this, SoundEffectActivity.class));
 			break;
 		case R.id.jpn_select_btn_wlan_battle:
 			ToastTool.showToast(this, R.string.no_support);

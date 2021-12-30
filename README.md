@@ -4,7 +4,7 @@
 ![image](https://github.com/WaSuper/Mahjong/blob/master/res/drawable-xxhdpi/ic_launcher.png)
 
 主界面
-本程序一共七大功能块：对战入口、历史战绩、计分器、排行榜、玩家管理、表情包
+本程序一共七大功能块：对战入口、历史战绩、计分器、排行榜、玩家管理、表情包、音频包
 右下角还有两个小功能：役种、数表。没记性的朋友可以有空看看→_→
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/1_mian.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/2_fan.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/3_shubiao.jpg)
 
@@ -35,9 +35,12 @@
 设置玩家头像，本来想做简单点的，后来在朋友的墙裂要求下，改需求→_→
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/5_emoticon.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/6_emoticon_detail.jpg)
 
+七.音频包
+将玩家音效独立出来统一设置
 
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
-Saki_v1.0.0_build210317 安装包下载地址：
-链接: https://pan.baidu.com/s/1eKUOLN1ZbYqzTZGQRfdQzg 提取码: me89
-
+Saki_v1.1.0_build211230 安装包下载地址：
+链接: https://pan.baidu.com/s/1EZAvw9ySrtCPPmkZyfjJvg 提取码: 1pa7
+素材下载地址：
+链接: https://pan.baidu.com/s/1qjlaVULnkxzDgXouUMc-tg 提取码: pagu

@@ -2,15 +2,15 @@ package com.mahjong.activity;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.activeandroid.ActiveAndroid;
 import com.mahjong.R;
-import com.mahjong.adapter.EmoticonAdapter;
+import com.mahjong.adapter.SoundEffectAdapter;
+import com.mahjong.model.AudioItem;
 import com.mahjong.model.Character;
-import com.mahjong.model.CharacterIcon;
+import com.mahjong.model.SoundBox;
+import com.mahjong.tools.AudioTool;
 import com.mahjong.tools.FileTools;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.tools.ValueTool;
@@ -27,36 +27,36 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class EmoticonActivity extends Activity 
-		implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
+public class SoundEffectActivity extends Activity 
+	implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 
-	public static final int Request_Emoticon_Update = 0x3001;
-	public static final int Request_Emoticon_Import = 0x3002;
+	public static final int Request_SoundBox_Update = 0x5001;
+	public static final int Request_SoundBox_Import = 0x5002;
 	
 	private Context mContext;
 	
 	private ImageView mBackView;
 	private ImageView mInfoView;
 	private ListView mListView;
-	private EmoticonAdapter mAdapter;	
+	private SoundEffectAdapter mAdapter;
 	private FloatingActionsMenu mMenu;
 	private FloatingActionButton mActionCreate;
 	private FloatingActionButton mActionImport;
 	
-	private List<Character> mCharacterList;
+	private List<SoundBox> mSoundBoxList;
 	private String mLastSelectPath = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_emoticon);
+		setContentView(R.layout.activity_soundeffect);
 		mContext = this;
 		initUI();
 	}
@@ -66,35 +66,35 @@ public class EmoticonActivity extends Activity
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
-			case Request_Emoticon_Update:
-				mCharacterList = Character.getAllCharacters(this);
-				mAdapter.setData(mCharacterList);
+			case Request_SoundBox_Update:
+				mSoundBoxList = SoundBox.getAllSoundBoxs();
+				mAdapter.setData(mSoundBoxList);
 				break;
-			case Request_Emoticon_Import:
+			case Request_SoundBox_Import:
 				mLastSelectPath = data.getStringExtra(FileActivity.FileDir);
 				String nameStrings = data.getStringExtra(FileActivity.FileSelects);
-				importCharacterList(mLastSelectPath, nameStrings);
+				importSoundBoxList(mLastSelectPath, nameStrings);
 				break;
 			default:
 				break;
 			}
 		}
 	}
-	
+
 	private void initUI() {
-		mBackView = (ImageView) findViewById(R.id.emoticon_back);
-		mInfoView = (ImageView) findViewById(R.id.emoticon_info);
-		mMenu = (FloatingActionsMenu) findViewById(R.id.emoticon_multiple_actions);
-		mActionCreate = (FloatingActionButton) findViewById(R.id.emoticon_action_create);
-		mActionImport = (FloatingActionButton) findViewById(R.id.emoticon_action_import);
-		mListView = (ListView) findViewById(R.id.emoticon_listview);
-		mAdapter = new EmoticonAdapter(this);
-		mCharacterList = Character.getAllCharacters(this);
-		mAdapter.setData(mCharacterList);
+		mBackView = (ImageView) findViewById(R.id.soundeffect_back);
+		mInfoView = (ImageView) findViewById(R.id.soundeffect_info);
+		mMenu = (FloatingActionsMenu) findViewById(R.id.soundeffect_multiple_actions);
+		mActionCreate = (FloatingActionButton) findViewById(R.id.soundeffect_action_create);
+		mActionImport = (FloatingActionButton) findViewById(R.id.soundeffect_action_import);
+		mListView = (ListView) findViewById(R.id.soundeffect_listview);
+		mAdapter = new SoundEffectAdapter(mContext);
+		mSoundBoxList = SoundBox.getAllSoundBoxs();
+		mAdapter.setData(mSoundBoxList);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		mListView.setOnItemLongClickListener(this);
-		
+
 		mBackView.setOnClickListener(this);
 		mInfoView.setOnClickListener(this);
 		mActionCreate.setOnClickListener(this);
@@ -104,22 +104,22 @@ public class EmoticonActivity extends Activity
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.emoticon_back:
+		case R.id.soundeffect_back:
 			finish();
 			break;
-		case R.id.emoticon_action_create:
-			createCharacter();
+		case R.id.soundeffect_action_create:
+			createSoundBox();
 			mMenu.collapse();
 			break;
-		case R.id.emoticon_action_import:
-			Intent intent = new Intent(EmoticonActivity.this, FileActivity.class);
-			intent.putExtra(FileActivity.FileType, FileActivity.File_Picture_Only);
+		case R.id.soundeffect_action_import:
+			Intent intent = new Intent(SoundEffectActivity.this, FileActivity.class);
+			intent.putExtra(FileActivity.FileType, FileActivity.File_Music_Only);
 			intent.putExtra(FileActivity.FileDir, mLastSelectPath);
 			intent.putExtra(FileActivity.FileShowBottom, true);
-			startActivityForResult(intent, Request_Emoticon_Import);
+			startActivityForResult(intent, Request_SoundBox_Import);
 			mMenu.collapse();
 			break;			
-		case R.id.emoticon_info:
+		case R.id.soundeffect_info:
 			showInformation();
 			break;
 		default:
@@ -129,24 +129,23 @@ public class EmoticonActivity extends Activity
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Character character = mCharacterList.get(position);
-		Intent intent = new Intent(EmoticonActivity.this, EmoticonDetailActivity.class);
-		intent.putExtra(Character.Col_Uuid, character.getUuid());
-		startActivityForResult(intent, Request_Emoticon_Update);
+		SoundBox soundbox = mSoundBoxList.get(position);
+		Intent intent = new Intent(SoundEffectActivity.this, SoundEffectDetailActivity.class);
+		intent.putExtra(Character.Col_Uuid, soundbox.getUuid());
+		startActivityForResult(intent, Request_SoundBox_Update);
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		if (position == 0) return true;
-		deleteCharacter(position);
+		deleteSoundBox(position);
 		return true;
 	}
 	
-	private void createCharacter() {
+	private void createSoundBox() {
 		final CommonDialog createDialog = new CommonDialog(mContext, R.style.MyDialogStyle);
 		createDialog.addView(R.layout.item_edittext);
 		createDialog.setCanceledOnTouchOutside(true);
-		createDialog.titleTextView.setText(getString(R.string.emoticon));
+		createDialog.titleTextView.setText(getString(R.string.sound_effect));
 		final EditText editText = (EditText) createDialog.getContentView().findViewById(R.id.edittext);
 		editText.setText("");
 		createDialog.ok.setOnClickListener(new OnClickListener() {
@@ -158,10 +157,13 @@ public class EmoticonActivity extends Activity
 					ToastTool.showToast(mContext, R.string.no_data);
 					return;
 				}
-				Character character = Character.createCharacter(
-						mCharacterList.get(mCharacterList.size() - 1), text, null);
-				if (character != null) {
-					mCharacterList.add(character);
+				int index = 0;
+				if (mSoundBoxList.size() > 0) {
+					index = mSoundBoxList.get(mSoundBoxList.size() - 1).getIndex() + 1;
+				}
+				SoundBox soundbox = SoundBox.createSoundBox(text, null, index);
+				if (soundbox != null) {
+					mSoundBoxList.add(soundbox);
 					mAdapter.notifyDataSetChanged();
 				} else {
 					ToastTool.showToast(mContext, R.string.add_log_fail);
@@ -179,26 +181,26 @@ public class EmoticonActivity extends Activity
 		createDialog.show();
 	}
 	
-	private void deleteCharacter(final int position) {
+	private void deleteSoundBox(final int position) {
 		final CommonDialog deleteDialog = new CommonDialog(mContext, R.style.MyDialogStyle);
 		deleteDialog.addView(R.layout.item_text);
 		deleteDialog.setCanceledOnTouchOutside(true);
 		deleteDialog.titleTextView.setText(getString(R.string.tip));
 		TextView textView = (TextView) deleteDialog.getContentView().findViewById(R.id.item_text);
-		textView.setText(getString(R.string.ensure_delete_emoticon_package));
+		textView.setText(getString(R.string.ensure_delete_soundbox));
 		deleteDialog.ok.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {			
-				boolean result = Character.deleteCharacter(mCharacterList.get(position));
+				boolean result = SoundBox.deleteSoundBox(mSoundBoxList.get(position));
 				if (result) {
-					mCharacterList.remove(position);
+					mSoundBoxList.remove(position);
 					ToastTool.showToast(mContext, R.string.delete_success);
 					mAdapter.notifyDataSetChanged();
 				} else {
 					ToastTool.showToast(mContext, R.string.delete_fail);
-				}				
-				deleteDialog.dismiss();
+				}		
+				deleteDialog.dismiss();		
 			}
 		});
 		deleteDialog.cancel.setOnClickListener(new OnClickListener() {
@@ -211,7 +213,7 @@ public class EmoticonActivity extends Activity
 		deleteDialog.show();
 	}
 	
-	private void importCharacterList(String path, String nameStrings) {
+	private void importSoundBoxList(String path, String nameStrings) {
 		File parentFile = new File(path);
 		if (!parentFile.exists()) {
 			ToastTool.showToast(mContext, R.string.import_fail);
@@ -225,26 +227,19 @@ public class EmoticonActivity extends Activity
 		
 		String regularEx = "#!#";
 		String[] names = nameStrings.split(regularEx);
-		Comparator<CharacterIcon> comparator = new Comparator<CharacterIcon>() {
-
-			@Override
-			public int compare(CharacterIcon c0, CharacterIcon c1) {
-				return c0.getIndex() - c1.getIndex();
-			}
-		};
 
 		ActiveAndroid.beginTransaction();
 		int count = 0;
 		for (String name : names) {
 			//System.out.println("tag-s " + path + "/" + name);
 			boolean isExist = false;
-			for (Character character :mCharacterList) {
-				if (character.getName().equals(name)) {
+			for (SoundBox soundbox :mSoundBoxList) {
+				if (soundbox.getName().equals(name)) {
 					isExist = true;
 					break;
 				}
 			}
-			if (!isExist && importCharacter(path + "/" + name, comparator)) {
+			if (!isExist && importSoundBox(path + "/" + name)) {
 				count++;
 			}
 		}		
@@ -253,13 +248,13 @@ public class EmoticonActivity extends Activity
 		
 		if (count > 0) {
 			mAdapter.notifyDataSetChanged();
-			ToastTool.showToast(mContext, getString(R.string.import_icon_success, count));			
+			ToastTool.showToast(mContext, getString(R.string.import_soundbox_success, count));			
 		} else {
 			ToastTool.showToast(mContext, R.string.import_fail);
 		}
 	}
 	
-	private boolean importCharacter(String path, Comparator<CharacterIcon> comparator) {
+	private boolean importSoundBox(String path) {
 		File parentFile = new File(path);
 		if (!parentFile.exists()) {
 			return false;
@@ -268,71 +263,76 @@ public class EmoticonActivity extends Activity
 		if (list == null || list.length == 0) {
 			return false;
 		}
-		Character newCharacter = new Character(System.currentTimeMillis(), 
-				parentFile.getName(), null, 
-				mCharacterList.get(mCharacterList.size() - 1).getIndex() + 1);
-		List<CharacterIcon> rankList1 = new ArrayList<CharacterIcon>();
-		List<CharacterIcon> rankList2 = new ArrayList<CharacterIcon>();
-		List<CharacterIcon> rankList3 = new ArrayList<CharacterIcon>();
-		List<CharacterIcon> rankList4 = new ArrayList<CharacterIcon>();
-		List<List<CharacterIcon>> rankLists = new ArrayList<List<CharacterIcon>>();
-		rankLists.add(rankList1);
-		rankLists.add(rankList2);
-		rankLists.add(rankList3);
-		rankLists.add(rankList4);
-		int iconCount = 0;
+		int index = 0;
+		if (mSoundBoxList.size() > 0) {
+			index = mSoundBoxList.get(mSoundBoxList.size() - 1).getIndex() + 1;
+		}
+		SoundBox newSoundBox = new SoundBox(System.currentTimeMillis(), 
+				parentFile.getName(), null, index);
+		List<AudioItem> audioList = new ArrayList<AudioItem>();
+		boolean isIconFound = false;
 		for (File file : list) {
 			if (file.isDirectory()) continue;
-			String extp = FileTools.getExtension(file.getName()); // 选择图片类型
+			String extp = FileTools.getExtension(file.getName()); // 选择文件类型
 			if (extp == null || extp.isEmpty()) continue;
-			for (String s : FileTools.Picture_SupportTypeArray) {                
+			// 先找到封面图
+			if (!isIconFound) {
+				for (String s : FileTools.Picture_SupportTypeArray) {
+					if (extp.equalsIgnoreCase(s)) {
+						String name = FileTools.getFileNameNoEx(file.getName()); // 截取名字
+						if (name.endsWith("_0_1")) { 
+							newSoundBox.setDefaultIcon(file.getAbsolutePath());
+							isIconFound = true;
+							break;
+						}
+					}
+				}
+				if (isIconFound) continue;
+			}		
+			// 再找到音频
+			for (String s : FileTools.Music_SupportTypeArray) {                
                 if (extp.equalsIgnoreCase(s)) {
                 	String name = FileTools.getFileNameNoEx(file.getName()); // 截取名字
-                	String[] nameSplits = name.split("_"); // 命名规则：emo_0_1
-                	if (nameSplits.length > 2) {
-                		try {
-    						String rankString = nameSplits[nameSplits.length - 2];
-    						String numString  = nameSplits[nameSplits.length - 1];
-    						int rank = Integer.parseInt(rankString);
-    						int num = Integer.parseInt(numString);	
-    						if (rank == 0) { // 封面图
-								newCharacter.setDefaultIcon(file.getAbsolutePath());
-								iconCount++;
-							} else if (rank > 0 && rank < 5) { // 排位图
-								CharacterIcon icon = new CharacterIcon(
-										newCharacter.getUuid(), file.getAbsolutePath(), rank, num, name);
-								rankLists.get(rank - 1).add(icon);
-								iconCount++;
-							}
-						} catch (Exception e) {
-							Log.e("EmoticonActivity", e.getMessage());
-						}
+                	if (name.endsWith("_act_rich")) { // 立直音效
+						AudioItem audio = new AudioItem(newSoundBox.getUuid(), 
+								AudioTool.Type_Lizhi, file.getAbsolutePath(), true);
+						audioList.add(audio);
+					} else if (name.endsWith("_act_drich")) { // 双立直音效
+						AudioItem audio = new AudioItem(newSoundBox.getUuid(), 
+								AudioTool.Type_DoubleLizhi, file.getAbsolutePath(), true);	
+						audioList.add(audio);					
+					} else if (name.endsWith("_act_tumo")) { // 自摸音效
+						AudioItem audio = new AudioItem(newSoundBox.getUuid(), 
+								AudioTool.Type_Zimo, file.getAbsolutePath(), true);	
+						audioList.add(audio);
+					} else if (name.endsWith("_act_ron")) { // 荣和音效
+						AudioItem audio = new AudioItem(newSoundBox.getUuid(), 
+								AudioTool.Type_Ronghe, file.getAbsolutePath(), true);	
+						audioList.add(audio);
+					} else if (name.endsWith("_game_top")) { // 第一位音效
+						AudioItem audio = new AudioItem(newSoundBox.getUuid(), 
+								AudioTool.Type_GameTop, file.getAbsolutePath(), true);
+						audioList.add(audio);	
 					}
                     break;
                 }
             }
 		}
-		if (iconCount == 0) {
+		if (audioList.size() == 0) {
 			return false;
-		}
-		for (List<CharacterIcon> icons : rankLists) {
-			Collections.sort(icons, comparator);
 		}
 		boolean result = false;
 		try {
-			newCharacter.save();
-			for (List<CharacterIcon> icons : rankLists) {
-				for (int i = 0; i < icons.size(); i++) {
-					icons.get(i).setIndex(i + 1);
-					icons.get(i).save();
-				}
+			newSoundBox.save();
+			for (AudioItem audio : audioList) {
+				audio.save();
 			}
 			result = true;
 		} catch (Exception e) {
-			Log.e("EmoticonActivity", e.getMessage());
+			Log.e("SoundEffectActivity", e.getMessage());
 		}
 		if (result) {
-			mCharacterList.add(newCharacter);
+			mSoundBoxList.add(newSoundBox);
 			return true;
 		} else {
 			return false;
@@ -343,9 +343,9 @@ public class EmoticonActivity extends Activity
 		final CommonDialog infoDialog = new CommonDialog(mContext, R.style.MyDialogStyle, 0);
 		infoDialog.addView(R.layout.item_text);
 		infoDialog.setCanceledOnTouchOutside(true);
-		infoDialog.titleTextView.setText(getString(R.string.emoticon_import_title));
+		infoDialog.titleTextView.setText(getString(R.string.sound_effect_import_title));
 		TextView textView = (TextView) infoDialog.getContentView().findViewById(R.id.item_text);
-		textView.setText(getString(R.string.emoticon_import_information));
+		textView.setText(getString(R.string.sound_effect_import_information));
 		textView.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
 		textView.setTextSize(ValueTool.sp2px(mContext, 6));
 		infoDialog.ok.setOnClickListener(new OnClickListener() {

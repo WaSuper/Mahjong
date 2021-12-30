@@ -164,7 +164,7 @@ public class CreatePlayerActivity extends Activity implements OnClickListener {
 		String sexString = mSex.getText().toString();
 		char sex = sexString.equals(getString(R.string.male)) ? 'M' : 'F';
 		Player player = new Player(uuid, name, nickname, sex, sign, 
-				mCharacter.getDefaultIcon(), mCharacter.getUuid());
+				mCharacter.getDefaultIcon(), mCharacter.getUuid(), -1);
 		player.save();
 		
 		setResult(RESULT_OK);

@@ -116,7 +116,7 @@ public class ImageTool {
 	}
 	
 	/**
-	 * 根据原图和变长绘制圆形图片
+	 * 根据原图和边长绘制圆形图片
 	 * 
 	 * @param source
 	 * @param min

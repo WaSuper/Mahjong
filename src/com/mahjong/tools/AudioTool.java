@@ -16,16 +16,23 @@ import android.media.SoundPool;
 public class AudioTool {
 
     public static final String RequestCode 	= "RequestCode";
-    public static final int MAX_TYPE 		= 4;
+    
+    public static final int Type_SoundBox 	= 0x00;
+    
+    public static final int MAX_TYPE 		= 7;
     public static final int Type_Lizhi_BGM 	= 0x01;
 	public static final int Type_Lizhi 		= 0x02;
-	public static final int Type_Zimo 		= 0x03;
-	public static final int Type_Ronghe 	= 0x04;
+	public static final int Type_DoubleLizhi= 0x03;
+	public static final int Type_Zimo 		= 0x04;
+	public static final int Type_Ronghe 	= 0x05;
+	public static final int Type_GameTop	= 0x06;
 	
 	public static final String Histrory_Lizhi_BGM 	= "Histrory_Lizhi_BGM";
 	public static final String Histrory_Lizhi 		= "Histrory_Lizhi";
+	public static final String Histrory_DoubleLizhi	= "Histrory_DoubleLizhi";
 	public static final String Histrory_Zimo 		= "Histrory_Zimo";
 	public static final String Histrory_Ronghe 		= "Histrory_Ronghe";
+	public static final String Histrory_GameTop		= "Histrory_GameTop";
 	
 	private boolean enableAudio = true;
 	
@@ -34,10 +41,14 @@ public class AudioTool {
 	private boolean[] mBgmEnables = {false, false, false, false};
 	private int[] mLizhiIds = {-1, -1, -1, -1};
 	private boolean[] mLizhiEnables = {false, false, false, false};
+	private int[] mDoubleLizhiIds = {-1, -1, -1, -1};
+	private boolean[] mDoubleLizhiEnables = {false, false, false, false};
 	private int[] mZimoIds = {-1, -1, -1, -1};
 	private boolean[] mZimoEnables = {false, false, false, false};
 	private int[] mRongheIds = {-1, -1, -1, -1};
 	private boolean[] mRongheEnables = {false, false, false, false};
+	private int[] mGameTopIds = {-1, -1, -1, -1};
+	private boolean[] mGameTopEnables = {false, false, false, false};
 	
 	private MediaPlayer mMediaPlayer;
 	
@@ -58,27 +69,12 @@ public class AudioTool {
 	}
 	
 	public void onDestory() {
-		if (mLizhiIds != null && mLizhiEnables != null) {
-			for (int i = 0; i < mLizhiIds.length; i++) {
-	            if (mLizhiEnables[i]) {
-	            	mSoundPool.unload(mLizhiIds[i]);
-	            }
-	        }
-		}
-		if (mZimoIds != null && mZimoEnables != null) {
-			for (int i = 0; i < mZimoIds.length; i++) {
-	            if (mZimoEnables[i]) {
-	            	mSoundPool.unload(mZimoIds[i]);
-	            }
-	        }
-		}
-		if (mRongheIds != null && mRongheEnables != null) {
-			for (int i = 0; i < mRongheIds.length; i++) {
-	            if (mRongheEnables[i]) {
-	            	mSoundPool.unload(mRongheIds[i]);
-	            }
-	        }
-		}
+		onReleaseAudio(mLizhiIds, mLizhiEnables);
+		onReleaseAudio(mDoubleLizhiIds, mDoubleLizhiEnables);
+		onReleaseAudio(mZimoIds, mZimoEnables);
+		onReleaseAudio(mRongheIds, mRongheEnables);
+		onReleaseAudio(mGameTopIds, mGameTopEnables);
+		
 		mSoundPool.release();
 		mSoundPool = null;
         if (mMediaPlayer != null) {
@@ -86,6 +82,16 @@ public class AudioTool {
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
+	}
+	
+	private void onReleaseAudio(int[] ids, boolean[] enables) {
+		if (ids != null && enables != null) {
+			for (int i = 0; i < ids.length; i++) {
+	            if (enables[i]) {
+	            	mSoundPool.unload(ids[i]);
+	            }
+	        }
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -153,46 +159,56 @@ public class AudioTool {
 	}
 	
 	public void loadByPlayer(String playerId, int index) {
-		List<AudioItem> audios = AudioItem.loadItemsById(playerId);
-		if (audios != null && audios.size() > 0) {
-			for (AudioItem audio : audios) {
+		List<AudioItem> audioItems = AudioItem.loadItemsById(playerId);
+		if (audioItems != null && audioItems.size() > 0) {
+			for (AudioItem audio : audioItems) {
 				switch (audio.getType()) {
 				case Type_Lizhi_BGM:
 					if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
 					mBgmEnables[index] = audio.getEnable();
 					mBgmPaths[index] = audio.getFilePath();
 					break;
-				case Type_Lizhi:
-					mLizhiEnables[index] = audio.getEnable();
-					if (mLizhiIds[index] != -1) mSoundPool.unload(mLizhiIds[index]);
-					if (audio.getFilePath() != null && audio.getFilePath() != "") {
-						mLizhiIds[index] = mSoundPool.load(audio.getFilePath(), 1);
-					} else {
-						mLizhiIds[index] = -1;
-					}
-					break;
-				case Type_Zimo:
-					mZimoEnables[index] = audio.getEnable();
-					if (mZimoIds[index] != -1) mSoundPool.unload(mZimoIds[index]);
-					if (audio.getFilePath() != null && audio.getFilePath() != "") {
-						mZimoIds[index] = mSoundPool.load(audio.getFilePath(), 1);
-					} else {
-						mZimoIds[index] = -1;
-					}
-					break;
-				case Type_Ronghe:
-					mRongheEnables[index] = audio.getEnable();
-					if (mRongheIds[index] != -1) mSoundPool.unload(mRongheIds[index]);
-					if (audio.getFilePath() != null && audio.getFilePath() != "") {
-						mRongheIds[index] = mSoundPool.load(audio.getFilePath(), 1);
-					} else {
-						mRongheIds[index] = -1;
+				case Type_SoundBox:
+					List<AudioItem> soundItems = AudioItem.loadItemsBySoundBoxId(audio.getSoundBoxId());
+					boolean enable = audio.getEnable();
+					if (soundItems != null && soundItems.size() > 0) {
+						for (AudioItem sound : soundItems) {
+							switch (sound.getType()) {
+							case Type_Lizhi:
+								doLoadAudio(mLizhiIds, mLizhiEnables, sound, index, enable);
+								break;
+							case Type_DoubleLizhi:
+								doLoadAudio(mDoubleLizhiIds, mDoubleLizhiEnables, sound, index, enable);
+								break;
+							case Type_Zimo:
+								doLoadAudio(mZimoIds, mZimoEnables, sound, index, enable);
+								break;
+							case Type_Ronghe:
+								doLoadAudio(mRongheIds, mRongheEnables, sound, index, enable);
+								break;
+							case Type_GameTop:
+								doLoadAudio(mGameTopIds, mGameTopEnables, sound, index, enable);
+							default:
+								break;
+							}
+						}
 					}
 					break;
 				default:
 					break;
 				}
 			}
+		}
+	}
+	
+	private void doLoadAudio(int[] ids, boolean[] enables, 
+			AudioItem audio, int index, boolean enable) {
+		enables[index] = enable;
+		if (ids[index] != -1) mSoundPool.unload(ids[index]);
+		if (audio.getFilePath() != null && audio.getFilePath() != "") {
+			ids[index] = mSoundPool.load(audio.getFilePath(), 1);
+		} else {
+			ids[index] = -1;
 		}
 	}
 	
@@ -217,6 +233,13 @@ public class AudioTool {
 		}
 	}
 	
+	public void playDoubleLizhi(int index) {
+		if (!enableAudio) return;
+		if (mDoubleLizhiEnables[index]) {
+			mSoundPool.play(mDoubleLizhiIds[index],1,1,1,0,1);
+		}
+	}
+	
 	public void playZimo(int index) {
 		if (!enableAudio) return;
 		if (mZimoEnables[index]) {
@@ -228,6 +251,13 @@ public class AudioTool {
 		if (!enableAudio) return;
 		if (mRongheEnables[index]) {
 			mSoundPool.play(mRongheIds[index],1,1,1,0,1);
+		}
+	}	
+	
+	public void playGameTop(int index) {
+		if (!enableAudio) return;
+		if (mRongheEnables[index]) {
+			mSoundPool.play(mGameTopIds[index],1,1,1,0,1);
 		}
 	}	
 	
@@ -245,11 +275,17 @@ public class AudioTool {
 		case Type_Lizhi:
 			historyKey = Histrory_Lizhi;
 			break;
+		case Type_DoubleLizhi:
+			historyKey = Histrory_DoubleLizhi;
+			break;
 		case Type_Zimo:
 			historyKey = Histrory_Zimo;
 			break;
 		case Type_Ronghe:
 			historyKey = Histrory_Ronghe;
+			break;
+		case Type_GameTop:
+			historyKey = Histrory_GameTop;
 			break;
 		default:
 			break;
@@ -285,11 +321,17 @@ public class AudioTool {
 		case Type_Lizhi:
 			historyKey = Histrory_Lizhi;
 			break;
+		case Type_DoubleLizhi:
+			historyKey = Histrory_DoubleLizhi;
+			break;
 		case Type_Zimo:
 			historyKey = Histrory_Zimo;
 			break;
 		case Type_Ronghe:
 			historyKey = Histrory_Ronghe;
+			break;
+		case Type_GameTop:
+			historyKey = Histrory_GameTop;
 			break;
 		default:
 			break;

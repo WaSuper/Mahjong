@@ -4,28 +4,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_default"
-    android:id="@+id/player_setting_ll_main"  >
+    android:id="@+id/soundeffect_detail_ll_main"  >
     
-    <RelativeLayout        
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/main" >
-
-        <ImageView
-            android:id="@+id/player_setting_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:src="@drawable/selector_btn_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/setting"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+        android:layout_height="60dp"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:layout_marginBottom="10dp"
+        android:orientation="horizontal" >
+        
+        <FrameLayout    
+            android:id="@+id/soundeffect_detail_iconlayout"        
+	        android:layout_width="60dp"
+	        android:layout_height="60dp"
+	        android:layout_centerVertical="true" >
+        
+	        <ImageView
+		        android:id="@+id/soundeffect_detail_icon_inner"
+		        android:layout_width="50dp"
+		        android:layout_height="50dp"       
+		        android:layout_gravity="center" />            
+	        
+	        <ImageView
+		        android:id="@+id/soundeffect_detail_icon_outer"
+		        android:layout_width="60dp"
+		        android:layout_height="60dp"
+		        android:src="@drawable/soundbox_default"        
+		        android:layout_gravity="center" />
+        </FrameLayout>
+	
+	    <TextView
+	        android:id="@+id/soundeffect_detail_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="name"
+	        android:textColor="@color/white"
+	        android:textSize="20sp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_centerVertical="true"
+	        android:layout_toRightOf="@id/soundeffect_detail_iconlayout" />
+    
+	    <ImageView
+	        android:id="@+id/soundeffect_detail_close"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+	        android:src="@drawable/close"
+	        android:layout_alignParentRight="true" />
+        
     </RelativeLayout>
 
     <RelativeLayout
@@ -37,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/audio_and_effect"
+            android:text="@string/sound_effect"
             android:textColor="@color/light_blacktext"
             android:textSize="18sp"
             android:layout_centerVertical="true"
@@ -60,25 +87,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lizhi_bgm"
+            android:text="@string/lizhi"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp" />
         
-        <CheckBox
-            android:id="@+id/audio_lizhi_bgm_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:button="@null"
-            android:checked="false"
-            android:drawableLeft="@drawable/selector_switch"
-            android:layout_marginRight="10dp" />
-        
         <TextView
-            android:id="@+id/audio_lizhi_bgm_dir"
+            android:id="@+id/soundeffect_detail_lizhi_dir"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -104,25 +120,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sound_effect"
+            android:text="@string/double_lizhi"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp" />
         
-        <CheckBox
-            android:id="@+id/audio_sound_effect_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:button="@null"
-            android:checked="false"
-            android:drawableLeft="@drawable/selector_switch"
-            android:layout_marginRight="10dp" />
-        
         <TextView
-            android:id="@+id/audio_sound_effect_dir"
+            android:id="@+id/soundeffect_detail_dlizhi_dir"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -143,80 +148,7 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="33dp" >
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lizhi"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" />
-        
-        <TextView
-            android:id="@+id/audio_lizhi_dir"
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:text="@string/no_setting"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:gravity="center_vertical|right" 
-            android:singleLine="true"
-            android:ellipsize="middle" />
-    </RelativeLayout>
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="33dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/diver_color" />
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="33dp">
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/double_lizhi"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" />
-        
-        <TextView
-            android:id="@+id/audio_dlizhi_dir"
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:text="@string/no_setting"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:gravity="center_vertical|right" 
-            android:singleLine="true"
-            android:ellipsize="middle" />
-    </RelativeLayout>
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="33dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/diver_color" />
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="33dp">
+        android:layout_height="40dp">
         
         <TextView
             android:layout_width="wrap_content"
@@ -228,16 +160,14 @@
             android:layout_marginLeft="10dp" />
         
         <TextView
-            android:id="@+id/audio_zimo_dir"
-            android:layout_width="180dp"
+            android:id="@+id/soundeffect_detail_zimo_dir"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:text="@string/no_setting"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
             android:textSize="15sp"
             android:textColor="@color/white"
-            android:gravity="center_vertical|right" 
+            android:gravity="center" 
             android:singleLine="true"
             android:ellipsize="middle" />
     </RelativeLayout>
@@ -245,14 +175,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginLeft="33dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/diver_color" />
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="33dp">
+        android:layout_height="40dp">
         
         <TextView
             android:layout_width="wrap_content"
@@ -264,16 +193,14 @@
             android:layout_marginLeft="10dp" />
         
         <TextView
-            android:id="@+id/audio_ronghe_dir"
-            android:layout_width="180dp"
+            android:id="@+id/soundeffect_detail_ronghe_dir"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:text="@string/no_setting"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
             android:textSize="15sp"
             android:textColor="@color/white"
-            android:gravity="center_vertical|right" 
+            android:gravity="center" 
             android:singleLine="true"
             android:ellipsize="middle" />
     </RelativeLayout>
@@ -281,14 +208,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginLeft="33dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/diver_color" />
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="33dp">
+        android:layout_height="40dp">
         
         <TextView
             android:layout_width="wrap_content"
@@ -300,16 +226,14 @@
             android:layout_marginLeft="10dp" />
         
         <TextView
-            android:id="@+id/audio_gametop_dir"
-            android:layout_width="180dp"
+            android:id="@+id/soundeffect_detail_gametop_dir"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:text="@string/no_setting"
+            android:layout_centerInParent="true"
+            android:text="@string/click_to_select"
             android:textSize="15sp"
             android:textColor="@color/white"
-            android:gravity="center_vertical|right" 
+            android:gravity="center" 
             android:singleLine="true"
             android:ellipsize="middle" />
     </RelativeLayout>
@@ -317,7 +241,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginLeft="33dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/diver_color" />
     

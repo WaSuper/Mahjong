@@ -13,6 +13,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * （弃用）早期界面
+ * 
+ * @author Summer Lee
+ *
+ */
 public class MjMainSelectActivity extends Activity implements OnClickListener {
 
 	Button btnJpn;

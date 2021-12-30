@@ -112,7 +112,12 @@ public class RankListActivity extends Activity
 			List<RankItem> items = RankItem.getAllRankItem();
 			Map<String, Player> playerMap = getPlayersWithNPC();
 			for (RankItem item : items) {
-				RankListData data = new RankListData(playerMap.get(item.getPlayerId()), item);
+				Player player = playerMap.get(item.getPlayerId());				
+				if (player == null) {
+					String name = getResources().getString(R.string.cannot_find_player, item.getPlayerId());
+					player = new Player(item.getPlayerId(), name, name, 'M', "", "");
+				}
+				RankListData data = new RankListData(player, item);
 				mResultList.put(item.getPlayerId(), data);
 			}
 			showData();

@@ -7,8 +7,10 @@ import java.util.List;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+@Table(name = "CharacterIcon")
 public class CharacterIcon extends Model {
 
 	public static final String Col_CharacterId	= "CharacterId";
@@ -16,6 +18,10 @@ public class CharacterIcon extends Model {
 	public static final String Col_Rank 		= "Rank";
 	public static final String Col_SortIndex 	= "SortIndex";
 	public static final String Col_Name 		= "Name";	
+	
+	public static final String[] Columns = {
+		Col_CharacterId, Col_Path, Col_Rank, Col_SortIndex, Col_Name
+	};
 	
 	@Column(name = "CharacterId")
 	private long character_id;		// id
@@ -79,6 +85,11 @@ public class CharacterIcon extends Model {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public static List<CharacterIcon> getAllCharacterIcons() {
+		List<CharacterIcon> iconList = new Select().from(CharacterIcon.class).execute();
+		return iconList;
 	}
 	
 	public static List<List<CharacterIcon>> getAllCharacterIcons(long uuid) {

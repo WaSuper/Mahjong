@@ -7,6 +7,7 @@
     <issue id="InlinedApi" severity="ignore" />
     <issue id="NewApi" severity="ignore" />
     <issue id="Override" severity="ignore" />
+    <issue id="ResourceAsColor" severity="ignore" />
     <issue id="RtlHardcoded" severity="ignore" />
     <issue id="SimpleDateFormat" severity="ignore" />
     <issue id="UseSparseArrays" severity="ignore" />

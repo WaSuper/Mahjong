@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,10 +22,8 @@ public class FileTools {
 	final public static String MEMORY_FILE_PATH = "MEMORY_FILE_PATH";
 	final public static String MEMORY_LISTVIEW_POS = "MEMORY_LISTVIEW_POS";
 	final public static String MEMORY_LISTVIE_TOP = "MEMORY_LISTVIE_TOP";
-	public static final String[] supportTypeArray = { "mp3", "wav", "ogg",
-			"ape", "wma", "aif", "aiff", "dsf", "dff", 
-			"flac", "m4a", "aac", "mp1", "mp2", 
-			"oga", "iso", "cue" };
+	public static final String[] Music_supportTypeArray = { "mp3", "wav", "ogg",
+			"ape", "flac", "m4a", "aac"};
 	public static final String[] mimeType = { "audio/x-mpeg", "audio/x-wav", "audio/ogg",
 		"audio/ape", "audio/x-ms-wma", "audio/x-aiff", "audio/x-aiff", "audio/dsf", "audio/dff",
 		"audio/flac", "audio/mp4a-latm", "audio/aac", "audio/x-mpeg", "audio/x-mpeg",
@@ -297,26 +294,6 @@ public class FileTools {
 			}
 		return false;
 	}
-
-	public static FilenameFilter getFilenameFilter(){
-		return mFilter;
-	}
-
-	 private static FilenameFilter mFilter = new FilenameFilter() {
-
-		@Override
-		public boolean accept(File directory, String filename) {
-			for (String s : supportTypeArray) {
-
-				if (getExtension(filename) != null) {
-					if (getExtension(filename).equalsIgnoreCase(s))
-						return true;
-				}
-			}
-			return false;
-		}
-
-	};
 	
 	public static String getExtension(String absPath) {
 		int index = -1;

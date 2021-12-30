@@ -255,8 +255,8 @@ public class FileFitVersionTool {
 				if (ext == null) {
 					mimeType = "audio/*";
 				} else {
-					for (int i = 0; i < FileTools.supportTypeArray.length; i++) {
-						if (ext.equals(FileTools.supportTypeArray[i])) {
+					for (int i = 0; i < FileTools.Music_supportTypeArray.length; i++) {
+						if (ext.equals(FileTools.Music_supportTypeArray[i])) {
 							mimeType = FileTools.mimeType[i];
 							break;
 						}

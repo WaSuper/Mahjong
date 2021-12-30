@@ -221,6 +221,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:gravity="center_horizontal" >
+        
+	        <ImageButton
+	            android:id="@+id/jpn_select_btn_sound_effect"
+	            android:layout_width="70dp"
+	            android:layout_height="70dp"
+	            android:src="@drawable/ic_sound_effect"
+	            android:background="@drawable/selector_bg_function_radius" />
+	        
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:layout_marginTop="3dp"
+	            android:text="@string/sound_effect"
+	            android:textColor="@color/white"
+	            android:textSize="15sp" />
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
             android:visibility="invisible" >
         
@@ -239,16 +264,6 @@
 	            android:text="@string/wlan_battle"
 	            android:textColor="@color/white"
 	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
             
         </LinearLayout>
         

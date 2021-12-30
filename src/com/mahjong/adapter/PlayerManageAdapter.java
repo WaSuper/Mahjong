@@ -65,6 +65,14 @@ public class PlayerManageAdapter extends BaseAdapter {
 		this.notifyDataSetChanged();
 	}
 
+	public void setCharacter(List<Character> characters) {
+		if (characters != null) {			
+			for (Character character : characters) {
+				this.characters.put(character.getUuid(), character);
+			}
+		}
+	}
+	
 	public List<Player> getPlayers() {
 		return players;
 	}

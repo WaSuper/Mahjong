@@ -1,5 +1,6 @@
 package com.mahjong.tools;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +19,8 @@ public class EmoticonTool {
 	public static DisplayImageOptions mDefaultOptions  = new DisplayImageOptions.Builder()
 		.showImageForEmptyUri(R.drawable.emo_unknown) 	//设置图片uri为空或是错误的时候显示的图片
 		.showImageOnFail(R.drawable.emo_unknown) 		//设置图片加载或解码过程中发生错误显示的图片
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
 		.build();
 
 	private static Random random = new Random(System.currentTimeMillis());
@@ -35,7 +38,11 @@ public class EmoticonTool {
 				if (path == null || path.isEmpty()) {
 					return ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.emo_unknown);
 				} else {
-					return ImageLoader.getInstance().loadImageSync("file://" + path, mDefaultOptions);				
+					File imgFile = new File(path);
+					if (imgFile != null && imgFile.exists()) {
+						return ImageLoader.getInstance().loadImageSync("file://" + path, mDefaultOptions);		
+					}
+					return ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.emo_unknown);		
 				}
 			}			
 		} else {
@@ -70,10 +77,21 @@ public class EmoticonTool {
 				List<CharacterIcon> icons = CharacterIcon.getCharacterIcons(player.getCharacterId(), rank, false);
 				if (icons != null && icons.size() > 0) {
 					int pos = random.nextInt(icons.size());
-					bitmap = ImageLoader.getInstance().loadImageSync("file://" + icons.get(pos).getPath(), mDefaultOptions);
+					String filePath = icons.get(pos).getPath();
+					File imgFile = new File(filePath);
+					if (imgFile != null && imgFile.exists()) {
+						bitmap = ImageLoader.getInstance().loadImageSync("file://" + filePath, mDefaultOptions);
+					} else {
+						bitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.emo_unknown);
+					}
 				} else {
 					if (player.getIcon() != null && !player.getIcon().isEmpty()) {
-						bitmap = ImageLoader.getInstance().loadImageSync("file://" + player.getIcon(), mDefaultOptions);
+						File imgFile = new File(player.getIcon());
+						if (imgFile != null && imgFile.exists()) {
+							bitmap = ImageLoader.getInstance().loadImageSync("file://" + player.getIcon(), mDefaultOptions);
+						} else {
+							bitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.emo_unknown);
+						}
 					} else {
 						bitmap = ImageLoader.getInstance().loadImageSync("drawable://" + R.drawable.emo_unknown);
 					}					

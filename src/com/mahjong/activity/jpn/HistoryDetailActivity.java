@@ -178,7 +178,7 @@ public class HistoryDetailActivity extends Activity implements OnClickListener {
 				}
 			}
 			frDialog.setData(players, mResult.getPoints(), 
-					mResult.getMas(), mResult.getRanks(), analysisTool);
+					mResult.getMas(), mResult.getRanks(), analysisTool, null);
 		}			
 		frDialog.show();
 	}

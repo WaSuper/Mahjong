@@ -20,16 +20,24 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"/>
 
+        <ImageView
+            android:id="@+id/file_more"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/selector_btn_more"
+            android:padding="5dp"
+            android:layout_alignParentRight="true"/>
+        
         <TextView
             android:id="@+id/file_back"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="50dp"
             android:text="↑"
             android:gravity="center"
             android:textSize="25sp"
             android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"/>
+            android:layout_toLeftOf="@id/file_more"
+            android:layout_marginRight="0dp"/>
 
         <TextView
             android:id="@+id/file_title"
@@ -69,11 +77,11 @@
         android:visibility="gone" >
         
         <Button
-        	android:id="@+id/file_cancel"
+        	android:id="@+id/file_choose_all"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/cancel"
+            android:text="@string/choose_all_or_not"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:background="@drawable/selector_button_radius_green"

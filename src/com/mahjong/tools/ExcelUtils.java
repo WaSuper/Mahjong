@@ -16,9 +16,12 @@ import java.util.Map;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.mahjong.model.AudioItem;
+import com.mahjong.model.Character;
+import com.mahjong.model.CharacterIcon;
 import com.mahjong.model.MjDetail;
 import com.mahjong.model.MjResult;
 import com.mahjong.model.Player;
+import com.mahjong.model.SoundBox;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -33,6 +36,9 @@ public class ExcelUtils {
 	private static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	private static final String mainSheetName = "main";
 	private static final String audioSheetName = "audio";
+	private static final String soundboxSheetName = "soundbox";
+	private static final String characterSheetName = "character";
+	private static final String iconSheetName = "icon";
 	
 	/**
 	 * 创建excel表（历史清单）
@@ -133,11 +139,16 @@ public class ExcelUtils {
 	 * 
 	 * @param filePath 保存路径
 	 * @param fileName 文件名
-	 * @param playerList 保存数据
+	 * @param playerList 玩家数据
+	 * @param audioList 音频数据
+	 * @param soundboxList 音频包数据
+	 * @param characterList 表情包数据
+	 * @param iconList 表情数据
 	 * @return 
 	 */
 	public static boolean createExcelFromPlayer(String filePath, String fileName, 
-			List<Player> playerList, List<AudioItem> audioList) {
+			List<Player> playerList, List<AudioItem> audioList, List<SoundBox> soundboxList,
+			List<Character> characterList, List<CharacterIcon> iconList) {
 		try {
 			File savePath = new File(filePath);
 			if (!savePath.exists()) {
@@ -172,6 +183,48 @@ public class ExcelUtils {
 					audioSheet.addCell(new Number(1, row, item.getType()));
 					audioSheet.addCell(new Label(2, row, item.getFilePath()));
 					audioSheet.addCell(new Number(3, row, item.getEnable() ? 1 : 0));
+					audioSheet.addCell(new Number(4, row, item.getSoundBoxId()));
+				}
+			}
+			WritableSheet soundboxSheet = writableWorkbook.createSheet(soundboxSheetName, 2); // 创建音频包表
+			addSheetTitle(soundboxSheet, SoundBox.Columns); // 添加标题
+			if (soundboxList != null && soundboxList.size() > 0) {
+				for (int i = 0; i < soundboxList.size(); i++) {
+					SoundBox soundbox = soundboxList.get(i);
+					int row = i + 1;
+					soundboxSheet.addCell(new Number(0, row, soundbox.getUuid()));
+					soundboxSheet.addCell(new Label(1, row, soundbox.getName()));
+					soundboxSheet.addCell(new Label(2, row, soundbox.getDefaultIcon()));
+					soundboxSheet.addCell(new Number(3, row, soundbox.getIndex()));
+					soundboxSheet.addCell(new Label(4, row, soundbox.getDescription()));
+				}
+			}
+			WritableSheet characterSheet = writableWorkbook.createSheet(characterSheetName, 3); // 创建表情包表
+			addSheetTitle(characterSheet, Character.Columns); // 添加标题
+			if (characterList != null && characterList.size() > 0) {
+				int row = 1;
+				for (int i = 0; i < characterList.size(); i++) {
+					Character character = characterList.get(i);
+					if (character.getUuid() < 0) continue; // -1为默认表情包，不需要保存
+					characterSheet.addCell(new Number(0, row, character.getUuid()));
+					characterSheet.addCell(new Label(1, row, character.getName()));
+					characterSheet.addCell(new Label(2, row, character.getDefaultIcon()));
+					characterSheet.addCell(new Number(3, row, character.getIndex()));
+					characterSheet.addCell(new Label(4, row, character.getDescription()));
+					row++;
+				}
+			}
+			WritableSheet iconSheet = writableWorkbook.createSheet(iconSheetName, 4); // 创建表情表
+			addSheetTitle(iconSheet, CharacterIcon.Columns); // 添加标题
+			if (iconList != null && iconList.size() > 0) {
+				for (int i = 0; i < iconList.size(); i++) {
+					CharacterIcon icon = iconList.get(i);
+					int row = i + 1;
+					iconSheet.addCell(new Number(0, row, icon.getCharacterId()));
+					iconSheet.addCell(new Label(1, row, icon.getPath()));
+					iconSheet.addCell(new Number(2, row, icon.getRank()));
+					iconSheet.addCell(new Number(3, row, icon.getIndex()));
+					iconSheet.addCell(new Label(4, row, icon.getName()));
 				}
 			}
 			writableWorkbook.write(); // 写入数据			
@@ -366,6 +419,9 @@ public class ExcelUtils {
         	workbook = Workbook.getWorkbook(is);
         	Sheet mainSheet = null;
         	Sheet audioSheet = null;
+        	Sheet soundboxSheet = null;
+        	Sheet characterSheet = null;
+        	Sheet iconSheet = null;
         	for (Sheet sheet : workbook.getSheets()) {
         		if (sheet.getName().equals(mainSheetName)) {
 					if (sheet.getColumns() < 7 || sheet.getRows() < 2) {
@@ -375,60 +431,63 @@ public class ExcelUtils {
 					}
         		} else if (sheet.getName().equals(audioSheetName)) {
         			audioSheet = sheet;
+        		} else if (sheet.getName().equals(soundboxSheetName)) {
+        			soundboxSheet = sheet;
+        		} else if (sheet.getName().equals(characterSheetName)) {
+        			characterSheet = sheet;
+        		} else if (sheet.getName().equals(iconSheetName)) {
+        			iconSheet = sheet;
         		}
         	}
+        	// 解析玩家表
         	if (mainSheet == null) return closeExcel(workbook);
-        	List<Player> playerList = new ArrayList<Player>();
-        	for (int i = 1; i < mainSheet.getRows(); i++) { // 逐行解析主表
-        		String uuid = mainSheet.getCell(0, i).getContents();
-        		if (uuid == null || uuid.isEmpty()) continue;
-        		String name = mainSheet.getCell(1, i).getContents();
-        		if (name == null || name.isEmpty()) continue;
-        		String nickName = mainSheet.getCell(2, i).getContents();
-        		if (nickName == null || nickName.isEmpty()) continue;
-        		String sexString = mainSheet.getCell(3, i).getContents();
-        		if (!sexString.equals("M") && !sexString.equals("F")) continue;
-        		char sex = sexString.equals("M") ? 'M' : 'F';
-        		String sign = mainSheet.getCell(4, i).getContents();
-        		String icon = mainSheet.getCell(5, i).getContents();
-        		long characterId = Long.parseLong(mainSheet.getCell(6, i).getContents());
-        		Player player = new Player(uuid, name, nickName, sex, sign, icon, characterId);
-        		playerList.add(player);
+        	List<Player> dbPlayers = Player.getAllPlayer();
+        	Map<String, Player> allPlayerIds = new HashMap<String, Player>(); // 存储所有玩家id
+        	for (Player player : dbPlayers) {
+				allPlayerIds.put(player.getUuid(), player);
+			}
+        	List<Player> newPlayerList = readPlayerSheet(mainSheet, allPlayerIds);
+        	// 解析音频包表
+        	List<SoundBox> dbSoundBoxs = SoundBox.getAllSoundBoxs();
+        	Map<Long, SoundBox> allSoundBoxIds = new HashMap<Long, SoundBox>(); // 存储所有音频包id
+        	for (SoundBox soundbox : dbSoundBoxs) {
+				allSoundBoxIds.put(soundbox.getUuid(), soundbox);
+			}
+        	List<SoundBox> newSoundboxList = readSoundBoxSheet(soundboxSheet, allSoundBoxIds);
+        	// 解析音频表
+        	List<AudioItem> newAudioList = readAudioItemSheet(audioSheet, allPlayerIds);
+        	// 解析表情包表
+        	List<Character> dbCharacters = Character.getAllCharacters();
+        	Map<Long, Character> allCharacterIds = new HashMap<Long, Character>(); // 存储所有表情包id
+        	for (Character character : dbCharacters) {
+        		allCharacterIds.put(character.getUuid(), character);
         	}
-        	List<AudioItem> audioList = new ArrayList<AudioItem>();
-        	if (audioSheet != null && audioSheet.getColumns() >= 4) {
-				for (int i = 1; i < audioSheet.getRows(); i++) {
-					String playerId = audioSheet.getCell(0, i).getContents();
-					if (playerId == null || playerId.isEmpty()) continue;
-					int type = Integer.parseInt(audioSheet.getCell(1, i).getContents());
-					if (type <= 0) continue;
-					String path = audioSheet.getCell(2, i).getContents();
-					Boolean enable = Integer.parseInt(audioSheet.getCell(3, i).getContents()) == 0 ? false : true;
-					AudioItem item = new AudioItem(playerId, type, path, enable);
-					audioList.add(item);
-				}
-			}
+        	List<Character> newCharacterList = readCharactersheet(characterSheet, allCharacterIds);
+        	// 解析表情表
+        	List<CharacterIcon> newIconList = readIconSheet(iconSheet, allCharacterIds);
+        	// 保存数据
         	ActiveAndroid.beginTransaction();
-	        for (int i = 0; i < playerList.size(); i++) {
-	        	Player player = playerList.get(i);
-	        	Player tmp = new Select().from(Player.class)
-	        			.where(Player.Col_Uuid + "=?", player.getUuid())
-		        		.executeSingle();
-	        	if (tmp == null) {
-	        		player.save();
-					count++;
-				}				
-			}	        
-	        for (int i = 0; i < audioList.size(); i++) {
-				AudioItem audio = audioList.get(i);
-				AudioItem tmp = new Select().from(AudioItem.class)
-						.where(AudioItem.Col_PlayerId + "=? and " + AudioItem.Col_Type + "=?", 
-								audio.getPlayerId(), audio.getType())
-						.executeSingle();
-				if (tmp == null) {
-					audio.save();
-				}
+	        for (int i = 0; i < newPlayerList.size(); i++) {
+	        	newPlayerList.get(i).save();	
+			}	 
+	        for (int i = 0; i < newSoundboxList.size(); i++) {
+	        	newSoundboxList.get(i).save();
+			}       
+	        for (int i = 0; i < newAudioList.size(); i++) {
+				newAudioList.get(i).save();
 			}
+	        for (int i = 0; i < newCharacterList.size(); i++) {
+	        	newCharacterList.get(i).save();
+			}
+	        for (int i = 0; i < newIconList.size(); i++) {
+				newIconList.get(i).save();
+			}
+	        count = newPlayerList.size(); // 返回新增玩家数量
+	        if (count == 0) {
+	        	boolean isImportExtra = newSoundboxList.size() > 0 || newAudioList.size() > 0
+	        			|| newCharacterList.size() > 0 || newIconList.size() > 0;
+	        	if (isImportExtra) count = -2;
+			}        	
 	        ActiveAndroid.setTransactionSuccessful();
 	        ActiveAndroid.endTransaction();
 	        workbook.close();// 关闭工作簿
@@ -442,6 +501,222 @@ public class ExcelUtils {
         return count;
 	}
 	
+	/**
+	 * 解析玩家表
+	 * 
+	 * @param mainSheet
+	 * @param allPlayerIds
+	 * @return
+	 */
+	private static List<Player> readPlayerSheet(Sheet mainSheet, Map<String, Player> allPlayerIds) {
+		List<Player> newPlayerList = new ArrayList<Player>();
+    	for (int i = 1; i < mainSheet.getRows(); i++) { // 逐行解析主表
+    		String uuid = mainSheet.getCell(0, i).getContents();
+    		if (uuid == null || uuid.isEmpty()) continue;
+    		Player tmpPlayer = allPlayerIds.get(uuid);
+    		if (tmpPlayer != null) continue; // 存在的玩家跳过
+    		String name = mainSheet.getCell(1, i).getContents();
+    		if (name == null || name.isEmpty()) continue;
+    		String nickName = mainSheet.getCell(2, i).getContents();
+    		if (nickName == null || nickName.isEmpty()) continue;
+    		String sexString = mainSheet.getCell(3, i).getContents();
+    		if (!sexString.equals("M") && !sexString.equals("F")) continue;
+    		char sex = sexString.equals("M") ? 'M' : 'F';
+    		String sign = mainSheet.getCell(4, i).getContents();
+    		String icon = mainSheet.getCell(5, i).getContents();
+    		long characterId = Long.parseLong(mainSheet.getCell(6, i).getContents());
+    		Player player = new Player(uuid, name, nickName, sex, sign, icon, characterId, -1);
+    		newPlayerList.add(player);
+    		allPlayerIds.put(uuid, player);    		
+    	}
+    	return newPlayerList;
+	}
+	
+	/**
+	 * 解析音频包表
+	 * 
+	 * @param soundboxSheet
+	 * @param allSoundBoxIds
+	 * @return
+	 */
+	private static List<SoundBox> readSoundBoxSheet(Sheet soundboxSheet, Map<Long, SoundBox> allSoundBoxIds) {
+		List<SoundBox> newSoundboxList = new ArrayList<SoundBox>();
+    	if (soundboxSheet != null && soundboxSheet.getColumns() >= 5) {
+			for (int i = 1; i < soundboxSheet.getRows(); i++) {
+				String soundboxString = soundboxSheet.getCell(0, i).getContents();
+				long soundboxId = -1;
+				if (soundboxString != null && !soundboxString.isEmpty()) {
+					soundboxId = Long.parseLong(soundboxString);
+				}
+				if (soundboxId < 0) continue;
+				SoundBox tmpBox = allSoundBoxIds.get(soundboxId);
+				if (tmpBox != null) continue; // 存在的音频包跳过
+				String name = soundboxSheet.getCell(1, i).getContents();
+				String icon = soundboxSheet.getCell(2, i).getContents();
+				int index = Integer.parseInt(soundboxSheet.getCell(3, i).getContents());
+				String description = soundboxSheet.getCell(4, i).getContents();
+				SoundBox soundbox = new SoundBox(soundboxId, name, icon, index, description);
+				newSoundboxList.add(soundbox);
+				allSoundBoxIds.put(soundboxId, soundbox);
+			}
+		}
+    	return newSoundboxList;
+	}
+	
+	/**
+	 * 解析音频表
+	 * 
+	 * @param audioSheet
+	 * @param allPlayerIds
+	 * @return
+	 */
+	private static List<AudioItem> readAudioItemSheet(Sheet audioSheet, Map<String, Player> allPlayerIds) {
+		List<AudioItem> newAudioList = new ArrayList<AudioItem>();
+		if (audioSheet != null && audioSheet.getColumns() >= 5) {
+        	List<AudioItem> dbAudioItems = AudioItem.getAllAudioItems();
+        	Map<String, AudioItem> type0List = new HashMap<String, AudioItem>();
+        	Map<String, AudioItem> type1List = new HashMap<String, AudioItem>();
+        	List<AudioItem> typeElseList = new ArrayList<AudioItem>();
+        	for (AudioItem item : dbAudioItems) {
+				switch (item.getType()) {
+				case AudioTool.Type_SoundBox:
+					type0List.put(item.getPlayerId() ,item);
+					break;
+				case AudioTool.Type_Lizhi_BGM:
+					type1List.put(item.getPlayerId() ,item);
+					break;
+				default:
+					typeElseList.add(item);
+					break;
+				}
+			}
+			for (int i = 1; i < audioSheet.getRows(); i++) {
+				String playerId = audioSheet.getCell(0, i).getContents();
+				String soundboxString = audioSheet.getCell(4, i).getContents();
+				long soundboxId = -1;
+				if (soundboxString != null && !soundboxString.isEmpty()) {
+					soundboxId = Long.parseLong(soundboxString);
+				}
+				int type = Integer.parseInt(audioSheet.getCell(1, i).getContents());
+				if (type < 0) continue;
+				switch (type) {
+				case AudioTool.Type_SoundBox:
+					if (playerId == null || playerId.isEmpty()) continue;
+					if (allPlayerIds.get(playerId) == null) continue;
+					if (type0List.get(playerId) != null) continue;
+					break;
+				case AudioTool.Type_Lizhi_BGM:
+					if (playerId == null || playerId.isEmpty()) continue;
+					if (allPlayerIds.get(playerId) == null) continue;
+					if (type1List.get(playerId) != null) continue;
+					break;
+				default:
+					boolean isExist = false;
+					for (AudioItem tmpItem : typeElseList) {
+						if (tmpItem.getType() == type && tmpItem.getSoundBoxId() == soundboxId) {
+							isExist = true;
+							break;
+						}
+					}
+					if (isExist) continue;
+					break;
+				}
+				String path = audioSheet.getCell(2, i).getContents();
+				Boolean enable = Integer.parseInt(audioSheet.getCell(3, i).getContents()) == 0 ? false : true;
+				AudioItem item = new AudioItem(playerId, soundboxId, type, path, enable);
+				newAudioList.add(item);
+				switch (type) {
+				case AudioTool.Type_SoundBox:
+					type0List.put(item.getPlayerId(), item);
+					break;
+				case AudioTool.Type_Lizhi_BGM:
+					type1List.put(item.getPlayerId(), item);
+					break;
+				default:
+					typeElseList.add(item);
+					break;
+				}
+			}
+		}
+		return newAudioList;
+	}
+	
+	/**
+	 * 解析表情包表
+	 * 
+	 * @param characterSheet
+	 * @param allCharacterIds
+	 * @return
+	 */
+	private static List<Character> readCharactersheet(Sheet characterSheet, Map<Long, Character> allCharacterIds) {
+		List<Character> newCharacterList = new ArrayList<Character>();
+    	if (characterSheet != null && characterSheet.getColumns() >= 5) {
+			for (int i = 1; i < characterSheet.getRows(); i++) {
+				String characterString = characterSheet.getCell(0, i).getContents();
+				long characterId = -1;
+				if (characterString != null && !characterString.isEmpty()) {
+					characterId = Long.parseLong(characterString);
+				}
+				if (characterId < 0) continue;
+				Character tmpCharacter = allCharacterIds.get(characterId);
+				if (tmpCharacter != null) continue; // 存在的表情包跳过
+				String name = characterSheet.getCell(1, i).getContents();
+				String icon = characterSheet.getCell(2, i).getContents();
+				int index = Integer.parseInt(characterSheet.getCell(3, i).getContents());
+				String description = characterSheet.getCell(4, i).getContents();
+				Character character = new Character(characterId, name, icon, index, description);
+				newCharacterList.add(character);
+				allCharacterIds.put(characterId, character);
+			}
+		}
+    	return newCharacterList;
+	}
+	
+	/**
+	 * 解析表情表
+	 * 
+	 * @param iconSheet
+	 * @return
+	 */
+	private static List<CharacterIcon> readIconSheet(Sheet iconSheet, Map<Long, Character> allCharacterIds) {
+		List<CharacterIcon> newIconList = new ArrayList<CharacterIcon>();
+    	if (iconSheet != null && iconSheet.getColumns() >= 5) {
+    		List<CharacterIcon> dbCharacterIcons = CharacterIcon.getAllCharacterIcons();
+    		List<List<CharacterIcon>> rankList = new ArrayList<List<CharacterIcon>>();
+    		// 分成4个等级的列表
+    		for (int i = 0; i < 4; i++) {
+				rankList.add(new ArrayList<CharacterIcon>());
+			}
+    		for (CharacterIcon icon : dbCharacterIcons) {
+    			int rank = icon.getRank();
+    			rankList.get(rank - 1).add(icon);
+    		}
+			for (int i = 1; i < iconSheet.getRows(); i++) {
+				long id = Long.parseLong(iconSheet.getCell(0, i).getContents());
+				if (id < 0) continue;
+				if (allCharacterIds.get(id) == null) continue;
+				String path = iconSheet.getCell(1, i).getContents();
+				if (path == null || path.isEmpty()) continue;
+				int rank = Integer.parseInt(iconSheet.getCell(2, i).getContents());
+				if (rank < 0 || rank > 4) continue;
+				List<CharacterIcon> curIconList = rankList.get(rank - 1);
+				boolean isExist = false;
+				for (CharacterIcon icon : curIconList) {
+					if (id == icon.getCharacterId() && path.equals(icon.getPath())) {
+						isExist = true;
+						break;
+					}
+				}
+				if (isExist) continue;
+				int index = Integer.parseInt(iconSheet.getCell(3, i).getContents());
+				String name = iconSheet.getCell(4, i).getContents();
+				CharacterIcon characterIcon = new CharacterIcon(id, path, rank, index, name);
+				newIconList.add(characterIcon);
+				curIconList.add(characterIcon);
+			}
+		}
+    	return newIconList;
+	}
 	
 	/**
 	 * 关闭工作表

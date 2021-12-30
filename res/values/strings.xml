@@ -260,6 +260,7 @@
 	<string name="batch_operation">批量操作</string>
 	<string name="please_select_operation">请选择操作</string>
 	<string name="choose_all">全选</string>
+	<string name="choose_all_or_not">全选/反选</string>
 	<string name="view_detail">查看详情</string>
 	<string name="delete_success">删除成功！</string>
 	<string name="show_all">显示全部</string>
@@ -301,6 +302,7 @@
 	<string name="import_fail">导入失败！</string>
 	<string name="import_success">导入成功！</string>
 	<string name="import_player_success">成功导入%d个玩家！</string>
+	<string name="import_icon_success">成功导入%d个表情包！</string>
 	<string name="input_icon_exist">表情已存在！</string>
 	<string name="modify_fail">修改失败！</string>
 	<string name="ensure_delete_emoticon_package">是否删除该表情包？</string>
@@ -311,7 +313,7 @@
 	<string name="emoticon_import_information">表情包名字：选取的文件夹名\n表情包图标：形如xxxx_0_1.jpg\n排位一图标：形如xxxx_1_1.jpg、xxxx_1_2.jpg等
 	    \n排位二图标：形如xxxx_2_1.jpg、xxxx_2_2.jpg等\n排位三图标：形如xxxx_3_1.jpg、xxxx_3_2.jpg等\n排位四图标：形如xxxx_4_1.jpg、xxxx_4_2.jpg等
 	    \nPS:支持图片格式有jpg、png、webp</string>
-	<string name="player_export_information">本次将导出所有玩家基本信息，并覆盖原本文件（注意保存信息）</string>
+	<string name="player_export_information">本次将导出所有玩家基本信息（包含音频数据和表情数据），并覆盖原本文件（注意保存信息）</string>
 	<string name="no_yaku">玩家无役，请确认输入牌谱！</string>
 	<string name="sign_none">无言的胜利！无敌的寂寞！</string>
 	<string name="rank_point">点数榜</string>
@@ -348,5 +350,20 @@
 	<string name="please_select">请选择</string>
 	<string name="file_all">手机存储</string>
 	<string name="file_music_history">历史音频</string>
+	<string name="sort_by_letter">根据字母排序</string>
+	<string name="sort_by_date">根据时间排序</string>
+	<string name="sound_effect">音频包</string>
+	<string name="sound_effect_import_title">音频包导入规则</string>
+	<string name="sound_effect_import_information">音频包名字：选取的文件夹名\n立直音频：形如xxxx_act_rich.mp3\n双立直音频：形如xxxx_act_drich.mp3
+	    \n自摸音频：形如xxxx_act_tumo.mp3\n荣和音频：形如xxxx_act_ron.mp3\n冠军宣言音频：形如xxxx_game_top.mp3</string>
+	<string name="ensure_delete_soundbox">是否删除该音频包？</string>
+	<string name="please_select_soundbox">请选择音频包</string>
+	<string name="import_soundbox_success">成功导入%d个音频包！</string>
+	<string name="cannot_find_player">玩家ID(%s)已飞往外太空...</string>
+	<string name="game_top_talk">冠军宣言</string>
+	<string name="no_setting">未设置</string>
+	<string name="dealing">正在施工中，请稍候...</string>
+	<string name="no_new_player">无新增玩家</string>
+	<string name="some_data_added">部分数据已补充</string>
 	    
 </resources>

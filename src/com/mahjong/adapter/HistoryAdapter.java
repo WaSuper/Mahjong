@@ -183,7 +183,7 @@ public class HistoryAdapter extends BaseAdapter {
 		}
 		MjResult result = mResults.get(position);
 		String title = result.getTitle();
-		if (title == null || title == "") {
+		if (title == null || title.isEmpty()) {
 			title = mContext.getString(R.string.result_title_none);
 		}
 		holder.titleView.setText(title);

@@ -64,6 +64,10 @@ public class RankListDetailActivity extends Activity implements OnClickListener 
 						break;
 					}
 				}
+				if (mPlayer == null) {
+					String name = getResources().getString(R.string.cannot_find_player, id);
+					mPlayer = new Player(id, name, name, 'M', "", "");
+				}
 			}
 			mRankItem = RankItem.getRankItem(id);
 		}		

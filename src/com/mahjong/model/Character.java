@@ -8,11 +8,13 @@ import android.content.Context;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.activeandroid.query.Update;
 import com.mahjong.R;
 
+@Table(name = "Character")
 public class Character extends Model {
 
 	public static final String Col_Uuid 		= "Uuid";
@@ -20,6 +22,10 @@ public class Character extends Model {
 	public static final String Col_DefaultIcon 	= "DefaultIcon";
 	public static final String Col_SortIndex 	= "SortIndex";
 	public static final String Col_Description 	= "Description";
+	
+	public static final String[] Columns = {
+		Col_Uuid, Col_Name, Col_DefaultIcon, Col_SortIndex, Col_Description
+	};
 	
 	@Column(name = "Uuid", unique = true)
 	private long uuid;				// id
@@ -90,6 +96,17 @@ public class Character extends Model {
 	}
 	
 	/**
+	 * 获取全部角色（无默认角色）
+	 * 
+	 * @return
+	 */
+	public static List<Character> getAllCharacters() {
+		List<Character> list = new Select().from(Character.class)
+				.orderBy(Character.Col_SortIndex + " ASC").execute();
+		return list;
+	}
+	
+	/**
 	 * 获取全部角色（第一个为默认角色）
 	 * 
 	 * @param context
@@ -105,6 +122,13 @@ public class Character extends Model {
 		return allCharacters;
 	}
 	
+	/**
+	 * 获取单个角色（第一个为默认角色）
+	 * 
+	 * @param context
+	 * @param uuid
+	 * @return
+	 */
 	public static Character getCharacter(Context context, long uuid) {
 		if (uuid == -1) {
 			return new Character(-1, context.getString(R.string.default_name), null, 0);
@@ -170,7 +194,7 @@ public class Character extends Model {
 	}
 	
 	/**
-	 * 修改角色
+	 * 修改角色名字
 	 * 
 	 * @param character
 	 * @param name
@@ -184,7 +208,7 @@ public class Character extends Model {
 	}
 	
 	/**
-	 * 修改角色
+	 * 修改角色头像
 	 * 
 	 * @param character
 	 * @param default_icon

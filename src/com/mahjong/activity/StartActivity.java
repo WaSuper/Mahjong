@@ -37,8 +37,6 @@ public class StartActivity extends Activity implements OnRequestPermissionsResul
 		handler.postDelayed(new Runnable() {
 
 			public void run() {
-//				startActivity(new Intent(StartActivity.this,
-//						MjJpnDiceActivity.class));
 				startActivity(new Intent(StartActivity.this,
 						MainSelectActivity.class));
 				StartActivity.this.finish();

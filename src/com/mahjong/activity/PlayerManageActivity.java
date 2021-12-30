@@ -8,7 +8,9 @@ import com.mahjong.R;
 import com.mahjong.adapter.PlayerManageAdapter;
 import com.mahjong.model.AudioItem;
 import com.mahjong.model.Character;
+import com.mahjong.model.CharacterIcon;
 import com.mahjong.model.Player;
+import com.mahjong.model.SoundBox;
 import com.mahjong.tools.ExcelUtils;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.tools.ValueTool;
@@ -22,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,6 +59,8 @@ public class PlayerManageActivity extends Activity
 	
 	private String mLastSelectPath = "";
 	
+	Handler handler = new Handler();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,9 +80,16 @@ public class PlayerManageActivity extends Activity
 				int count = ExcelUtils.readExcelToPlayer(path);
 				if (count > 0) {
 					ToastTool.showToast(mContext, getString(R.string.import_player_success, count));
-				} else {
+				} else if (count == 0) {
+					ToastTool.showToast(mContext, R.string.no_new_player);
+				} else if (count == -1) {
 					ToastTool.showToast(mContext, R.string.import_fail);
+				} else if (count == -2) {
+					ToastTool.showToast(mContext, getString(R.string.no_new_player) + "，" 
+							+ getString(R.string.some_data_added));
 				}
+				List<Character> characters = Character.getAllCharacters();
+				mPlayerAdapter.setCharacter(characters);
 			case REQUEST_CREATEPLAYER:
 			case REQUEST_EDITPLAYER:
 				List<Player> list = Player.getAllPlayer();
@@ -250,15 +262,31 @@ public class PlayerManageActivity extends Activity
 			
 			@Override
 			public void onClick(View view) {	
-				String fileName = "player";
-				String filePath = Environment.getExternalStorageDirectory() + "/Mahjong";
-				if (ExcelUtils.createExcelFromPlayer(filePath, fileName, 
-						Player.getAllPlayer(), AudioItem.getAllAudioItems())) {
-			        ToastTool.showToast(mContext, mContext.getString(R.string.export_success, filePath + "/" + fileName + ".xls"));				
-				} else {
-					ToastTool.showToast(mContext, mContext.getString(R.string.export_fail));	
-				}
+				ToastTool.showToast(mContext, mContext.getString(R.string.dealing));		
 				mDialog.dismiss();
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						final String fileName = "player";
+						final String filePath = Environment.getExternalStorageDirectory() + "/Mahjong";
+						final boolean isDone = ExcelUtils.createExcelFromPlayer(filePath, fileName, 
+								Player.getAllPlayer(), AudioItem.getAllAudioItems(), SoundBox.getAllSoundBoxs(),
+								Character.getAllCharacters(), CharacterIcon.getAllCharacterIcons());						
+						handler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								if (isDone) {
+							        ToastTool.showToast(mContext, mContext.getString(R.string.export_success, 
+							        		filePath + "/" + fileName + ".xls"));				
+								} else {
+									ToastTool.showToast(mContext, mContext.getString(R.string.export_fail));	
+								}
+							}
+						});
+					}
+				}).start();			
 			}
 		});
 		mDialog.cancel.setOnClickListener(new OnClickListener() {
