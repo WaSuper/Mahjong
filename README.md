@@ -36,7 +36,8 @@
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/5_emoticon.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/6_emoticon_detail.jpg)
 
 七.音频包
-将玩家音效独立出来统一设置
+将玩家音效独立出来统一设置，可以为每个玩家单独设置一套音频
+![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/20_soundbox.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/21_soundbox_detail.jpg)
 
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
