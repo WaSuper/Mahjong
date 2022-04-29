@@ -14,6 +14,7 @@ public class Yaku09_LingShangKaiHua extends Yaku {
 	public Yaku09_LingShangKaiHua() {
 		mOrderIndex = 9;
 		mFlags = YakuFlag.Environment;
+		mName = "LingShangKaiHua";
 	}
 	
 	@Override

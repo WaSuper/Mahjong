@@ -9,11 +9,12 @@ import com.mahjong.data.jpn.YakuEnvironment;
 import com.mahjong.data.jpn.YakuFlag;
 import com.mahjong.data.jpn.YakuValue;
 
-public class Yaku50_TianDiRen extends Yaku {
+public class Yaku50_TianHe extends Yaku {
 
-	public Yaku50_TianDiRen() {
+	public Yaku50_TianHe() {
 		mOrderIndex = 50;
 		mFlags = YakuFlag.YiMan | YakuFlag.Environment | YakuFlag.MenQianQing;
+		mName = "TianHe";
 	}
 		
 	@Override
@@ -22,12 +23,9 @@ public class Yaku50_TianDiRen extends Yaku {
 		if ((env & YakuEnvironment.ZiMo) != 0) {
 			if ((env & YakuEnvironment.SelfWindEast) != 0) {
 				result.add(YakuValue.FromFullYaku(this, "天和", 1));
-			} else {
-				result.add(YakuValue.FromFullYaku(this, "地和", 1));
+				mName = "TianHe";
 			}
-		} else {
-			result.add(YakuValue.FromFullYaku(this, "人和", 1));
-		}
+		} 
 		return true;
 	}
 

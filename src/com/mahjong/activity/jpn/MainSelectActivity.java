@@ -7,6 +7,7 @@ import com.mahjong.activity.PlayerManageActivity;
 import com.mahjong.activity.SoundEffectActivity;
 import com.mahjong.activity.jpn.CalculateActivity;
 import com.mahjong.activity.jpn.SettingActivity;
+import com.mahjong.tools.SpecialYakuTool;
 import com.mahjong.tools.ToastTool;
 
 import android.app.Activity;
@@ -37,8 +38,14 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_function_select);
 		initUI();
+		initData();
 	}
 
+	private void initData() {
+		// 初始化特殊役保存文件地址
+		SpecialYakuTool.getInstance().init(this, getFilesDir().toString());
+	}
+	
 	private void initUI() {
 		btnBattleEntrance = (ImageButton) findViewById(R.id.jpn_select_btn_battle_entrance);
 		btnBattleRecord = (ImageButton) findViewById(R.id.jpn_select_btn_battle_record);

@@ -36,8 +36,17 @@ import com.mahjong.data.jpn.yaku.Yaku26_ErBeiKou;
 import com.mahjong.data.jpn.yaku.Yaku27_ChunQuanDaiYaoJiu;
 import com.mahjong.data.jpn.yaku.Yaku28_HunYiSe;
 import com.mahjong.data.jpn.yaku.Yaku29_QingYiSe;
-import com.mahjong.data.jpn.yaku.Yaku50_TianDiRen;
-import com.mahjong.data.jpn.yaku.Yaku51_DaCheLun;
+import com.mahjong.data.jpn.yaku.Yaku31_ShiErLuoTai;
+import com.mahjong.data.jpn.yaku.Yaku32_SanLianKe;
+import com.mahjong.data.jpn.yaku.Yaku33_SanSeTongGuan;
+import com.mahjong.data.jpn.yaku.Yaku34_SanSeLianKe;
+import com.mahjong.data.jpn.yaku.Yaku35_JingTongHe;
+import com.mahjong.data.jpn.yaku.Yaku36_ErTongKe;
+import com.mahjong.data.jpn.yaku.Yaku37_SanSeShuangLongHui;
+import com.mahjong.data.jpn.yaku.Yaku50_TianHe;
+import com.mahjong.data.jpn.yaku.Yaku51_DiHe;
+import com.mahjong.data.jpn.yaku.Yaku70_RenHe;
+import com.mahjong.data.jpn.yaku.Yaku71_DaCheLun;
 import com.mahjong.data.jpn.yaku.Yaku52_GuoShuiWuShuang;
 import com.mahjong.data.jpn.yaku.Yaku53_JiuLianBaiDeng;
 import com.mahjong.data.jpn.yaku.Yaku54_SiAnKe;
@@ -48,10 +57,13 @@ import com.mahjong.data.jpn.yaku.Yaku58_ZiYiSe;
 import com.mahjong.data.jpn.yaku.Yaku59_QingLaoTou;
 import com.mahjong.data.jpn.yaku.Yaku60_XiaoSixi;
 import com.mahjong.data.jpn.yaku.Yaku61_DaSixi;
+import com.mahjong.data.jpn.yaku.Yaku72_DaZhuLin;
+import com.mahjong.data.jpn.yaku.Yaku73_DaShuLin;
+import com.mahjong.data.jpn.yaku.Yaku74_DaQiXing;
 
 public class Game {
 
-	private Yaku[] Yakus = {
+	public Yaku[] Yakus = {
 			// 普通役
 			new Yaku01_LiZhi(), new Yaku02_YiFa(), new Yaku03_ZiMo(), new Yaku04_PingHe(), new Yaku05_QiangGang(),
 			new Yaku06_YiPai(), new Yaku07_DuanYaoJiu(), new Yaku08_YiBeiKou(), new Yaku09_LingShangKaiHua(), 
@@ -60,10 +72,16 @@ public class Game {
 			new Yaku19_SanSeTongShun(), new Yaku20_SanSeTongKe(), new Yaku21_SanGangZi(), new Yaku22_DuiDuiHe(), 
 			new Yaku23_SanAnKe(), new Yaku24_XiaoSanYuan(), new Yaku25_HunLaoTou(), new Yaku26_ErBeiKou(), 
 			new Yaku27_ChunQuanDaiYaoJiu(), new Yaku28_HunYiSe(), new Yaku29_QingYiSe(), 
+			// 普通役（古役）
+			new Yaku31_ShiErLuoTai(), new Yaku32_SanLianKe(), new Yaku33_SanSeTongGuan(), new Yaku34_SanSeLianKe(),
+			new Yaku35_JingTongHe(), new Yaku36_ErTongKe(), new Yaku37_SanSeShuangLongHui(),
 			// 役满役
-			new Yaku50_TianDiRen(), new Yaku51_DaCheLun(), new Yaku52_GuoShuiWuShuang(), new Yaku53_JiuLianBaiDeng(),
-			new Yaku54_SiAnKe(), new Yaku55_DaSanYuan(), new Yaku56_SiGangZi(), new Yaku57_LvYiSe(), new Yaku58_ZiYiSe(),
-			new Yaku59_QingLaoTou(), new Yaku60_XiaoSixi(), new Yaku61_DaSixi()			
+			new Yaku50_TianHe(), new Yaku51_DiHe(), new Yaku52_GuoShuiWuShuang(), new Yaku53_JiuLianBaiDeng(), 
+			new Yaku54_SiAnKe(), new Yaku55_DaSanYuan(), new Yaku56_SiGangZi(), new Yaku57_LvYiSe(), 
+			new Yaku58_ZiYiSe(), new Yaku59_QingLaoTou(), new Yaku60_XiaoSixi(), new Yaku61_DaSixi(),		
+			// 役满役（古役）
+			new Yaku70_RenHe(), new Yaku71_DaCheLun(), new Yaku72_DaZhuLin(), new Yaku73_DaShuLin(),
+			new Yaku74_DaQiXing()
 	};
 	
 	//private Yaku[] SpecialYakus = { new Yaku16_QiDuiZi(), new Yaku52_GuoShuiWuShuang()};
@@ -88,6 +106,7 @@ public class Game {
 		divideYakuForEnv(allYakus, envYakus, nonEnvYakus);
 		List<YakuValue> tempResult = new ArrayList<YakuValue>();
 		for (Yaku y : envYakus) {
+			if (!y.isCalculateYaku()) continue;
 			y.Test(tempResult, null, null, env);
 		}
 
@@ -104,6 +123,7 @@ public class Game {
 			List<YakuValue> result = new ArrayList<YakuValue>(tempResult);
 
 			for (Yaku yaku : nonEnvYakus) {
+				if (!yaku.isCalculateYaku()) continue;
 				if (yaku.FilterTest(junkoCount, pungCount) 
 						&& yaku.FilterTest(kindCountsFromTiles, kindCounts, kindCountsWithoutPair)) {
 					yaku.Test(result, tiles, groups, env);
@@ -119,6 +139,7 @@ public class Game {
 		// 形如11223344556677也算七对子，因此即使牌面能拆分成若干group也不能排除特殊役
 		boolean succ = false;
 		for (Yaku y : nonEnvYakus) {
+			if (!y.isCalculateYaku()) continue;
 			if (!y.FilterTest(0, 0)) continue;
 			if (!y.FilterTest(kindCountsFromTiles, null, null)) continue;
 			succ = (y.Test(tempResult, tiles, null, env) && y instanceof SpecialYaku) || succ;

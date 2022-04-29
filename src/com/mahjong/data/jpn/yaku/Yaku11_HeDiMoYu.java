@@ -14,6 +14,7 @@ public class Yaku11_HeDiMoYu extends Yaku {
 	public Yaku11_HeDiMoYu() {
 		mOrderIndex = 11;
 		mFlags = YakuFlag.Environment;
+		mName = "HeDiMoYu";
 	}
 	
 	@Override

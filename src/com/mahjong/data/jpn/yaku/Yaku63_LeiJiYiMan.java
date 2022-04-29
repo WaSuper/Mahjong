@@ -13,6 +13,7 @@ public class Yaku63_LeiJiYiMan extends Yaku {
 	public Yaku63_LeiJiYiMan() {
 		mOrderIndex = 63;
 		mFlags = YakuFlag.YiMan;
+		mName = "LeiJiYiMan";
 	}
 	
 	@Override

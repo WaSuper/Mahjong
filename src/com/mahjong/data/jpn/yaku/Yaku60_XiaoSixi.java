@@ -15,6 +15,7 @@ public class Yaku60_XiaoSixi extends Yaku {
 	public Yaku60_XiaoSixi() {
 		mOrderIndex = 60;
 		mFlags = YakuFlag.YiMan;
+		mName = "XiaoSixi";
 	}
 		
 	@Override

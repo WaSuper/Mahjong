@@ -15,6 +15,7 @@ public class Yaku27_ChunQuanDaiYaoJiu extends Yaku {
 	public Yaku27_ChunQuanDaiYaoJiu() {
 		mOrderIndex = 27;
 		mFlags = YakuFlag.None;
+		mName = "ChunQuanDaiYaoJiu";
 	}
 	
 	@Override

@@ -1,5 +1,8 @@
 ﻿package com.mahjong.tools;
 
+import android.content.res.Resources;
+import android.content.res.Configuration;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.app.Application;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -11,8 +14,20 @@ public class MahjongApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		ActiveAndroid.initialize(this);
-		initImageLoader();
+		initImageLoader();		
 	}	
+
+	/**
+	 * 设置 app 不随着系统字体的调整而变化
+	 */
+	@Override
+	public Resources getResources() {
+		Resources resources = super.getResources();
+		Configuration configuration = resources.getConfiguration();
+		configuration.fontScale = 1;
+		resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+		return resources;
+	}
 	
 	@Override  
     public void onTerminate() {  

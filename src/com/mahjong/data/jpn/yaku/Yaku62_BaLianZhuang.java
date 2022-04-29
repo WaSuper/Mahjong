@@ -13,6 +13,8 @@ public class Yaku62_BaLianZhuang extends Yaku {
 	public Yaku62_BaLianZhuang() {
 		mOrderIndex = 62;
 		mFlags = YakuFlag.YiMan;
+		mName = "BaLianZhuang";
+		mAncientYaku = true; // 八连庄为古役
 	}
 	
 	@Override

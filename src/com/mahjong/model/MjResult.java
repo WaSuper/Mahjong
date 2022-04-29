@@ -36,13 +36,14 @@ public class MjResult extends Model {
 	public static final String Col_NorthMa 		= "NorthMa";
 	public static final String Col_Title		= "Title";
 	public static final String Col_Note			= "Note";
+	public static final String Col_RetPoint		= "RetPoint";
 	
 	public static final String[] Columns = {Col_GameType, Col_BasePoint, Col_MaPoint, Col_StartTime, Col_EndTime,
 		Col_EastId, Col_EastName, Col_EastPoint, Col_EastRank, Col_EastRMa,
 		Col_SouthId, Col_SouthName, Col_SouthPoint, Col_SouthRank, Col_SouthMa,
 		Col_WestId, Col_WestName, Col_WestPoint, Col_WestRank, Col_WestMa,
 		Col_NorthId, Col_NorthName, Col_NorthPoint, Col_NorthRank, Col_NorthMa,
-		Col_Title, Col_Note};
+		Col_Title, Col_Note, Col_RetPoint};
 	
 	@Column(name = "GameType")
 	private int game_type;			// 游戏类型:1->东风战，2->半庄战，4->全庄战
@@ -125,13 +126,17 @@ public class MjResult extends Model {
 	@Column(name = "Note")
 	private String note;			// 备注
 	
+	@Column(name = "RetPoint")
+	private int ret_point;			// 返点-基础分
+	
 	public MjResult() {
 		super();
 	}
 	
 	public MjResult(int game_type, int base_point, int[] ma_points, long start_time, 
 			String east_id, String east_name, String south_id, String south_name,
-			String west_id, String west_name, String north_id, String north_name) {
+			String west_id, String west_name, String north_id, String north_name,
+			int ret_point) {
 		super();
 		this.game_type = game_type;
 		this.base_point = base_point;
@@ -154,6 +159,7 @@ public class MjResult extends Model {
 		this.north_name = north_name;
 		this.north_point = base_point;
 		this.north_rank = 4;
+		this.ret_point = ret_point;
 	}
 	
 	public void setEndGame(long end_time, int[] scores, int[] ranks, float[] mas) {
@@ -324,6 +330,14 @@ public class MjResult extends Model {
 	
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	public int getRetPoint() {
+		return ret_point;
+	}
+	
+	public void setRetPoint(int ret) {
+		this.ret_point = ret;
 	}
 	
 	public void changePlayer(int index, String uuid, String name) {

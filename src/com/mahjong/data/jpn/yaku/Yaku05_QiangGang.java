@@ -14,6 +14,7 @@ public class Yaku05_QiangGang extends Yaku {
 	public Yaku05_QiangGang() {
 		mOrderIndex = 5;
 		mFlags = YakuFlag.Environment;
+		mName = "QiangGang";
 	}
 	
 	@Override

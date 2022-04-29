@@ -13,6 +13,7 @@ public class Yaku30_LiuJuManGuan extends Yaku {
 	public Yaku30_LiuJuManGuan() {
 		mOrderIndex = 30;
 		mFlags = YakuFlag.None;
+		mName = "LiuJuManGuan";
 	}
 	
 	@Override

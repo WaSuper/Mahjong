@@ -14,6 +14,7 @@ public class Yaku03_ZiMo extends Yaku {
 	public Yaku03_ZiMo() {
 		mOrderIndex = 3;
 		mFlags = YakuFlag.Environment | YakuFlag.MenQianQing;
+		mName = "ZiMo";
 	}
 	
 	@Override

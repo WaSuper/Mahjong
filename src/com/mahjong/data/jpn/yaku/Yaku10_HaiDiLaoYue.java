@@ -14,6 +14,7 @@ public class Yaku10_HaiDiLaoYue extends Yaku {
 	public Yaku10_HaiDiLaoYue() {
 		mOrderIndex = 10;
 		mFlags = YakuFlag.Environment;
+		mName = "HaiDiLaoYue";
 	}
 	
 	@Override

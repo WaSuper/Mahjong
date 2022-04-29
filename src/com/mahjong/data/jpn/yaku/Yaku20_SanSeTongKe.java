@@ -15,6 +15,7 @@ public class Yaku20_SanSeTongKe extends Yaku {
 	public Yaku20_SanSeTongKe() {
 		mOrderIndex = 20;
 		mFlags = YakuFlag.None;
+		mName = "SanSeTongKe";
 	}
 	
 	@Override

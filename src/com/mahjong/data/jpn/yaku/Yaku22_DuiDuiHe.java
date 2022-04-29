@@ -13,6 +13,7 @@ public class Yaku22_DuiDuiHe extends Yaku {
 	public Yaku22_DuiDuiHe() {
 		mOrderIndex = 22;
 		mFlags = YakuFlag.None;
+		mName = "DuiDuiHe";
 	}
 	
 	@Override

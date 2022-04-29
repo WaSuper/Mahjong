@@ -15,6 +15,7 @@ public class Yaku06_YiPai extends Yaku {
 	public Yaku06_YiPai() {
 		mOrderIndex = 6;
 		mFlags = YakuFlag.None;
+		mName = "YiPai";
 	}
 	
 	@Override

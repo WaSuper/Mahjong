@@ -14,6 +14,7 @@ public class Yaku01_LiZhi extends Yaku {
 	public Yaku01_LiZhi() {
 		mOrderIndex = 1;
 		mFlags = YakuFlag.Environment | YakuFlag.MenQianQing;
+		mName = "LiZhi";
 	}
 	
 	@Override

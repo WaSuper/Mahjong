@@ -16,6 +16,7 @@ public class Yaku08_YiBeiKou extends Yaku {
 	public Yaku08_YiBeiKou() {
 		mOrderIndex = 8;
 		mFlags = YakuFlag.MenQianQing;
+		mName = "YiBeiKou";
 	}
 	
 	@Override

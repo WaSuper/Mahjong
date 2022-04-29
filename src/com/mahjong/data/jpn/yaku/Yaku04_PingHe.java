@@ -17,6 +17,7 @@ public class Yaku04_PingHe extends Yaku {
 	public Yaku04_PingHe() {
 		mOrderIndex = 4;
 		mFlags = YakuFlag.TingPai | YakuFlag.MenQianQing;
+		mName = "PingHe";
 	}
 	
 	@Override

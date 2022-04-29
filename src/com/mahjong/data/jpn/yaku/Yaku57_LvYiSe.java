@@ -18,12 +18,12 @@ public class Yaku57_LvYiSe extends Yaku {
 			| (1L << JpnSetting.SOU4)
 			| (1L << JpnSetting.SOU6)
 			| (1L << JpnSetting.SOU8)
-			| (1L << JpnSetting.SOU9)
 			| (1L << JpnSetting.HAT);
 	
 	public Yaku57_LvYiSe() {
 		mOrderIndex = 57;
 		mFlags = YakuFlag.YiMan;
+		mName = "LvYiSe";
 	}
 		
 	@Override

@@ -15,6 +15,7 @@ public class Yaku12_Dora extends Yaku {
 	public Yaku12_Dora() {
 		mOrderIndex = 12;
 		mFlags = YakuFlag.Dora;
+		mName = "Dora";
 	}
 	
 	@Override

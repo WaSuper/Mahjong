@@ -16,6 +16,7 @@ public class Yaku53_JiuLianBaiDeng extends Yaku {
 	public Yaku53_JiuLianBaiDeng() {
 		mOrderIndex = 53;
 		mFlags = YakuFlag.YiMan | YakuFlag.MenQianQing;
+		mName = "JiuLianBaiDeng";
 	}
 		
 	@Override
@@ -48,11 +49,13 @@ public class Yaku53_JiuLianBaiDeng extends Yaku {
 		int extraTile = tiles.Added().Value() % 9;
 		if (extraTile == extraNumber) {
 			result.add(YakuValue.FromFullYaku(this, "纯正九莲宝灯", 2));
+			mName = "JiuLianBaiDengPure";
 		} else {
 			if ((env & YakuEnvironment.FirstRound) != 0
 					&& (env & YakuEnvironment.ZiMo) != 0
 					&& (env & YakuEnvironment.SelfWindEast) != 0) {
 				result.add(YakuValue.FromFullYaku(this, "纯正九莲宝灯", 2));
+				mName = "JiuLianBaiDengPure";
 			} else {
 				result.add(YakuValue.FromFullYaku(this, "九莲宝灯", 1));
 			}

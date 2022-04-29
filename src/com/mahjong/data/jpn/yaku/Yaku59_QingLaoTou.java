@@ -14,6 +14,7 @@ public class Yaku59_QingLaoTou extends Yaku {
 	public Yaku59_QingLaoTou() {
 		mOrderIndex = 59;
 		mFlags = YakuFlag.YiMan;
+		mName = "QingLaoTou";
 	}
 		
 	@Override

@@ -51,35 +51,61 @@ public class AgariIndex {
 //				}
 	        	if ((r&0x4000000) != 0x4000000 && (r&0x80000000) != 0x80000000) { // 七对子 和 国士无双 除外
 	        		List<Group> tmpList = new ArrayList<Groups.Group>();
-	        		boolean hasHePai = false;
-	        		GroupState state = GroupState.MenQing;
+	        		List<Group> hepaiGroups = new ArrayList<Groups.Group>(); // 记录包含和牌的group，取state为和牌
+	        		List<Group> menqingGroups = new ArrayList<Groups.Group>(); // 记录包含和牌的group，取state为门清
 	        		int value = pos[(r>>6)&0xF];
 //	        		System.out.println("雀頭=" + value);
-	        		state = (hasHePai = (added == value)) ? GroupState.HePai : GroupState.MenQing;
-	        		tmpList.add(new Groups.Pair(value, state));
+	        		if (added == value) {
+	        			hepaiGroups.add(new Groups.Pair(value, GroupState.HePai));
+	        			menqingGroups.add(new Groups.Pair(value, GroupState.MenQing));
+					} else {
+						tmpList.add(new Groups.Pair(value, GroupState.MenQing));
+					}
 		            int num_kotsu = r&0x7;
 		            int num_shuntsu = (r>>3)&0x7;
 		            for (int i = 0; i < num_kotsu; i++) {
 		            	value = pos[(r>>(10+i*4))&0xF];
-		            	if (hasHePai) state = GroupState.MenQing;
-		            	else state = (hasHePai = (added == value)) ? GroupState.HePai : GroupState.MenQing;
-		            	tmpList.add(new Groups.Pung(value, state));
+		            	if (added == value) {
+		            		hepaiGroups.add(new Groups.Pung(value, GroupState.HePai));
+		            		menqingGroups.add(new Groups.Pung(value, GroupState.MenQing));
+		            	} else {
+		            		tmpList.add(new Groups.Pung(value, GroupState.MenQing));
+		            	}
 //		                System.out.println("刻子=" + value);
 		            }
 		            for (int i = 0; i < num_shuntsu; i++) {
 		            	value = pos[(r>>(10+num_kotsu*4+i*4))&0xF];
-		            	if (hasHePai) state = GroupState.MenQing;
-		            	else state = (hasHePai = (added == value || added == value + 1 || added == value + 2)) ? 
-		            			GroupState.HePai : GroupState.MenQing;
-		            	if (state == GroupState.HePai) {
-		            		tmpList.add(new Groups.Junko(value, state, calc_addedIndex(added, value)));
+		            	if (added == value || added == value + 1 || added == value + 2) {
+		            		hepaiGroups.add(new Groups.Junko(value, GroupState.HePai, calc_addedIndex(added, value)));
+		            		menqingGroups.add(new Groups.Junko(value, GroupState.MenQing));
 						} else {
-							tmpList.add(new Groups.Junko(value, state));
-						}		            	
+							tmpList.add(new Groups.Junko(value, GroupState.MenQing));
+						}	            	
 //		                System.out.println("順子=" + value);
 		            }
-		            Group[] tmpArray = new Group[tmpList.size()];
-		            groups.add(tmpList.toArray(tmpArray));
+		            // 当存在多个包含和牌的group时，添加全部组合的group
+		            if (hepaiGroups.size() == 0) {
+		            	Group[] tmpArray = new Group[tmpList.size()];
+			            groups.add(tmpList.toArray(tmpArray));
+					} else if (hepaiGroups.size() == 1) {
+						tmpList.add(hepaiGroups.get(0));
+						Group[] tmpArray = new Group[tmpList.size()];
+			            groups.add(tmpList.toArray(tmpArray));
+					} else {
+						List<Group> allList = new ArrayList<Groups.Group>();
+						for (int i = 0; i < hepaiGroups.size(); i++) {
+							allList.clear();
+							allList.addAll(tmpList);
+							allList.add(hepaiGroups.get(i));
+							for (int j = 0; j < menqingGroups.size(); j++) {
+								if (i != j) {
+									allList.add(menqingGroups.get(j));
+								}
+							}
+							Group[] allArray = new Group[allList.size()];
+				            groups.add(allList.toArray(allArray));
+						}
+					}		            
 				}	   
 	        }
             return true;

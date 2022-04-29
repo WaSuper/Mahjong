@@ -38,7 +38,18 @@
             android:gravity="bottom"
             android:text="@string/reset"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp" />      
+
+        <TextView
+            android:id="@+id/calculate_specialyaku"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="㊙"
+            android:textColor="@color/fan_item_text"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/calculate_title" />
     </RelativeLayout>
 
     <RelativeLayout

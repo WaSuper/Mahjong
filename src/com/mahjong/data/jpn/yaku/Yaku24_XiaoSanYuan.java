@@ -15,6 +15,7 @@ public class Yaku24_XiaoSanYuan extends Yaku {
 	public Yaku24_XiaoSanYuan() {
 		mOrderIndex = 24;
 		mFlags = YakuFlag.None;
+		mName = "XiaoSanYuan";
 	}
 	
 	@Override

@@ -15,6 +15,7 @@ public class Yaku21_SanGangZi extends Yaku {
 	public Yaku21_SanGangZi() {
 		mOrderIndex = 21;
 		mFlags = YakuFlag.None;
+		mName = "SanGangZi";
 	}
 	
 	@Override

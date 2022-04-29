@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahjong"
     android:versionCode="1"
-    android:versionName="1.1.0 build 211230" >
+    android:versionName="1.2.0 build 220429" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -33,7 +33,7 @@
 		</provider>
         
         <meta-data android:name="AA_DB_NAME" android:value="mahjong.db" />  
-        <meta-data android:name="AA_DB_VERSION" android:value="5" />  
+        <meta-data android:name="AA_DB_VERSION" android:value="6" />  
         <meta-data
     		android:name="AA_MODELS"
     		android:value="com.mahjong.model.Player,com.mahjong.model.MjResult,com.mahjong.model.MjDetail,com.mahjong.model.AudioItem,com.mahjong.model.Character,com.mahjong.model.CharacterIcon,com.mahjong.model.RankItem,com.mahjong.model.SoundBox" />

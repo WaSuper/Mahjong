@@ -16,6 +16,7 @@ public class Yaku26_ErBeiKou extends Yaku {
 	public Yaku26_ErBeiKou() {
 		mOrderIndex = 26;
 		mFlags = YakuFlag.MenQianQing;
+		mName = "ErBeiKou";
 	}
 	
 	@Override

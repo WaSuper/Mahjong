@@ -15,6 +15,7 @@ public class Yaku56_SiGangZi extends Yaku {
 	public Yaku56_SiGangZi() {
 		mOrderIndex = 56;
 		mFlags = YakuFlag.YiMan;
+		mName = "SiGangZi";
 	}
 		
 	@Override

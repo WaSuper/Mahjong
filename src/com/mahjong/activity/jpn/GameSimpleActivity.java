@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -120,7 +121,7 @@ public class GameSimpleActivity extends Activity implements
 	private int[] rankDrawables = {0, R.drawable.rank1_num, R.drawable.rank2_num, 
 			R.drawable.rank3_num, R.drawable.rank4_num }; // 排位图片
 	
-//	private Handler mHandler = new Handler();
+	private Handler mHandler = new Handler();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -1133,7 +1134,13 @@ public class GameSimpleActivity extends Activity implements
 				endDialog.dismiss();
 			}
 		});
-		endDialog.show();
+		mHandler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				endDialog.show();
+			}
+		});		
 	}
 	
 	private void showGameEndDialog() {
@@ -1179,7 +1186,7 @@ public class GameSimpleActivity extends Activity implements
 	}	
 	
 	private void showRankDialog(Player[] players, int[] scores, int[] ranks, float[] mas) {
-		FinalRankDialog frDialog = new FinalRankDialog(mContext);
+		final FinalRankDialog frDialog = new FinalRankDialog(mContext);
 		AnalysisTool aTool = new AnalysisTool(mManageTool.getResult(), mManageTool.getAllDetails());
 		frDialog.setData(players, scores, mas, ranks, aTool, mAudioTool);
 		frDialog.setOnCancelListener(new OnCancelListener() {
@@ -1189,7 +1196,13 @@ public class GameSimpleActivity extends Activity implements
 				finish();
 			}
 		});
-		frDialog.show();
+		mHandler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				frDialog.show();
+			}
+		});				
 	}
 	
 	private class ResultBroadcast extends BroadcastReceiver {

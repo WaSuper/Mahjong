@@ -14,6 +14,7 @@ public class Yaku25_HunLaoTou extends Yaku {
 	public Yaku25_HunLaoTou() {
 		mOrderIndex = 25;
 		mFlags = YakuFlag.None;
+		mName = "HunLaoTou";
 	}
 	
 	@Override

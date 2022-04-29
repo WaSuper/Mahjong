@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white" >    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" >
+        
+        <Button
+            android:id="@+id/basepoint_set2w5"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="25000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <Button
+            android:id="@+id/basepoint_set4w"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="40000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />    
+        
+        <Button
+            android:id="@+id/basepoint_set10w"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="100000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout> 
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" >
+        
+        <Button
+            android:id="@+id/basepoint_plus1000"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="+1000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+        <EditText
+            android:id="@+id/basepoint_point"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="25000"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:editable="false" />
+        
+        <Button
+            android:id="@+id/basepoint_minus1000"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="-1000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/selector_btn_blue_bg" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.adapter.SpecialYakuCheckAdapter;
 import com.mahjong.adapter.StringArrayAdapter;
 import com.mahjong.common.MjCalcTool;
 import com.mahjong.common.MjCard;
@@ -48,6 +49,7 @@ public class CalculateActivity extends Activity
 	public static final int MjPairsCode = 101;
 	
 	private TextView mTitle;
+	private TextView mSpecialYaku;
 	private ImageView mBack;
 	private TextView mNote;
 	private TextView mPoint;			// 基本分：25000
@@ -141,6 +143,7 @@ public class CalculateActivity extends Activity
 
 	private void initUI() {
 		mTitle = (TextView) findViewById(R.id.calculate_title);
+		mSpecialYaku = (TextView) findViewById(R.id.calculate_specialyaku);
 		mBack = (ImageView) findViewById(R.id.calculate_back);
 		mNote = (TextView) findViewById(R.id.calculate_note);
 		mPoint = (TextView) findViewById(R.id.calculate_point);
@@ -171,6 +174,7 @@ public class CalculateActivity extends Activity
 		mResult = (MjCalcTreeView) findViewById(R.id.calculate_tree_result);
 		
 		mTitle.setOnClickListener(this);
+		mSpecialYaku.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 		mNote.setOnClickListener(this);
 		mPoint.setText("25000");
@@ -384,6 +388,9 @@ public class CalculateActivity extends Activity
 				}
 			}).start();			
 			break;
+		case R.id.calculate_specialyaku:
+			showSpecialYakuDialog();
+			break;
 		default:
 			break;
 		}
@@ -546,6 +553,31 @@ public class CalculateActivity extends Activity
 		if (!mPairsTypeDialog.isShowing()) {
 			mPairsTypeDialog.show();
 		}		
+	}
+	
+	private void showSpecialYakuDialog() {
+		final CommonDialog mDialog = new CommonDialog(this, R.style.MyDialogStyle, 0);
+		mDialog.addView(R.layout.listview);
+		mDialog.setCanceledOnTouchOutside(true);
+		mDialog.titleTextView.setText(getResources().getString(R.string.special_yaku));
+		mDialog.ok.setText(getResources().getString(R.string.ok));
+		ListView listView = (ListView) mDialog.getContentView();
+		final SpecialYakuCheckAdapter mAdapter = new SpecialYakuCheckAdapter(this);
+		listView.setAdapter(mAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mAdapter.clickItem(position);
+			}
+		});
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
 	}
 	
 	@Override

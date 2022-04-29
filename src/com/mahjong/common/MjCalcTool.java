@@ -3,6 +3,7 @@ package com.mahjong.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.mahjong.data.jpn.AgariIndex;
 import com.mahjong.data.jpn.Game;
@@ -19,8 +20,10 @@ import com.mahjong.data.jpn.Score;
 import com.mahjong.data.jpn.ScoreSystem;
 import com.mahjong.data.jpn.Tile;
 import com.mahjong.data.jpn.TileCollection;
+import com.mahjong.data.jpn.Yaku;
 import com.mahjong.data.jpn.YakuEnvironment;
 import com.mahjong.data.jpn.YakuValue;
+import com.mahjong.item.YakuBean;
 import com.mahjong.ui.MahjongSpectrum;
 
 public class MjCalcTool {
@@ -547,6 +550,46 @@ public class MjCalcTool {
 			tile = new Tile(value, false, wind);
 		}
 		return tile;
+	}
+	
+	public static List<Yaku> getSpecialYakus() {
+		List<Yaku> spYakus = new ArrayList<Yaku>();
+		for (Yaku yaku : mGame.Yakus) {
+			if (yaku.isAncientYaku()) {
+				spYakus.add(yaku);
+			}
+		}		
+		return spYakus;
+	}
+	
+	public static String getSpecialYakusEnable2String() {
+		StringBuffer buffer = new StringBuffer();
+		boolean isFirst = true;
+		for (Yaku yaku : mGame.Yakus) {
+			if (yaku.isAncientYaku()) {
+				if (yaku.isCalculateYaku()) {
+					if (!isFirst) {
+						buffer.append(",");
+					} else {
+						isFirst = false;
+					}
+					buffer.append(yaku.orderIndex());					
+				}
+			}
+		}	
+		return buffer.toString();
+	}
+	
+	public static void setSpecialYakusEnable(
+			Map<String, Integer> name2IndexMap, List<YakuBean> mYakuList) {
+		for (Yaku yaku : mGame.Yakus) {
+			if (yaku.isAncientYaku()) {
+				Integer index = name2IndexMap.get(yaku.name());
+				if (index != null) {
+					yaku.setCalculateYaku(mYakuList.get(index).enable());
+				}
+			}
+		}
 	}
 	
 }

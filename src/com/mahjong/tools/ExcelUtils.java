@@ -92,6 +92,8 @@ public class ExcelUtils {
 				// database ver.2
 				mainSheet.addCell(new Label(25, row, result.getTitle()));
 				mainSheet.addCell(new Label(26, row, result.getNote()));
+				// database ver.3
+				mainSheet.addCell(new Number(27, row, result.getRetPoint()));
 				// 写入detail数据
 				List<MjDetail> detailList = new Select().from(MjDetail.class)
 						.where(MjDetail.Col_StartTime + "=?", result.getStartTime())
@@ -335,7 +337,8 @@ public class ExcelUtils {
         		if (northRank < 1 || northRank > 4) continue;
         		float northMa = Float.parseFloat(mainSheet.getCell(24, i).getContents());        		
         		MjResult result = new MjResult(gameType, basePoint, ma_points, start_time, 
-        				eastId, eastName, southId, southName, westId, westName, northId, northName);
+        				eastId, eastName, southId, southName, westId, westName, northId, northName,
+        				5000);
         		result.setEndGame(end_time, 
         				new int[] {eastPoint, southPoint, westPoint, northPoint}, 
         				new int[] {eastRank, southRank, westRank, northRank}, 
@@ -345,6 +348,10 @@ public class ExcelUtils {
         			String note = mainSheet.getCell(26, i).getContents();
         			result.setTitle(title);
             		result.setNote(note);
+				}        		
+        		if (mainSheet.getColumns() >= 28) { // database ver.3
+        			int retPoint = Integer.parseInt(mainSheet.getCell(27, i).getContents());
+        			result.setRetPoint(retPoint);
 				}        		
         		Sheet timeSheet = sheetMap.get(startTime);
         		if (timeSheet == null) continue;

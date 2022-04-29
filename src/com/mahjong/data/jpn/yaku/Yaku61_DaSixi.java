@@ -15,6 +15,7 @@ public class Yaku61_DaSixi extends Yaku {
 	public Yaku61_DaSixi() {
 		mOrderIndex = 61;
 		mFlags = YakuFlag.YiMan;
+		mName = "DaSixi";
 	}
 		
 	@Override

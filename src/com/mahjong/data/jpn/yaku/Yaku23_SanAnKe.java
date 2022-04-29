@@ -16,6 +16,7 @@ public class Yaku23_SanAnKe extends Yaku {
 	public Yaku23_SanAnKe() {
 		mOrderIndex = 23;
 		mFlags = YakuFlag.TingPai;
+		mName = "SanAnKe";
 	}
 	
 	@Override

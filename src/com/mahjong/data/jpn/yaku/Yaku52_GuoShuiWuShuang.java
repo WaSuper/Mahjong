@@ -32,6 +32,7 @@ public class Yaku52_GuoShuiWuShuang extends SpecialYaku {
 	public Yaku52_GuoShuiWuShuang() {
 		mOrderIndex = 52;
 		mFlags = YakuFlag.YiMan | YakuFlag.MenQianQing;
+		mName = "GuoShuiWuShuang";
 	}
 
 
@@ -83,11 +84,13 @@ public class Yaku52_GuoShuiWuShuang extends SpecialYaku {
 		int[] sorted = tiles.SortedTiles();
 		if (sorted[added] == 2) {
 			result.add(YakuValue.FromFullYaku(this, "国士无双十三面", 2));
+			mName = "GuoShuiWuShuangF13";
 		} else {
 			if ((env & YakuEnvironment.FirstRound) != 0
 					&& (env & YakuEnvironment.ZiMo) != 0
 					&& (env & YakuEnvironment.SelfWindEast) != 0) {
 				result.add(YakuValue.FromFullYaku(this, "国士无双十三面", 2));
+				mName = "GuoShuiWuShuangF13";
 			} else {
 				result.add(YakuValue.FromFullYaku(this, "国士无双", 1));
 			}

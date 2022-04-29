@@ -7,7 +7,7 @@
     <string name="power_by">Powered by Summer Studio</string>
   	<string name="about">关于</string>
   	<string name="version">Version %s</string>
-  	<string name="copyright">Copyright © 2019-2021 Summer Studio.\nAll Rights Reserved.</string>
+  	<string name="copyright">Copyright © 2019-2022 Summer Studio.\nAll Rights Reserved.</string>
     <string name="select_text">请选择麻将种类</string>
     <string name="mahjong_japanese">日本麻将</string>
     <string name="mahjong_international">国际麻将</string>
@@ -80,6 +80,7 @@
     <string name="LingShangKaiHua">岭上开花</string>
     <string name="HaiDiLaoYue">海底捞月</string>
     <string name="HeDiMoYu">河底摸鱼</string>
+    <string name="ShiErLuoTai">十二落抬</string>
     <string name="QiDuiZi">七对子</string>
     <string name="HunQuanDaiYao">混全带幺</string>
     <string name="YiQiTongGuan">一气通贯</string>
@@ -90,6 +91,12 @@
     <string name="SanAnKe">三暗刻</string>
     <string name="XiaoSanYuan">小三元</string>
     <string name="HunLaoTou">混老头</string>
+    <string name="SanLianKe">三连刻</string>
+    <string name="SanSeTongGuan">三色通貫</string>
+    <string name="SanSeLianKe">三色连刻</string>
+    <string name="JingTongHe">镜同和</string>
+    <string name="ErTongKe">二同刻</string>
+    <string name="SanSeShuangLongHui">三色双龙会</string>
     <string name="ErBeiKou">二杯口</string>
     <string name="ChunQuanDaiYaoJiu">纯全带幺九</string>
     <string name="HunYiSe">混一色</string>
@@ -97,8 +104,6 @@
     <string name="LiuJuManGuan">流局满贯</string>
     <string name="TianHe">天和</string>
     <string name="DiHe">地和</string>
-    <string name="RenHe">人和</string>
-    <string name="DaCheLun">大车轮</string>
     <string name="GuoShiWuShuang">国士无双</string>
     <string name="JiuLianBaoDeng">九莲宝灯</string>
     <string name="SiAnKe">四暗刻</string>
@@ -108,11 +113,16 @@
     <string name="ZiYiSe">字一色</string>
     <string name="QingLaoTou">清老头</string>
     <string name="XiaoSiXi">小四喜</string>
+    <string name="RenHe">人和</string>
+    <string name="DaCheLun">大车轮</string>
+    <string name="DaZhuLin">大竹林</string>
+    <string name="DaShuLin">大数隣</string>
     <string name="BaLianZhuang">八连庄</string>
     <string name="SiAnKe_Single">四暗刻单骑</string>
     <string name="GuoShiWuShuang_Thirteen">国士无双十三面</string>
     <string name="JiuLianBaoDeng_Pure">纯正九莲宝灯</string>
     <string name="DaSiXi">大四喜</string>
+    <string name="DaQiXing">大七星</string>
     <string name="SiFengLianDa">四风连打</string>
     <string name="SiGangSanLe">四杠散了</string>
     <string name="JiuPaiJiuZhong">九牌九种</string>
@@ -365,5 +375,7 @@
 	<string name="dealing">正在施工中，请稍候...</string>
 	<string name="no_new_player">无新增玩家</string>
 	<string name="some_data_added">部分数据已补充</string>
+	<string name="ret_point">返点-基础分</string>
+	<string name="ret_point_no_negative">PS：差值不能为负数</string>
 	    
 </resources>

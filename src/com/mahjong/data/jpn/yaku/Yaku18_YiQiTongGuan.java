@@ -16,6 +16,7 @@ public class Yaku18_YiQiTongGuan extends Yaku {
 	public Yaku18_YiQiTongGuan() {
 		mOrderIndex = 18;
 		mFlags = YakuFlag.None;
+		mName = "YiQiTongGuan";
 	}
 	
 	@Override

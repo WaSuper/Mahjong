@@ -15,6 +15,7 @@ public class Yaku16_QiDuiZi extends SpecialYaku {
 	public Yaku16_QiDuiZi() {
 		mOrderIndex = 16;
 		mFlags = YakuFlag.MenQianQing;
+		mName = "QiDuiZi";
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ public class Yaku02_YiFa extends Yaku {
 	public Yaku02_YiFa() {
 		mOrderIndex = 2;
 		mFlags = YakuFlag.Environment | YakuFlag.MenQianQing;
+		mName = "YiFa";
 	}
 	
 	@Override

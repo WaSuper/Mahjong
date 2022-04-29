@@ -35,6 +35,17 @@
             android:padding="10dp"
             android:src="@drawable/information"
             android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/fan_type_specialyaku"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="㊙"
+            android:textColor="@color/fan_item_text"
+            android:textSize="20sp"
+            android:layout_toLeftOf="@id/fan_type_info" />
     </RelativeLayout>
 
     <LinearLayout

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.adapter.SpecialYakuCheckAdapter;
 import com.mahjong.adapter.StringArrayAdapter;
 import com.mahjong.common.MjSetting;
 import com.mahjong.tools.ManageTool;
@@ -26,6 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SettingFragment extends Fragment 
@@ -36,23 +38,27 @@ public class SettingFragment extends Fragment
 	
 	private TextView mMemberCount;
 	private TextView mBattleCount;
-	private TextView mBasePoint;
+	private TextView mBasePointText;
 	private TextView mEnterSWText;
 	private CheckBox mEnterSWBox;
-	private TextView mSpYakuText;
 	private TextView mFanfuText;
 	private CheckBox mFanfuBox;
 	private TextView mLizhiBelongText;
 	private TextView mLizhiBelongChoice;
 	private TextView mMaPointText;
+	private TextView mRetPointText;
+	private RelativeLayout mSpYakuLayout;
 	
 	private List<String> mBattleCountList;
 	private int mMember;
 	private int mMaxFeng;
 	private int mBaseScore;
+	private int defaultBaseScore = 25000;
 	private int mLizhiBelong;
-	private int[] mMa;
+	private int[] mMaPoints;
 	private int[] defaultMa = {15, 5, -5, -15};
+	private int mRetPoint;
+	private int defaultRet = 5000;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -66,27 +72,29 @@ public class SettingFragment extends Fragment
 	private void initUI() {
 		mMemberCount = (TextView) mView.findViewById(R.id.setting_member_count);
 		mBattleCount = (TextView) mView.findViewById(R.id.setting_battle_count);
-		mSpYakuText = (TextView) mView.findViewById(R.id.setting_tv_special_yaku);
 		mFanfuText = (TextView) mView.findViewById(R.id.setting_tv_fanfu);
 		mFanfuBox = (CheckBox) mView.findViewById(R.id.setting_cb_fanfu);
-		mBasePoint = (TextView) mView.findViewById(R.id.setting_basepoint);
+		mBasePointText = (TextView) mView.findViewById(R.id.setting_basepoint);
 		mEnterSWText = (TextView) mView.findViewById(R.id.setting_tv_enter_sw);
 		mEnterSWBox =  (CheckBox) mView.findViewById(R.id.setting_cb_enter_sw);
 		mLizhiBelongText = (TextView) mView.findViewById(R.id.setting_lizhi_belong_content);
 		mLizhiBelongChoice = (TextView) mView.findViewById(R.id.setting_lizhi_belong);
 		mMaPointText = (TextView) mView.findViewById(R.id.setting_mapoint);
+		mRetPointText = (TextView) mView.findViewById(R.id.setting_retpoint);
+		mSpYakuLayout = (RelativeLayout) mView.findViewById(R.id.setting_rl_special_yaku);
 		
 		mMemberCount.setOnClickListener(this);
 		mBattleCount.setOnClickListener(this);
-		mSpYakuText.setOnClickListener(this);
 		mFanfuText.setOnClickListener(this);
 		mFanfuBox.setOnCheckedChangeListener(this);
-		mBasePoint.setOnClickListener(this);
+		mBasePointText.setOnClickListener(this);
 		mEnterSWText.setOnClickListener(this);
 		mEnterSWBox.setOnCheckedChangeListener(this);
 		mLizhiBelongText.setOnClickListener(this);
 		mLizhiBelongChoice.setOnClickListener(this);
 		mMaPointText.setOnClickListener(this);
+		mRetPointText.setOnClickListener(this);
+		mSpYakuLayout.setOnClickListener(this);
 		
 		ShareprefenceTool tool = ShareprefenceTool.getInstance();
 		mMember = tool.getInt(MjSetting.MEMBER_COUNT, mContext, 4);
@@ -95,8 +103,8 @@ public class SettingFragment extends Fragment
 		mMaxFeng = tool.getInt(MjSetting.BATTLE_COUNT, mContext, 1);
 		mBattleCount.setText(battleCount2String(mMaxFeng));
 		
-		mBaseScore = tool.getInt(MjSetting.BASE_POINT, mContext, 25000);
-		mBasePoint.setText(mBaseScore + "");
+		mBaseScore = tool.getInt(MjSetting.BASE_POINT, mContext, defaultBaseScore);
+		mBasePointText.setText(mBaseScore + "");
 		
 		boolean isEnterSW = tool.getBoolean(MjSetting.ENTER_SOUTNWEST, mContext, false);
 		mEnterSWBox.setChecked(isEnterSW);
@@ -111,11 +119,14 @@ public class SettingFragment extends Fragment
 			mLizhiBelongChoice.setText(mContext.getString(R.string.dealer));
 		}
 		
-		mMa = tool.getIntArray(MjSetting.MA_POINT, mContext);
-		if (mMa == null || mMa.length != 4) {
-			mMa = defaultMa;
+		mMaPoints = tool.getIntArray(MjSetting.MA_POINT, mContext);
+		if (mMaPoints == null || mMaPoints.length != 4) {
+			mMaPoints = defaultMa;
 		}
-		mMaPointText.setText(mMa[0] + "," + mMa[1] + "," + mMa[2] + "," + mMa[3]);
+		mMaPointText.setText(mMaPoints[0] + "," + mMaPoints[1] + "," + mMaPoints[2] + "," + mMaPoints[3]);
+		
+		mRetPoint = tool.getInt(MjSetting.RET_POINT, mContext, defaultRet);
+		mRetPointText.setText(mRetPoint + "");
 	}
 
 	public void initGameStart() {
@@ -125,7 +136,8 @@ public class SettingFragment extends Fragment
 		tool.setEnterSouthEast(mEnterSWBox.isChecked());
 		tool.setLiZhiBelong(mLizhiBelong);
 		tool.setEnableFanFu(mFanfuBox.isChecked());
-		tool.setMaPoint(mMa);
+		tool.setMaPoint(mMaPoints);
+		tool.setRetPoint(mRetPoint);
 	}
 	
 	private String battleCount2String(int count) {
@@ -164,14 +176,7 @@ public class SettingFragment extends Fragment
 			showListDialog(getResources().getString(R.string.battle_count), mBattleCountList);
 			break;
 		case R.id.setting_basepoint:
-			mList.add("25000");
-			mList.add("40000");
-			mList.add("100000");
-			showListDialog(getResources().getString(R.string.base_point), mList);
-			break;
-		case R.id.setting_tv_special_yaku:
-			showTextDialog(getResources().getString(R.string.special_yaku), 
-					getResources().getString(R.string.no_support));
+			showBasePointDialog();
 			break;
 		case R.id.setting_tv_enter_sw:
 			showTextDialog(getResources().getString(R.string.enter_south_or_west), 
@@ -192,6 +197,12 @@ public class SettingFragment extends Fragment
 			break;
 		case R.id.setting_mapoint:
 			showMaPointDialog();
+			break;
+		case R.id.setting_retpoint:
+			showRetPointDialog();
+			break;
+		case R.id.setting_rl_special_yaku:
+			showSpecialYakuDialog(getResources().getString(R.string.special_yaku)); 
 			break;
 		default:
 			break;
@@ -250,12 +261,6 @@ public class SettingFragment extends Fragment
 					mMaxFeng = battleString2Count(textString);
 					ShareprefenceTool.getInstance().setInt(
 							MjSetting.BATTLE_COUNT, mMaxFeng, mContext);
-				} else if (mDialog.titleTextView.getText().equals(
-						getResources().getString(R.string.base_point))) {
-					mBaseScore = Integer.parseInt(textString);
-					mBasePoint.setText(textString);
-					ShareprefenceTool.getInstance().setInt(
-							MjSetting.BASE_POINT, mBaseScore, mContext);					
 				} else if (mDialog.titleTextView.getText().equals(
 						getResources().getString(R.string.lizhi_belong_to))) {
 					mLizhiBelong = position;
@@ -409,7 +414,7 @@ public class SettingFragment extends Fragment
 				}
 			}
 		};
-		defaultMa = mMa;
+		defaultMa = mMaPoints;
 		for (int i = 0; i < 4; i++) {
 			plus5Btns[i].setOnClickListener(listener);
 			plus1Btns[i].setOnClickListener(listener);
@@ -424,9 +429,9 @@ public class SettingFragment extends Fragment
 				if (defaultMa[0] + defaultMa[1] + defaultMa[2]+ defaultMa[3] != 0) {
 					return;
 				}
-				mMa = defaultMa;
-				ShareprefenceTool.getInstance().setIntArray(MjSetting.MA_POINT, mMa, mContext);
-				mMaPointText.setText(mMa[0] + "," + mMa[1] + "," + mMa[2] + "," + mMa[3]);
+				mMaPoints = defaultMa;
+				ShareprefenceTool.getInstance().setIntArray(MjSetting.MA_POINT, mMaPoints, mContext);
+				mMaPointText.setText(mMaPoints[0] + "," + mMaPoints[1] + "," + mMaPoints[2] + "," + mMaPoints[3]);
 				mDialog.dismiss();				
 			}
 		});
@@ -464,6 +469,153 @@ public class SettingFragment extends Fragment
 			break;
 		}
 		
+	}
+	
+	private void showBasePointDialog() {
+		final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle);
+		mDialog.addView(R.layout.layout_basepoint);
+		mDialog.setCanceledOnTouchOutside(false);
+		mDialog.titleTextView.setText(mContext.getString(R.string.base_point));
+		View contentView = mDialog.getContentView();
+		Button set2w5Btn = (Button) contentView.findViewById(R.id.basepoint_set2w5);
+		Button set4wBtn = (Button) contentView.findViewById(R.id.basepoint_set4w);
+		Button set10wBtn = (Button) contentView.findViewById(R.id.basepoint_set10w);
+		Button plus1000Btn = (Button) contentView.findViewById(R.id.basepoint_plus1000);
+		Button minus1000Btn = (Button) contentView.findViewById(R.id.basepoint_minus1000);
+		final EditText pointText = (EditText) contentView.findViewById(R.id.basepoint_point);
+		pointText.setText(mBaseScore + "");
+		defaultBaseScore = mBaseScore;
+		OnClickListener listener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.basepoint_set2w5:
+					defaultBaseScore = 25000;
+					pointText.setText("25000");
+					break;
+				case R.id.basepoint_set4w:
+					defaultBaseScore = 40000;
+					pointText.setText("40000");
+					break;
+				case R.id.basepoint_set10w:
+					defaultBaseScore = 100000;
+					pointText.setText("100000");
+					break;
+				case R.id.basepoint_plus1000:
+					defaultBaseScore += 1000;
+					pointText.setText(defaultBaseScore + "");
+					break;
+				case R.id.basepoint_minus1000:
+					defaultBaseScore -= 1000;
+					if (defaultBaseScore < 0) defaultBaseScore = 0;
+					pointText.setText(defaultBaseScore + "");
+					break;
+				default:
+					break;
+				}				
+			}
+		};
+		set2w5Btn.setOnClickListener(listener);
+		set4wBtn.setOnClickListener(listener);
+		set10wBtn.setOnClickListener(listener);
+		plus1000Btn.setOnClickListener(listener);
+		minus1000Btn.setOnClickListener(listener);
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mBaseScore = defaultBaseScore;
+				mBasePointText.setText(mBaseScore + "");
+				ShareprefenceTool.getInstance().setInt(MjSetting.BASE_POINT, mBaseScore, mContext);
+				mDialog.dismiss();
+			}
+		});
+		mDialog.cancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
+	}
+	
+	private void showRetPointDialog() {
+		final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle);
+		mDialog.addView(R.layout.layout_retpoint);
+		mDialog.setCanceledOnTouchOutside(false);
+		mDialog.titleTextView.setText(mContext.getString(R.string.ret_point));
+		View contentView = mDialog.getContentView();
+		Button plus1000Btn = (Button) contentView.findViewById(R.id.retpoint_plus1000);
+		Button minus1000Btn = (Button) contentView.findViewById(R.id.retpoint_minus1000);
+		final EditText pointText = (EditText) contentView.findViewById(R.id.retpoint_point);
+		pointText.setText(mRetPoint + "");
+		defaultRet = mRetPoint;
+		OnClickListener listener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.retpoint_plus1000:
+					defaultRet += 1000;
+					pointText.setText(defaultRet + "");
+					break;
+				case R.id.retpoint_minus1000:
+					defaultRet -= 1000;
+					if (defaultRet < 0) defaultRet = 0;
+					pointText.setText(defaultRet + "");
+					break;
+				default:
+					break;
+				}				
+			}
+		};
+		plus1000Btn.setOnClickListener(listener);
+		minus1000Btn.setOnClickListener(listener);
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mRetPoint = defaultRet;
+				mRetPointText.setText(mRetPoint + "");
+				ShareprefenceTool.getInstance().setInt(MjSetting.RET_POINT, mRetPoint, mContext);
+				mDialog.dismiss();
+			}
+		});
+		mDialog.cancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
+	}
+	
+	private void showSpecialYakuDialog(String title) {
+		final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle, 0);
+		mDialog.addView(R.layout.listview);
+		mDialog.setCanceledOnTouchOutside(true);
+		mDialog.titleTextView.setText(title);
+		mDialog.ok.setText(getResources().getString(R.string.ok));
+		ListView listView = (ListView) mDialog.getContentView();
+		final SpecialYakuCheckAdapter mAdapter = new SpecialYakuCheckAdapter(mContext);
+		listView.setAdapter(mAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mAdapter.clickItem(position);
+			}
+		});
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
 	}
 	
 }

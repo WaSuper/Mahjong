@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.activeandroid.ActiveAndroid;
+import com.mahjong.common.MjCalcTool;
 import com.mahjong.common.MjCard;
 import com.mahjong.data.jpn.ScoreSystem;
 import com.mahjong.item.ResultList;
@@ -69,6 +70,7 @@ public class ManageTool {
 	private boolean mEnableFanfu; // 本场番缚
 	private int[] mMaPoints = new int[4]; // 马点
 	private String note; // 备注
+	private int mRetPoint; // 返点-基础分
 	
 	private String mTmpFileDir; // 临时信息保存地址
 	private static final String TAG_INTERRUPT = "interrupt";
@@ -160,6 +162,15 @@ public class ManageTool {
 	 */
 	public void setMaPoint(int[] ma) {
 		this.mMaPoints = ma;
+	}
+	
+	/**
+	 * 设置返点
+	 * 
+	 * @param ret
+	 */
+	public void setRetPoint(int ret) {
+		this.mRetPoint = ret;
 	}
 	
 	/**
@@ -840,7 +851,8 @@ public class ManageTool {
 				getPlayer(0).getUuid(), getPlayer(0).getNickName(), 
 				getPlayer(1).getUuid(), getPlayer(1).getNickName(), 
 				getPlayer(2).getUuid(), getPlayer(2).getNickName(), 
-				getPlayer(3).getUuid(), getPlayer(3).getNickName());
+				getPlayer(3).getUuid(), getPlayer(3).getNickName(),
+				mRetPoint);
 		mFengCount = 0;
 		Arrays.fill(mJuCount, 0);
 		mLizhiCount = 0;
@@ -857,7 +869,7 @@ public class ManageTool {
 	
 	/**
 	 * 结束游戏
-	 * 计算最终排名及得分（默认：返点 = 原点 + 5000）
+	 * 计算最终排名及得分
 	 * 
 	 */
 	public void doGameFinish() {
@@ -867,11 +879,11 @@ public class ManageTool {
 			ranks[i] = analysisPlayerRank(i, mScores);
 			switch (ranks[i]) {
 			case 1:
-				mas[i] += 20; // 头名赏：（返点 - 原点） / 1000 * 4; 
+				mas[i] += (mRetPoint / 1000 * 4); // 头名赏：（返点 - 原点） / 1000 * 4; 
 			case 2:				
 			case 3:
 			case 4: // 最终得点：（最终得分 - 返点） / 1000 + 顺位马
-				double tmp = ((double)(mScores[i] - mBaseScore - 5000)) / 1000 + mMaPoints[ranks[i] - 1];
+				double tmp = ((double)(mScores[i] - mBaseScore - mRetPoint)) / 1000 + mMaPoints[ranks[i] - 1];
 				float point = new BigDecimal(tmp).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
 				mas[i] += point;
 				break;
@@ -1140,10 +1152,10 @@ public class ManageTool {
 					for (int j = 0; j < changeScores.length; j++) {
 						if (j != i) {
 							changeScores[j] -= 4000;
-							resultLists[i].addBase(-4000);
+							resultLists[j].addBase(-4000);
 						} else {
 							changeScores[j] += 12000;
-							resultLists[i].addBase(12000);
+							resultLists[j].addBase(12000);
 						}
 					}
 				} else { // 闲家满贯8000->庄家减4000，闲家减2000
@@ -1151,14 +1163,14 @@ public class ManageTool {
 						if (j != i) {
 							if (getDealer() == j) {
 								changeScores[j] -= 4000;
-								resultLists[i].addBase(-4000);
+								resultLists[j].addBase(-4000);
 							} else {
 								changeScores[j] -= 2000;
-								resultLists[i].addBase(-2000);
+								resultLists[j].addBase(-2000);
 							}							
 						} else {
 							changeScores[j] += 8000;
-							resultLists[i].addBase(8000);
+							resultLists[j].addBase(8000);
 						}
 					}
 				}
@@ -1366,7 +1378,8 @@ public class ManageTool {
 		}
 		MjAction action = MjAction.createZimoAction(getPlayer(winIndex).getUuid(), 
 				spectrum, fan, fu, env,
-				isBao, (isBao && baoId >= 0) ? getPlayer(baoId).getUuid() : "");
+				isBao, (isBao && baoId >= 0) ? getPlayer(baoId).getUuid() : "",
+				MjCalcTool.getSpecialYakusEnable2String());
 		MjDetail detail = new MjDetail(mResult.getStartTime(), System.currentTimeMillis(), 
 				getJuCountForAll(), getRoundCount(), getLizhiCount(), 
 				changeScores[0], mScores[0], changeScores[1], mScores[1], 
@@ -1542,7 +1555,8 @@ public class ManageTool {
 			}			
 		}
 		MjAction action = MjAction.createBombAction(getPlayer(bombIndex).getUuid(), 
-				winIndexs.length, winIds, spectrums, fans, fus, envs, isBaos.length, baoIds);
+				winIndexs.length, winIds, spectrums, fans, fus, envs, isBaos.length, baoIds,
+				MjCalcTool.getSpecialYakusEnable2String());
 		MjDetail detail = new MjDetail(mResult.getStartTime(), System.currentTimeMillis(), 
 				getJuCountForAll(), getRoundCount(), getLizhiCount(), 
 				changeScores[0], mScores[0], changeScores[1], mScores[1], 
@@ -1874,6 +1888,7 @@ public class ManageTool {
 			json.put("ma_points", mMaPoints[0] + "," + mMaPoints[1] + "," + mMaPoints[2] + "," + mMaPoints[3]);
 			json.put("start_time", mResult.getStartTime());
 			json.put("note", note != null ? note : "");
+			json.put("ret_point", mRetPoint);
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < mDetails.size(); i++) {
 				MjDetail detail = mDetails.get(i);
@@ -1977,6 +1992,7 @@ public class ManageTool {
 					} else return false;
 					long result_time = json.getLong("start_time");
 					note = json.getString("note");
+					mRetPoint = json.getInt("ret_point");
 					JSONArray jsonArray = json.getJSONArray("details");
 					mDetails.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {
@@ -2029,7 +2045,8 @@ public class ManageTool {
 							getPlayer(0).getUuid(), getPlayer(0).getNickName(), 
 							getPlayer(1).getUuid(), getPlayer(1).getNickName(), 
 							getPlayer(2).getUuid(), getPlayer(2).getNickName(), 
-							getPlayer(3).getUuid(), getPlayer(3).getNickName());
+							getPlayer(3).getUuid(), getPlayer(3).getNickName(),
+							mRetPoint);
 					mDoraIndicaOut.clear();
 					mDoraIndicaIn.clear();
 					for (int i = 0; i < 4; i++) {

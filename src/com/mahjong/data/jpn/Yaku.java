@@ -14,9 +14,21 @@ public abstract class Yaku implements Comparable<Yaku> {
 	 */
 	protected int mOrderIndex;
 	/**
-	 *  表示役的类型，参考YakuFlag
+	 * 表示役的类型，参考YakuFlag
 	 */
 	protected int mFlags;
+	/**
+	 * 判断是否古役
+	 */
+	protected boolean mAncientYaku = false;
+	/**
+	 * 判断是否进行番数计算
+	 */
+	protected boolean mCalcYaku = true;
+	/**
+	 * 表示役的名字
+	 */
+	protected String mName;
 	
 	public Yaku() {}
 		
@@ -26,6 +38,22 @@ public abstract class Yaku implements Comparable<Yaku> {
 		
 	public int flags() {
 		return mFlags;
+	}
+
+	public boolean isAncientYaku() { 
+		return mAncientYaku; 
+	}
+	
+	public boolean isCalculateYaku() {
+		return mCalcYaku;
+	}
+	
+	public void setCalculateYaku(boolean isCalc) {
+		mCalcYaku = isCalc;
+	}
+	
+	public String name() {
+		return mName;
 	}
 	
 	/**
@@ -63,7 +91,6 @@ public abstract class Yaku implements Comparable<Yaku> {
 	 * @return
 	 */
 	protected int HookCalculateFu(IGroups groups, int env)  { return -1; }
-
 	
 	@Override
 	public int compareTo(Yaku other) {

@@ -14,6 +14,7 @@ public class Yaku15_DoubleLiZhi extends Yaku {
 	public Yaku15_DoubleLiZhi() {
 		mOrderIndex = 15;
 		mFlags = YakuFlag.Environment | YakuFlag.MenQianQing;
+		mName = "DoubleLiZhi";
 	}
 	
 	@Override

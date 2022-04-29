@@ -15,6 +15,7 @@ public class Yaku54_SiAnKe extends Yaku {
 	public Yaku54_SiAnKe() {
 		mOrderIndex = 54;
 		mFlags = YakuFlag.YiMan | YakuFlag.MenQianQing;
+		mName = "SiAnKe";
 	}
 		
 	@Override
@@ -31,11 +32,13 @@ public class Yaku54_SiAnKe extends Yaku {
 
 		if (groups.Pair().state() == GroupState.HePai) {
 			result.add(YakuValue.FromFullYaku(this, "四暗刻单骑", 2));
+			mName = "SiAnKeF1";
 		} else {
 			if ((env & YakuEnvironment.FirstRound) != 0
 					&& (env & YakuEnvironment.ZiMo) != 0
 					&& (env & YakuEnvironment.SelfWindEast) != 0) {
 				result.add(YakuValue.FromFullYaku(this, "四暗刻单骑", 2));
+				mName = "SiAnKeF1";
 			} else {
 				result.add(YakuValue.FromFullYaku(this, "四暗刻", 1));
 			}

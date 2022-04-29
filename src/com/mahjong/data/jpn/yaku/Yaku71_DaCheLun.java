@@ -9,11 +9,13 @@ import com.mahjong.data.jpn.Yaku;
 import com.mahjong.data.jpn.YakuFlag;
 import com.mahjong.data.jpn.YakuValue;
 
-public class Yaku51_DaCheLun extends Yaku {
+public class Yaku71_DaCheLun extends Yaku {
 
-	public Yaku51_DaCheLun() {
-		mOrderIndex = 51;
+	public Yaku71_DaCheLun() {
+		mOrderIndex = 71;
 		mFlags = YakuFlag.YiMan | YakuFlag.MenQianQing;
+		mName = "DaCheLun";
+		mAncientYaku = true; // 大车轮为古役
 	}
 		
 	@Override

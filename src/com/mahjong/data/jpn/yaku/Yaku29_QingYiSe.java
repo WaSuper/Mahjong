@@ -14,6 +14,7 @@ public class Yaku29_QingYiSe extends Yaku {
 	public Yaku29_QingYiSe() {
 		mOrderIndex = 29;
 		mFlags = YakuFlag.None;
+		mName = "QingYiSe";
 	}
 	
 	@Override

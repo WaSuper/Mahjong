@@ -42,6 +42,7 @@ public class MjAction {
 	public String baoId0;		// 包牌玩家id0
 	public String baoId1;		// 包牌玩家id1
 	public String baoId2;		// 包牌玩家id2
+	public String spYakus;		// 特殊役
 	
 	public MjAction(int actionId) {
 		this.actionId = actionId;
@@ -73,7 +74,7 @@ public class MjAction {
 	 * @return
 	 */
 	public static MjAction createZimoAction(String zimoId, String spectrum, int fan, int fu, int env,
-			boolean isBao, String baoId) {
+			boolean isBao, String baoId, String spYakus) {
 		MjAction action = new MjAction(ACTION_ZIMO);
 		action.id0 = zimoId;
 		action.spt0 = spectrum;
@@ -82,6 +83,7 @@ public class MjAction {
 		action.env0 = env;
 		action.tag1 = isBao ? 1 : 0;
 		if (isBao) action.baoId0 = baoId;
+		action.spYakus = spYakus;
 		return action;
 	}
 	
@@ -101,11 +103,12 @@ public class MjAction {
 	 */
 	public static MjAction createBombAction(String bombId, int winCount,
 			String[] id, String[] spectrum, int[] fan, int[] fu, int[] envs,
-			int baoCount, String[] baoId) {
+			int baoCount, String[] baoId, String spYakus) {
 		MjAction action = new MjAction(ACTION_BOMB);
 		action.id3 = bombId;
 		action.tag1 = winCount;
 		action.tag2 = baoCount;
+		action.spYakus = spYakus;
 		if (winCount > 0) {
 			action.id0 = id[0];
 			action.spt0 = spectrum[0];
@@ -288,6 +291,7 @@ public class MjAction {
 				if (action.tag1 > 0) {
 					action.baoId0 = jb.optString("baoId0", "");
 				}
+				action.spYakus = jb.optString("spYakus", "");
 				break;
 			case ACTION_BOMB:
 				action.id3 = jb.optString("id3", "");
@@ -317,6 +321,7 @@ public class MjAction {
 					action.env2 = jb.optInt("env2", 0);
 					if (action.tag2 > 0) action.baoId2 = jb.optString("baoId2", "");
 				}
+				action.spYakus = jb.optString("spYakus", "");
 				break;
 			case ACTION_HUANGPAILIUJU:
 				action.tag1 = jb.optInt("tag1", 0);
@@ -399,6 +404,7 @@ public class MjAction {
 				if (tag1 > 0) {
 					jb.put("baoId0", baoId0);
 				}
+				jb.put("spYakus", spYakus != null ? spYakus : "");
 				break;
 			case ACTION_BOMB:
 				jb.put("id3", id3);
@@ -428,6 +434,7 @@ public class MjAction {
 					jb.put("env2", env2);
 					if (tag2 > 0) jb.put("baoId2", baoId2);
 				}
+				jb.put("spYakus", spYakus != null ? spYakus : "");
 				break;
 			case ACTION_HUANGPAILIUJU:
 				jb.put("tag1", tag1);
