@@ -3,8 +3,10 @@ package com.mahjong.activity.jpn;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseFragmentActivity;
 import com.mahjong.common.MjCalcTool;
 import com.mahjong.common.MjCard;
+import com.mahjong.common.MjSetting;
 import com.mahjong.common.MjCalcTool.GameResult;
 import com.mahjong.data.jpn.Score;
 import com.mahjong.data.jpn.YakuValue;
@@ -14,6 +16,7 @@ import com.mahjong.fragment.ResultComplexFragment;
 import com.mahjong.fragment.ResultComplexFragment.OnResultComplexListener;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ManageTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.MahjongMainDora;
 import com.mahjong.ui.MahjongMainDora.MahjongMainDoraListener;
@@ -26,7 +29,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -41,7 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ResultSetComplexActivity extends FragmentActivity 
+public class ResultSetComplexActivity extends BaseFragmentActivity 
 		implements OnClickListener, OnResultComplexListener {	
 	
 	private Context mContext;
@@ -77,6 +79,8 @@ public class ResultSetComplexActivity extends FragmentActivity
 	
 	private ManageTool mManageTool = ManageTool.getInstance();
 	
+	private boolean landscapeMode;
+	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -91,20 +95,15 @@ public class ResultSetComplexActivity extends FragmentActivity
 		// 设定方向
 		Intent intent = getIntent();
 		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
-		switch (pos) {
-		case PlayerFuncItem.POS_LEFT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_RIGHT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_TOP:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-			break;
-		case PlayerFuncItem.POS_BOTTOM:
-		default:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			break;
+		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
+		int[] land_orientations = {ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, 
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT};
+		if (landscapeMode) {
+			setRequestedOrientation(land_orientations[pos]);
+		} else {
+			setRequestedOrientation(port_orientations[pos]);
 		}
 		setContentView(R.layout.activity_jpn_result_set_complex);
 		mContext = this;
@@ -345,7 +344,12 @@ public class ResultSetComplexActivity extends FragmentActivity
 	}
 	
 	private void sendData() {
-		Intent data = new Intent(ResultSetComplexActivity.this, ResultShow.class);
+		Intent data;
+		if (landscapeMode) {
+			data = new Intent(ResultSetComplexActivity.this, ResultShowForLand.class);
+		} else {
+			data = new Intent(ResultSetComplexActivity.this, ResultShow.class);
+		}
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		if (isBomb) {
 			data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);

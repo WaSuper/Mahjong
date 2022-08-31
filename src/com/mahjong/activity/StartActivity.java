@@ -5,7 +5,6 @@ import com.mahjong.activity.jpn.MainSelectActivity;
 import com.mahjong.ui.CommonDialog;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,7 +17,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class StartActivity extends Activity implements OnRequestPermissionsResultCallback {
+public class StartActivity extends BaseActivity 
+		implements OnRequestPermissionsResultCallback {
 
 	Handler handler = new Handler();
 

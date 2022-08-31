@@ -10,11 +10,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MahjongApplication extends Application {
 
+	CrashHandler handler = null;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		ActiveAndroid.initialize(this);
 		initImageLoader();		
+		handler = CrashHandler.getInstance();
+        handler.init(getApplicationContext());
 	}	
 
 	/**

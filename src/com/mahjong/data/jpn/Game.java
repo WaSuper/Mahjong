@@ -90,6 +90,7 @@ public class Game {
 	
 	public Score getScore(ITiles tiles, List<IGroups> gList, int env) {
 		List<Score> scores = GetScores(tiles, gList, env);
+		if (scores.size() == 0) return null;
 		Score result = scores.get(0);
 		for (int i = 1; i < scores.size(); i++) {
 			Score tmpScore = scores.get(i);

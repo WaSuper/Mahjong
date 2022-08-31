@@ -20,7 +20,6 @@ import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PlayerSettingActivity extends Activity 
+public class PlayerSettingActivity extends BaseActivity 
 		implements OnClickListener, OnCheckedChangeListener {
 
 	private LinearLayout mMainLinearLayout;

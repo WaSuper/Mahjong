@@ -128,5 +128,10 @@ public class ScoreSystem {
 		cmp = x.Fu() - y.Fu();
 		return cmp;
 	}
+	
+	public static int compareForGame34(Score x, Score y) {
+		int cmp = GetBasePoint(x) - GetBasePoint(y);
+		return cmp;
+	}
 
 }

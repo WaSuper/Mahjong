@@ -7,7 +7,6 @@ import com.mahjong.tools.PopWinDownUtil;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.tools.ValueTool;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,7 +34,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author Summer Lee
  *
  */
-public class HeadIconSelectActivity extends Activity implements OnClickListener {
+public class HeadIconSelectActivity extends BaseActivity implements OnClickListener {
 
 	public static final int REQUEST_ICON = 1111;
 	public static final String ID_ICON = "ID_ICON";

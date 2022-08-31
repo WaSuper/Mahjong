@@ -125,6 +125,17 @@ public class KeyBoardUtil implements OnClickListener {
 		mBtnDragonChun.setOnClickListener(this);
 	}
 	
+	public void enableRedDora(boolean enable) {
+		if (!enable) {
+			mBtnMan5r.setVisibility(View.GONE);
+			mBtnPin5r.setVisibility(View.GONE);
+			mBtnBamboo5r.setVisibility(View.GONE);
+		} else {
+			mBtnMan5r.setVisibility(View.VISIBLE);
+			mBtnPin5r.setVisibility(View.VISIBLE);
+			mBtnBamboo5r.setVisibility(View.VISIBLE);
+		}
+	}
 	
 	public void show(MahjongBaseView baseView) {
 		this.mMjBaseView = baseView;

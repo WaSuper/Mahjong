@@ -101,6 +101,7 @@ public class MjDiceResultView extends View {
 		super.onDraw(canvas);
 		if (mPoint < 2 || mPoint > 12) return;
 		int len = Math.min(getWidth(), getHeight());
+		boolean isLandscape = getWidth() > getHeight();
 		float hHeight = (float)len / 20;
 		float hWidth = hHeight * 50 / 42;
 		float hPadding = hHeight * 32 / 42;
@@ -108,8 +109,15 @@ public class MjDiceResultView extends View {
 		float vHeight = vWidth * 54 / 38;
 		float vPadding = vWidth * 16 / 54;
 		if (mPoint == 2 || mPoint == 6 || mPoint == 10) { // 右方
-			float right = getWidth() - ValueTool.dp2px(mContext, 20);
-			float top = (getHeight() - len) / 2 + hHeight * 3;
+			float right;
+			float top;
+			if (isLandscape) {
+				top = ValueTool.dp2px(mContext, 20);
+				right = (getWidth() + len) / 2 - hWidth;
+			} else {
+				right = getWidth() - ValueTool.dp2px(mContext, 20);
+				top = (getHeight() - len) / 2 + hHeight * 3;
+			}
 			if (isAction) canvas.drawText(mPoint + "", right - hWidth * 3 / 2, top + hHeight, mPaint);
 			for (int i = 0; i < mPoint; i++) {
 				if (isAction &&i == mPoint - 1) { // 添加叠加效果
@@ -154,8 +162,15 @@ public class MjDiceResultView extends View {
 				
 			}
 		} else if (mPoint == 3 || mPoint == 7 || mPoint == 11) { // 上方
-			float left = vWidth;
-			float top = (getHeight() - len) / 2 + hHeight;
+			float left;
+			float top;
+			if (isLandscape) {
+				top = ValueTool.dp2px(mContext, 20);
+				left = (getWidth() - len) / 2 + vWidth;
+			} else {
+				left = vWidth;
+				top = (getHeight() - len) / 2 + hHeight;
+			}
 			if (isAction) canvas.drawText(mPoint + "", left + vWidth / 2, top + vHeight * 2, mPaint);
 			for (int i = 0; i < mPoint; i++) {
 				top += vPadding; 
@@ -185,8 +200,15 @@ public class MjDiceResultView extends View {
 			}
 			if (isAction) canvas.drawText(17 - mPoint + "", left - vWidth / 2, top + vHeight * 2, mPaint);
 		} else if (mPoint == 4 || mPoint == 8 || mPoint == 12) { // 左方
-			float left = ValueTool.dp2px(mContext, 20);
-			float top = (getHeight() - len) / 2 + hHeight * 3;
+			float left;
+			float top;
+			if (isLandscape) {
+				top = ValueTool.dp2px(mContext, 20);
+				left = (getWidth() - len) / 2 + hWidth;
+			} else {
+				left = ValueTool.dp2px(mContext, 20);
+				top = (getHeight() - len) / 2 + hHeight * 3;
+			}
 			if (isAction) canvas.drawText(17 - mPoint + "", left + hWidth * 3 / 2, top + hHeight, mPaint);
 			if (!isAction) top += hPadding;
 			for (int i = mPoint; i < 17; i++) {
@@ -217,8 +239,15 @@ public class MjDiceResultView extends View {
 			}
 			if (isAction) canvas.drawText(mPoint + "", left + hWidth * 3 / 2, top, mPaint);
 		} else if (mPoint == 5 || mPoint == 9) { // 下方
-			float right = getWidth() - vWidth;
-			float bottom = (getHeight() + len) / 2 - hHeight;
+			float right;
+			float bottom;
+			if (isLandscape) {
+				bottom = getHeight() - ValueTool.dp2px(mContext, 20);
+				right = (getWidth() + len) / 2 - vWidth;
+			} else {
+				right = getWidth() - vWidth;
+				bottom = (getHeight() + len) / 2 - hHeight;
+			}
 			if (isAction) canvas.drawText(mPoint + "", right - vWidth / 2, bottom - vHeight * 3 / 2, mPaint);
 			for (int i = 0; i < mPoint; i++) {
 				// 绘制底层叠放

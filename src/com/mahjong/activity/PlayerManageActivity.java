@@ -18,7 +18,6 @@ import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.fab.FloatingActionButton;
 import com.mahjong.ui.fab.FloatingActionsMenu;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PlayerManageActivity extends Activity 
+public class PlayerManageActivity extends BaseActivity 
 		implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 
 	public static final int REQUEST_CREATEPLAYER 	= 0x1001;

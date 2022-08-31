@@ -3,6 +3,7 @@ package com.mahjong.activity.jpn;
 import java.text.DecimalFormat;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.item.MjFanBean;
 import com.mahjong.model.Player;
 import com.mahjong.model.RankItem;
@@ -10,7 +11,6 @@ import com.mahjong.tools.EmoticonTool;
 import com.mahjong.ui.MahjongSpectrum;
 import com.mahjong.ui.RankChart;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RankListDetailActivity extends Activity implements OnClickListener {
+public class RankListDetailActivity extends BaseActivity implements OnClickListener {
 
 	private Context mContext;
 	

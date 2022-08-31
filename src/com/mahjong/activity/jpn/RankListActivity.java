@@ -8,6 +8,7 @@ import java.util.Map;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.RankListAdapter;
 import com.mahjong.dialog.ProgressDialog;
 import com.mahjong.model.MjAction;
@@ -20,7 +21,6 @@ import com.mahjong.ui.HorizontalPosition;
 import com.mahjong.ui.SmartPopupWindow;
 import com.mahjong.ui.VerticalPosition;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +36,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class RankListActivity extends Activity 
+public class RankListActivity extends BaseActivity 
 		implements OnClickListener, OnItemClickListener {
 
 	private static final String LAST_SELECT_RANK = "LAST_SELECT_RANK";

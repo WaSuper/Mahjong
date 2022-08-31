@@ -38,7 +38,9 @@ public class Yaku19_SanSeTongShun extends Yaku {
 		Arrays.fill(flags[2], false);
 		for (Junko junko : groups.JunkoList()) {
 			int x = junko.value() / 9;
+			if (x >= 3) continue;
 			int y = junko.value() % 9;
+			if (y >= 7) continue;
 			flags[x][y] = true;
 		}
 		for (int i = 0; i < 7; i++) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants" >
+    
+    <TextView
+        android:id="@+id/item_mjss_num"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true" />
+    
+    <TextView
+        android:id="@+id/item_mjss_fan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:layout_alignParentRight="true" />
+    
+    <com.mahjong.ui.MahjongSpectrum
+        android:id="@+id/item_mjss_mjspectrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleLine="true"
+        app:touchMode="false"
+        app:enable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_toRightOf="@id/item_mjss_num"/>
+
+</RelativeLayout>

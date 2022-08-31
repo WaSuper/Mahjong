@@ -3,6 +3,8 @@ package com.mahjong.activity.jpn;
 import java.util.Random;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
+import com.mahjong.tools.LightTool;
 import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.MjDiceResultView;
@@ -10,7 +12,6 @@ import com.mahjong.ui.PlayerFuncItem;
 import com.mahjong.ui.RippleLayout;
 import com.mahjong.ui.RippleLayout.OnRippleCompleteListener;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,7 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
-public class DiceActivity extends Activity 
+public class DiceActivity extends BaseActivity 
 		implements OnClickListener, OnRippleCompleteListener, OnCheckedChangeListener {
 
 	private static final String ENABLE_DICE_SOUND = "ENABLE_DICE_SOUND";
@@ -51,10 +52,13 @@ public class DiceActivity extends Activity
 	private SoundPool soundPool;
 	private int soundId;
 	
+	private LightTool mLightTool; // 控制屏幕亮度
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_dice);
+		mLightTool = new LightTool(this);
 		initUI();
 		initSoundEffect();
 		boolean enableSound = ShareprefenceTool.getInstance().getBoolean(ENABLE_DICE_SOUND, this, true);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseFragmentActivity;
 import com.mahjong.fragment.MemberFragment;
 import com.mahjong.fragment.SettingFragment;
 import com.mahjong.tools.ManageTool;
@@ -12,7 +13,6 @@ import com.mahjong.ui.CommonDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SettingActivity extends FragmentActivity implements
+public class SettingActivity extends BaseFragmentActivity implements
 		OnClickListener {
 
 	private ImageView mBack;

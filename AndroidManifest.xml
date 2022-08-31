@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahjong"
     android:versionCode="1"
-    android:versionName="1.2.0 build 220429" >
+    android:versionName="1.3.0 build 220831" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -77,24 +77,26 @@
         <activity android:name="com.mahjong.activity.jpn.GameActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.jpn.GameSimpleActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity android:name="com.mahjong.activity.jpn.ResultSetSimpleActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="behind" />
         <activity android:name="com.mahjong.activity.jpn.ResultSetBombSimpleActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="behind" />
         <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivity"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="behind"
             android:configChanges="orientation|keyboardHidden|screenSize" />        
         <activity android:name="com.mahjong.activity.jpn.ResultShow"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />        
+        <activity android:name="com.mahjong.activity.jpn.ResultShowForLand"
+            android:screenOrientation="landscape" />   
         <activity android:name="com.mahjong.activity.jpn.HistoryActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.jpn.HistoryDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.jpn.DiceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="behind" />
         <activity android:name="com.mahjong.activity.jpn.ChangeScoreActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="behind" />
         <activity android:name="com.mahjong.activity.EmoticonActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.EmoticonDetailActivity"
@@ -106,6 +108,10 @@
         <activity android:name="com.mahjong.activity.SoundEffectActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.SoundEffectDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.game34.Game34SelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.game34.Game34CalculateActivity"
             android:screenOrientation="portrait" />
         
     </application>

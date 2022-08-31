@@ -8,6 +8,7 @@ import java.util.Locale;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.activity.FileActivity;
 import com.mahjong.adapter.HistoryAdapter;
 import com.mahjong.adapter.HistoryAdapter.HistoryItemListener;
@@ -28,7 +29,6 @@ import com.mahjong.ui.HorizontalPosition;
 import com.mahjong.ui.SmartPopupWindow;
 import com.mahjong.ui.VerticalPosition;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -52,7 +52,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
-public class HistoryActivity extends Activity
+public class HistoryActivity extends BaseActivity
 		implements OnClickListener, OnItemClickListener, OnItemLongClickListener, OnCheckedChangeListener {
 
 	public final static int Data_Result_Done = 9001;

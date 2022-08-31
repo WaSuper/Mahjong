@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout
+        android:id="@+id/game34_calculate_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main" >
+
+        <ImageView
+            android:id="@+id/game34_calculate_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/selector_btn_back" />
+
+        <TextView
+            android:id="@+id/game34_calculate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/score_calculator"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/game34_calculate_note"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/game34_calculate_title"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="bottom"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/game34_calculate_specialyaku"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/game34_calculate_title"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="㊙"
+            android:textColor="@color/fan_item_text"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/game34_calculate_rl_line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_rl_top"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <LinearLayout
+            android:id="@+id/game34_calculate_ll_groundwind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ground_wind_"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/game34_calculate_tv_groundwind"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/east"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/base_point"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/game34_calculate_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50000"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/game34_calculate_rl_line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_rl_line1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <LinearLayout
+            android:id="@+id/game34_calculate_ll_selfwind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/self_wind_"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/game34_calculate_tv_selfwind"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/east"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/game34_calculate_dealer_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:button="@null"
+            android:checked="true"
+            android:clickable="false"
+            android:drawableLeft="@drawable/switch_dealer_player"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/game34_calculate_ll_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_rl_line2"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp" >
+
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <CheckBox
+	            android:id="@+id/game34_calculate_lizhi"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/selector_checkbox_swap"
+	            android:button="@null"
+	            android:checked="true"
+	            android:gravity="center"
+	            android:paddingBottom="1dp"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
+	            android:paddingTop="1dp"
+	            android:text="@string/lizhi"
+	            android:textSize="12sp" />
+	
+	        <CheckBox
+	            android:id="@+id/game34_calculate_yifa"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/selector_checkbox_swap"
+	            android:button="@null"
+	            android:checked="false"
+	            android:gravity="center"
+	            android:paddingBottom="1dp"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
+	            android:paddingTop="1dp"
+	            android:text="@string/yifa"
+	            android:textSize="12sp" />
+            
+        </LinearLayout>
+        
+        <CheckBox
+            android:id="@+id/game34_calculate_final_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_checkbox_swap"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="1dp"
+            android:text="@string/final_pick"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/game34_calculate_set_way"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/game34_calculate_rl_line2"
+        android:layout_marginLeft="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calc_way_"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/game34_calculate_tv_way"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="@string/calc_way_value"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>    
+
+    <ImageView
+        android:id="@+id/game34_calculate_set_random"
+        android:layout_width="40dp"
+        android:layout_height="33dp"
+        android:src="@drawable/player_choose_random"
+        android:layout_below="@id/game34_calculate_rl_line2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp" />
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/game34_calculate_ll_checkbox"
+        android:layout_below="@id/game34_calculate_rl_top"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/game34_calculate_ll_bangcount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:rotation="90"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mj_bang" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:text="x"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/game34_calculate_tv_bangcount"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/game34_calculate_ll_rollcount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:rotation="90"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mj_roll" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:text="x"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/game34_calculate_tv_rollcount"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.mahjong.ui.Mahjong34CardView
+        android:id="@+id/game34_calculate_mahjong34cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_ll_checkbox"
+        android:layout_marginTop="5dp"
+        app:touchMode="true" />
+
+    <com.mahjong.ui.MahjongDora
+        android:id="@+id/game34_calculate_mahjongdora_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_mahjong34cardview"
+        app:doraIn="false" />
+
+    <com.mahjong.ui.MahjongDora
+        android:id="@+id/game34_calculate_mahjongdora_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_mahjong34cardview"
+        android:layout_toRightOf="@id/game34_calculate_mahjongdora_out"
+        android:visibility="invisible"
+        app:doraIn="true" />
+
+    <ImageButton
+        android:id="@+id/game34_calculate_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/game34_calculate_mahjongdora_out"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/game34_calculate_mahjong34cardview"
+        android:layout_marginRight="20dp"
+        android:background="@color/transparent"
+        android:src="@drawable/selector_btn_calc_start" />
+
+    <LinearLayout
+	    android:id="@+id/game34_calculate_layout_mahjongspectrum"
+	    android:layout_below="@id/game34_calculate_mahjongdora_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+	    android:layout_marginTop="10dp" >
+        
+        <TextView
+	        android:id="@+id/game34_calculate_result_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/0"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp" />
+        
+	    <com.mahjong.ui.MahjongSpectrum
+	        android:id="@+id/game34_calculate_mahjongspectrum"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        app:singleLine="true"
+	        app:touchMode="false" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/game34_calculate_layout_mahjongspectrum"
+        android:layout_margin="10dp" >
+
+        <com.mahjong.ui.MjCalcTreeView
+            android:id="@+id/game34_calculate_tree_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <CheckBox
+        android:id="@+id/game34_calculate_escape_dora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game34_calculate_layout_mahjongspectrum"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/selector_checkbox_rectangle"
+        android:drawablePadding="5dp"
+        android:button="@null"
+        android:padding="6dp"
+        android:checked="false"
+        android:gravity="center"
+        android:text="@string/escape_dora"
+        android:textSize="14sp" />
+    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/keyboard_mahjong"
+        android:visibility="gone" />
+
+</RelativeLayout>

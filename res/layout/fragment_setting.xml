@@ -265,13 +265,14 @@
 
             <TextView
                 android:id="@+id/setting_retpoint"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="5000"
                 android:textColor="@color/grey"
-                android:textSize="16sp" />
+                android:textSize="16sp" 
+                android:gravity="right|center_vertical"/>
         </RelativeLayout>
         
         <View
@@ -304,6 +305,40 @@
                 android:src="@drawable/selector_btn_right_arrow"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
+        </RelativeLayout>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/diver_color" />
+
+        <RelativeLayout
+            android:id="@+id/setting_rl_landscape_mode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/landscape_mode"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/setting_cb_landscape_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_switch" />
         </RelativeLayout>
     </LinearLayout>
 

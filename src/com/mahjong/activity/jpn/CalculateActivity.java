@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.SpecialYakuCheckAdapter;
 import com.mahjong.adapter.StringArrayAdapter;
 import com.mahjong.common.MjCalcTool;
@@ -23,7 +24,6 @@ import com.mahjong.ui.MjCalcTreeView;
 import com.mahjong.ui.ext.CountPicker;
 import com.mahjong.ui.ext.CountPicker.OnCountSelectedListener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +43,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CalculateActivity extends Activity 
+public class CalculateActivity extends BaseActivity 
 		implements OnClickListener, OnCheckedChangeListener {
 
 	public static final int MjPairsCode = 101;
@@ -322,19 +322,55 @@ public class CalculateActivity extends Activity
 		List<MjCard> mDarkNums = mjSpectrum.getDarkNums();
 		List<MjCardPairs> mBrightNums = mjSpectrum.getBrightNums();
 		MjCard mWinNum = mjSpectrum.getWinNum();
-		for (int i = 0; i < mDarkNums.size(); i++) {
-			if (mDarkNums.get(i).isBlank()) {
+		int[] numCounts = new int[38];
+		for (MjCard card : mDarkNums) {
+			if (card.isBlank()) {
+				msg.arg1 = SHOW_ERROR_TEXT;
+				msg.obj = new String(getString(R.string.input_invalid));
+				mHandler.sendMessage(msg);
+				return;
+			} else {
+				numCounts[card.num]++;
+				if (numCounts[card.num] > 4) {
+					msg.arg1 = SHOW_ERROR_TEXT;
+					msg.obj = new String(getString(R.string.input_invalid));
+					mHandler.sendMessage(msg);
+					return;
+				}
+			}
+		}
+		for (MjCardPairs pairs : mBrightNums) {
+			List<MjCard> cards = pairs.mCardList;
+			for (MjCard card : cards) {
+				if (card.isBlank()) {
+					msg.arg1 = SHOW_ERROR_TEXT;
+					msg.obj = new String(getString(R.string.input_invalid));
+					mHandler.sendMessage(msg);
+					return;
+				} else {
+					numCounts[card.num]++;
+					if (numCounts[card.num] > 4) {
+						msg.arg1 = SHOW_ERROR_TEXT;
+						msg.obj = new String(getString(R.string.input_invalid));
+						mHandler.sendMessage(msg);
+						return;
+					}
+				}
+			}
+		}
+		if (mWinNum.isBlank()) {
+			msg.arg1 = SHOW_ERROR_TEXT;
+			msg.obj = new String(getString(R.string.input_invalid));
+			mHandler.sendMessage(msg);
+			return;
+		} else {
+			numCounts[mWinNum.num]++;
+			if (numCounts[mWinNum.num] > 4) {
 				msg.arg1 = SHOW_ERROR_TEXT;
 				msg.obj = new String(getString(R.string.input_invalid));
 				mHandler.sendMessage(msg);
 				return;
 			}
-		}
-		if (mjSpectrum.getWinNum().isBlank()) {
-			msg.arg1 = SHOW_ERROR_TEXT;
-			msg.obj = new String(getString(R.string.input_invalid));
-			mHandler.sendMessage(msg);
-			return;
 		}
 		List<MjCard> mDora = mjDoraIndicaOut.getDoraList();
 		List<MjCard> mDoraIn = mjDoraIndicaIn.getDoraList();
@@ -404,12 +440,16 @@ public class CalculateActivity extends Activity
 		case R.id.calculate_lizhi:
 			if (isChecked && mDoubleLizhiBox.isChecked()) {
 				mDoubleLizhiBox.setChecked(false);
+			} else if (!isChecked) {
+				if (mYifaBox.isChecked()) mYifaBox.setChecked(false);
 			}
 			checkDoraIn();
 			break;
 		case R.id.calculate_double_lizhi:
 			if (isChecked && mLizhiBox.isChecked()) {
 				mLizhiBox.setChecked(false);
+			} else if (!isChecked) {
+				if (mYifaBox.isChecked()) mYifaBox.setChecked(false);
 			}
 			checkDoraIn();
 			break;

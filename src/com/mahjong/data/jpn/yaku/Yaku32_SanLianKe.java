@@ -38,6 +38,7 @@ public class Yaku32_SanLianKe extends Yaku {
 		Arrays.fill(flags[2], false);
 		for (Group pung : groups.PungList()) {
 			int x = pung.value() / 9;
+			if (x >= 3) continue; // 不包含字牌
 			int y = pung.value() % 9;
 			flags[x][y] = true;
 		}

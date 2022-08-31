@@ -1,16 +1,18 @@
 package com.mahjong.activity.jpn;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
+import com.mahjong.common.MjSetting;
 import com.mahjong.dialog.FanfuDialog;
 import com.mahjong.dialog.FanfuDialog.OnFanfuListener;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ManageTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.FlowRadioGroup;
 import com.mahjong.ui.FlowRadioGroup.OnCheckedChangeListener;
 import com.mahjong.ui.PlayerFuncItem;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -23,7 +25,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ResultSetSimpleActivity extends Activity implements OnClickListener {	
+public class ResultSetSimpleActivity extends BaseActivity implements OnClickListener {	
 	
 	private Context mContext;
 	
@@ -50,26 +52,23 @@ public class ResultSetSimpleActivity extends Activity implements OnClickListener
 	private int mFanCount = 1; // 番数
 	private int mFuCount = 0; // 符数
 	
+	private boolean landscapeMode;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		// 设定方向
 		Intent intent = getIntent();
 		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
-		switch (pos) {
-		case PlayerFuncItem.POS_LEFT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_RIGHT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_TOP:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-			break;
-		case PlayerFuncItem.POS_BOTTOM:
-		default:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			break;
+		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
+		int[] land_orientations = {ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, 
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT};
+		if (landscapeMode) {
+			setRequestedOrientation(land_orientations[pos]);
+		} else {
+			setRequestedOrientation(port_orientations[pos]);
 		}
 		setContentView(R.layout.activity_jpn_result_set_simple);
 		mContext = this;
@@ -189,7 +188,12 @@ public class ResultSetSimpleActivity extends Activity implements OnClickListener
 	private void sendData() {
 		ManageTool mTool = ManageTool.getInstance();
 		mTool.setResult(mOrgPlayer, mFanCount, mFuCount);
-		Intent data = new Intent(ResultSetSimpleActivity.this, ResultShow.class);
+		Intent data;
+		if (landscapeMode) {
+			data = new Intent(ResultSetSimpleActivity.this, ResultShowForLand.class);
+		} else {
+			data = new Intent(ResultSetSimpleActivity.this, ResultShow.class);
+		}
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		if (isZimo) {
 			data.putExtra(MjAction.Name, MjAction.ACTION_ZIMO);

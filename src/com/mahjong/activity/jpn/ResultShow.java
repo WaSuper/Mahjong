@@ -1,16 +1,20 @@
 package com.mahjong.activity.jpn;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
+import com.mahjong.common.MjSetting;
 import com.mahjong.item.ResultList;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ImageTool;
 import com.mahjong.tools.LightTool;
 import com.mahjong.tools.ManageTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.ResultListView;
 import com.mahjong.ui.ResultView;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,7 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ResultShow extends Activity implements OnClickListener {
+public class ResultShow extends BaseActivity implements OnClickListener {
 
 	private ResultView[] mResultViews; // 结果视图
 	private ResultListView[] mResultListViews; // 分数列表视图
@@ -57,6 +61,20 @@ public class ResultShow extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		boolean landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+		boolean isPortscapeMode = getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+		if (isPortscapeMode && landscapeMode) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			setContentView(R.layout.activity_blank);
+		} else if (!isPortscapeMode && !landscapeMode) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			setContentView(R.layout.activity_blank);
+		} else {
+			onCreateAction();
+		}
+	}
+	
+	private void onCreateAction() {
 		setContentView(R.layout.activity_jpn_show_result);
 		mActionType = getIntent().getIntExtra(MjAction.Name, 0);
 		mMainVision = getIntent().getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
@@ -303,6 +321,12 @@ public class ResultShow extends Activity implements OnClickListener {
 		intent.putExtra(GameSimpleActivity.BROADCAST_RESULT, 
 				GameSimpleActivity.REQUEST_INVALIDATE);
 		sendBroadcast(intent);
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+//		onCreateAction();
+		super.onConfigurationChanged(newConfig);
 	}
 	
 }

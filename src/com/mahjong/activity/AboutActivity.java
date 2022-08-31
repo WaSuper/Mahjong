@@ -5,7 +5,6 @@ import com.mahjong.anime.SwingAnimation;
 import com.mahjong.tools.FileTools;
 import com.mahjong.tools.PackageUtils;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity implements OnClickListener {
+public class AboutActivity extends BaseActivity implements OnClickListener {
 
 	private ImageView backView;
 	private TextView versionView;

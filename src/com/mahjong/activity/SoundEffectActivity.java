@@ -18,7 +18,6 @@ import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.fab.FloatingActionButton;
 import com.mahjong.ui.fab.FloatingActionsMenu;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +33,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-public class SoundEffectActivity extends Activity 
+public class SoundEffectActivity extends BaseActivity 
 	implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 
 	public static final int Request_SoundBox_Update = 0x5001;

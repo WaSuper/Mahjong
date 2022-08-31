@@ -3,6 +3,7 @@ package com.mahjong.activity.jpn;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
 import com.mahjong.dialog.DoraDialog;
@@ -19,7 +20,6 @@ import com.mahjong.ui.MahjongMainDora.MahjongMainDoraListener;
 import com.mahjong.ui.MahjongMainPanel;
 import com.mahjong.ui.MahjongMainPanel.MahjongMainPanelListener;
 import com.mahjong.ui.MahjongSpectrum;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
  * @author Summer Lee
  *
  */
-public class GameActivity extends Activity 
+public class GameActivity extends BaseActivity 
 	implements OnClickListener, OnLongClickListener {
 
 	private Context mContext;

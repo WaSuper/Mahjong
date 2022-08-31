@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.activity.PlayerSettingActivity;
 import com.mahjong.adapter.PlayerSimpleAdapter;
 import com.mahjong.common.MjSetting;
@@ -29,11 +30,11 @@ import com.mahjong.ui.MjPanelView;
 import com.mahjong.ui.MjPanelView.OnMjPanelViewListener;
 import com.mahjong.ui.PlayerFuncItem;
 import com.mahjong.ui.PlayerFuncItem.OnPlayerFuncItemListener;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -50,7 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class GameSimpleActivity extends Activity implements
+public class GameSimpleActivity extends BaseActivity implements
 		OnClickListener {
 
 	public static final String MAIN_VISION 		= "MAIN_VISION";
@@ -123,9 +124,17 @@ public class GameSimpleActivity extends Activity implements
 	
 	private Handler mHandler = new Handler();
 	
+	private boolean landscapeMode;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+		if (landscapeMode) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 		setContentView(R.layout.activity_jpn_game_simple);
 		mContext = this;
 		mLightTool = new LightTool(this);
@@ -573,7 +582,11 @@ public class GameSimpleActivity extends Activity implements
 			// 庄家听牌：连庄，本场+1；庄家无听牌，流庄，本场+1
 			mManageTool.setPlayerTingPai(mPlayerBoxs[0].isChecked(), mPlayerBoxs[1].isChecked(), 
 					mPlayerBoxs[2].isChecked(), mPlayerBoxs[3].isChecked());
-			intent = new Intent(GameSimpleActivity.this, ResultShow.class);
+			if (landscapeMode) {
+				intent = new Intent(GameSimpleActivity.this, ResultShowForLand.class);
+			} else {
+				intent = new Intent(GameSimpleActivity.this, ResultShow.class);
+			}
 			intent.putExtra(MjAction.Name, MjAction.ACTION_HUANGPAILIUJU);
 			intent.putExtra(MAIN_VISION, mMainVision);
 			startActivity(intent);

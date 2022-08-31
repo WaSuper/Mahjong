@@ -10,7 +10,8 @@ import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 import com.mahjong.R;
-import android.app.Activity;
+import com.mahjong.activity.BaseActivity;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PointFormActivity extends Activity implements OnClickListener {
+public class PointFormActivity extends BaseActivity implements OnClickListener {
 
 	private ImageView mBack;
 	private TextView mDealerView;

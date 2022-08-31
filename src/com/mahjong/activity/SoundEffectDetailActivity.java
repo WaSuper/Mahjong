@@ -19,7 +19,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,7 +34,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SoundEffectDetailActivity extends Activity
+public class SoundEffectDetailActivity extends BaseActivity
 		implements OnClickListener {
 
 	public static final int Request_SoundEffect_Icon = 0x6001;

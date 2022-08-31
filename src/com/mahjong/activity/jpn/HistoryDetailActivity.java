@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.activeandroid.query.Select;
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.HistoryDetailAdapter;
 import com.mahjong.dialog.FinalRankDialog;
 import com.mahjong.model.MjAction;
@@ -20,7 +21,6 @@ import com.mahjong.ui.LineChart;
 import com.mahjong.ui.SmartPopupWindow;
 import com.mahjong.ui.VerticalPosition;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -34,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class HistoryDetailActivity extends Activity implements OnClickListener {
+public class HistoryDetailActivity extends BaseActivity implements OnClickListener {
 
 	private Context mContext;
 	private long mStartTime;

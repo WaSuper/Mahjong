@@ -40,7 +40,7 @@ public class Yaku04_PingHe extends Yaku {
 				int value = g.value();
 				switch (g.addedIndex()) {
 					case 0: //边张
-						if (value == 6 || value == 9 || value == 24) { // 789的顺子
+						if (value == 6 || value == 15 || value == 24) { // 789的顺子
 							return false;
 						}
 						break;

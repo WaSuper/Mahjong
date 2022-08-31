@@ -18,7 +18,6 @@ import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.fab.FloatingActionButton;
 import com.mahjong.ui.fab.FloatingActionsMenu;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class EmoticonActivity extends Activity 
+public class EmoticonActivity extends BaseActivity 
 		implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 
 	public static final int Request_Emoticon_Update = 0x3001;

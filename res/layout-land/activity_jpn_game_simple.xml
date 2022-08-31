@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default2" >
+
+    <com.mahjong.ui.PlayerFuncItem
+        android:id="@+id/game_player_top"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:padding="3dp"
+        app:position="top" />
+
+    <com.mahjong.ui.PlayerFuncItem
+        android:id="@+id/game_player_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom"
+        android:padding="3dp"
+        app:position="bottom" />
+
+    <com.mahjong.ui.PlayerFuncItem
+        android:id="@+id/game_player_left"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        app:position="left" />
+
+    <com.mahjong.ui.PlayerFuncItem
+        android:id="@+id/game_player_right"
+        android:layout_width="85dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:padding="3dp"
+        app:position="right" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_left"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="110dp"
+        android:src="@drawable/rank4_num"
+        android:rotation="90" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_right"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="110dp"
+        android:src="@drawable/rank2_num"
+        android:rotation="-90" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="110dp"
+        android:src="@drawable/rank3_num"
+        android:rotation="180" />
+
+    <ImageView
+        android:id="@+id/game_player_rank_bottom"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="110dp"
+        android:src="@drawable/rank1_num" />
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginLeft="100dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/game_img_novice"
+            android:layout_width="70dp"
+            android:layout_height="56dp"
+            android:background="@drawable/mj_novice" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mode"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:ems="1" />
+
+            <CheckBox
+                android:id="@+id/game_switch_mode"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/switch_type1"
+                android:rotation="90" />
+
+            <TextView
+                android:id="@+id/game_tv_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/novice"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:ems="1" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/game_img_expert"
+            android:layout_width="70dp"
+            android:layout_height="56dp"
+            android:background="@drawable/mj_expert" />
+        
+    </LinearLayout>
+
+    <com.mahjong.ui.MjPanelView
+        android:id="@+id/game_panel_center"
+        android:layout_width="230dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="85dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="120dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/game_btn_liuju"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="15dp"
+            android:paddingTop="9dp"
+            android:text="@string/fan_leave"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/game_btn_baopai"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_game_btn_right"
+            android:gravity="left"
+            android:paddingLeft="15dp"
+            android:paddingTop="9dp"
+            android:text="@string/baopai"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
+</FrameLayout>

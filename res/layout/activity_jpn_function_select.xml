@@ -247,6 +247,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
             android:visibility="invisible" >
         
 	        <ImageButton
@@ -273,7 +274,24 @@
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
             android:orientation="vertical"
-            android:gravity="center_horizontal" >
+            android:gravity="center_horizontal"
+            android:visibility="visible" >
+        
+	        <ImageButton
+	            android:id="@+id/jpn_select_btn_game34"
+	            android:layout_width="70dp"
+	            android:layout_height="70dp"
+	            android:src="@drawable/ic_game34"
+	            android:background="@drawable/selector_bg_function_radius" />
+	        
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:layout_marginTop="3dp"
+	            android:text="@string/game34"
+	            android:textColor="@color/white"
+	            android:textSize="15sp" />
             
         </LinearLayout>
         

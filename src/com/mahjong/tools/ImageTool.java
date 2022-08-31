@@ -72,7 +72,12 @@ public class ImageTool {
 		Matrix matrix = new Matrix();
 		matrix.postScale(scaleWidth, scaleHeight);
 		// 得到新的图片
-		return Bitmap.createBitmap(org, 0, 0, width, height, matrix, true);
+		Bitmap scaleBitmap = Bitmap.createBitmap(org, 0, 0, width, height, matrix, true);
+		if (scaleBitmap != org && org != null && !org.isRecycled()) {
+			org.recycle();
+			org = null;
+		}
+		return scaleBitmap;
 	}
 
 	public static Bitmap rotateTo(float angle, Bitmap bitmap) {

@@ -29,23 +29,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/ic_game_back" />
-            
-  <!--  <com.mahjong.ui.LeanTextView
-        android:id="@+id/rank_wintext"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-		android:layout_alignTop="@id/rank_title"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="30dp"
-        android:paddingLeft="80dp"
-        android:paddingRight="60dp"
-        android:text="胜利宣言"
-        android:textSize="18sp"
-        android:textColor="@color/gold"
-        android:background="@drawable/dialog_win"
-        android:alpha="0.7"
-        android:singleLine="false"
-        app:rotateAngle="-15" /> -->
    
    <com.mahjong.ui.MjWinTextView        
         android:id="@+id/rank_wintext"
@@ -523,7 +506,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="25dp"
-            android:layout_toRightOf="@id/rank_img3"
             android:orientation="horizontal" >
 
             <LinearLayout

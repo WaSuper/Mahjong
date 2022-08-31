@@ -1,6 +1,5 @@
 package com.mahjong.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +44,7 @@ import com.mahjong.ui.SmartPopupWindow;
 import com.mahjong.ui.VerticalPosition;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class FileActivity extends Activity implements View.OnClickListener {
+public class FileActivity extends BaseActivity implements View.OnClickListener {
 
 	public static final String FILE_SORT_MODE = "FILE_SORT_MODE";
 	public static final int File_Sort_By_letter = 0;

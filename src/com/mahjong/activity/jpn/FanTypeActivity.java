@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.SpecialYakuCheckAdapter;
 import com.mahjong.common.MjFanType;
 import com.mahjong.item.MjFanBean;
@@ -11,7 +12,6 @@ import com.mahjong.tools.ValueTool;
 import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.MahjongSpectrum;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class FanTypeActivity extends Activity implements OnClickListener {
+public class FanTypeActivity extends BaseActivity implements OnClickListener {
 
 	private ImageView mBack;
 	private ListView mListView;

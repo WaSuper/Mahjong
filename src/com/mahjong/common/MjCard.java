@@ -15,6 +15,10 @@ public class MjCard implements Parcelable {
 		this(0, MjDir.vertical);
 	}
 	
+	public MjCard(int num) {
+		this(num, MjDir.vertical);
+	}
+	
 	public MjCard(int num, int dir) {
 		this.id = MjSetting.buildUuid();
 		this.num = num;

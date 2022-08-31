@@ -39,9 +39,11 @@
 将玩家音效独立出来统一设置，可以为每个玩家单独设置一套音频
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/20_soundbox.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/21_soundbox_detail.jpg)
 
+最近还加了个新玩法：十七步（暂时只有计算器，有兴趣的可以去萌娘百科搜下玩法，适合2人玩）
+
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
-Saki_v1.2.0_build220429 安装包下载地址：
-链接: https://pan.baidu.com/s/14UxLP8kCoXc17SbKyx7Ajw 提取码: ydc3
+Saki_v1.3.0_build220831 安装包下载地址：
+链接: https://pan.baidu.com/s/1VVYCr3NmuBGI86YAcjXv0g 提取码: kfn2
 素材下载地址：
 链接: https://pan.baidu.com/s/1qjlaVULnkxzDgXouUMc-tg 提取码: pagu

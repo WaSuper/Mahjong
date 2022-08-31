@@ -136,22 +136,33 @@ public class MjPanelView extends View {
 		mBtn2String[2] = getResources().getString(R.string.history);
 		mBtn2String[3] = getResources().getString(R.string.revoke);
 		
-		mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-		mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-		mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+//		mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+//		mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+//		mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
 		mImgLizhiCount = BitmapFactory.decodeResource(getResources(), R.drawable.mj_bang);
 		mImgDice = BitmapFactory.decodeResource(getResources(), R.drawable.bg_dice);
 		Bitmap windBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.text_ju_wind);
 		mImgWinds = ImageTool.split(windBitmap, 4, 1);
+		releaseBitmap(windBitmap);
 		Bitmap juNumBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.text_ju_number);
 		mImgJuNums = ImageTool.split(juNumBitmap, 4, 1);
+		releaseBitmap(juNumBitmap);
 		Bitmap roundNumBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.text_count_number);
 		mImgRoundNums = ImageTool.split(roundNumBitmap, 11, 1);
+		releaseBitmap(roundNumBitmap);
 		Bitmap extraBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.text_extra);
 		Bitmap[] extras = ImageTool.split(extraBitmap, 3, 1);
+		releaseBitmap(extraBitmap);
 		mImgJu = extras[0];
 		mImgBen = extras[1];
 		mImgChang = extras[2];
+	}
+	
+	private void releaseBitmap(Bitmap bitmap) {
+		if (bitmap != null && !bitmap.isRecycled()) {
+			bitmap.recycle();
+			bitmap = null;
+		}
 	}
 	
 	public void setCurPlayer(int index) {
@@ -375,6 +386,10 @@ public class MjPanelView extends View {
 		if (isLizhi) {
 			RectF bottomRectF = new RectF(leftP4 + lizhiCorner, bottomP2, 
 					rightP4 - lizhiCorner, bottomP1);
+			if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
+				mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+				mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, bottomRectF.width(), bottomRectF.height());
+			}
 			canvas.drawBitmap(mImgLizhiH, null, bottomRectF, mBitmapPaint);
 		}
 		mBottomPointRectF = new RectF(leftP4, bottomP3, rightP4, bottomP1);
@@ -391,6 +406,11 @@ public class MjPanelView extends View {
 		if (isLizhi) {
 			RectF rightRectF = new RectF(rightP2, topP4 + lizhiCorner, 
 					rightP1, bottomP4 - lizhiCorner);
+			if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
+				mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+				mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, rightRectF.width(), rightRectF.height());
+				mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+			}
 			canvas.drawBitmap(mImgLizhiV, null, rightRectF, mBitmapPaint);
 		}
 		mRightPointRectF = new RectF(rightP3, topP4, rightP1, bottomP4);
@@ -407,6 +427,10 @@ public class MjPanelView extends View {
 		if (isLizhi) {
 			RectF topRectF = new RectF(leftP4 + lizhiCorner, topP1, 
 					rightP4 - lizhiCorner, topP2);
+			if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
+				mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+				mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, topRectF.width(), topRectF.height());
+			}
 			canvas.drawBitmap(mImgLizhiH, null, topRectF, mBitmapPaint);
 		}
 		mTopPointRectF = new RectF(leftP4, topP1, rightP4, topP3);
@@ -423,6 +447,11 @@ public class MjPanelView extends View {
 		if (isLizhi) {
 			RectF leftRectF = new RectF(leftP1, topP4 + lizhiCorner, 
 					leftP2, bottomP4 - lizhiCorner);
+			if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
+				mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+				mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, leftRectF.width(), leftRectF.height());
+				mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+			}
 			canvas.drawBitmap(mImgLizhiV, null, leftRectF, mBitmapPaint);
 		}
 		mLeftPointRectF = new RectF(leftP1, topP4, leftP3, bottomP4);

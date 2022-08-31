@@ -2,15 +2,16 @@
 
 import com.mahjong.R;
 import com.mahjong.activity.AboutActivity;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.activity.EmoticonActivity;
 import com.mahjong.activity.PlayerManageActivity;
 import com.mahjong.activity.SoundEffectActivity;
 import com.mahjong.activity.jpn.CalculateActivity;
 import com.mahjong.activity.jpn.SettingActivity;
+import com.mahjong.activity.jpn.game34.Game34SelectActivity;
 import com.mahjong.tools.SpecialYakuTool;
 import com.mahjong.tools.ToastTool;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MainSelectActivity extends Activity implements OnClickListener {
+public class MainSelectActivity extends BaseActivity implements OnClickListener {
 
 	private ImageButton btnBattleEntrance;
 	private ImageButton btnBattleRecord;
@@ -29,6 +30,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 	private ImageButton btnEmoticon;
 	private ImageButton btnSoundEffect;
 	private ImageButton btnWlanBattle;	
+	private ImageButton btnGame34;	
 	private Button btnFanType;
 	private Button btnPointForm;
 	private TextView aboutView;
@@ -55,6 +57,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 		btnEmoticon = (ImageButton) findViewById(R.id.jpn_select_btn_emoticon);
 		btnSoundEffect = (ImageButton) findViewById(R.id.jpn_select_btn_sound_effect);
 		btnWlanBattle = (ImageButton) findViewById(R.id.jpn_select_btn_wlan_battle);
+		btnGame34 = (ImageButton) findViewById(R.id.jpn_select_btn_game34);
 		btnFanType = (Button) findViewById(R.id.jpn_select_btn_fan_type);
 		btnPointForm = (Button) findViewById(R.id.jpn_select_btn_point_form);
 		aboutView = (TextView) findViewById(R.id.jpn_select_about);
@@ -67,6 +70,7 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 		btnWlanBattle.setOnClickListener(this);
 		btnEmoticon.setOnClickListener(this);
 		btnSoundEffect.setOnClickListener(this);
+		btnGame34.setOnClickListener(this);
 		btnFanType.setOnClickListener(this);
 		btnPointForm.setOnClickListener(this);
 		aboutView.setOnClickListener(this);
@@ -97,6 +101,9 @@ public class MainSelectActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.jpn_select_btn_wlan_battle:
 			ToastTool.showToast(this, R.string.no_support);
+			break;
+		case R.id.jpn_select_btn_game34:
+			startActivity(new Intent(MainSelectActivity.this, Game34SelectActivity.class));
 			break;
 		case R.id.jpn_select_btn_fan_type:
 			startActivity(new Intent(MainSelectActivity.this, FanTypeActivity.class));

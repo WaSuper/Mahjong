@@ -46,7 +46,7 @@ public class MjResult extends Model {
 		Col_Title, Col_Note, Col_RetPoint};
 	
 	@Column(name = "GameType")
-	private int game_type;			// 游戏类型:1->东风战，2->半庄战，4->全庄战
+	private int game_type;			// 游戏类型:0->东风战，1->半庄战，3->全庄战
 	
 	@Column(name = "BasePoint")
 	private int base_point;			// 基本点数

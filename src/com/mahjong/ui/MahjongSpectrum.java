@@ -84,6 +84,18 @@ public class MahjongSpectrum extends MahjongBaseView {
 	 * 是否显示添加区域
 	 */
 	private boolean isShowAddRect;
+	/**
+	 * 是否标记添加区域
+	 */
+	private boolean isMarkWinRect;
+	/**
+	 * 宝牌列表
+	 */
+	private int[] mDoraList;
+	/**
+	 * 是否使能控件
+	 */
+	private boolean enable;
 	
 	public MahjongSpectrum(Context context) {
 		this(context, null);
@@ -100,6 +112,8 @@ public class MahjongSpectrum extends MahjongBaseView {
 		singleLine = a.getBoolean(R.styleable.MahjongSpectrum_singleLine, true);
 		touchMode = a.getBoolean(R.styleable.MahjongSpectrum_touchMode, false);
 		isShowAddRect = a.getBoolean(R.styleable.MahjongSpectrum_showAddRect, true);
+		enable = a.getBoolean(R.styleable.MahjongSpectrum_enable, true);
+		isMarkWinRect = false;
 		a.recycle();
 		initPaint();
 		reset();
@@ -117,6 +131,15 @@ public class MahjongSpectrum extends MahjongBaseView {
 		mBitmapPaint.setStyle(Paint.Style.FILL);
 		mBitmapPaint.setTextAlign(Paint.Align.CENTER);
 		
+	}
+	
+	public void setMarkWinRect(int[] doraList) {
+		this.isMarkWinRect = true;
+		mDoraList = doraList;
+	}
+	
+	public int[] getDoraList() {
+		return mDoraList;
 	}
 	
 	public void setTouchRectColor(int color) {
@@ -209,9 +232,24 @@ public class MahjongSpectrum extends MahjongBaseView {
 	}
 	
 	public void setData(List<MjCard> cards, List<MjCardPairs> pairs, MjCard winCard) {
-		this.mWinNum = winCard;
-		this.mDarkNums = cards;
-		this.mBrightNums = pairs;
+		if (cards == null) {
+			mDarkNums.clear();
+			for (int i = 0; i < 13; i++) {
+				mDarkNums.add(new MjCard());
+			}
+		} else {
+			mDarkNums = cards;
+		}
+		if (winCard == null) {
+			mWinNum.reset();
+		} else {
+			this.mWinNum = winCard;
+		}
+		if (pairs == null) {
+			mBrightNums.clear();
+		} else {
+			mBrightNums = pairs;
+		}
 		clearTouchItem();
 		invalidate();
 	}	
@@ -629,6 +667,19 @@ public class MahjongSpectrum extends MahjongBaseView {
 		Bitmap winBitmap = BitmapFactory.decodeResource(getResources(), 
 				MjSetting.getMahjongBitmapRes(mWinNum.num));
 		mWinNum.setRect(leftPoint, cTop, leftPoint + mjWidth, cTop + mjHeight);
+		if (isMarkWinRect && mDoraList != null) {
+			for (int dora : mDoraList) {
+				if (dora > 0 && dora == mWinNum.num) {
+					mPaint.setColor(Color.parseColor("#a0ff3030"));
+					mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+					canvas.drawRect(leftPoint - 5, cTop - 5, 
+							leftPoint + mjWidth + 5, cTop + mjHeight + 5, mPaint);
+					mPaint.setColor(Color.parseColor("#a0ffffff"));
+					mPaint.setStyle(Paint.Style.STROKE);
+					break;
+				}
+			}
+		}
 		canvas.drawBitmap(winBitmap, null, mWinNum.rect, mBitmapPaint);
 		return leftPoint + mjWidth;
 	}
@@ -699,6 +750,7 @@ public class MahjongSpectrum extends MahjongBaseView {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		if (!enable) return false;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:	
 			if (touchMode) {

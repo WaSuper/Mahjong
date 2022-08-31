@@ -1,13 +1,15 @@
 package com.mahjong.activity.jpn;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
+import com.mahjong.common.MjSetting;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ManageTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.RotateButton;
 import com.mahjong.ui.RotateTextView;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ChangeScoreActivity extends Activity implements OnClickListener {
+public class ChangeScoreActivity extends BaseActivity implements OnClickListener {
 
 	public static final String ChangeScores = "ChangeScores";
 	
@@ -48,9 +50,12 @@ public class ChangeScoreActivity extends Activity implements OnClickListener {
 	
 	private ManageTool mTool = ManageTool.getInstance();
 	
+	private boolean landscapeMode;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
 		setContentView(R.layout.activity_jpn_changescore);
 		mContext = this;
 		mMainVision = getIntent().getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
@@ -163,7 +168,12 @@ public class ChangeScoreActivity extends Activity implements OnClickListener {
 				ToastTool.showToast(mContext, R.string.total_not_zore);
 				return;
 			}
-			Intent intent = new Intent(ChangeScoreActivity.this, ResultShow.class);
+			Intent intent;
+			if (landscapeMode) {
+				intent = new Intent(ChangeScoreActivity.this, ResultShowForLand.class);
+			} else {
+				intent = new Intent(ChangeScoreActivity.this, ResultShow.class);
+			}
 			intent.putExtra(MjAction.Name, MjAction.ACTION_CHANGESCORE);
 			intent.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 			intent.putExtra(ChangeScores, 

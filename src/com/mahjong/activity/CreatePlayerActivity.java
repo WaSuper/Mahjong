@@ -12,7 +12,6 @@ import com.mahjong.model.Player;
 import com.mahjong.tools.EmoticonTool;
 import com.mahjong.tools.ImageTool;
 import com.mahjong.ui.CommonDialog;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class CreatePlayerActivity extends Activity implements OnClickListener {
+public class CreatePlayerActivity extends BaseActivity implements OnClickListener {
 
 	private Context mContext;
 	

@@ -13,7 +13,6 @@ import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class EmoticonDetailActivity extends Activity 
+public class EmoticonDetailActivity extends BaseActivity 
 		implements OnClickListener {
 
 	public static final int Request_Emoticon_Icon = 0x4001;

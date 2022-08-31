@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default2" >
+    
+    <LinearLayout
+        android:id="@+id/changescore_center"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true" >
+        
+        <Button
+        	android:id="@+id/changescore_btn_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reset"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/total"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:gravity="center" />
+        
+        <TextView
+        	android:id="@+id/changescore_tv_sum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+        
+        <Button
+        	android:id="@+id/changescore_btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+        
+        <Button
+        	android:id="@+id/changescore_btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <View
+                android:layout_width="60dp"
+                android:layout_height="1dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_minus_1"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_minus_10"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_minus_100"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_minus_1000"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_name"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                app:rotateAngle="180" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="x100"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_tv_1"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_tv_10"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_tv_100"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_tv_1000"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_top_tv_tag"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="180" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_plus_1"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_plus_10"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_plus_100"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_top_plus_1000"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:rotateAngle="180"
+                app:transY="2dp" />
+            
+        </LinearLayout>  
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_plus_1000"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_plus_100"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_plus_10"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_plus_1"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_tv_tag"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_tv_1000"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_tv_100"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_tv_10"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_tv_1"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center" />
+            
+            <com.mahjong.ui.RotateTextView
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:text="x100"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_bottom_name"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="middle" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_minus_1000"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_minus_100"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_minus_10"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_bottom_minus_1"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp" 
+                app:transY="-2dp" />
+            
+            <View
+                android:layout_width="60dp"
+                android:layout_height="1dp" />
+            
+        </LinearLayout>  
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:gravity="center" >
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="name"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_minus_1000"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />   
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_minus_100"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_minus_10"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_minus_1"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+            
+        </LinearLayout> 
+        
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_tv_tag"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_tv_1000"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_tv_100"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_tv_10"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_left_tv_1"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+            <com.mahjong.ui.RotateTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="x100"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="90" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_plus_1000"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_plus_100"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_plus_10"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_left_plus_1"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="90" 
+        		app:transX="-2dp"
+        		app:transY="2dp" />
+            
+        </LinearLayout>        
+        
+    </LinearLayout>  
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:gravity="center" >
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_plus_1"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90" 
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_plus_10"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90" 
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_plus_100"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90" 
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_plus_1000"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90" 
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+        </LinearLayout> 
+        
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <com.mahjong.ui.RotateTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="x100"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_tv_1"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_tv_10"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_tv_100"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_tv_1000"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_tv_tag"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:rotateAngle="-90" />
+            
+        </LinearLayout>    
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_minus_1"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90"
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_minus_10"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90"
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_minus_100"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90"
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateButton
+        		android:id="@+id/changescore_right_minus_1000"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+        		app:rotateAngle="-90"
+        		app:transX="2dp"
+        		app:transY="2dp" />
+            
+            <com.mahjong.ui.RotateTextView
+        		android:id="@+id/changescore_right_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="name"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                app:rotateAngle="-90" />
+            
+        </LinearLayout>        
+        
+    </LinearLayout>  
+
+</RelativeLayout>

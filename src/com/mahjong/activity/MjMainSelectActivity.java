@@ -5,7 +5,6 @@ import com.mahjong.activity.jpn.CalculateActivity;
 import com.mahjong.activity.jpn.SettingActivity;
 import com.mahjong.tools.ToastTool;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.widget.ImageView;
  * @author Summer Lee
  *
  */
-public class MjMainSelectActivity extends Activity implements OnClickListener {
+public class MjMainSelectActivity extends BaseActivity implements OnClickListener {
 
 	Button btnJpn;
 	Button btnInter;

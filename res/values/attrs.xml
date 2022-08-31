@@ -68,10 +68,15 @@
         <attr name="startCount" format="integer"/>
         <attr name="endCount" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="Mahjong34CardView">
+        <attr name="threeLine" format="boolean" />
+        <attr name="touchMode"/>
+    </declare-styleable>
     <declare-styleable name="MahjongSpectrum">
         <attr name="singleLine" format="boolean" />
         <attr name="touchMode"/>
         <attr name="showAddRect" format="boolean"/>
+        <attr name="enable" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="MahjongDora">
         <attr name="doraIn" format="boolean" />

@@ -48,6 +48,7 @@ public class SettingFragment extends Fragment
 	private TextView mMaPointText;
 	private TextView mRetPointText;
 	private RelativeLayout mSpYakuLayout;
+	private CheckBox mLandscapeMode;	
 	
 	private List<String> mBattleCountList;
 	private int mMember;
@@ -76,12 +77,13 @@ public class SettingFragment extends Fragment
 		mFanfuBox = (CheckBox) mView.findViewById(R.id.setting_cb_fanfu);
 		mBasePointText = (TextView) mView.findViewById(R.id.setting_basepoint);
 		mEnterSWText = (TextView) mView.findViewById(R.id.setting_tv_enter_sw);
-		mEnterSWBox =  (CheckBox) mView.findViewById(R.id.setting_cb_enter_sw);
+		mEnterSWBox = (CheckBox) mView.findViewById(R.id.setting_cb_enter_sw);
 		mLizhiBelongText = (TextView) mView.findViewById(R.id.setting_lizhi_belong_content);
 		mLizhiBelongChoice = (TextView) mView.findViewById(R.id.setting_lizhi_belong);
 		mMaPointText = (TextView) mView.findViewById(R.id.setting_mapoint);
 		mRetPointText = (TextView) mView.findViewById(R.id.setting_retpoint);
 		mSpYakuLayout = (RelativeLayout) mView.findViewById(R.id.setting_rl_special_yaku);
+		mLandscapeMode = (CheckBox) mView.findViewById(R.id.setting_cb_landscape_mode);
 		
 		mMemberCount.setOnClickListener(this);
 		mBattleCount.setOnClickListener(this);
@@ -95,6 +97,7 @@ public class SettingFragment extends Fragment
 		mMaPointText.setOnClickListener(this);
 		mRetPointText.setOnClickListener(this);
 		mSpYakuLayout.setOnClickListener(this);
+		mLandscapeMode.setOnCheckedChangeListener(this);
 		
 		ShareprefenceTool tool = ShareprefenceTool.getInstance();
 		mMember = tool.getInt(MjSetting.MEMBER_COUNT, mContext, 4);
@@ -127,6 +130,9 @@ public class SettingFragment extends Fragment
 		
 		mRetPoint = tool.getInt(MjSetting.RET_POINT, mContext, defaultRet);
 		mRetPointText.setText(mRetPoint + "");
+		
+		boolean landscapeMode = tool.getBoolean(MjSetting.LANDSCAPE_MODE, mContext, false);
+		mLandscapeMode.setChecked(landscapeMode);
 	}
 
 	public void initGameStart() {
@@ -464,6 +470,10 @@ public class SettingFragment extends Fragment
 		case R.id.setting_cb_enter_sw:
 			ShareprefenceTool.getInstance().setBoolean(
 					MjSetting.ENTER_SOUTNWEST, isChecked, mContext);
+			break;
+		case R.id.setting_cb_landscape_mode:
+			ShareprefenceTool.getInstance().setBoolean(
+					MjSetting.LANDSCAPE_MODE, isChecked, mContext);
 			break;
 		default:
 			break;

@@ -1,17 +1,19 @@
 package com.mahjong.activity.jpn;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
+import com.mahjong.common.MjSetting;
 import com.mahjong.dialog.FanfuDialog;
 import com.mahjong.dialog.FanfuDialog.OnFanfuListener;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ManageTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.PlayerFuncItem;
 import com.mahjong.ui.ext.TextPicker;
 import com.mahjong.ui.ext.TextPicker.OnTextSelectedListener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -24,7 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 
-public class ResultSetBombSimpleActivity extends Activity implements OnClickListener {
+public class ResultSetBombSimpleActivity extends BaseActivity implements OnClickListener {
 
 	private Context mContext;
 	
@@ -51,26 +53,23 @@ public class ResultSetBombSimpleActivity extends Activity implements OnClickList
 	private int mHuCount = 0; // 胡牌人数
 	private int mCheckBoxIndex = 0; // 当前查询位置
 	
+	private boolean landscapeMode;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		// 设定方向
 		Intent intent = getIntent();
 		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
-		switch (pos) {
-		case PlayerFuncItem.POS_LEFT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_RIGHT:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-			break;
-		case PlayerFuncItem.POS_TOP:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-			break;
-		case PlayerFuncItem.POS_BOTTOM:
-		default:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			break;
+		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
+		int[] land_orientations = {ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, 
+				ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT};
+		if (landscapeMode) {
+			setRequestedOrientation(land_orientations[pos]);
+		} else {
+			setRequestedOrientation(port_orientations[pos]);
 		}
 		setContentView(R.layout.activity_jpn_result_set_bomb_simple);
 		mContext = this;
@@ -175,7 +174,12 @@ public class ResultSetBombSimpleActivity extends Activity implements OnClickList
 	
 	private void sendData() {
 		ManageTool mTool = ManageTool.getInstance();
-		Intent data = new Intent(ResultSetBombSimpleActivity.this, ResultShow.class);
+		Intent data;
+		if (landscapeMode) {
+			data = new Intent(ResultSetBombSimpleActivity.this, ResultShowForLand.class);
+		} else {
+			data = new Intent(ResultSetBombSimpleActivity.this, ResultShow.class);
+		}
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);
 		data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, mOrgPlayer);

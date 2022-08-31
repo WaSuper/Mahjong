@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.DropDownAdapter;
 import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
@@ -18,7 +19,6 @@ import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.MahjongBaseView.OnTouchEventListener;
 import com.mahjong.ui.MahjongBaseView;
 import com.mahjong.ui.MahjongPairs;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PairsSelectActivity extends Activity
+public class PairsSelectActivity extends BaseActivity
 		implements OnClickListener, OnItemClickListener, OnDismissListener {
 
 	public static final String MjPairsType = "MjPairsType";

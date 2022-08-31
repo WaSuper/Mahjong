@@ -377,5 +377,14 @@
 	<string name="some_data_added">部分数据已补充</string>
 	<string name="ret_point">返点-基础分</string>
 	<string name="ret_point_no_negative">PS：差值不能为负数</string>
+	<string name="game34">十七步</string>
+	<string name="calc_way_">计量：</string>
+	<string name="calc_way_fan">番数优先</string>
+	<string name="calc_way_value">分值优先</string>
+	<string name="game34_explain">1.开局从初始牌山中选取面前的34张牌作为起始牌组；\n2.从34张牌中选取13张作为最终牌组进行听牌并立直，牌组最终应满足满贯要求，亦可自定义规则；
+	    \n3.玩家按轮流将剩余的牌打出，凭借智慧与RP避铳、胡牌，各自剩余4张牌时本轮结束(最后一张打出牌可作为河底牌,并且无流局满贯)，分值计算按正常日麻算分系统计算；\n4.若牌组无法组合听牌，可以随意组合进行假听，若最终流局则按听牌处理；
+	    \nPS：此游戏2人玩最为适宜，增至3-4人会严重加快游戏进程，可自行体会...</string>
+	<string name="landscape_mode">横屏模式</string>
+	<string name="escape_dora">去宝牌降番</string>
 	    
 </resources>
