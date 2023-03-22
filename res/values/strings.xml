@@ -7,7 +7,7 @@
     <string name="power_by">Powered by Summer Studio</string>
   	<string name="about">关于</string>
   	<string name="version">Version %s</string>
-  	<string name="copyright">Copyright © 2019-2022 Summer Studio.\nAll Rights Reserved.</string>
+  	<string name="copyright">Copyright © 2019-2023 Summer Studio.\nAll Rights Reserved.</string>
     <string name="select_text">请选择麻将种类</string>
     <string name="mahjong_japanese">日本麻将</string>
     <string name="mahjong_international">国际麻将</string>
@@ -35,6 +35,7 @@
     <string name="battle_count">局数</string>
     <string name="battle_one">东风战</string>
     <string name="battle_two">半庄战</string>
+    <string name="battle_three">西风战</string>
     <string name="battle_four">全庄战</string>
     <string name="member_count">人数</string>
     <string name="base_point">基础分</string>
@@ -292,7 +293,7 @@
   	<string name="setting_player">玩家设置</string>
   	<string name="change_player">更换玩家</string>
   	<string name="result_none">秘籍：混水摸鱼</string>
-  	<string name="please_select_four_players">请选择4个玩家！</string>
+  	<string name="please_select_count_players">请选择%d个玩家！</string>
   	<string name="statistics">统计数据</string>
   	<string name="change_score">分数调整</string>
   	<string name="total">合计</string>
@@ -377,14 +378,27 @@
 	<string name="some_data_added">部分数据已补充</string>
 	<string name="ret_point">返点-基础分</string>
 	<string name="ret_point_no_negative">PS：差值不能为负数</string>
-	<string name="game34">十七步</string>
+	<string name="game17s">十七步</string>
 	<string name="calc_way_">计量：</string>
 	<string name="calc_way_fan">番数优先</string>
 	<string name="calc_way_value">分值优先</string>
-	<string name="game34_explain">1.开局从初始牌山中选取面前的34张牌作为起始牌组；\n2.从34张牌中选取13张作为最终牌组进行听牌并立直，牌组最终应满足满贯要求，亦可自定义规则；
+	<string name="game17s_explain">1.开局从初始牌山中选取面前的34张牌作为起始牌组；\n2.从34张牌中选取13张作为最终牌组进行听牌并立直，牌组最终应满足满贯要求，亦可自定义规则；
 	    \n3.玩家按轮流将剩余的牌打出，凭借智慧与RP避铳、胡牌，各自剩余4张牌时本轮结束(最后一张打出牌可作为河底牌,并且无流局满贯)，分值计算按正常日麻算分系统计算；\n4.若牌组无法组合听牌，可以随意组合进行假听，若最终流局则按听牌处理；
 	    \nPS：此游戏2人玩最为适宜，增至3-4人会严重加快游戏进程，可自行体会...</string>
 	<string name="landscape_mode">横屏模式</string>
 	<string name="escape_dora">去宝牌降番</string>
+	<string name="game17s_FanFu">番缚</string>
+	<string name="game17s_FanFu_content">需达到满贯才能进行荣和（可计算立直、 一发、河底、宝牌）</string>
+	<string name="game17s_FanFu_none">无番缚</string>
+	<string name="game17s_FanFu_manguan">满贯番缚</string>
+	<string name="game17s_FanFu_five">五番番缚</string>
+	<string name="game17s_groundwind_stay_east">固定东风</string>
+	<string name="game17s_groundwind_take_turns">轮流场风</string>
+	<string name="game4p">四麻</string>
+	<string name="game3p">三麻</string>
+	<string name="double_wind_4">雀头双风4符</string>
+	<string name="dora_north">拨北</string>
+	<string name="zimo_cut">自摸损</string>
+	<string name="game17s_fanfu_invalid">当前处于%1$s，有效番数为%2$d，胡牌不能！</string>
 	    
 </resources>

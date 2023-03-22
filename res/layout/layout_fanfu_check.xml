@@ -15,6 +15,7 @@
         android:orientation="horizontal" >
 
         <TextView
+            android:id="@+id/fanfu_item_dora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"

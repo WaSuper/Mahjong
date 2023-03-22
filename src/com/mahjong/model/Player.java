@@ -181,4 +181,10 @@ public class Player extends Model {
 				"drawable://"+ R.drawable.head_pc_shizuno, 0, 0);
 		return mNPCs;
 	}
+	
+	public static Player createNullPlayer() {
+		Player player = new Player("", "", "", 'F', "", 
+				"drawable://" + R.drawable.head_none, 0, 0);
+		return player;
+	}
 }

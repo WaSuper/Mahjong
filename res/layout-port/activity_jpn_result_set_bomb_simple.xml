@@ -23,6 +23,7 @@
     </RelativeLayout>
     
     <LinearLayout
+        android:id="@+id/result_set_bomb_simple_title_upper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -104,6 +105,7 @@
     </LinearLayout>
     
     <LinearLayout
+        android:id="@+id/result_set_bomb_simple_title_oppositer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -185,6 +187,7 @@
     </LinearLayout>
     
     <LinearLayout
+        android:id="@+id/result_set_bomb_simple_title_downer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

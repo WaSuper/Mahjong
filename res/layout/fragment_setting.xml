@@ -29,29 +29,26 @@
 
             <TextView
                 android:id="@+id/setting_member_count"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:gravity="right"
                 android:text="4"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,27 +61,59 @@
 
             <TextView
                 android:id="@+id/setting_battle_count"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:gravity="right"
                 android:text="@string/battle_two"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <View
+        <RelativeLayout
+            android:id="@+id/setting_rl_groundwind"
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
+            android:visibility="gone" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/windground"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/setting_tv_groundwind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/game17s_groundwind_stay_east"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,18 +135,16 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:id="@+id/setting_lizhi_belong_content"
@@ -140,18 +167,17 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
-
         <RelativeLayout
+            android:id="@+id/setting_rl_enter_sw"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:id="@+id/setting_tv_enter_sw"
@@ -174,18 +200,17 @@
                 android:drawableLeft="@drawable/selector_switch" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
-
         <RelativeLayout
+            android:id="@+id/setting_rl_fanfu"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:id="@+id/setting_tv_fanfu"
@@ -207,19 +232,51 @@
                 android:checked="false"
                 android:drawableLeft="@drawable/selector_switch" />
         </RelativeLayout>
-
-        <View
+        
+        <RelativeLayout
+            android:id="@+id/setting_game17s_rl_fanfu"
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
+            android:visibility="gone" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:id="@+id/setting_game17s_tv_fanfu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/game17s_FanFu"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/setting_game17s_tv_fanfu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/game17s_FanFu_five"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -241,18 +298,16 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -274,13 +329,72 @@
                 android:textSize="16sp" 
                 android:gravity="right|center_vertical"/>
         </RelativeLayout>
-        
-        <View
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:id="@+id/setting_tv_dwind4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/double_wind_4"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/setting_cb_dwind4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_rl_zimocut"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
+            android:visibility="gone" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:id="@+id/setting_tv_zimocut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/zimo_cut"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/setting_cb_zimocut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_switch" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/setting_rl_special_yaku"
@@ -288,6 +402,11 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:id="@+id/setting_tv_special_yaku"
@@ -306,13 +425,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
         </RelativeLayout>
-        
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/diver_color" />
 
         <RelativeLayout
             android:id="@+id/setting_rl_landscape_mode"
@@ -320,6 +432,11 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
 
             <TextView
                 android:layout_width="wrap_content"

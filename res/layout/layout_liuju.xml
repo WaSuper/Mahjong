@@ -39,12 +39,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="42dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/liuju_layout_sifenglianda"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal" >
@@ -74,6 +75,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liuju_layout_sigangsanle"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal" >
@@ -103,6 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liuju_layout_jiupaijiuzhong"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal" >
@@ -132,6 +135,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liuju_layout_sijializhi"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal" >
@@ -161,6 +165,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liuju_layout_sanjiaheliao"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal" >

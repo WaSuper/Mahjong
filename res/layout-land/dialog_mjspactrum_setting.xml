@@ -10,7 +10,7 @@
         android:id="@+id/dialog_mjspactrum_stereoview"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="170dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" >

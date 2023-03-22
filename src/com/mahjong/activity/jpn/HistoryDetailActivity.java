@@ -8,6 +8,7 @@ import com.activeandroid.query.Select;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.HistoryDetailAdapter;
+import com.mahjong.control.BaseManager;
 import com.mahjong.dialog.FinalRankDialog;
 import com.mahjong.model.MjAction;
 import com.mahjong.model.MjDetail;
@@ -85,18 +86,26 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 		mAdapter = new HistoryDetailAdapter(mContext, mResult, mDetailList);
 		mHistoryList.setAdapter(mAdapter);
 		String type = "";
-		switch (mResult.getGameType()) {
-		case 0:
-			type = mContext.getString(R.string.battle_one);
-			break;
-		case 1:
-			type = mContext.getString(R.string.battle_two);
-			break;
-		case 3:
-			type = mContext.getString(R.string.battle_four);
-			break;
-		default:
-			break;
+		if (mResult.getMainType() == BaseManager.MainType_17s) {
+			type += (mResult.getGameType() + 1);
+			type += mContext.getString(R.string.ju);
+		} else {
+			switch (mResult.getGameType()) {
+			case 0:
+				type = mContext.getString(R.string.battle_one);
+				break;
+			case 1:
+				type = mContext.getString(R.string.battle_two);
+				break;
+			case 2:
+				type = mContext.getString(R.string.battle_three);
+				break;
+			case 3:
+				type = mContext.getString(R.string.battle_four);
+				break;
+			default:
+				break;
+			}
 		}
 		String title = mResult.getTitle();
 		if (title == null || title.isEmpty()) {
@@ -121,7 +130,7 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 		mTimeView.setText(timeText);
 		
 		analysisTool = new AnalysisTool(mResult, mDetailList);
-		mLineChart.setData(analysisTool.getBaseScore(), analysisTool.getDataLen(),
+		mLineChart.setData(analysisTool.getBaseScore(), analysisTool.getDataLen(), mResult.getMemberCount(),
 				analysisTool.getScore1st(), analysisTool.getScore2nd(), 
 				analysisTool.getScore3rd(), analysisTool.getScore4th());
 	}
@@ -178,7 +187,7 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 				}
 			}
 			frDialog.setData(players, mResult.getPoints(), 
-					mResult.getMas(), mResult.getRanks(), analysisTool, null);
+					mResult.getMas(), mResult.getRanks(), analysisTool, null, mResult.getMemberCount());
 		}			
 		frDialog.show();
 	}
@@ -233,9 +242,27 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 		for (MjDetail detail : mDetailList) {
 			Date date = new Date(detail.getLogTime());
 			buffer.append(simpleDateFormat.format(date) + " ");
-			int juWind = detail.getJuCount() / 4;
+			int memberCount = mResult.getMemberCount();
+			int juWind;
 			int juCount = detail.getJuCount() % 4;
-			buffer.append(winds[juWind] + nums[juCount] + ju + " ");
+			if (mResult.getMainType() == BaseManager.MainType_17s) {
+				if (mResult.getFengType() == 0) {
+					juWind = 0;
+				} else {
+					if (memberCount == 2) {
+						if ((detail.getJuCount() / 2) % 2 == 0) juWind = 0;
+						else juWind = 2;
+					} else {
+						juWind = detail.getJuCount() / memberCount;
+					}
+				}
+				buffer.append(winds[juWind] + "[" + (detail.getJuCount() / memberCount + 1) + "]"
+						+ nums[juCount] + ju);
+			} else {
+				juWind = detail.getJuCount() / memberCount;
+				buffer.append(winds[juWind] + nums[juCount] + ju);
+			}
+			buffer.append(" ");
 			buffer.append(detail.getRoundCount() + round + "\n");
 			int[] changeScores = detail.getChangeScores();
 			int[] finalScores = detail.getFinalScores();
@@ -259,8 +286,25 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 			}
 			buffer.append(content + "\n");
 			if (isShowScore) {
-				for (int i = 0; i < 4; i++) {
-					String playerWind = winds[(i + 4 - juCount) % 4];
+				int[] playerIndexes;
+				if (memberCount < 4) {
+					if (memberCount < 3) {
+						playerIndexes = new int[] {0, 2};
+					} else {
+						playerIndexes = new int[] {0, 1, 2};
+					}
+				} else {
+					playerIndexes = new int[] {0, 1, 2, 3};
+				}
+				for (int i : playerIndexes) {
+					int tmpIndex = (i + memberCount - juCount) % memberCount;
+					if (memberCount == 2) {
+						if (i == 2) {
+							tmpIndex = (1 + memberCount - juCount) % memberCount;
+						}
+						if (tmpIndex == 1) tmpIndex = 2;
+					}
+					String playerWind = winds[tmpIndex];
 					buffer.append("(" + playerWind + ")" + mNames[i] + ":\t\t");
 					buffer.append(changeScores[i] + "→" + finalScores[i] + "\n");
 				}

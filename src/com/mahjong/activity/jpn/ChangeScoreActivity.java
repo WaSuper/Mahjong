@@ -3,8 +3,9 @@ package com.mahjong.activity.jpn;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjSetting;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.model.MjAction;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.RotateButton;
@@ -47,8 +48,9 @@ public class ChangeScoreActivity extends BaseActivity implements OnClickListener
 	private RotateButton[] mLeftMinusBtns;
 	private RotateButton[] mLeftPlusBtns;
 	private RotateTextView[] mLeftTexts;
+	private RotateTextView[] mTextx100Views;
 	
-	private ManageTool mTool = ManageTool.getInstance();
+	private BaseManager mTool = ManagerTool.getInstance().getManager();
 	
 	private boolean landscapeMode;
 	
@@ -137,6 +139,11 @@ public class ChangeScoreActivity extends BaseActivity implements OnClickListener
 		mLeftTexts[1] = (RotateTextView) findViewById(R.id.changescore_left_tv_10);
 		mLeftTexts[2] = (RotateTextView) findViewById(R.id.changescore_left_tv_100);
 		mLeftTexts[3] = (RotateTextView) findViewById(R.id.changescore_left_tv_1000);
+		mTextx100Views = new RotateTextView[4];
+		mTextx100Views[0] = (RotateTextView) findViewById(R.id.changescore_bottom_tv_x100);
+		mTextx100Views[1] = (RotateTextView) findViewById(R.id.changescore_right_tv_x100);
+		mTextx100Views[2] = (RotateTextView) findViewById(R.id.changescore_top_tv_x100);
+		mTextx100Views[3] = (RotateTextView) findViewById(R.id.changescore_left_tv_x100);
 		
 		mIndexs = new int[4];
 		for (int i = 0; i < 4; i++) {
@@ -155,6 +162,62 @@ public class ChangeScoreActivity extends BaseActivity implements OnClickListener
 		mResetBtn.setOnClickListener(this);
 		mOkBtn.setOnClickListener(this);
 		mCancelBtn.setOnClickListener(this);
+		
+		checkIsShowItem(ManagerTool.getInstance().getManager().getMemberCount());
+	}
+	
+	/**
+	 * 根据人数确定是否显示控件
+	 * 
+	 * @param memberCount
+	 */
+	private void checkIsShowItem(int memberCount) {
+		int orgIndex = mMainVision;
+		for (int i = 0; i < 4; i++) {
+			if ((orgIndex == 1 && memberCount < 3)
+					|| (orgIndex == 3 && memberCount < 4)) {
+				mTagViews[i].setVisibility(View.INVISIBLE);
+				mNameViews[i].setVisibility(View.INVISIBLE);
+				mTextx100Views[i].setVisibility(View.INVISIBLE);
+				hideItem(i);
+			} 
+			orgIndex = (orgIndex + 1) % 4;
+		}
+	}
+	
+	private void hideItem(int index) {
+		switch (index) {
+		case 0:
+			for (int i = 0; i < 4; i++) {
+				mBottomTexts[i].setVisibility(View.INVISIBLE);
+				mBottomPlusBtns[i].setVisibility(View.INVISIBLE);
+				mBottomMinusBtns[i].setVisibility(View.INVISIBLE);
+			}
+			break;
+		case 1:
+			for (int i = 0; i < 4; i++) {
+				mRightTexts[i].setVisibility(View.INVISIBLE);
+				mRightPlusBtns[i].setVisibility(View.INVISIBLE);
+				mRightMinusBtns[i].setVisibility(View.INVISIBLE);
+			}
+			break;
+		case 2:
+			for (int i = 0; i < 4; i++) {
+				mTopTexts[i].setVisibility(View.INVISIBLE);
+				mTopPlusBtns[i].setVisibility(View.INVISIBLE);
+				mTopMinusBtns[i].setVisibility(View.INVISIBLE);
+			}
+			break;
+		case 3:
+			for (int i = 0; i < 4; i++) {
+				mLeftTexts[i].setVisibility(View.INVISIBLE);
+				mLeftPlusBtns[i].setVisibility(View.INVISIBLE);
+				mLeftMinusBtns[i].setVisibility(View.INVISIBLE);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

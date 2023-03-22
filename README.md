@@ -5,6 +5,7 @@
 
 主界面
 本程序一共七大功能块：对战入口、历史战绩、计分器、排行榜、玩家管理、表情包、音频包
+共有3种玩法：四人麻将、三人麻将、十七步（终于做完了....）
 右下角还有两个小功能：役种、数表。没记性的朋友可以有空看看→_→
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/1_mian.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/2_fan.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/3_shubiao.jpg)
 
@@ -39,11 +40,9 @@
 将玩家音效独立出来统一设置，可以为每个玩家单独设置一套音频
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/20_soundbox.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/21_soundbox_detail.jpg)
 
-最近还加了个新玩法：十七步（暂时只有计算器，有兴趣的可以去萌娘百科搜下玩法，适合2人玩）
-
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
-Saki_v1.3.0_build220831 安装包下载地址：
-链接: https://pan.baidu.com/s/1VVYCr3NmuBGI86YAcjXv0g 提取码: kfn2
+Saki_v2.0.0_build230322 安装包下载地址：
+链接: https://pan.baidu.com/s/187UbWFn7QGeI6OhR94x9Gw 提取码: nyrh
 素材下载地址：
 链接: https://pan.baidu.com/s/1qjlaVULnkxzDgXouUMc-tg 提取码: pagu

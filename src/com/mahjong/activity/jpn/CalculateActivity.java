@@ -10,9 +10,12 @@ import com.mahjong.adapter.StringArrayAdapter;
 import com.mahjong.common.MjCalcTool;
 import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
+import com.mahjong.common.MjSetting;
 import com.mahjong.common.MjWind;
+import com.mahjong.control.BaseManager;
 import com.mahjong.data.jpn.Score;
 import com.mahjong.tools.KeyBoardUtil;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.tools.KeyBoardUtil.OnKeyBoardListener;
 import com.mahjong.ui.CommonDialog;
@@ -52,7 +55,7 @@ public class CalculateActivity extends BaseActivity
 	private TextView mSpecialYaku;
 	private ImageView mBack;
 	private TextView mNote;
-	private TextView mPoint;			// 基本分：25000
+	private TextView mPoint;			// 基本分：25000 / 35000
 	private CheckBox mPlayerBox; 		// 庄家：true or 闲家：false
 	private CheckBox mLizhiBox;			// 立直
 	private CheckBox mDoubleLizhiBox;	// 双立直
@@ -62,6 +65,8 @@ public class CalculateActivity extends BaseActivity
 	private CheckBox mYifaBox;			// 一发
 	private CheckBox mQianggangBox;		// 抢杠
 	private CheckBox mLingshangBox;		// 岭上开花
+	private CheckBox mDoubleWind4Box;	// 雀头双风4符
+	private CheckBox mDoraNorthBox;		// 拨北
 	private MahjongSpectrum mjSpectrum;	// 牌谱
 	private MahjongDora mjDoraIndicaOut;// 宝牌指示牌
 	private MahjongDora mjDoraIndicaIn; // 里宝牌指示牌
@@ -90,6 +95,9 @@ public class CalculateActivity extends BaseActivity
 	private int mBangCount = 0;
 	private int mRollCount = 0;
 	private int mSelectedCount = 0;
+	
+	private List<String> mDoraNorthList = new ArrayList<String>();
+	private int mDoraNorthCount = 0;
 	
 //	private String mResultText = "";
 	private Score mResultScore = null;
@@ -156,6 +164,8 @@ public class CalculateActivity extends BaseActivity
 		mYifaBox = (CheckBox) findViewById(R.id.calculate_yifa);
 		mQianggangBox = (CheckBox) findViewById(R.id.calculate_qianggang);
 		mLingshangBox = (CheckBox) findViewById(R.id.calculate_lingshangkaihua);
+		mDoubleWind4Box = (CheckBox) findViewById(R.id.calculate_doublewind4);
+		mDoraNorthBox = (CheckBox) findViewById(R.id.calculate_doranorth);
 		mjSpectrum = (MahjongSpectrum) findViewById(R.id.calculate_mahjongspectrum);
 		mjDoraIndicaOut = (MahjongDora) findViewById(R.id.calculate_mahjongdora_out);
 		mjDoraIndicaIn = (MahjongDora) findViewById(R.id.calculate_mahjongdora_in);
@@ -197,6 +207,10 @@ public class CalculateActivity extends BaseActivity
 		mQianggangBox.setOnCheckedChangeListener(this);
 		mLingshangBox.setChecked(false);
 		mLingshangBox.setOnCheckedChangeListener(this);
+		mDoubleWind4Box.setChecked(false);
+		mDoubleWind4Box.setOnCheckedChangeListener(this);
+		mDoraNorthBox.setChecked(false);
+		mDoraNorthBox.setOnCheckedChangeListener(this);
 		mjSpectrum.setOnTouchEventListener(mTouchListener);
 		mjDoraIndicaOut.setOnTouchEventListener(mTouchListener);
 		mjDoraIndicaIn.setOnTouchEventListener(mTouchListener);
@@ -221,10 +235,23 @@ public class CalculateActivity extends BaseActivity
 		mPairsTypeList.add(getString(R.string.addition_kong));
 		mPairsTypeList.add(getString(R.string.exposed_kong));
 		mPairsTypeList.add(getString(R.string.concealed_kong));		
+		
+		mDoraNorthList.clear();
+		mDoraNorthList.add("1");
+		mDoraNorthList.add("2");
+		mDoraNorthList.add("3");
+		mDoraNorthList.add("4");
+		int type = ShareprefenceTool.getInstance().getInt(BaseManager.GAME_TYPE, mContext, 0);
+		if (type == BaseManager.MainType_4p) {
+			mDoraNorthBox.setVisibility(View.GONE);
+			mPoint.setText("25000");
+		} else if (type == BaseManager.MainType_3p) {
+			mDoraNorthBox.setVisibility(View.VISIBLE);
+			mPoint.setText("35000");
+		}
 	}
 	
 	private void resetData() {
-		
 		mPlayerBox.setChecked(true);
 		mZimoBox.setChecked(false);
 		mDoubleLizhiBox.setChecked(false);
@@ -234,6 +261,10 @@ public class CalculateActivity extends BaseActivity
 		mYifaBox.setChecked(false);
 		mQianggangBox.setChecked(false);
 		mLingshangBox.setChecked(false);
+		mDoubleWind4Box.setChecked(false);
+		mDoraNorthBox.setChecked(false);
+		mDoraNorthBox.setText(getString(R.string.dora_north));
+		mDoraNorthCount = 0;
 		
 		mGroundWind = MjWind.East;
 		setWindText(mGroundWind, mGroundWindText);
@@ -372,6 +403,14 @@ public class CalculateActivity extends BaseActivity
 				return;
 			}
 		}
+		if (mDoraNorthCount > 0) {
+			if (numCounts[MjSetting._wind_north] > (4 - mDoraNorthCount)) {
+				msg.arg1 = SHOW_ERROR_TEXT;
+				msg.obj = new String(getString(R.string.dora_north) + getString(R.string.input_invalid));
+				mHandler.sendMessage(msg);
+				return;
+			}
+		}
 		List<MjCard> mDora = mjDoraIndicaOut.getDoraList();
 		List<MjCard> mDoraIn = mjDoraIndicaIn.getDoraList();
 //		mResultText = MjCalcTool.calcToResultText(mDarkNums, mBrightNums, mWinNum, 
@@ -385,7 +424,7 @@ public class CalculateActivity extends BaseActivity
 				mFirstRoundBox.isChecked(), mFinalPickBox.isChecked(), mZimoBox.isChecked(),
 				mYifaBox.isChecked(), mQianggangBox.isChecked(), mLingshangBox.isChecked(),
 				mGroundWind, mSelfWind, mBangCount, mRollCount,
-				mDora, mDoraIn);
+				mDora, mDoraIn, mDoubleWind4Box.isChecked(), mDoraNorthCount);
 		msg.arg1 = SHOW_RESULT;
 		mHandler.sendMessage(msg);
 	}
@@ -484,6 +523,16 @@ public class CalculateActivity extends BaseActivity
 				if (mQianggangBox.isChecked()) mQianggangBox.setChecked(false);
 			}
 			break;
+		case R.id.calculate_doublewind4:
+			break;
+		case R.id.calculate_doranorth:
+			if (isChecked) {
+				showDoraNorthDialog();
+			} else {
+				mDoraNorthBox.setText(getString(R.string.dora_north));
+				mDoraNorthCount = 0;
+			}
+			break;
 		default:
 			break;
 		}
@@ -495,6 +544,34 @@ public class CalculateActivity extends BaseActivity
 		} else {
 			mjDoraIndicaIn.setVisibility(View.INVISIBLE);
 		}
+	}
+	
+	private void showDoraNorthDialog() {
+		final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle, 0);
+		mDialog.addView(R.layout.listview);
+		mDialog.setCanceledOnTouchOutside(true);
+		mDialog.titleTextView.setText(getString(R.string.dora_north));
+		mDialog.ok.setText(getResources().getString(R.string.dora_north));
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				mDialog.dismiss();
+			}
+		});
+		ListView listView = (ListView) mDialog.getContentView();
+		StringArrayAdapter mAdapter = new StringArrayAdapter(mContext);
+		listView.setAdapter(mAdapter);
+		mAdapter.setData(mDoraNorthList);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mDoraNorthCount = position + 1;
+				mDoraNorthBox.setText(getString(R.string.dora_north) + "+" + mDoraNorthList.get(position));
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
 	}
 	
 	private void showWindDialog(String title, final boolean isGroundWind) {

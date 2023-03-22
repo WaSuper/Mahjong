@@ -189,12 +189,36 @@
 	            android:paddingTop="1dp"
 	            android:text="@string/lizhi"
 	            android:textSize="12sp" />
+        
+	        <CheckBox
+	            android:id="@+id/game34_calculate_final_pick"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:layout_gravity="center_horizontal"
+	            android:background="@drawable/selector_checkbox_swap"
+	            android:button="@null"
+	            android:checked="false"
+	            android:gravity="center"
+	            android:paddingBottom="1dp"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
+	            android:paddingTop="1dp"
+	            android:text="@string/final_pick"
+	            android:textSize="12sp" />
+            
+        </LinearLayout>
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_marginTop="6dp"
+            android:orientation="horizontal">
 	
 	        <CheckBox
 	            android:id="@+id/game34_calculate_yifa"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dp"
 	            android:background="@drawable/selector_checkbox_swap"
 	            android:button="@null"
 	            android:checked="false"
@@ -205,25 +229,25 @@
 	            android:paddingTop="1dp"
 	            android:text="@string/yifa"
 	            android:textSize="12sp" />
-            
-        </LinearLayout>
         
-        <CheckBox
-            android:id="@+id/game34_calculate_final_pick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_checkbox_swap"
-            android:button="@null"
-            android:checked="false"
-            android:gravity="center"
-            android:paddingBottom="1dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="1dp"
-            android:text="@string/final_pick"
-            android:textSize="12sp" />
+	        <CheckBox
+	            android:id="@+id/game34_calculate_doublewind4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:layout_gravity="center_horizontal"
+	            android:background="@drawable/selector_checkbox_swap"
+	            android:button="@null"
+	            android:checked="false"
+	            android:gravity="center"
+	            android:paddingBottom="1dp"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
+	            android:paddingTop="1dp"
+	            android:text="@string/double_wind_4"
+	            android:textSize="12sp" />
+	        
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

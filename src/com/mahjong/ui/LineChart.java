@@ -24,6 +24,7 @@ public class LineChart extends View {
 	private int[] mScore4th;
 	private int mMaxScore;
 	private int mMinScore;
+	private int mMemberCount;
 	
 	public LineChart(Context context) {
 		this(context, null);
@@ -52,10 +53,11 @@ public class LineChart extends View {
 		mPaint.setTextSize(ValueTool.sp2px(getContext(), 14));
 	}
 	
-	public void setData(int baseScore, int len,
+	public void setData(int baseScore, int len, int memberCount,
 			int[] score1st, int[] score2nd, int[] score3rd, int[] score4th) {
 		mBaseScore = baseScore;
 		mLen = len;
+		mMemberCount = memberCount;
 		mScore1st = score1st;
 		mScore2nd = score2nd;
 		mScore3rd = score3rd;
@@ -67,40 +69,45 @@ public class LineChart extends View {
 			if (score1st[i] < mMinScore) mMinScore = score1st[i];
 			if (score2nd[i] > mMaxScore) mMaxScore = score2nd[i];
 			if (score2nd[i] < mMinScore) mMinScore = score2nd[i];
-			if (score3rd[i] > mMaxScore) mMaxScore = score3rd[i];
-			if (score3rd[i] < mMinScore) mMinScore = score3rd[i];
-			if (score4th[i] > mMaxScore) mMaxScore = score4th[i];
-			if (score4th[i] < mMinScore) mMinScore = score4th[i];
+			if (memberCount > 2) {
+				if (score3rd[i] > mMaxScore) mMaxScore = score3rd[i];
+				if (score3rd[i] < mMinScore) mMinScore = score3rd[i];
+				if (memberCount > 3) {
+					if (score4th[i] > mMaxScore) mMaxScore = score4th[i];
+					if (score4th[i] < mMinScore) mMinScore = score4th[i];
+				}
+			}
+			
 		}
 		invalidate();
 	}
 	
-	private void testData() {
-		mBaseScore = 25000;
-		mLen = 4;
-		mScore1st = new int[mLen];
-		mScore1st[0] = 25000;
-		mScore1st[1] = 23500;
-		mScore1st[2] = 22100;
-		mScore1st[3] = 54100;
-		mScore2nd = new int[mLen];
-		mScore2nd[0] = 25000;
-		mScore2nd[1] = 25000;
-		mScore2nd[2] = 30500;
-		mScore2nd[3] = 30500;
-		mScore3rd = new int[mLen];
-		mScore3rd[0] = 25000;
-		mScore3rd[1] = 25000;
-		mScore3rd[2] = 23600;
-		mScore3rd[3] = 23600;
-		mScore4th = new int[mLen];
-		mScore4th[0] = 26500;
-		mScore4th[1] = 26500;
-		mScore4th[2] = 23800;
-		mScore4th[3] = 8200;
-		mMaxScore = 54100;
-		mMinScore = 8200;
-	}
+//	private void testData() {
+//		mBaseScore = 25000;
+//		mLen = 4;
+//		mScore1st = new int[mLen];
+//		mScore1st[0] = 25000;
+//		mScore1st[1] = 23500;
+//		mScore1st[2] = 22100;
+//		mScore1st[3] = 54100;
+//		mScore2nd = new int[mLen];
+//		mScore2nd[0] = 25000;
+//		mScore2nd[1] = 25000;
+//		mScore2nd[2] = 30500;
+//		mScore2nd[3] = 30500;
+//		mScore3rd = new int[mLen];
+//		mScore3rd[0] = 25000;
+//		mScore3rd[1] = 25000;
+//		mScore3rd[2] = 23600;
+//		mScore3rd[3] = 23600;
+//		mScore4th = new int[mLen];
+//		mScore4th[0] = 26500;
+//		mScore4th[1] = 26500;
+//		mScore4th[2] = 23800;
+//		mScore4th[3] = 8200;
+//		mMaxScore = 54100;
+//		mMinScore = 8200;
+//	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -135,17 +142,21 @@ public class LineChart extends View {
 			canvas.drawLine(startX, y1, startX + xSpace, y2, mPaint);
 			if (i != 0) canvas.drawCircle(startX, y1, 4, mPaint);
 			// 3位
-			mPaint.setColor(Color.parseColor("#a26628"));
-			y1 = (float) ((double)(mMaxScore - mScore3rd[i]) / yScore * yLen) + paddingTop;
-			y2 = (float) ((double)(mMaxScore - mScore3rd[i + 1]) / yScore * yLen) + paddingTop;
-			canvas.drawLine(startX, y1, startX + xSpace, y2, mPaint);
-			if (i != 0) canvas.drawCircle(startX, y1, 4, mPaint);
-			// 4位
-			mPaint.setColor(Color.parseColor("#cacaca"));
-			y1 = (float) ((double)(mMaxScore - mScore4th[i]) / yScore * yLen) + paddingTop;
-			y2 = (float) ((double)(mMaxScore - mScore4th[i + 1]) / yScore * yLen) + paddingTop;
-			canvas.drawLine(startX, y1, startX + xSpace, y2, mPaint);
-			if (i != 0) canvas.drawCircle(startX, y1, 4, mPaint);
+			if (mMemberCount > 2) {
+				mPaint.setColor(Color.parseColor("#a26628"));
+				y1 = (float) ((double)(mMaxScore - mScore3rd[i]) / yScore * yLen) + paddingTop;
+				y2 = (float) ((double)(mMaxScore - mScore3rd[i + 1]) / yScore * yLen) + paddingTop;
+				canvas.drawLine(startX, y1, startX + xSpace, y2, mPaint);
+				if (i != 0) canvas.drawCircle(startX, y1, 4, mPaint);
+				// 4位
+				if (mMemberCount > 3) {
+					mPaint.setColor(Color.parseColor("#cacaca"));
+					y1 = (float) ((double)(mMaxScore - mScore4th[i]) / yScore * yLen) + paddingTop;
+					y2 = (float) ((double)(mMaxScore - mScore4th[i + 1]) / yScore * yLen) + paddingTop;
+					canvas.drawLine(startX, y1, startX + xSpace, y2, mPaint);
+					if (i != 0) canvas.drawCircle(startX, y1, 4, mPaint);
+				}
+			}
 			// nextLine
 			startX += xSpace;
 		}		
@@ -165,15 +176,19 @@ public class LineChart extends View {
 		startX += padding1;
 		canvas.drawCircle(startX, centerY, 7, mPaint);
 		startX += padding2;
-		mPaint.setColor(Color.parseColor("#a26628"));
-		canvas.drawText("3位", startX, startY, mPaint);
-		startX += padding1;
-		canvas.drawCircle(startX, centerY, 7, mPaint);
-		startX += padding2;
-		mPaint.setColor(Color.parseColor("#cacaca"));
-		canvas.drawText("4位", startX, startY, mPaint);
-		startX += padding1;
-		canvas.drawCircle(startX, centerY, 7, mPaint);
+		if (mMemberCount > 2) {
+			mPaint.setColor(Color.parseColor("#a26628"));
+			canvas.drawText("3位", startX, startY, mPaint);
+			startX += padding1;
+			canvas.drawCircle(startX, centerY, 7, mPaint);
+			startX += padding2;
+			if (mMemberCount > 3) {
+				mPaint.setColor(Color.parseColor("#cacaca"));
+				canvas.drawText("4位", startX, startY, mPaint);
+				startX += padding1;
+				canvas.drawCircle(startX, centerY, 7, mPaint);
+			}
+		}
 	}
 
 }

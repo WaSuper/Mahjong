@@ -35,6 +35,9 @@ public class MapointRankAdapter extends BaseAdapter {
 			float[] mas = result.getMas();
 			for (int i = 0; i < ids.length; i++) {
 				String id = ids[i];
+				if (id == null || id.isEmpty()) {
+					continue;
+				}
 				RankData data = playerMap.get(id);
 				if (data == null) {
 					data = new RankData(id, names[i]);			

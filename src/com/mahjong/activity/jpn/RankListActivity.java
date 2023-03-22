@@ -10,6 +10,7 @@ import com.activeandroid.query.Select;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.RankListAdapter;
+import com.mahjong.control.BaseManager;
 import com.mahjong.dialog.ProgressDialog;
 import com.mahjong.model.MjAction;
 import com.mahjong.model.MjDetail;
@@ -52,6 +53,8 @@ public class RankListActivity extends BaseActivity
 	
 	private Map<String, RankListData> mResultList = new HashMap<String, RankListActivity.RankListData>();
 	private int mLastSelectRank;
+	
+	private int mMainType;
 
 	private Handler mHandler = new Handler() {
 		
@@ -79,6 +82,7 @@ public class RankListActivity extends BaseActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_ranklist);
 		mContext = this;
+		mMainType = ShareprefenceTool.getInstance().getInt(BaseManager.GAME_TYPE, mContext, 0);
 		initUI();
 		checkUpdateData();
 	}
@@ -98,8 +102,23 @@ public class RankListActivity extends BaseActivity
 	}
 	
 	private void checkUpdateData() {
-		boolean isNeedUpdate = ShareprefenceTool.getInstance()
-				.getBoolean(RankItem.IS_NEED_UPDATE, mContext, true);
+		boolean isNeedUpdate = true;
+		switch (mMainType) {
+		case BaseManager.MainType_4p:
+			isNeedUpdate = ShareprefenceTool.getInstance()
+				.getBoolean(RankItem.IS_UPDATE, mContext, true);
+			break;
+		case BaseManager.MainType_3p:
+			isNeedUpdate = ShareprefenceTool.getInstance()
+				.getBoolean(RankItem.IS_UPDATE_3P, mContext, true);
+			break;
+		case BaseManager.MainType_17s:
+			isNeedUpdate = ShareprefenceTool.getInstance()
+				.getBoolean(RankItem.IS_UPDATE_17S, mContext, true);
+			break;
+		default:
+			break;
+		}
 		if (isNeedUpdate) {
 			new Thread(new Runnable() {
 				
@@ -109,7 +128,7 @@ public class RankListActivity extends BaseActivity
 				}
 			}).start();
 		} else {
-			List<RankItem> items = RankItem.getAllRankItem();
+			List<RankItem> items = RankItem.getAllRankItemByType(mMainType);
 			Map<String, Player> playerMap = getPlayersWithNPC();
 			for (RankItem item : items) {
 				Player player = playerMap.get(item.getPlayerId());				
@@ -127,8 +146,9 @@ public class RankListActivity extends BaseActivity
 	private void calcPlayerRankData() {
 		ActiveAndroid.beginTransaction();
 		try {
-			RankItem.resetTable();
+			RankItem.resetTable(mMainType);
 			List<MjResult> results = new Select().from(MjResult.class)
+					.where(MjResult.Col_MainType + "=?", mMainType)
 					.orderBy(MjResult.Col_StartTime + " DESC").execute();
 			if (results != null && results.size() > 0) { // show dialog
 				Message message = new Message();
@@ -147,13 +167,16 @@ public class RankListActivity extends BaseActivity
 				int[] points = result.getPoints();
 				for (int i = 0; i < uuids.length; i++) {
 					String uuid = uuids[i];
+					if (uuid == null || uuid.isEmpty()) {
+						continue;
+					}
 					RankListData data = mResultList.get(uuid);
 					if (data == null) {
 						Player player = playerMap.get(uuid);
 						if (player == null) {
 							player = new Player(uuid, names[i], names[i], 'M', "", "");
 						}
-						RankItem rankItem = new RankItem(uuid);
+						RankItem rankItem = new RankItem(uuid, mMainType);
 						data = new RankListData(player, rankItem);
 						mResultList.put(uuid, data);
 						rankItems[i] = rankItem;
@@ -243,6 +266,7 @@ public class RankListActivity extends BaseActivity
 					}
 				}				
 				for (int i = 0; i < rankItems.length; i++) {
+					if (rankItems[i] == null) continue;
 					rankItems[i].addDetail(roundCount, lizhiCounts[i], hepaiCounts[i], 
 							zimoCounts[i], bombCounts[i], bankerCounts[i], 
 							maxFans[i], maxFus[i], maxSepctrums[i], 
@@ -258,7 +282,19 @@ public class RankListActivity extends BaseActivity
 				data.rankItem.save();
 			}
 			ActiveAndroid.setTransactionSuccessful();
-			ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, false, mContext);
+			switch (mMainType) {
+			case BaseManager.MainType_4p:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, false, mContext);
+				break;
+			case BaseManager.MainType_3p:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, false, mContext);
+				break;
+			case BaseManager.MainType_17s:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, false, mContext);
+				break;
+			default:
+				break;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -299,6 +335,9 @@ public class RankListActivity extends BaseActivity
 	
 	private int searchId2Index(String[] uuids, String id) {
 		for (int i = 0; i < uuids.length; i++) {
+			if (uuids[i] == null || uuids[i].isEmpty()) {
+				return -1;
+			}
 			if (uuids[i].equals(id)) {
 				return i;
 			}

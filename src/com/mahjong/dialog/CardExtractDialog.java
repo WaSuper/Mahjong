@@ -1,7 +1,8 @@
 package com.mahjong.dialog;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.mahjong.R;
 import com.mahjong.adapter.PlayerSimpleAdapter;
@@ -57,8 +58,11 @@ public class CardExtractDialog extends Dialog implements OnClickListener {
 	private List<Player> playerList;	
 	private Player[] mPlayers = new Player[4];
 	private int mIndex;
+	private int mMemberCount = 4;
 	
 	private CardExtractListener mListener;
+	
+	private Random mRandom = new Random(System.currentTimeMillis());
 	
 	public CardExtractDialog(Context context) {
 		super(context, R.style.MyDialogStyle);
@@ -130,6 +134,26 @@ public class CardExtractDialog extends Dialog implements OnClickListener {
 		dTitleTextView.setText(mContext.getString(R.string.please_choose_player));
 		dOk.setOnClickListener(this);
 		
+		// randomCards();
+	}
+	
+	public void setMemberCount(int count) {
+		mMemberCount = count;
+		if (mMemberCount > 2) {
+			mLayout[1].setVisibility(View.VISIBLE);
+			mNameViews[1].setVisibility(View.VISIBLE);
+		} else {
+			mLayout[1].setVisibility(View.GONE);
+			mNameViews[1].setVisibility(View.GONE);
+		}
+		if (mMemberCount > 3) {
+			mLayout[3].setVisibility(View.VISIBLE);
+			mNameViews[3].setVisibility(View.VISIBLE);
+		} else {
+			mLayout[3].setVisibility(View.GONE);
+			mNameViews[3].setVisibility(View.GONE);
+		}
+		turnBack();
 		randomCards();
 	}
 	
@@ -211,15 +235,26 @@ public class CardExtractDialog extends Dialog implements OnClickListener {
 	 * 乱序卡牌
 	 */
 	private void randomCards() {
-		boolean[] used = new boolean[4];
-		Arrays.fill(used, false);
-		int index;
-		for (int i = 0; i < 4; i++) {
-			do {
-				index = (int)(Math.random() * 4);
-			} while (used[index]);
-			cardPos[i] = index;		
-			used[index] = true;
+		int[] posList;
+		List<Integer> indexList = new ArrayList<Integer>();
+		indexList.add(0);
+		indexList.add(2);
+		if (mMemberCount == 2) { // 2人时去除右边2张牌
+			cardPos[1] = 1;
+			cardPos[3] = 3;
+			posList = new int[] {0 , 2};
+		} else if (mMemberCount == 3) { // 3人时去除右下1张牌
+			cardPos[3] = 3;
+			indexList.add(1);
+			posList = new int[] {0 , 1, 2};
+		} else {
+			indexList.add(1);
+			indexList.add(3);
+			posList = new int[] {0 , 1, 2, 3};
+		}
+		for (int i : posList) {
+			int index = mRandom.nextInt(indexList.size());
+			cardPos[i] = indexList.remove(index);		
 		}
 		for (int i = 0; i < 4; i++) {
 			mFrontView[i].setBackgroundResource(cardImgs[cardPos[i]]);
@@ -231,7 +266,8 @@ public class CardExtractDialog extends Dialog implements OnClickListener {
 	 */
 	public void turnBack() {
 		for (int i = 0; i < 4; i++) {
-			if (mFrontView[i].getVisibility() == View.VISIBLE) {
+			if (mLayout[i].getVisibility() == View.VISIBLE 
+					&& mFrontView[i].getVisibility() == View.VISIBLE) {
 				cardTurnover(mBackView[i], mFrontView[i], mLayout[i]);
 			}
 			if (mClickView[i].getVisibility() == View.VISIBLE) {
@@ -321,11 +357,6 @@ public class CardExtractDialog extends Dialog implements OnClickListener {
     
     private void setPlayer(Player player, int dir, boolean isSave) {
 		boolean isReset = (player == null);
-//		int icon = R.drawable.player_nor;
-//		if (!isReset) {
-//			icon = HeadIconTool.String2Id(player.getIcon());
-//			if (icon == -1) icon = R.drawable.head_none;
-//		}		
 		Bitmap bitmap;
 		if (!isReset) {
 			bitmap = EmoticonTool.getEmoticon(Character.getCharacter(mContext, player.getCharacterId()));

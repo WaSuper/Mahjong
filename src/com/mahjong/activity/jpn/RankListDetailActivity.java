@@ -4,10 +4,12 @@ import java.text.DecimalFormat;
 
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
+import com.mahjong.control.BaseManager;
 import com.mahjong.item.MjFanBean;
 import com.mahjong.model.Player;
 import com.mahjong.model.RankItem;
 import com.mahjong.tools.EmoticonTool;
+import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.MahjongSpectrum;
 import com.mahjong.ui.RankChart;
 
@@ -48,11 +50,14 @@ public class RankListDetailActivity extends BaseActivity implements OnClickListe
 	private DecimalFormat rankFormat = new DecimalFormat("##0.0%");
 	private DecimalFormat percentFormat = new DecimalFormat("##0.0%");
 	
+	private int mMainType;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_rank_detail);
 		mContext = this;
+		mMainType = ShareprefenceTool.getInstance().getInt(BaseManager.GAME_TYPE, mContext, 0);
 		String id = getIntent().getStringExtra(Player.Col_Uuid);
 		if (id != null && !id.isEmpty()) {
 			mPlayer = Player.getPlayer(id);
@@ -69,7 +74,7 @@ public class RankListDetailActivity extends BaseActivity implements OnClickListe
 					mPlayer = new Player(id, name, name, 'M', "", "");
 				}
 			}
-			mRankItem = RankItem.getRankItem(id);
+			mRankItem = RankItem.getRankItem(id, mMainType);
 		}		
 		initUI();
 		initData();

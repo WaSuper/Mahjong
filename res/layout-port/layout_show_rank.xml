@@ -47,6 +47,7 @@
         android:orientation="vertical" >
 
         <RelativeLayout
+            android:id="@+id/rank_rl_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="35dp"
@@ -131,6 +132,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/rank_ll_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -232,6 +234,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rank_rl_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -316,6 +319,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/rank_ll_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -417,6 +421,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rank_rl_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -502,6 +507,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/rank_ll_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -603,6 +609,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rank_rl_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -687,6 +694,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/rank_ll_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

@@ -67,6 +67,7 @@ public class PlayerFuncItem extends View {
 	private boolean mChicken = true; // 玩家是否烧鸡
 	private PathType mSelectPath = PathType.None;
 	private int rank = 0; // 玩家排位（1-4）
+	private boolean mEnableZimo = true; // 是否允许自摸按键（17步不允许）
 	
 	private Bitmap mIcon;		// 玩家头像
 	private Bitmap mImgLeader; 	// 东风定位
@@ -194,6 +195,10 @@ public class PlayerFuncItem extends View {
 		this.rank = rank;
 		this.mIcon = null;
 		invalidate();
+	}
+	
+	public void setEnableZimo(boolean enable) {
+		this.mEnableZimo = enable;
 	}
 	
 	@Override
@@ -363,9 +368,11 @@ public class PlayerFuncItem extends View {
 		canvas.drawPath(mZimoPath, mPaint);
 		mTextPaint.setTextSize(ValueTool.sp2px(getContext(), 16));
 		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-		canvas.drawText(getResources().getString(R.string.zimo), 
-				(bxlLeft - marginLen2 + bxlRight) / 2, 
-				(byTop - extendHeight + byBottom - fontMetrics.top - fontMetrics.bottom) / 2, mTextPaint);
+		if (mEnableZimo) {
+			canvas.drawText(getResources().getString(R.string.zimo), 
+					(bxlLeft - marginLen2 + bxlRight) / 2, 
+					(byTop - extendHeight + byBottom - fontMetrics.top - fontMetrics.bottom) / 2, mTextPaint);
+		}
 		// 画荣和
 		float bxrLeft = getWidth() / 2 + height + marginLen - diffLen;
 		float bxrRight = bxrLeft + sLen + diffLen;
@@ -509,13 +516,16 @@ public class PlayerFuncItem extends View {
 		mBgPaint.setColor(Color.parseColor(BackgroudColor));
 		canvas.drawPath(mZimoPath, mPaint);
 		mTextPaint.setTextSize(ValueTool.sp2px(getContext(), 16));
-		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();	
+		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+		
 		centerX = (bxlLeft + marginLen2 + bxlRight) / 2;
 		centerY = (byTop + byBottom + extendHeight) / 2;
-		canvas.rotate(mRotateAngle, centerX, centerY);
-		canvas.drawText(getResources().getString(R.string.zimo), 
-				centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
-		canvas.rotate(-mRotateAngle, centerX, centerY);
+		if (mEnableZimo) {
+			canvas.rotate(mRotateAngle, centerX, centerY);
+			canvas.drawText(getResources().getString(R.string.zimo), 
+					centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
+			canvas.rotate(-mRotateAngle, centerX, centerY);
+		}
 		// 画荣和
 		float bxrRight = getWidth() / 2 - height - marginLen + diffLen;
 		float bxrLeft = bxrRight - sLen - diffLen;
@@ -673,10 +683,12 @@ public class PlayerFuncItem extends View {
 		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();	
 		centerX = (lxLeft + lxRight + extendHeight) / 2;
 		centerY = (lytTop - marginLen2 + lytBottom) / 2;
-		canvas.rotate(mRotateAngle, centerX, centerY);
-		canvas.drawText(getResources().getString(R.string.zimo), 
-				centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
-		canvas.rotate(-mRotateAngle, centerX, centerY);
+		if (mEnableZimo) {
+			canvas.rotate(mRotateAngle, centerX, centerY);
+			canvas.drawText(getResources().getString(R.string.zimo), 
+					centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
+			canvas.rotate(-mRotateAngle, centerX, centerY);
+		}
 		// 画荣和
 		float lybTop = getHeight() / 2 + width + marginLen - diffLen;
 		float lybBottom = lybTop + sLen + diffLen;
@@ -834,10 +846,12 @@ public class PlayerFuncItem extends View {
 		Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();	
 		centerX = (lxLeft + lxRight - extendHeight) / 2;
 		centerY = (lytTop + marginLen2 + lytBottom) / 2;
-		canvas.rotate(mRotateAngle, centerX, centerY);
-		canvas.drawText(getResources().getString(R.string.zimo), 
-				centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
-		canvas.rotate(-mRotateAngle, centerX, centerY);
+		if (mEnableZimo) {
+			canvas.rotate(mRotateAngle, centerX, centerY);
+			canvas.drawText(getResources().getString(R.string.zimo), 
+					centerX, centerY - (fontMetrics.top + fontMetrics.bottom) / 2, mTextPaint);
+			canvas.rotate(-mRotateAngle, centerX, centerY);
+		}
 		// 画荣和
 		float lybBottom = getHeight() / 2 - width - marginLen + diffLen;
 		float lybTop = lybBottom - sLen - diffLen;
@@ -1175,7 +1189,7 @@ public class PlayerFuncItem extends View {
 			if (mListener != null) mListener.onClickIcon(mPlayer, mOrgIndex, mPosition);
 			break;
 		case Zimo:			
-			if (mListener != null) mListener.onClickZimo(mPlayer, mOrgIndex, mPosition);
+			if (mEnableZimo && mListener != null) mListener.onClickZimo(mPlayer, mOrgIndex, mPosition);
 			break;
 		case Ronghe:			
 			if (mListener != null) mListener.onClickRonghe(mPlayer, mOrgIndex, mPosition);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahjong"
-    android:versionCode="1"
-    android:versionName="1.3.0 build 220831" >
+    android:versionCode="2"
+    android:versionName="2.0.0 build 230322" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -33,7 +33,7 @@
 		</provider>
         
         <meta-data android:name="AA_DB_NAME" android:value="mahjong.db" />  
-        <meta-data android:name="AA_DB_VERSION" android:value="6" />  
+        <meta-data android:name="AA_DB_VERSION" android:value="7" />  
         <meta-data
     		android:name="AA_MODELS"
     		android:value="com.mahjong.model.Player,com.mahjong.model.MjResult,com.mahjong.model.MjDetail,com.mahjong.model.AudioItem,com.mahjong.model.Character,com.mahjong.model.CharacterIcon,com.mahjong.model.RankItem,com.mahjong.model.SoundBox" />
@@ -83,8 +83,17 @@
         <activity android:name="com.mahjong.activity.jpn.ResultSetBombSimpleActivity"
             android:screenOrientation="behind" />
         <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivity"
-            android:screenOrientation="behind"
-            android:configChanges="orientation|keyboardHidden|screenSize" />        
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize" />  
+        <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivityForRePort"
+            android:screenOrientation="reversePortrait"
+            android:configChanges="orientation|keyboardHidden|screenSize" />     
+        <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivityForLand"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize" />   
+        <activity android:name="com.mahjong.activity.jpn.ResultSetComplexActivityForReLand"
+            android:screenOrientation="reverseLandscape"
+            android:configChanges="orientation|keyboardHidden|screenSize" />     
         <activity android:name="com.mahjong.activity.jpn.ResultShow"
             android:screenOrientation="portrait" />        
         <activity android:name="com.mahjong.activity.jpn.ResultShowForLand"
@@ -109,9 +118,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.SoundEffectDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.mahjong.activity.jpn.game34.Game34SelectActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.mahjong.activity.jpn.game34.Game34CalculateActivity"
+        <activity android:name="com.mahjong.activity.jpn.game17s.Game17sCalculateActivity"
             android:screenOrientation="portrait" />
         
     </application>

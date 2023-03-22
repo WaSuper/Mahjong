@@ -21,9 +21,7 @@ public class MjSetting {
 	public static final String MA_POINT 		= "MA_POINT";
 	public static final String RET_POINT 		= "RET_POINT";
 	public static final String LANDSCAPE_MODE	= "LANDSCAPE_MODE";
-	
-	// 特殊役
-	public static final String BALIANZHUANG 	= "BALIANZHUANG";
+	public static final String DOUBLE_WIND_4	= "DOUBLE_WIND_4";
 	
 	public static int UUID = 0;
 	

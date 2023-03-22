@@ -37,16 +37,20 @@ public class MjResult extends Model {
 	public static final String Col_Title		= "Title";
 	public static final String Col_Note			= "Note";
 	public static final String Col_RetPoint		= "RetPoint";
+	public static final String Col_MemberCount	= "MemberCount";
+	public static final String Col_MainType		= "MainType";
+	public static final String Col_ExtraData	= "ExtraData";
 	
 	public static final String[] Columns = {Col_GameType, Col_BasePoint, Col_MaPoint, Col_StartTime, Col_EndTime,
 		Col_EastId, Col_EastName, Col_EastPoint, Col_EastRank, Col_EastRMa,
 		Col_SouthId, Col_SouthName, Col_SouthPoint, Col_SouthRank, Col_SouthMa,
 		Col_WestId, Col_WestName, Col_WestPoint, Col_WestRank, Col_WestMa,
 		Col_NorthId, Col_NorthName, Col_NorthPoint, Col_NorthRank, Col_NorthMa,
-		Col_Title, Col_Note, Col_RetPoint};
+		Col_Title, Col_Note, Col_RetPoint, Col_MemberCount, Col_MainType, Col_ExtraData};
 	
 	@Column(name = "GameType")
-	private int game_type;			// 游戏类型:0->东风战，1->半庄战，3->全庄战
+	private int game_type;			// 游戏局数	四麻/三麻:0->东风战，1->半庄战，3->全庄战
+									//			17步:   局数(由0开始计数，0即1局)
 	
 	@Column(name = "BasePoint")
 	private int base_point;			// 基本点数
@@ -129,6 +133,15 @@ public class MjResult extends Model {
 	@Column(name = "RetPoint")
 	private int ret_point;			// 返点-基础分
 	
+	@Column(name = "MemberCount")
+	private int member_count;		// 玩家人数
+	
+	@Column(name = "MainType")
+	private int main_type;			// 游戏主类型:0->四麻,1->三麻,2->17步
+	
+	@Column(name = "ExtraData")
+	private int extra_data;			// 场上额外设定(为0时表示之前未记录)
+	
 	public MjResult() {
 		super();
 	}
@@ -136,7 +149,7 @@ public class MjResult extends Model {
 	public MjResult(int game_type, int base_point, int[] ma_points, long start_time, 
 			String east_id, String east_name, String south_id, String south_name,
 			String west_id, String west_name, String north_id, String north_name,
-			int ret_point) {
+			int ret_point, int member_count, int main_type, int extra_data) {
 		super();
 		this.game_type = game_type;
 		this.base_point = base_point;
@@ -160,6 +173,9 @@ public class MjResult extends Model {
 		this.north_point = base_point;
 		this.north_rank = 4;
 		this.ret_point = ret_point;
+		this.member_count = member_count;
+		this.main_type = main_type;
+		this.extra_data = extra_data;
 	}
 	
 	public void setEndGame(long end_time, int[] scores, int[] ranks, float[] mas) {
@@ -338,6 +354,39 @@ public class MjResult extends Model {
 	
 	public void setRetPoint(int ret) {
 		this.ret_point = ret;
+	}
+	
+	public int getMemberCount() {
+		return member_count;
+	}
+	
+	public void setMemberCount(int count) {
+		this.member_count = count;
+	}
+	
+	public int getMainType() {
+		return main_type;
+	}
+	
+	public void setMainType(int type) {
+		this.main_type = type;
+	}
+	
+	public int getExtraData() {
+		return extra_data;
+	}
+	
+	/**
+	 * 根据extra_data调出17步的场风类型
+	 * 
+	 * @return
+	 */
+	public int getFengType() {
+		return (extra_data & 0x20) >> 5;
+	}
+	
+	public void setExtraData(int data) {
+		this.extra_data = data;
 	}
 	
 	public void changePlayer(int index, String uuid, String name) {

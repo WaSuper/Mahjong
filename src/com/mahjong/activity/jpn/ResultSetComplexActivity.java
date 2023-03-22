@@ -6,8 +6,9 @@ import com.mahjong.R;
 import com.mahjong.activity.BaseFragmentActivity;
 import com.mahjong.common.MjCalcTool;
 import com.mahjong.common.MjCard;
-import com.mahjong.common.MjSetting;
 import com.mahjong.common.MjCalcTool.GameResult;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.data.jpn.Score;
 import com.mahjong.data.jpn.YakuValue;
 import com.mahjong.dialog.DoraDialog;
@@ -15,17 +16,12 @@ import com.mahjong.dialog.DoraDialog.OnDoraDialogListener;
 import com.mahjong.fragment.ResultComplexFragment;
 import com.mahjong.fragment.ResultComplexFragment.OnResultComplexListener;
 import com.mahjong.model.MjAction;
-import com.mahjong.tools.ManageTool;
-import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.MahjongMainDora;
 import com.mahjong.ui.MahjongMainDora.MahjongMainDoraListener;
 import com.mahjong.ui.MahjongSpectrum;
-import com.mahjong.ui.PlayerFuncItem;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,7 +73,7 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 	private int mFanCount = 1; // 番数
 	private int mFuCount = 0; // 符数
 	
-	private ManageTool mManageTool = ManageTool.getInstance();
+	private BaseManager mManageTool = ManagerTool.getInstance().getManager();
 	
 	private boolean landscapeMode;
 	
@@ -94,23 +90,23 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 		super.onCreate(savedInstanceState);		
 		// 设定方向
 		Intent intent = getIntent();
-		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
-		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
-		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
-				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
-		int[] land_orientations = {ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, 
-				ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT};
-		if (landscapeMode) {
-			setRequestedOrientation(land_orientations[pos]);
-		} else {
-			setRequestedOrientation(port_orientations[pos]);
-		}
+//		int pos = intent.getIntExtra(BaseManager.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
+//		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
+//		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
+//				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
+//		int[] land_orientations = {ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, 
+//				ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT};
+//		if (landscapeMode) {
+//			setRequestedOrientation(land_orientations[pos]);
+//		} else {
+//			setRequestedOrientation(port_orientations[pos]);
+//		}
 		setContentView(R.layout.activity_jpn_result_set_complex);
 		mContext = this;
 		// 设定内容
-		isZimo = intent.getBooleanExtra(ManageTool.PLAYER_IS_ZIMO, false);
-		isBomb = intent.getBooleanExtra(ManageTool.PLAYER_IS_BOMB, false);
-		mOrgPlayer = intent.getIntExtra(ManageTool.PLAYER_ORIGINAL_INDEX, 0);
+		isZimo = intent.getBooleanExtra(BaseManager.PLAYER_IS_ZIMO, false);
+		isBomb = intent.getBooleanExtra(BaseManager.PLAYER_IS_BOMB, false);
+		mOrgPlayer = intent.getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
 		mMainVision = intent.getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
 		initUI();
 	}
@@ -141,25 +137,56 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 			mResultFragment[0].setPlayerIndex(0, mOrgPlayer, isZimo, mOrgPlayer);
 		} else {
 			mZimoLayout.setVisibility(View.GONE);
-			mRongheLayout.setVisibility(View.VISIBLE);		
+			mRongheLayout.setVisibility(View.VISIBLE);
+			switch (mManageTool.getMemberCount()) {
+			case 2:
+				mUpperBtn.setVisibility(View.INVISIBLE);
+				mDownerBtn.setVisibility(View.INVISIBLE);
+				mPointViews[0].setVisibility(View.INVISIBLE);
+				mPointViews[2].setVisibility(View.INVISIBLE);
+				break;
+			case 3:
+				mOpppsiterBtn.setVisibility(View.INVISIBLE);
+				mPointViews[1].setVisibility(View.INVISIBLE);
+				break;
+			default:
+				break;
+			}		
 			if (isBomb) {
 				mPointsLayout.setVisibility(View.VISIBLE);	
-				mResultFragment = new ResultComplexFragment[3];
-				mResultFragment[0] = new ResultComplexFragment();
-				mResultFragment[0].setPlayerIndex(0, (mOrgPlayer + 3) % 4, isZimo, mOrgPlayer);
-				mResultFragment[1] = new ResultComplexFragment();
-				mResultFragment[1].setPlayerIndex(1, (mOrgPlayer + 2) % 4, isZimo, mOrgPlayer);
-				mResultFragment[2] = new ResultComplexFragment();	
-				mResultFragment[2].setPlayerIndex(2, (mOrgPlayer + 1) % 4, isZimo, mOrgPlayer);
+				mResultFragment = new ResultComplexFragment[mManageTool.getMemberCount() - 1];
+				for (int i = 0; i < mResultFragment.length; i++) {
+					mResultFragment[i] = new ResultComplexFragment();
+				}
+				if (mManageTool.getMemberCount() == 4) {
+					mResultFragment[0].setPlayerIndex(0, (mOrgPlayer + 3) % 4, isZimo, mOrgPlayer);
+					mResultFragment[1].setPlayerIndex(1, (mOrgPlayer + 2) % 4, isZimo, mOrgPlayer);
+					mResultFragment[2].setPlayerIndex(2, (mOrgPlayer + 1) % 4, isZimo, mOrgPlayer);
+				} else if (mManageTool.getMemberCount() == 3) {
+					int tmpIndex = (mOrgPlayer + 3) % 4;
+					if (mOrgPlayer == 3) tmpIndex = 2;
+					mResultFragment[0].setPlayerIndex(0, tmpIndex, isZimo, mOrgPlayer);
+					tmpIndex = (mOrgPlayer + 1) % 4;
+					if (mOrgPlayer == 3) tmpIndex = 0;
+					mResultFragment[1].setPlayerIndex(1, tmpIndex, isZimo, mOrgPlayer);
+				} else if (mManageTool.getMemberCount() == 2) {
+					mResultFragment[0].setPlayerIndex(0, (mOrgPlayer + 2) % 4, isZimo, mOrgPlayer);
+					mPositions[1] = true; // 2人时默认选对家
+				}
 				for (int i = 0; i < mPositions.length; i++) {
 					setRonghePlayer(i, false);
-				}				
+				}
 			} else {
 				mPointsLayout.setVisibility(View.INVISIBLE);	
 				mResultFragment = new ResultComplexFragment[1];
 				mResultFragment[0] = new ResultComplexFragment();	
 				mResultFragment[0].setPlayerIndex(0, mOrgPlayer, isZimo, (mOrgPlayer + 2) % 4);	
-				setDianPaoPlayer(mPosition);
+				if (mManageTool.getMemberCount() == 2) {
+					setDianPaoPlayer(2); // 2人时默认选对家
+				} else {
+					setDianPaoPlayer(mPosition);
+				}
+				
 			}
 		}
 		for (int i = 0; i < mResultFragment.length; i++) {
@@ -200,6 +227,7 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 				showDoraDialog(doras, doraIns);
 			}
 		});
+		
 	}
 	
 	@Override
@@ -291,14 +319,20 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 					}
 				}				
 			}
-			boolean isEnableFanfu = mManageTool.getEnableFanFu();
-			int roundCount = mManageTool.getRoundCount();
-			if (isEnableFanfu && roundCount >= 5) {
-				if (checkFanfu(roundCount)) {
+			if (mManageTool.is17Step()) {
+				if (check17StepFanfu(mManageTool.getFanfuType())) {
 					sendData();
-				} 
+				}
 			} else {
-				sendData();
+				boolean isEnableFanfu = mManageTool.getEnableFanFu();
+				int roundCount = mManageTool.getRoundCount();
+				if (isEnableFanfu && roundCount >= 5) {
+					if (checkFanfu(roundCount)) {
+						sendData();
+					} 
+				} else {
+					sendData();
+				}
 			}
 			break;
 		case R.id.result_set_complex_cancel:
@@ -307,6 +341,59 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 		default:
 			break;
 		}
+	}
+	
+	private boolean check17StepFanfu(int fanfuType) {
+		if (!isBomb) {
+			GameResult gameResult = mResultFragment[0].getGameResult();
+			if (gameResult.canHupai && gameResult.score.hasYaku()) {
+				boolean result = gameResult.score.check17StepFanfu(fanfuType);
+				if (!result) {
+					show17StepFanfuError(gameResult.score, fanfuType);
+				}
+				return result;
+			} else {
+				ToastTool.showToast(mContext, R.string.no_yaku);
+				return false;
+			}
+		} else {
+			int[] resultIndexes = getResultIndexes();
+			for (int i = 0; i < mPositions.length; i++) {
+				if (mPositions[i]) {
+					GameResult gameResult = mResultFragment[resultIndexes[i]].getGameResult();
+					if (gameResult.canHupai && gameResult.score.hasYaku()) {
+						boolean result = gameResult.score.check17StepFanfu(fanfuType);
+						if (!result) {
+							show17StepFanfuError(gameResult.score, fanfuType);
+							mSpectrumLayout.setCurrentItem(resultIndexes[i], true);
+							return false;
+						}
+					} else {
+						ToastTool.showToast(mContext, R.string.no_yaku);
+						return false;
+					}
+				}
+			}
+			return true;
+		}		
+	}
+	
+	private void show17StepFanfuError(Score score, int fanfuType) {
+		String text = "";
+		switch (fanfuType) {
+		case 0:
+			text = getString(R.string.game17s_FanFu_five);
+			break;
+		case 1:
+			text = getString(R.string.game17s_FanFu_manguan);
+			break;
+		case 2:
+		default:
+			text = getString(R.string.game17s_FanFu_none);
+			break;
+		}
+		ToastTool.showToast(mContext, getString(R.string.game17s_fanfu_invalid, 
+				text, score.get17StepFanfuValidYaku()));
 	}
 	
 	private boolean checkFanfu(int roundCount) {
@@ -318,24 +405,30 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 					showFanfuError(gameResult.score, roundCount);
 				}
 				return result;
+			} else {
+				ToastTool.showToast(mContext, R.string.no_yaku);
+				return false;
 			}
 		} else {
+			int[] resultIndexes = getResultIndexes();
 			for (int i = 0; i < mPositions.length; i++) {
 				if (mPositions[i]) {
-					GameResult gameResult = mResultFragment[i].getGameResult();
+					GameResult gameResult = mResultFragment[resultIndexes[i]].getGameResult();
 					if (gameResult.canHupai && gameResult.score.hasYaku()) {
 						boolean result = gameResult.score.checkFanfu(roundCount);
 						if (!result) {
 							showFanfuError(gameResult.score, roundCount);
-							mSpectrumLayout.setCurrentItem(i, true);
+							mSpectrumLayout.setCurrentItem(resultIndexes[i], true);
 							return false;
 						}
+					} else {
+						ToastTool.showToast(mContext, R.string.no_yaku);
+						return false;
 					}
 				}
 			}
 			return true;
 		}		
-		return false;
 	}
 	
 	private void showFanfuError(Score score, int roundCount) {
@@ -353,12 +446,13 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		if (isBomb) {
 			data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);
-			data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
+			data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
 			int[] bombIndexs = new int[mHuCount];
 			int index = 0;
+			int[] resultIndexes = getResultIndexes();
 			for (int i = 0; i < mPositions.length; i++) {
 				if (mPositions[i]) {
-					GameResult result = mResultFragment[i].getGameResult();
+					GameResult result = mResultFragment[resultIndexes[i]].getGameResult();
 					if (!result.hasYaku) {
 						ToastTool.showToast(mContext, R.string.no_yaku);
 						return;
@@ -369,12 +463,24 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 					String spectrum = result.spectrum.toString();
 					int env = result.env;
 					bombIndexs[index] = (mOrgPlayer + 3 - i) % 4;	
+					if (mManageTool.getMemberCount() == 3) {
+						switch (mOrgPlayer) {
+						case 0:
+							if (i == 0) bombIndexs[index] = 2;
+							break;
+						case 2:
+							if (i == 2) bombIndexs[index] = 0;
+							break;
+						default:
+							break;
+						}
+					}
 					mManageTool.setResult(bombIndexs[index], 
 							fan, fu, spectrum, env);
 					index++;
 				}
 			}
-			data.putExtra(ManageTool.RESULT_BOMB_INDEX, bombIndexs);
+			data.putExtra(BaseManager.RESULT_BOMB_INDEX, bombIndexs);
 		} else {
 			GameResult result = mResultFragment[0].getGameResult();
 			if (!result.hasYaku) {
@@ -384,11 +490,24 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 			mManageTool.setResult(mOrgPlayer, mFanCount, mFuCount);
 			if (isZimo) {
 				data.putExtra(MjAction.Name, MjAction.ACTION_ZIMO);
-				data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
+				data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
 			} else {
 				data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);
-				data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, (mOrgPlayer + mPosition) % 4);
-				data.putExtra(ManageTool.RESULT_BOMB_INDEX, new int[] {mOrgPlayer});
+				int index = (mOrgPlayer + mPosition) % 4;
+				if (mManageTool.getMemberCount() == 3) {
+					switch (mOrgPlayer) {
+					case 0:
+						if (mPosition == 3) index = 2;
+						break;
+					case 2:
+						if (mPosition == 1) index = 0;
+						break;
+					default:
+						break;
+					}
+				}
+				data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, index);
+				data.putExtra(BaseManager.RESULT_BOMB_INDEX, new int[] {mOrgPlayer});
 			}
 			int fan = result.score.AllFanValue();
 			if (result.score.FullYaku() > 0) fan = -result.score.FullYaku();
@@ -401,6 +520,24 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 		this.finish();		
 	}
 	
+	private int[] getResultIndexes() {
+		int[] resultIndexes;
+		switch (mManageTool.getMemberCount()) {
+		case 2:
+			resultIndexes = new int[] {0, 0, 0}; // 2人时中间有效
+			break;
+		case 3:
+			resultIndexes = new int[] {0, 1, 1}; // 3人时左右有效
+			break;
+		case 4:
+		default:
+			resultIndexes = new int[] {0, 1, 2}; // 4人时全部有效
+			break;
+		}
+		return resultIndexes;
+	}
+	
+	@SuppressWarnings("deprecation")
 	private void showDoraDialog(List<MjCard> doras, List<MjCard> doraIns) {
 		if (mDoraDialog == null) {
 			mDoraDialog = new DoraDialog(mContext);
@@ -529,24 +666,36 @@ public class ResultSetComplexActivity extends BaseFragmentActivity
 			mCurPage = pos;
 			switch (mCurPage) {
 			case 0:
-				mPointViews[0].setImageResource(R.drawable.ic_indicator_sel);
-				mPointViews[1].setImageResource(R.drawable.ic_indicator_nor);
-				mPointViews[2].setImageResource(R.drawable.ic_indicator_nor);
+				if (mResultFragment.length == 1) {
+					setPointSelect(1);
+				} else {
+					setPointSelect(0);
+				}
 				break;
 			case 1:
-				mPointViews[0].setImageResource(R.drawable.ic_indicator_nor);
-				mPointViews[1].setImageResource(R.drawable.ic_indicator_sel);
-				mPointViews[2].setImageResource(R.drawable.ic_indicator_nor);				
+				if (mResultFragment.length == 2) {
+					setPointSelect(2);
+				} else {
+					setPointSelect(1);
+				}
 				break;
 			case 2:
-				mPointViews[0].setImageResource(R.drawable.ic_indicator_nor);
-				mPointViews[1].setImageResource(R.drawable.ic_indicator_nor);
-				mPointViews[2].setImageResource(R.drawable.ic_indicator_sel);					
+				setPointSelect(2);				
 				break;
 			default:
 				break;
 			}
 			setResultText2(mResultFragment[mCurPage].getGameResult());
+		}
+		
+		private void setPointSelect(int index) {
+			for (int i = 0; i < mPointViews.length; i++) {
+				if (i == index) {
+					mPointViews[i].setImageResource(R.drawable.ic_indicator_sel);
+				} else {
+					mPointViews[i].setImageResource(R.drawable.ic_indicator_nor);
+				}
+			}
 		}
 
 	}

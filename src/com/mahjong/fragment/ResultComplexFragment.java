@@ -7,9 +7,10 @@ import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
 import com.mahjong.common.MjWind;
 import com.mahjong.common.MjCalcTool.GameResult;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.SpectrumDialog;
 import com.mahjong.dialog.SpectrumDialog.OnSpectrumDialogListener;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.ui.MahjongSpectrum;
 
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class ResultComplexFragment extends Fragment
@@ -40,6 +42,7 @@ public class ResultComplexFragment extends Fragment
 	private CheckBox mFinalPickBox;
 	private CheckBox mQianggangBox;
 	private CheckBox mLingshangBox;
+	private TextView mDoraNorthText;
 	
 	private SpectrumDialog mSpectrumDialog;
 	private int mOrgIndex;
@@ -48,8 +51,12 @@ public class ResultComplexFragment extends Fragment
 	private int curPage;
 	private int mAddedIndex;
 	private GameResult mGameResult;
+	private boolean isDoubleWind4;
+	private int mDoraNorthCount = 0;
 	
 	private OnResultComplexListener mListener;
+	
+	private BaseManager mManager = ManagerTool.getInstance().getManager();
 	
 //	@Override
 //	public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -87,6 +94,7 @@ public class ResultComplexFragment extends Fragment
 		mFinalPickBox = (CheckBox) mView.findViewById(R.id.result_set_complex_final_pick);
 		mQianggangBox = (CheckBox) mView.findViewById(R.id.result_set_complex_qianggang);
 		mLingshangBox = (CheckBox) mView.findViewById(R.id.result_set_complex_lingshangkaihua);
+		mDoraNorthText = (TextView) mView.findViewById(R.id.result_set_complex_doranorth);
 		
 		mSpectrum.setOnClickListener(this);
 		mLizhiBox.setOnCheckedChangeListener(this);
@@ -99,6 +107,7 @@ public class ResultComplexFragment extends Fragment
 		mFinalPickBox.setOnCheckedChangeListener(this);
 		mQianggangBox.setOnCheckedChangeListener(this);
 		mLingshangBox.setOnCheckedChangeListener(this);
+		mDoraNorthText.setOnClickListener(this);
 		
 		if (mLizhiState > 0) {
 			if (mLizhiState == 1) mLizhiBox.setChecked(true);
@@ -106,73 +115,50 @@ public class ResultComplexFragment extends Fragment
 		}
 		mZimoBox.setChecked(isZimo);
 		if (mGameResult != null) mGameResult.spectrum = mSpectrum;
-//		System.out.println("initUI -> mGameResult" + (mGameResult != null ? "不为空" : "为空"));
+		
+		isDoubleWind4 = mManager.getEnableDoubleWind4();
+		
+		if (!mManager.is3pMahjong()) {
+			mDoraNorthText.setVisibility(View.GONE);
+		}
 	}
 
 	public void setPlayerIndex(int page, int index, boolean zimo, int addedIndex) {
 		curPage = page;
 		mOrgIndex = index;
-		mLizhiState = ManageTool.getInstance().getPlayerLizhi(mOrgIndex);
+		mLizhiState = mManager.getPlayerLizhi(mOrgIndex);
 		isZimo = zimo;
 		mAddedIndex = addedIndex;
-		ManageTool tool = ManageTool.getInstance();
-		MjWind groundWind = MjWind.None;
-		switch (tool.getFengCount()) {
-		case 0:
-			groundWind = MjWind.East;
-			break;
-		case 1:
-			groundWind = MjWind.South;
-			break;
-		case 2:
-			groundWind = MjWind.West;
-			break;
-		case 3:
-			groundWind = MjWind.North;
-			break;
-		default:
-			break;
-		}
-		MjWind selfWind = MjWind.None;
-		switch (tool.getPlayerWind(index)) {
-		case 0:
-			selfWind = MjWind.East;
-			break;
-		case 1:
-			selfWind = MjWind.South;
-			break;
-		case 2:
-			selfWind = MjWind.West;
-			break;
-		case 3:
-			selfWind = MjWind.North;
-			break;
-		default:
-			break;
-		}
+		MjWind groundWind = indexToWind(mManager.getGroundWind());
+		MjWind selfWind = indexToWind(mManager.getPlayerWind(mOrgIndex));
 		MjWind addedWind = MjWind.None;
 		if (!zimo) {
-			switch (tool.getPlayerWind(addedIndex)) {
-			case 0:
-				addedWind = MjWind.East;
-				break;
-			case 1:
-				addedWind = MjWind.South;
-				break;
-			case 2:
-				addedWind = MjWind.West;
-				break;
-			case 3:
-				addedWind = MjWind.North;
-				break;
-			default:
-				break;
-			}
+			addedWind = indexToWind(mManager.getPlayerWind(mAddedIndex));
 		}
 		mGameResult = new GameResult(groundWind, selfWind, addedWind);
 		if (mSpectrum != null) mGameResult.spectrum = mSpectrum;
-//		System.out.println("setPlayerIndex -> mSpectrum" + (mSpectrum != null ? "不为空" : "为空"));
-//		System.out.println("setPlayerIndex -> mGameResult" + (mGameResult != null ? "不为空" : "为空"));
+	}
+	
+	private MjWind indexToWind(int index) {
+		MjWind wind = MjWind.None;
+		switch (index) {
+		case 0:
+			wind = MjWind.East;
+			break;
+		case 1:
+			wind = MjWind.South;
+			break;
+		case 2:
+			wind = MjWind.West;
+			break;
+		case 3:
+			wind = MjWind.North;
+			break;
+		default:
+			wind = MjWind.None;
+			break;
+		}
+		return wind;
 	}
 	
 	public GameResult getGameResult() {
@@ -185,11 +171,26 @@ public class ResultComplexFragment extends Fragment
 		case R.id.result_set_complex_mjspectrum:
 			showSpectrumDialog();
 			break;
+		case R.id.result_set_complex_doranorth:
+			mDoraNorthCount = (mDoraNorthCount + 1) % 5;
+			updateDoraNorth();
+			break;
 		default:
 			break;
 		}
 	}
 	
+	private void updateDoraNorth() {
+		if (mDoraNorthCount == 0) {
+			mDoraNorthText.setText(getString(R.string.dora_north));
+			mDoraNorthText.setBackgroundResource(R.drawable.swapitem_nor);
+		} else {
+			mDoraNorthText.setText(getString(R.string.dora_north) + "+" + mDoraNorthCount);
+			mDoraNorthText.setBackgroundResource(R.drawable.swapitem_sel);
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
 	private void showSpectrumDialog() {
 		if (mSpectrumDialog == null) {
 			mSpectrumDialog = new SpectrumDialog(mContext);
@@ -203,7 +204,8 @@ public class ResultComplexFragment extends Fragment
 				public void onComplete(int index, List<MjCard> darkCards,
 						List<MjCardPairs> brightCardPairs, MjCard winCard
 						, boolean lizhi,boolean doublelizhi, boolean yifa, boolean zimo,
-						boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang) {
+						boolean firstround, boolean finalpick, boolean qianggang, 
+						boolean lingshang, int doranorth) {
 					mSpectrum.copy(darkCards, brightCardPairs, winCard);
 					mLizhiBox.setChecked(lizhi);
 					mWLizhiBox.setChecked(doublelizhi);
@@ -213,8 +215,11 @@ public class ResultComplexFragment extends Fragment
 					mFinalPickBox.setChecked(finalpick);
 					mQianggangBox.setChecked(qianggang);
 					mLingshangBox.setChecked(lingshang);
+					mDoraNorthCount = doranorth;
+					updateDoraNorth();
 					mGameResult.setData(lizhi, doublelizhi, zimo, yifa, 
-							firstround, finalpick, qianggang, lingshang);
+							firstround, finalpick, qianggang, lingshang, 
+							isDoubleWind4, mDoraNorthCount);
 					if (mListener != null) {
 						mListener.onResult(mGameResult, curPage, mOrgIndex);
 					}
@@ -225,7 +230,8 @@ public class ResultComplexFragment extends Fragment
 				mSpectrum.getBrightNums(), mSpectrum.getWinNum());
 		mSpectrumDialog.setEnvironment(mLizhiState, mYifaBox.isChecked(), mZimoBox.isChecked(), 
 				mFirstRoundBox.isChecked(), mFinalPickBox.isChecked(), 
-				mQianggangBox.isChecked(), mLingshangBox.isChecked());
+				mQianggangBox.isChecked(), mLingshangBox.isChecked(),
+				mManager.is3pMahjong(), mDoraNorthCount);
 		mSpectrumDialog.show();
 	}
 	

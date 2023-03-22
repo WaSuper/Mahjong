@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.mahjong.R;
+import com.mahjong.control.BaseManager;
 import com.mahjong.item.MjFanBean;
 import com.mahjong.model.MjAction;
 import com.mahjong.model.MjDetail;
@@ -123,9 +124,26 @@ public class HistoryDetailAdapter extends BaseAdapter {
 		MjAction action = detail.getAction();
 		Date date = new Date(detail.getLogTime());
 		holder.timeText.setText(simpleDateFormat.format(date));
-		int juWind = detail.getJuCount() / 4;
-		int juCount = detail.getJuCount() % 4;
-		holder.juText.setText(winds[juWind] + nums[juCount] + ju);
+		int memberCount = mResult.getMemberCount();
+		int juWind, juCount;
+		juCount = detail.getJuCount() % memberCount;
+		if (mResult.getMainType() == BaseManager.MainType_17s) {
+			if (mResult.getFengType() == 0) {
+				juWind = 0;
+			} else {
+				if (memberCount == 2) {
+					if ((detail.getJuCount() / 2) % 2 == 0) juWind = 0;
+					else juWind = 2;
+				} else {
+					juWind = detail.getJuCount() / memberCount;
+				}
+			}
+			holder.juText.setText(winds[juWind] + "[" + (detail.getJuCount() / memberCount + 1) + "]"
+					+ nums[juCount] + ju);
+		} else {
+			juWind = detail.getJuCount() / memberCount;
+			holder.juText.setText(winds[juWind] + nums[juCount] + ju);
+		}
 		holder.roundText.setText(detail.getRoundCount() + round);
 		int[] changeScores = detail.getChangeScores();
 		int[] finalScores = detail.getFinalScores();
@@ -161,8 +179,30 @@ public class HistoryDetailAdapter extends BaseAdapter {
 		holder.contentText.setText(content);
 		if (isShowScore) {
 			holder.mScoreLayout.setVisibility(View.VISIBLE);
-			for (int i = 0; i < 4; i++) {
-				String playerWind = winds[(i + 4 - juCount) % 4];
+			int[] playerIndexes;
+			if (memberCount < 4) {
+				setPlayerVisible(holder, false, 3);
+				if (memberCount < 3) {
+					setPlayerVisible(holder, false, 1);
+					playerIndexes = new int[] {0, 2};
+				} else {
+					setPlayerVisible(holder, true, 1);
+					playerIndexes = new int[] {0, 1, 2};
+				}
+			} else {
+				setPlayerVisible(holder, true, 1);
+				setPlayerVisible(holder, true, 3);
+				playerIndexes = new int[] {0, 1, 2, 3};
+			}
+			for (int i : playerIndexes) {
+				int tmpIndex = (i + memberCount - juCount) % memberCount;
+				if (memberCount == 2) {
+					if (i == 2) {
+						tmpIndex = (1 + memberCount - juCount) % memberCount;
+					}
+					if (tmpIndex == 1) tmpIndex = 2;
+				}
+				String playerWind = winds[tmpIndex];
 				holder.playerTexts[i].setText("(" + playerWind + ")"
 						+ mNames[i] + ":");
 				holder.scoreTexts[i].setText(changeScores[i] + "→"
@@ -181,6 +221,11 @@ public class HistoryDetailAdapter extends BaseAdapter {
 			spectrum.setData(bean.getCardList(), 
 					bean.getPairsList(), bean.getWinCard());
 		}
+	}
+	
+	private void setPlayerVisible(ViewHolder holder, boolean isVisible, int index) {
+		holder.playerTexts[index].setVisibility(isVisible ? View.VISIBLE : View.GONE);
+		holder.scoreTexts[index].setVisibility(isVisible ? View.VISIBLE : View.GONE);
 	}
 	
 	private class ViewHolder {

@@ -15,6 +15,7 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 
 	private ImageView mMinusBtn;
 	private ImageView mPlusBtn;
+	private TextView mDoraTitleText;
 	private TextView mDoraText;
 	private CheckBox mYifaBox;
 	private CheckBox mHaidiBox;
@@ -24,6 +25,10 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 	private int round_count;
 	private int fan;
 	private int dora_count = 0;
+	
+	private boolean is17step;
+	private int fu;
+	private int type;
 	
 	private OnFanfuListener mListener;
 	
@@ -43,6 +48,7 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 		mHediBox = (CheckBox) view.findViewById(R.id.fanfu_cb_hedimoyu);
 		mErrorText = (TextView) view.findViewById(R.id.fanfu_error);
 		
+		this.is17step = false;
 		this.round_count = roundCount;
 		this.fan = fan;
 		
@@ -51,6 +57,38 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 		mYifaBox .setOnCheckedChangeListener(this);
 		mHaidiBox .setOnCheckedChangeListener(this);
 		mHediBox .setOnCheckedChangeListener(this);
+		ok.setOnClickListener(this);
+		cancel.setOnClickListener(this);
+	}
+	
+	public FanfuDialog(Context context, String title, int fan, int fu, int type) {
+		super(context, R.style.MyDialogStyle);
+		addView(R.layout.layout_fanfu_check);
+		if (title == null) {
+			titleTextView.setText(mContext.getString(R.string.FanFu));
+		} else {
+			titleTextView.setText(title);
+		}
+		mMinusBtn = (ImageView) view.findViewById(R.id.fanfu_dora_minus);
+		mPlusBtn = (ImageView) view.findViewById(R.id.fanfu_dora_plus);
+		mDoraTitleText = (TextView) view.findViewById(R.id.fanfu_item_dora);
+		mDoraTitleText.setText(R.string.dora_in);
+		mDoraText = (TextView) view.findViewById(R.id.fanfu_dora_count);
+		mYifaBox = (CheckBox) view.findViewById(R.id.fanfu_cb_yifa);
+		mYifaBox.setVisibility(View.GONE);
+		mHaidiBox = (CheckBox) view.findViewById(R.id.fanfu_cb_haidilaoyue);
+		mHaidiBox.setVisibility(View.GONE);
+		mHediBox = (CheckBox) view.findViewById(R.id.fanfu_cb_hedimoyu);
+		mHediBox.setVisibility(View.GONE);
+		mErrorText = (TextView) view.findViewById(R.id.fanfu_error);
+		
+		this.is17step = true;
+		this.fan = fan;
+		this.fu = fu;
+		this.type = type;
+		
+		mMinusBtn.setOnClickListener(this);
+		mPlusBtn.setOnClickListener(this);
 		ok.setOnClickListener(this);
 		cancel.setOnClickListener(this);
 	}
@@ -69,9 +107,16 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 			mDoraText.setText(dora_count + "");
 			break;
 		case R.id.l_ok:
-			if (checkFanfu()) {
-				if (mListener != null) mListener.onSuccess();
-				dismiss();
+			if (is17step) {
+				if (check17StepFanfu()) {
+					if (mListener != null) mListener.onSuccess();
+					dismiss();
+				}
+			} else {
+				if (checkFanfu()) {
+					if (mListener != null) mListener.onSuccess();
+					dismiss();
+				}
 			}
 			break;
 		case R.id.l_cancel:
@@ -82,12 +127,56 @@ public class FanfuDialog extends CommonDialog implements android.view.View.OnCli
 		}
 	}
 	
+	private boolean check17StepFanfu() {
+		int count = dora_count;
+		if (fan > 0 && count > fan) {
+			mErrorText.setText(R.string.fanfu_wrong);
+			mErrorText.setVisibility(View.VISIBLE);
+			return false;
+		}
+		String fanfuText = mContext.getString(R.string.game17s_FanFu_none);
+		switch (type) {
+		case 0: // 五番番缚
+			if (fan < 0) {
+				return true;
+			} else {
+				if ((fan - count) >= 5) {
+					return true;
+				}
+			}
+			fanfuText = mContext.getString(R.string.game17s_FanFu_five);
+			break;
+		case 1: // 满贯番缚
+			if (fan < 0) {
+				return true;
+			} else {
+				int validYaku = fan - count;
+				if (validYaku >= 5) {
+					return true;
+				} else if (validYaku == 4 && fu >= 40) {
+					return true;
+				} else if (validYaku == 3 && fu >= 70) {
+					return true;
+				}
+			}
+			fanfuText = mContext.getString(R.string.game17s_FanFu_manguan);
+			break;
+		case 2: // 无番缚
+		default:
+			return true;
+		}		
+		String error = String.format(mContext.getString(R.string.game17s_fanfu_invalid), fanfuText, fan - count); 
+		mErrorText.setText(error);
+		mErrorText.setVisibility(View.VISIBLE);
+		return false;
+	}
+	
 	private boolean checkFanfu() {
 		int count = dora_count;
 		if (mYifaBox.isChecked()) count++;
 		if (mHaidiBox.isChecked()) count++;
 		if (mHediBox.isChecked()) count++;
-		if (count > fan) {
+		if (fan > 0 && count > fan) {
 			mErrorText.setText(R.string.fanfu_wrong);
 			mErrorText.setVisibility(View.VISIBLE);
 			return false;

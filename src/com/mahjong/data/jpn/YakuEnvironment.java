@@ -20,5 +20,7 @@ public class YakuEnvironment {
 	public static final int FinalPick		= 0x00004000;	// 海底或河底
 	public static final int LingShangKaiHua	= 0x00008000;	// 岭上开花
 	public static final int MenQianQing		= 0x00010000;	// 门前清
+	public static final int DoubleWind4		= 0x00020000;	// 双风算4符,否则只算2符
+	public static final int DoraNorth		= 0x001c0000;	// 拨北宝牌（数据为0-4，占3个位）
 	
 }

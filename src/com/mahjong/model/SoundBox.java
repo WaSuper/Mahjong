@@ -2,8 +2,6 @@ package com.mahjong.model;
 
 import java.util.List;
 
-import android.content.Context;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

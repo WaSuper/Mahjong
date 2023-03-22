@@ -1,4 +1,4 @@
-package com.mahjong.activity.jpn.game34;
+package com.mahjong.activity.jpn.game17s;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import com.mahjong.activity.BaseActivity;
 import com.mahjong.adapter.SpecialYakuCheckAdapter;
 import com.mahjong.adapter.StringArrayAdapter;
 import com.mahjong.common.MjCalcTool;
-import com.mahjong.common.MjCalcTool.Game34Result;
+import com.mahjong.common.MjCalcTool.Game17sResult;
 import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
 import com.mahjong.common.MjSetting;
@@ -49,7 +49,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-public class Game34CalculateActivity extends BaseActivity 
+public class Game17sCalculateActivity extends BaseActivity 
 		implements OnClickListener, OnCheckedChangeListener {
 
 	private TextView mTitle;				// 标题
@@ -61,6 +61,7 @@ public class Game34CalculateActivity extends BaseActivity
 	private CheckBox mLizhiBox;				// 立直
 	private CheckBox mYifaBox;				// 一发
 	private CheckBox mFinalPickBox;			// 海底
+	private CheckBox mDoubleWind4Box;		// 雀头双风4符
 	private Mahjong34CardView mj34CardView; // 牌谱 
 	private MahjongDora mjDoraIndicaOut; 	// 宝牌指示牌
 	private MahjongDora mjDoraIndicaIn; 	// 里宝牌指示牌
@@ -96,8 +97,8 @@ public class Game34CalculateActivity extends BaseActivity
 	private int mRollCount = 0;
 	private int mSelectedCount = 0;
 	
-	private Game34Result mGame34Result = new Game34Result(1);
-	private Game34Result mGame34ResultEscapeDora = new Game34Result(2);
+	private Game17sResult mGame17sResult = new Game17sResult(1);
+	private Game17sResult mGame17sResultEscapeDora = new Game17sResult(2);
 //	private Score mResultScore = null;
 	private int mScoreIndex = -1;
 	private Random mRandom = new Random(System.currentTimeMillis());
@@ -116,23 +117,23 @@ public class Game34CalculateActivity extends BaseActivity
 			switch (choice) {
 			case SHOW_RESULT:
 				int level = msg.arg2;
-				Game34Result game34Result;
+				Game17sResult game17sResult;
 				if (level == 1) {
-					game34Result = mGame34Result;
+					game17sResult = mGame17sResult;
 				} else {
-					game34Result = mGame34ResultEscapeDora;
+					game17sResult = mGame17sResultEscapeDora;
 				}
 				Score mResultScore = mScoreIndex > -1 ? 
-						game34Result.getScore(mScoreIndex) : null;
+						game17sResult.getScore(mScoreIndex) : null;
 				mResult.setData(mResultScore, mRollCount, mBangCount, 
 						mPlayerBox.isChecked(), false);
 				List<MjCard> cards = mScoreIndex > -1 ? 
-						game34Result.getHandCards(mScoreIndex) : null;
+						game17sResult.getHandCards(mScoreIndex) : null;
 				MjCard addedCard = mScoreIndex > -1 ? 
-						game34Result.getAddedCards(mScoreIndex) : null;
+						game17sResult.getAddedCards(mScoreIndex) : null;
 				mj34Spectrum.setData(cards, null, addedCard);
 				if (mScoreIndex > -1) {
-					mResultNumText.setText((mScoreIndex + 1) + "/" + game34Result.size());
+					mResultNumText.setText((mScoreIndex + 1) + "/" + game17sResult.size());
 				} else {
 					mResultNumText.setText("0/0");
 				}
@@ -178,6 +179,7 @@ public class Game34CalculateActivity extends BaseActivity
 		mLizhiBox = (CheckBox) findViewById(R.id.game34_calculate_lizhi);
 		mYifaBox = (CheckBox) findViewById(R.id.game34_calculate_yifa);
 		mFinalPickBox = (CheckBox) findViewById(R.id.game34_calculate_final_pick);
+		mDoubleWind4Box = (CheckBox) findViewById(R.id.game34_calculate_doublewind4);
 		mStartBtn = (ImageButton) findViewById(R.id.game34_calculate_start);
 		mGroundWindLayout = (LinearLayout) findViewById(R.id.game34_calculate_ll_groundwind);
 		mGroundWindText = (TextView) findViewById(R.id.game34_calculate_tv_groundwind);
@@ -216,6 +218,8 @@ public class Game34CalculateActivity extends BaseActivity
 		mYifaBox.setOnCheckedChangeListener(this);
 		mFinalPickBox.setChecked(false);
 		mFinalPickBox.setOnCheckedChangeListener(this);
+		mDoubleWind4Box.setChecked(false);
+		mDoubleWind4Box.setOnCheckedChangeListener(this);
 		mj34CardView.setOnTouchEventListener(mTouchListener);
 		mjDoraIndicaOut.setOnTouchEventListener(mTouchListener);
 		mjDoraIndicaIn.setOnTouchEventListener(mTouchListener);
@@ -249,6 +253,7 @@ public class Game34CalculateActivity extends BaseActivity
 		mLizhiBox.setChecked(true);
 		mYifaBox.setChecked(false);
 		mFinalPickBox.setChecked(false);
+		mDoubleWind4Box.setChecked(false);
 		
 		mGroundWind = MjWind.East;
 		setWindText(mGroundWind, mGroundWindText);
@@ -340,7 +345,7 @@ public class Game34CalculateActivity extends BaseActivity
 		mCalcWayText.setText(mCalcWayList.get(position));
 	}
 	
-	private void calculateStart(Game34Result result) {
+	private void calculateStart(Game17sResult result) {
 		Message msg = new Message();
 		
 		List<MjCard> mDarkNums = mj34CardView.getAllCards();
@@ -363,11 +368,11 @@ public class Game34CalculateActivity extends BaseActivity
 		}
 		List<MjCard> mDora = mjDoraIndicaOut.getDoraList();
 		List<MjCard> mDoraIn = mjDoraIndicaIn.getDoraList();
-		MjCalcTool.calcGame34ToResultScores(mCalcWay, result, mDarkNums,
+		MjCalcTool.calcGame17sToResultScores(mCalcWay, result, mDarkNums,
 				mPlayerBox.isChecked(), mLizhiBox.isChecked(), 
 				mYifaBox.isChecked(), mFinalPickBox.isChecked(),
 				mGroundWind, mSelfWind, mBangCount, mRollCount,
-				mDora, mDoraIn);
+				mDora, mDoraIn, mDoubleWind4Box.isChecked(), 0);
 		int[] doras = MjCalcTool.convertCard2CardDoras(mDora);
 		mj34Spectrum.setMarkWinRect(doras);
 		mScoreIndex = result.hasYaku() ? 0 : -1;
@@ -376,11 +381,11 @@ public class Game34CalculateActivity extends BaseActivity
 		} else { // 当降番后依然只能听宝牌时，需要继续向下降番寻找
 			while (result.isAllAddedTileDoras()) {
 				result.setLevel1Score(result.getScore(0));
-				MjCalcTool.calcGame34ToResultScores(mCalcWay, result, mDarkNums,
+				MjCalcTool.calcGame17sToResultScores(mCalcWay, result, mDarkNums,
 						mPlayerBox.isChecked(), mLizhiBox.isChecked(), 
 						mYifaBox.isChecked(), mFinalPickBox.isChecked(),
 						mGroundWind, mSelfWind, mBangCount, mRollCount,
-						mDora, mDoraIn);
+						mDora, mDoraIn, mDoubleWind4Box.isChecked(), 0);
 				mScoreIndex = result.hasYaku() ? 0 : -1;
 			}
 		}
@@ -443,8 +448,8 @@ public class Game34CalculateActivity extends BaseActivity
 				
 				@Override
 				public void run() {
-					calculateStart(mGame34Result);
-					mGame34ResultEscapeDora.reset();
+					calculateStart(mGame17sResult);
+					mGame17sResultEscapeDora.reset();
 				}
 			}).start();			
 			break;
@@ -457,12 +462,12 @@ public class Game34CalculateActivity extends BaseActivity
 		case R.id.game34_calculate_mahjongspectrum:
 			if (isShowEscapeDora) {
 				if (mEscapeDoraBox.isChecked()) {
-					showMjSpectrumDialog(mGame34ResultEscapeDora);
+					showMjSpectrumDialog(mGame17sResultEscapeDora);
 				} else {
-					showMjSpectrumDialog(mGame34Result);
+					showMjSpectrumDialog(mGame17sResult);
 				}
 			} else {
-				showMjSpectrumDialog(mGame34Result);
+				showMjSpectrumDialog(mGame17sResult);
 			}
 			break;
 		case R.id.game34_calculate_set_way:
@@ -495,28 +500,30 @@ public class Game34CalculateActivity extends BaseActivity
 			if (isShowEscapeDora) {
 				mScoreIndex = 0;
 				if (isChecked) {
-					if (mGame34ResultEscapeDora.isInit()) {
+					if (mGame17sResultEscapeDora.isInit()) {
 						Message msg = new Message();
 						msg.arg1 = SHOW_RESULT;
-						msg.arg2 = mGame34ResultEscapeDora.getLevel();
+						msg.arg2 = mGame17sResultEscapeDora.getLevel();
 						mHandler.sendMessage(msg);
 					} else {
-						mGame34ResultEscapeDora.setLevel1Score(mGame34Result.getScore(0));
+						mGame17sResultEscapeDora.setLevel1Score(mGame17sResult.getScore(0));
 						new Thread(new Runnable() {
 							
 							@Override
 							public void run() {
-								calculateStart(mGame34ResultEscapeDora);
+								calculateStart(mGame17sResultEscapeDora);
 							}
 						}).start();
 					}
 				} else {
 					Message msg = new Message();
 					msg.arg1 = SHOW_RESULT;
-					msg.arg2 = mGame34Result.getLevel();
+					msg.arg2 = mGame17sResult.getLevel();
 					mHandler.sendMessage(msg);
 				}
 			}
+			break;
+		case R.id.game34_calculate_doublewind4:
 			break;
 		default:
 			break;
@@ -706,7 +713,7 @@ public class Game34CalculateActivity extends BaseActivity
 		
 	};
 	
-	private void showMjSpectrumDialog(final Game34Result result) {
+	private void showMjSpectrumDialog(final Game17sResult result) {
 		if (!result.hasYaku()) return;
 		final CommonDialog mDialog = new CommonDialog(this, R.style.MyDialogStyle, 0);
 		mDialog.addView(R.layout.listview);
@@ -746,15 +753,15 @@ public class Game34CalculateActivity extends BaseActivity
 	class MjSpectrumAdapter extends BaseAdapter {
 
 		private Context mContext;
-		private Game34Result mGame34Result;
+		private Game17sResult mGame17sResult;
 		private int[] doraList;
 		
 		public MjSpectrumAdapter(Context context) {
 			this.mContext = context;
 		}
 		
-		public void setData(Game34Result game34Result) {
-			this.mGame34Result = game34Result;
+		public void setData(Game17sResult game17sResult) {
+			this.mGame17sResult = game17sResult;
 			notifyDataSetChanged();
 		}
 		
@@ -764,12 +771,12 @@ public class Game34CalculateActivity extends BaseActivity
 		
 		@Override
 		public int getCount() {
-			return mGame34Result.hasYaku() ? mGame34Result.size() : 0;
+			return mGame17sResult.hasYaku() ? mGame17sResult.size() : 0;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return mGame34Result.hasYaku() ? mGame34Result.getScore(position) : null;
+			return mGame17sResult.hasYaku() ? mGame17sResult.getScore(position) : null;
 		}
 
 		@Override
@@ -791,10 +798,10 @@ public class Game34CalculateActivity extends BaseActivity
 	        	holder = (ViewHolder) convertView.getTag();
 	        }
 			holder.numText.setText((position + 1) + "");
-			holder.mjSpectrum.setData(mGame34Result.getHandCards(position), null, 
-					mGame34Result.getAddedCards(position));
+			holder.mjSpectrum.setData(mGame17sResult.getHandCards(position), null, 
+					mGame17sResult.getAddedCards(position));
 			holder.mjSpectrum.setMarkWinRect(doraList);
-			Score score = mGame34Result.getScore(position);
+			Score score = mGame17sResult.getScore(position);
 			if (score.FullYaku() > 0) {
 				holder.fanText.setText("*" + score.FullYaku());
 			} else {

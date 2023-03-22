@@ -29,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SpectrumDialog extends Dialog 
 		implements OnClickListener, OnCheckedChangeListener {
@@ -50,6 +51,7 @@ public class SpectrumDialog extends Dialog
 	private CheckBox mFinalPickBox;
 	private CheckBox mQiangGangBox;
 	private CheckBox mLingShangBox;	
+	private TextView mDoraNorthText;	
 	// page pair setting
 	private RippleButton mPairSetBackBtn;
 	private RippleButton mPairSetNextBtn;
@@ -75,6 +77,7 @@ public class SpectrumDialog extends Dialog
 	
 	private int index;
 	private int mLizhiState = 0;
+	private int mDoraNorthCount = 0;
 	
 	public SpectrumDialog(Context context) {
 		super(context, R.style.MyDialogStyle);
@@ -125,6 +128,8 @@ public class SpectrumDialog extends Dialog
 		mQiangGangBox.setOnCheckedChangeListener(this);
 		mLingShangBox = (CheckBox) findViewById(R.id.dialog_page_lingshangkaihua);
 		mLingShangBox.setOnCheckedChangeListener(this);
+		mDoraNorthText = (TextView) findViewById(R.id.dialog_page_dora_north);
+		mDoraNorthText.setOnClickListener(this);
 		
 		mPairSetBackBtn = (RippleButton) findViewById(R.id.dialog_page_pair_setting_back);
 		mPairSetBackBtn.setOnClickListener(this);
@@ -168,7 +173,8 @@ public class SpectrumDialog extends Dialog
 	}
 	
 	public void setEnvironment(int lizhiState, boolean yifa, boolean zimo,
-			boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang) {
+			boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang,
+			boolean is3pMahjong, int doraNorth) {
 		mLizhiState = lizhiState;
 		if (mLizhiState == 1) mLiZhiBox.setChecked(true);
 		if (mLizhiState == 2) mDoubleLiZhiBox.setChecked(true);
@@ -178,6 +184,24 @@ public class SpectrumDialog extends Dialog
 		mFinalPickBox.setChecked(finalpick);
 		mQiangGangBox.setChecked(qianggang);
 		mLingShangBox.setChecked(lingshang);
+		if (is3pMahjong) {
+			mDoraNorthText.setVisibility(View.VISIBLE);
+			mDoraNorthCount = doraNorth;
+			updateDoraNoth();
+		} else {
+			mDoraNorthText.setVisibility(View.GONE);
+			mDoraNorthCount = 0;
+		}
+	}
+	
+	private void updateDoraNoth() {
+		if (mDoraNorthCount == 0) {
+			mDoraNorthText.setText(mContext.getString(R.string.dora_north));
+			mDoraNorthText.setBackgroundResource(R.drawable.swapitem_nor);
+		} else {
+			mDoraNorthText.setText(mContext.getString(R.string.dora_north) + "+" + mDoraNorthCount);
+			mDoraNorthText.setBackgroundResource(R.drawable.swapitem_sel);
+		}
 	}
 	
 	private void checkAddShow() {
@@ -205,7 +229,8 @@ public class SpectrumDialog extends Dialog
 						mLiZhiBox.isChecked(), mDoubleLiZhiBox.isChecked(),
 						mYiFaBox.isChecked(), mZiMoBox.isChecked(),
 						mFirstRoundBox.isChecked(), mFinalPickBox.isChecked(),
-						mQiangGangBox.isChecked(), mLingShangBox.isChecked());
+						mQiangGangBox.isChecked(), mLingShangBox.isChecked(),
+						mDoraNorthCount);
 			}
 			dismiss();
 			break;
@@ -267,6 +292,10 @@ public class SpectrumDialog extends Dialog
 			} else {
 				ToastTool.showToast(mContext, R.string.please_release_blank_card);
 			}			
+			break;
+		case R.id.dialog_page_dora_north:
+			mDoraNorthCount = (mDoraNorthCount + 1) % 5;
+			updateDoraNoth();
 			break;
 		default:
 			break;
@@ -417,7 +446,7 @@ public class SpectrumDialog extends Dialog
 	public interface OnSpectrumDialogListener {
 		public void onComplete(int index, List<MjCard> darkCards, List<MjCardPairs> brightCardPairs, MjCard winCard,
 				boolean lizhi, boolean doublelizhi, boolean yifa, boolean zimo,
-				boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang);
+				boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang, int doranorth);
 	}
 	
 	

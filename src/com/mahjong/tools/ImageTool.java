@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
 
@@ -116,6 +117,36 @@ public class ImageTool {
 		} else {
 			float tmpW = ((float)destH / (float)orgH) * orgW;
 			desBitmap = scaleTo(src, tmpW, destH);
+		}		
+		return desBitmap;
+	}
+	
+	/**
+	 * resize图片，以 fitend模式填充到指定宽度，过长截取下部分
+	 * 
+	 * @param src
+	 * @param destWidth
+	 * @param destHeight
+	 * @return
+	 */
+	public static Bitmap resizeBitmapEnd(Bitmap src, int destW, int destH) {
+		if (src == null || destW == 0) {
+			return null;
+		}		
+		int orgW = src.getWidth(); // 图片宽度		
+		int orgH = src.getHeight(); // 图片高度	
+		
+		Bitmap desBitmap;
+		float tmpH = ((float)destW / (float)orgW) * orgH;
+		if (tmpH < destH) {
+			desBitmap = scaleTo(src, destW, tmpH);
+		} else {
+			Paint paint = new Paint();
+			paint.setAntiAlias(true);
+			desBitmap = Bitmap.createBitmap(destW, destH, Config.ARGB_8888);
+			Canvas canvas = new Canvas(desBitmap);
+			tmpH = ((float)destH * (float)orgW) / destW;
+			canvas.drawBitmap(src, new Rect(0, (int) (orgH - tmpH), orgW, orgH), new Rect(0, 0, destW, destH), paint);
 		}		
 		return desBitmap;
 	}

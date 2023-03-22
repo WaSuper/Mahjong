@@ -13,6 +13,7 @@ import com.mahjong.activity.FileActivity;
 import com.mahjong.adapter.HistoryAdapter;
 import com.mahjong.adapter.HistoryAdapter.HistoryItemListener;
 import com.mahjong.adapter.MapointRankAdapter;
+import com.mahjong.control.BaseManager;
 import com.mahjong.model.MjDetail;
 import com.mahjong.model.MjResult;
 import com.mahjong.model.RankItem;
@@ -82,11 +83,14 @@ public class HistoryActivity extends BaseActivity
 	private TextView mSelActionView;
 	private TextView mOkView;	
 	
+	private int mMainType;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_history);
 		mContext = this;
+		mMainType = ShareprefenceTool.getInstance().getInt(BaseManager.GAME_TYPE, mContext, 0);
 		initUI();
 		FileTools.getInstance().setFitVersionTool(new FileFitVersionTool(this, new Handler()));
 	}
@@ -98,11 +102,20 @@ public class HistoryActivity extends BaseActivity
 			switch (requestCode) {
 			case FileActivity.File_Excel_Only:
 				String filePath = data.getStringExtra(FileActivity.FileDir);
-				int count = ExcelUtils.readExcelToResult(filePath);
+				boolean[] updataType = {false, false, false}; // 导入数据可能有其他类型，应全部判断是否更新
+				int count = ExcelUtils.readExcelToResult(filePath, updataType);
 				if (count > 0) {
 					ToastTool.showToast(mContext, mContext.getString(R.string.add_log_success, count));
 					searchResultList(true);
-					ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
+					if (updataType[0]) {
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, true, mContext);
+					}
+					if (updataType[1]) {
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, true, mContext);
+					}
+					if (updataType[2]) {
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, true, mContext);
+					}
 				} else {
 					ToastTool.showToast(mContext, R.string.add_log_fail);
 				}
@@ -184,7 +197,8 @@ public class HistoryActivity extends BaseActivity
 
 	private void searchResultList(boolean isReset) {
 		mResultList = new Select().from(MjResult.class)
-				.where(MjResult.Col_StartTime + ">=? AND " + MjResult.Col_StartTime + "<=?", mStartDate, mEndDate)
+				.where(MjResult.Col_StartTime + ">=? AND " + MjResult.Col_StartTime + "<=? AND " + MjResult.Col_MainType + "=?", 
+						mStartDate, mEndDate, mMainType)
 				.orderBy(MjResult.Col_StartTime + " DESC")
 				.execute();
 		mCountText.setText(String.format(getString(R.string.log_count), 
@@ -196,6 +210,7 @@ public class HistoryActivity extends BaseActivity
 	
 	private void showAllResult() {
 		mResultList = new Select().from(MjResult.class)
+				.where(MjResult.Col_MainType + "=?", mMainType)
 				.orderBy(MjResult.Col_StartTime + " DESC")
 				.execute();
 		mCountText.setText(String.format(getString(R.string.log_count), 
@@ -304,7 +319,21 @@ public class HistoryActivity extends BaseActivity
 			copyToClickboard(list);
 			break;
 		case R.id.his_act_export_for_excel:
-			String fileName = "mj_" + String.valueOf(System.currentTimeMillis());
+			String type = "";
+			switch (mMainType) {
+			case BaseManager.MainType_4p:
+				type = "4p";
+				break;
+			case BaseManager.MainType_3p:
+				type = "3p";
+				break;
+			case BaseManager.MainType_17s:
+				type = "17s";
+				break;
+			default:
+				break;
+			}
+			String fileName = "mj_" + type + "_" + String.valueOf(System.currentTimeMillis());
 			String filePath = Environment.getExternalStorageDirectory() + "/Mahjong";
 			if (ExcelUtils.createExcelFromResult(filePath, fileName, list)) {
 		        ToastTool.showToast(mContext, mContext.getString(R.string.export_success, filePath + "/" + fileName + ".xls"));				
@@ -347,6 +376,7 @@ public class HistoryActivity extends BaseActivity
         // 创建普通字符型ClipData
     	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String battleCount = mContext.getString(R.string.battle_count) + "：";
+        String juText = mContext.getString(R.string.ju);
         String startTime = mContext.getString(R.string.start_time) + "：";
         String endTime = mContext.getString(R.string.end_time) + "：";
         String[] rankStrings = new String[4];
@@ -359,7 +389,7 @@ public class HistoryActivity extends BaseActivity
         String[] types = new String[4];
         types[0] = mContext.getString(R.string.battle_one);
         types[1] = mContext.getString(R.string.battle_two);
-        types[2] = "";
+        types[2] = mContext.getString(R.string.battle_three);
         types[3] = mContext.getString(R.string.battle_four);
         StringBuffer buffer = new StringBuffer();
         for (MjResult result : list) {
@@ -369,7 +399,11 @@ public class HistoryActivity extends BaseActivity
 				buffer.append(title + "\n");
 			}
 			buffer.append(battleCount);
-			buffer.append(types[result.getGameType()] + "\n");
+			if (result.getMainType() == BaseManager.MainType_17s) {
+				buffer.append((result.getGameType() + 1) + juText + "\n");
+			} else {
+				buffer.append(types[result.getGameType()] + "\n");
+			}
 			buffer.append(startTime);
 			buffer.append(dateFormat.format(new Date(result.getStartTime())) + "\n");
 			buffer.append(endTime);
@@ -379,7 +413,17 @@ public class HistoryActivity extends BaseActivity
 			int[] scores = result.getPoints();
 			float[] mas = result.getMas();
 			String[] ranklines = new String[4];
-			for (int i = 0; i < 4; i++) {
+			int[] playerIndexes;
+			if (result.getMemberCount() < 4) {
+				if (result.getMemberCount() < 3) {
+					playerIndexes = new int[] {0, 2};
+				} else {
+					playerIndexes = new int[] {0, 1, 2};
+				}
+			} else {
+				playerIndexes = new int[] {0, 1, 2, 3};
+			}
+			for (int i : playerIndexes) {
 				int rank = ranks[i];
 				ranklines[rank - 1] = rankStrings[rank - 1] + names[i] + "\t\t" + point;
 				String score = scores[i] + "(";
@@ -495,7 +539,20 @@ public class HistoryActivity extends BaseActivity
 							.execute();
 					ToastTool.showToast(mContext, R.string.delete_success);
 					searchResultList(true);
-					ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
+					switch (mMainType) {
+					case BaseManager.MainType_4p:
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, true, mContext);
+						break;
+					case BaseManager.MainType_3p:
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, true, mContext);
+						break;
+					case BaseManager.MainType_17s:
+						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, true, mContext);
+						break;
+					default:
+						break;
+					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 					ToastTool.showToast(mContext, R.string.delete_fail);

@@ -3,10 +3,11 @@ package com.mahjong.activity.jpn;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjSetting;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.FanfuDialog;
 import com.mahjong.dialog.FanfuDialog.OnFanfuListener;
 import com.mahjong.model.MjAction;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.FlowRadioGroup;
@@ -54,12 +55,14 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 	
 	private boolean landscapeMode;
 	
+	private BaseManager mManager = ManagerTool.getInstance().getManager();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		// 设定方向
 		Intent intent = getIntent();
-		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
+		int pos = intent.getIntExtra(BaseManager.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
 		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
 		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
 				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
@@ -73,8 +76,8 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		setContentView(R.layout.activity_jpn_result_set_simple);
 		mContext = this;
 		// 设定内容
-		isZimo = intent.getBooleanExtra(ManageTool.PLAYER_IS_ZIMO, false);
-		mOrgPlayer = intent.getIntExtra(ManageTool.PLAYER_ORIGINAL_INDEX, 0);
+		isZimo = intent.getBooleanExtra(BaseManager.PLAYER_IS_ZIMO, false);
+		mOrgPlayer = intent.getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
 		mMainVision = intent.getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
 		initUI();
 //		if (!isZimo) setDianPaoPlayer(2); // 默认对家
@@ -127,6 +130,18 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		} else {
 			mZimoLayout.setVisibility(View.GONE);
 			mRongheLayout.setVisibility(View.VISIBLE);
+			switch (mManager.getMemberCount()) {
+			case 2:
+				mUpperBtn.setVisibility(View.INVISIBLE);
+				mDownerBtn.setVisibility(View.INVISIBLE);
+				setDianPaoPlayer(2); // 2人时默认选对家
+				break;
+			case 3:
+				mOpppsiterBtn.setVisibility(View.INVISIBLE);
+				break;
+			default:
+				break;
+			}
 		}
 		mOpppsiterBtn.setOnClickListener(this);
 		mUpperBtn.setOnClickListener(this);
@@ -161,20 +176,37 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 				ToastTool.showToast(mContext, R.string.player_bomb_no_choose);
 				return;
 			}
-			boolean isEnableFanfu = ManageTool.getInstance().getEnableFanFu();
-			int roundCount = ManageTool.getInstance().getRoundCount();
-			if (isEnableFanfu && roundCount >= 5) {
-				FanfuDialog dialog = new FanfuDialog(mContext, null, roundCount, mFanCount);
-				dialog.setOnFanfuListener(new OnFanfuListener() {
-					
-					@Override
-					public void onSuccess() {
-						sendData();
-					}
-				});
-				dialog.show();
+			if (mManager.is17Step()) {
+				if (mManager.getFanfuType() == 2 || mFanCount < 0) {
+					sendData();
+				} else { // 检测非役满情况
+					FanfuDialog dialog = new FanfuDialog(mContext, null, 
+							mFanCount, mFuCount, mManager.getFanfuType());
+					dialog.setOnFanfuListener(new OnFanfuListener() {
+						
+						@Override
+						public void onSuccess() {
+							sendData();
+						}
+					});
+					dialog.show();
+				}
 			} else {
-				sendData();
+				boolean isEnableFanfu = mManager.getEnableFanFu();
+				int roundCount = mManager.getRoundCount();
+				if (isEnableFanfu && roundCount >= 5 && mFanCount > 0) { // 检测非役满情况
+					FanfuDialog dialog = new FanfuDialog(mContext, null, roundCount, mFanCount);
+					dialog.setOnFanfuListener(new OnFanfuListener() {
+						
+						@Override
+						public void onSuccess() {
+							sendData();
+						}
+					});
+					dialog.show();
+				} else {
+					sendData();
+				}
 			}
 			break;
 		case R.id.result_set_simple_cancel:
@@ -186,8 +218,7 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 	}
 	
 	private void sendData() {
-		ManageTool mTool = ManageTool.getInstance();
-		mTool.setResult(mOrgPlayer, mFanCount, mFuCount);
+		mManager.setResult(mOrgPlayer, mFanCount, mFuCount);
 		Intent data;
 		if (landscapeMode) {
 			data = new Intent(ResultSetSimpleActivity.this, ResultShowForLand.class);
@@ -197,11 +228,24 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		if (isZimo) {
 			data.putExtra(MjAction.Name, MjAction.ACTION_ZIMO);
-			data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
+			data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
 		} else {
 			data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);
-			data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, (mOrgPlayer + mPosition) % 4);
-			data.putExtra(ManageTool.RESULT_BOMB_INDEX, new int[] {mOrgPlayer});
+			int index = (mOrgPlayer + mPosition) % 4;
+			if (mManager.getMemberCount() == 3) {
+				switch (mOrgPlayer) {
+				case 0:
+					if (mPosition == 3) index = 2;
+					break;
+				case 2:
+					if (mPosition == 1) index = 0;
+					break;
+				default:
+					break;
+				}
+			}
+			data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, index);
+			data.putExtra(BaseManager.RESULT_BOMB_INDEX, new int[] {mOrgPlayer});
 		}
 		startActivity(data);
 		this.finish();		

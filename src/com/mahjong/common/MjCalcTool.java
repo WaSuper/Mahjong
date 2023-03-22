@@ -55,6 +55,8 @@ public class MjCalcTool {
 		public boolean isFinalPick;
 		public boolean isQiangGang;
 		public boolean isLingshang;
+		public boolean isDoubleWind4;
+		public int doraNorth;
 		public MjWind groundWind;
 		public MjWind selfWind;
 		public MjWind addedWind;
@@ -69,7 +71,8 @@ public class MjCalcTool {
 		
 		public void setData(
 				boolean isLiZhi, boolean isDoubleLiZhi, boolean isZiMo, boolean isYiFa, 
-				boolean isFirstRound, boolean isFinalPick, boolean isQiangGang, boolean isLingshang) {			
+				boolean isFirstRound, boolean isFinalPick, boolean isQiangGang, 
+				boolean isLingshang, boolean isDoubleWind4, int doraNorth) {			
 			this.isLiZhi = isLiZhi;
 			this.isDoubleLiZhi = isDoubleLiZhi;
 			this.isZiMo = isZiMo;
@@ -78,6 +81,8 @@ public class MjCalcTool {
 			this.isFinalPick = isFinalPick;
 			this.isQiangGang = isQiangGang;
 			this.isLingshang = isLingshang;
+			this.isDoubleWind4 = isDoubleWind4;
+			this.doraNorth =doraNorth;
 		}
 		
 		public void setResult(boolean canHupai,
@@ -105,11 +110,12 @@ public class MjCalcTool {
 		
 		public void reCalcEnv() {
 			this.env = convert2JpnEnvironment(isLiZhi, isDoubleLiZhi, isFirstRound, isFinalPick, 
-					isZiMo, isYiFa, isQiangGang, isLingshang, groundWind, selfWind, isMenQing(fulouGroups));
+					isZiMo, isYiFa, isQiangGang, isLingshang, groundWind, selfWind, 
+					isMenQing(fulouGroups), isDoubleWind4, doraNorth);
 		}
 	}
 
-	public static class Game34Result {
+	public static class Game17sResult {
 
 		public int env; // 环境变量
 		public int calcWay; // 计量方式：0：分值优先，1：番数优先
@@ -125,7 +131,7 @@ public class MjCalcTool {
 		public Score level1Score; // 当显示2级结果时，不能超过的1级结果的上限
 		public boolean isInit = false;
 		
-		public Game34Result(int level) {
+		public Game17sResult(int level) {
 			this.level = level;
 		}
 		
@@ -371,11 +377,13 @@ public class MjCalcTool {
 			boolean isYiFa, boolean isQiangGang, boolean isLingshang,
 			MjWind groundWind, MjWind selfWind, 
 			int lizhiCount, int roundCount,
-			List<MjCard> indicators, List<MjCard> indicatorsIns) {
+			List<MjCard> indicators, List<MjCard> indicatorsIns, 
+			boolean isDoubleWind4, int doraNorth) {
 		Score score = calcToResultScore(darkNums, brightNums, winNum, 
 				isDealer, isLiZhi, isDoubleLiZhi, 
 				isFirstRound, isFinalPick, isZiMo, isYiFa, isQiangGang, isLingshang, 
-				groundWind, selfWind, lizhiCount, roundCount, indicators, indicatorsIns);
+				groundWind, selfWind, lizhiCount, roundCount, indicators, indicatorsIns, 
+				isDoubleWind4, doraNorth);
 		if (score != null) {
 			StringBuffer sBuffer = new StringBuffer();
 			sBuffer.append(score.toString());
@@ -432,7 +440,8 @@ public class MjCalcTool {
 			boolean isYiFa, boolean isQiangGang, boolean isLingshang,
 			MjWind groundWind, MjWind selfWind, 
 			int lizhiCount, int roundCount,
-			List<MjCard> indicators, List<MjCard> indicatorsIns) {
+			List<MjCard> indicators, List<MjCard> indicatorsIns, 
+			boolean isDoubleWind4, int doraNorth) {
 		List<Tile> allTiles = new ArrayList<Tile>();	// 所有牌
 		List<Tile> handTiles = new ArrayList<Tile>();	// 门清牌
 		// 添加和牌
@@ -458,7 +467,8 @@ public class MjCalcTool {
 		boolean result = AgariIndex.done(handTiles, addedTile.Value(), menqingGroups);		
 		if (result) {
 			int env = convert2JpnEnvironment(isLiZhi, isDoubleLiZhi, isFirstRound, isFinalPick, 
-					isZiMo, isYiFa, isQiangGang, isLingshang, groundWind, selfWind, isMenQing(fulouGroups));
+					isZiMo, isYiFa, isQiangGang, isLingshang, groundWind, selfWind, 
+					isMenQing(fulouGroups), isDoubleWind4, doraNorth);
 			Score score = calcToScore(env, menqingGroups, fulouGroups, allTiles, handTiles, addedTile);
 			return score;
 		}
@@ -489,15 +499,17 @@ public class MjCalcTool {
 	 * 十七步算法：根据34张牌挑选出13张最优解牌谱
 	 * --限定条件（确定：门清，可能：立直、一发、河底，无赤宝牌）
 	 */
-	public static boolean calcGame34ToResultScores(int calcWay,
-			Game34Result game34Result, List<MjCard> cardNums,
+	public static boolean calcGame17sToResultScores(int calcWay,
+			Game17sResult game17sResult, List<MjCard> cardNums,
 			boolean isDealer, boolean isLiZhi, boolean isYiFa, boolean isFinalPick,
 			MjWind groundWind, MjWind selfWind, 
 			int lizhiCount, int roundCount,
-			List<MjCard> indicators, List<MjCard> indicatorsIns) {
+			List<MjCard> indicators, List<MjCard> indicatorsIns, 
+			boolean isDoubleWind4, int doraNorth) {
 		// 用于计算的分值的元素
 		int env = convert2JpnEnvironment(isLiZhi, false, false, isFinalPick,
-				false, isYiFa, false, false, groundWind, selfWind, true); // 环境变量
+				false, isYiFa, false, false, groundWind, selfWind, true, 
+				isDoubleWind4, doraNorth); // 环境变量
 		// 计算宝牌
 		int[] doras = convertCard2TileDoras(indicators);
 		// 计算里宝牌
@@ -508,7 +520,7 @@ public class MjCalcTool {
 			doraIns = new int[indicatorsIns.size()];
 			Arrays.fill(doraIns, -1);
 		}
-		game34Result.init(env, calcWay, doras, doraIns);
+		game17sResult.init(env, calcWay, doras, doraIns);
 		// 记录所有牌，并分类
 		Tile[] tileMap = new Tile[34]; // 记录所有存在的牌
 		int[] tileCounts = new int[34];// 记录所有存在的牌对应的数量
@@ -574,11 +586,11 @@ public class MjCalcTool {
 		}
 		// 判断特殊牌型（国士无双、七对子）
 		// 1.国士无双
-		calcGame34ForGuoShiWuShuang(game34Result, byteTile, tileMap, tileCounts, canBombs, bombTiles);
+		calcGame17sForGuoShiWuShuang(game17sResult, byteTile, tileMap, tileCounts, canBombs, bombTiles);
 		// 2.七对子
-		calcGame34ForQiDuiZi(game34Result, pairTiles, tileMap, tileKeys, canBombs, bombTiles);
+		calcGame17sForQiDuiZi(game17sResult, pairTiles, tileMap, tileKeys, canBombs, bombTiles);
 		// 3.检测所有顺子、刻子的排列组合(单骑、听嵌章、双面听)
-		calcGame34ForGroup(game34Result, junkoTiles, pungTiles, tileCounts, tileMap, tileKeys, 
+		calcGame17sForGroup(game17sResult, junkoTiles, pungTiles, tileCounts, tileMap, tileKeys, 
 				canBombs, bombTiles, pairTiles, junkoQbTiles, junkoQzTiles);
 		return true;
 	}
@@ -593,7 +605,7 @@ public class MjCalcTool {
 	 * @param canBombs
 	 * @param bombTiles
 	 */
-	private static void calcGame34ForGuoShiWuShuang(Game34Result game34Result,
+	private static void calcGame17sForGuoShiWuShuang(Game17sResult game17sResult,
 			long byteTile, Tile[] tileMap, int[] tileCounts,
 			boolean[] canBombs, Tile[] bombTiles) {
 		long gswsByte = 0x3fc060301L; // 只含有1万、9万、1饼、9饼、1索、9索、东、南、西、北、白、发、中
@@ -606,7 +618,7 @@ public class MjCalcTool {
 				if (!canBombs[yaojiu]) continue;
 				Tile tmpAddedTile = bombTiles[yaojiu];
 				// 取分值最大的结果
-				game34Result.LogMaxScore(tmpAddedTile, tmpHandTiles, null);
+				game17sResult.LogMaxScore(tmpAddedTile, tmpHandTiles, null);
 			}
 		} else { // 国士无双缺一张
 			for (int yaojiu : JpnSetting.YaoJiu) {
@@ -634,7 +646,7 @@ public class MjCalcTool {
 						List<Tile> tmpHandTiles2 = new ArrayList<Tile>(tmpHandTiles);
 						tmpHandTiles2.add(yaojiuTile);
 						// 取分值最大的结果
-						game34Result.LogMaxScore(tmpAddedTile, tmpHandTiles2, null);
+						game17sResult.LogMaxScore(tmpAddedTile, tmpHandTiles2, null);
 					}
 					break; // 符合其中一种，另外8种情况可以直接排除
 				}
@@ -652,7 +664,7 @@ public class MjCalcTool {
 	 * @param canBombs
 	 * @param bombTiles
 	 */
-	private static void calcGame34ForQiDuiZi(Game34Result game34Result,
+	private static void calcGame17sForQiDuiZi(Game17sResult game17sResult,
 			List<Integer> pairTiles, Tile[] tileMap, List<Integer> tileKeys,
 			boolean[] canBombs, Tile[] bombTiles) {
 		if (pairTiles.size() >= 6) {
@@ -678,7 +690,7 @@ public class MjCalcTool {
 						tmpKeyHandTiles.add(tileMap[key]);
 						Tile tmpAddedTile = bombTiles[key];
 						// 取分值最大的结果
-						game34Result.LogMaxScore(tmpAddedTile, tmpKeyHandTiles, null);
+						game17sResult.LogMaxScore(tmpAddedTile, tmpKeyHandTiles, null);
 					}
 				}
 			}			
@@ -700,7 +712,7 @@ public class MjCalcTool {
 	 * @param junkoQbTiles
 	 * @param junkoQzTiles
 	 */
-	private static void calcGame34ForGroup(Game34Result game34Result,
+	private static void calcGame17sForGroup(Game17sResult game17sResult,
 			List<Integer> junkoTiles, List<Integer> pungTiles,
 			int[] tileCounts, Tile[] tileMap, List<Integer> tileKeys,
 			boolean[] canBombs, Tile[] bombTiles,
@@ -750,7 +762,7 @@ public class MjCalcTool {
 							tmp4BHandTiles.add(tileMap[key]);
 							Tile tmpAddedTile = bombTiles[key];
 							// 取分值最大的结果
-							game34Result.LogMaxScore(tmpAddedTile, tmp4BHandTiles, tmpAllGroups);
+							game17sResult.LogMaxScore(tmpAddedTile, tmp4BHandTiles, tmpAllGroups);
 						}
 					} else if (countOfbyte1 == 3) { // 顺子听嵌章、顺子双面听、两对双面听
 						for (int j = 0; j < pairTiles.size(); j++) { // 先取出1个对子
@@ -778,27 +790,27 @@ public class MjCalcTool {
 									tmpAddedTile = bombTiles[QbValue + 2];
 									tmp3AllGroups.add(new Groups.Junko(QbValue, GroupState.HePai, 2));
 									// 取分值最大的结果
-									game34Result.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
+									game17sResult.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
 								} else if (num == 8) { // 89听7
 									if (!canBombs[QbValue - 1]) continue;
 									tmpAddedTile = bombTiles[QbValue - 1];
 									tmp3AllGroups.add(new Groups.Junko(QbValue - 1, GroupState.HePai, 0));
 									// 取分值最大的结果
-									game34Result.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
+									game17sResult.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
 								} else { // 23听1、4
 									if (canBombs[QbValue - 1]) {
 										tmpAddedTile = bombTiles[QbValue - 1];
 										List<Group> tmp4AllGroups = new ArrayList<Groups.Group>(tmp3AllGroups);
 										tmp4AllGroups.add(new Groups.Junko(QbValue - 1, GroupState.HePai, 0));
 										// 取分值最大的结果
-										game34Result.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp4AllGroups);
+										game17sResult.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp4AllGroups);
 									}
 									if (canBombs[QbValue + 2]) {
 										tmpAddedTile = bombTiles[QbValue + 2];
 										List<Group> tmp4AllGroups = new ArrayList<Groups.Group>(tmp3AllGroups);
 										tmp4AllGroups.add(new Groups.Junko(QbValue, GroupState.HePai, 2));
 										// 取分值最大的结果
-										game34Result.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp4AllGroups);
+										game17sResult.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp4AllGroups);
 									}
 								}
 							}
@@ -814,7 +826,7 @@ public class MjCalcTool {
 								tmpAddedTile = bombTiles[QzValue + 1];
 								tmp3AllGroups.add(new Groups.Junko(QzValue, GroupState.HePai, 1));
 								// 取分值最大的结果
-								game34Result.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
+								game17sResult.LogMaxScore(tmpAddedTile, tmp3HandTiles, tmp3AllGroups);
 			            	}
 						}
 						if (pairTiles.size() >= 2) { // 两对双面听
@@ -844,11 +856,11 @@ public class MjCalcTool {
 										if (key == tmpAddedKeys[0]) {
 											tmp2AllGroups.add(new Groups.Pung(tmpAddedKeys[0], GroupState.HePai));
 											tmp2AllGroups.add(new Groups.Pair(tmpAddedKeys[1], GroupState.MenQing));
-											game34Result.LogMaxScore(tmpAddedTile, tmp2HandTiles, tmp2AllGroups);
+											game17sResult.LogMaxScore(tmpAddedTile, tmp2HandTiles, tmp2AllGroups);
 										} else if (key == tmpAddedKeys[1]) {
 											tmp2AllGroups.add(new Groups.Pung(tmpAddedKeys[1], GroupState.HePai));
 											tmp2AllGroups.add(new Groups.Pair(tmpAddedKeys[0], GroupState.MenQing));
-											game34Result.LogMaxScore(tmpAddedTile, tmp2HandTiles, tmp2AllGroups);
+											game17sResult.LogMaxScore(tmpAddedTile, tmp2HandTiles, tmp2AllGroups);
 										}
 									}
 								}
@@ -1047,7 +1059,8 @@ public class MjCalcTool {
 	public static int convert2JpnEnvironment(boolean isLiZhi, boolean isDoubleLiZhi,
 			boolean isFirstRound, boolean isFinalPick, boolean isZiMo, 
 			boolean isYiFa, boolean isQiangGang, boolean isLingshang,
-			MjWind groundWind, MjWind selfWind, boolean isMenQing) {
+			MjWind groundWind, MjWind selfWind, boolean isMenQing, 
+			boolean isDoubleWind4, int doraNorth) {
 		int env = 0;
 		if (isLiZhi) env |= YakuEnvironment.LiZhi;
 		if (isZiMo) env |= YakuEnvironment.ZiMo;
@@ -1090,6 +1103,8 @@ public class MjCalcTool {
 		default:
 			break;
 		}
+		if (isDoubleWind4) env |= YakuEnvironment.DoubleWind4;
+		if (doraNorth > 0 && doraNorth < 5) env |= (doraNorth << 18);
 		return env;
 	}
 	

@@ -6,8 +6,11 @@ import com.mahjong.tools.ValueTool;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -19,8 +22,17 @@ import android.view.View;
 public class MjPanelView extends View {
 
 	private static final String FrameColor = "#349abe";
-	private static final String BackgroudColor = "#401E90FF"; // 蓝色
+	private static final String BackgroundColor = "#401E90FF"; // 蓝色
 	private static final String SelectColor = "#4000FFFF"; // 绿色
+	private static final String FrameFanfu5Color = "#FFFF00"; // 黄色
+	private static final String BackgroundFanfu5Color = "#A0CDCD00"; // 
+	private static final String SelectFanfu5Color = "#FFFF00"; // 
+	private static final String FrameFanfu9Color = "#FF0000"; // 红色
+	private static final String BackgroundFanfu9Color = "#A0CD3700"; // 
+	private static final String SelectFanfu9Color = "#FF0000"; // 
+	private static final String FrameFanfu13Color = "#000000"; // 黑色
+	private static final String BackgroundFanfu13Color = "#A01C1C1C"; // 
+	private static final String SelectFanfu13Color = "#000000"; // 
 	
 	enum PathType {
 		None, LeftTop, LeftBottom, RightTop, RightBottom, 
@@ -56,6 +68,8 @@ public class MjPanelView extends View {
 	//private int[] mPlayer2Index = {0, 1, 2, 3}; // 玩家对应的索引
 	private String[] mBtn2String = new String[4]; // 四个按钮对应的文本(0:帮助，1：退出，2：历史，3：撤销)
 	
+	private int mMemberCount = 4; // 玩家人数
+	
 	private Bitmap mImgLizhiH; // 水平立直棒
 	private Bitmap mImgLizhiV; // 竖直立直棒
 	private Bitmap mImgLizhiCount; // 立直棒计数
@@ -82,6 +96,13 @@ public class MjPanelView extends View {
 	
 	private OnMjPanelViewListener mListener;
 	
+	private boolean is17Step = false; // 当玩法为17步时，场风显示不同
+	private int mFengType = 0; // 17步场风类型：0->固定东风,1->轮流场风
+	
+	private int mFrameColor;
+	private int mBackgroundColor;
+	private int mSelectColor;
+	
 	public MjPanelView(Context context) {
 		this(context, null);
 	}
@@ -106,7 +127,7 @@ public class MjPanelView extends View {
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		mPaint.setColor(Color.parseColor(FrameColor));
 		mPaint.setTextSize(ValueTool.sp2px(getContext(), 14));
-		mPaint.setStrokeWidth(4);
+		mPaint.setStrokeWidth(5);
 		
 		mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG
 				| Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
@@ -117,7 +138,7 @@ public class MjPanelView extends View {
 				| Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
 		mBgPaint.setStyle(Paint.Style.FILL);
 		mBgPaint.setTextAlign(Paint.Align.CENTER);
-		mBgPaint.setColor(Color.parseColor(BackgroudColor));
+		mBgPaint.setColor(Color.parseColor(BackgroundColor));
 		
 		mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG
 				| Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
@@ -175,8 +196,9 @@ public class MjPanelView extends View {
 		invalidate();
 	}
 	
-	public void setBaseScore(int score, boolean initAll) {
+	public void setBaseData(int score, int member, boolean initAll) {
 		mBaseScore = score;
+		mMemberCount = member;
 		if (initAll) {
 			for (int i = 0; i < mScores.length; i++) {
 				mScores[i] = mBaseScore;
@@ -214,6 +236,12 @@ public class MjPanelView extends View {
 		invalidate();
 	}
 	
+	public void set17StepPanel(boolean is17Step, int fengType) {
+		this.is17Step = is17Step;
+		this.mFengType = fengType;
+		invalidate();
+	}
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -237,11 +265,32 @@ public class MjPanelView extends View {
 		float rightP1 = width - leftP1, rightP2 = width - leftP2, rightP3 = width - leftP3, rightP4 = width - leftP4;
 		float topP1 = hPadding, topP2 = topP1 + lizhiPadding, topP3 = topP2 + pointPadding, topP4 = hPadding + cLen;
 		float bottomP1 = height - topP1, bottomP2 = height - topP2, bottomP3 = height - topP3, bottomP4 = height - topP4;
-
+		
+		if (mRoundCount < 5) {
+			mFrameColor = Color.parseColor(FrameColor);
+			mBackgroundColor = Color.parseColor(BackgroundColor);
+			mSelectColor = Color.parseColor(SelectColor);
+		} else if (mRoundCount < 9) {
+			mFrameColor = Color.parseColor(FrameFanfu5Color);
+			mBackgroundColor = Color.parseColor(BackgroundFanfu5Color);
+			mSelectColor = Color.parseColor(SelectFanfu5Color);
+		} else if (mRoundCount < 13) {
+			mFrameColor = Color.parseColor(FrameFanfu9Color);
+			mBackgroundColor = Color.parseColor(BackgroundFanfu9Color);
+			mSelectColor = Color.parseColor(SelectFanfu9Color);
+		} else {
+			mFrameColor = Color.parseColor(FrameFanfu13Color);
+			mBackgroundColor = Color.parseColor(BackgroundFanfu13Color);
+			mSelectColor = Color.parseColor(SelectFanfu13Color);
+		}
+		mPaint.setColor(mFrameColor);
+		mBgPaint.setColor(mBackgroundColor);
 		/*************************************************************************/
 		/********************************* 绘制边框 *********************************/
 		/*************************************************************************/
 		mTextPaint.setTextAlign(Paint.Align.CENTER);
+		MaskFilter lastMaskFilter = mPaint.getMaskFilter();
+		mPaint.setMaskFilter(new BlurMaskFilter(10, Blur.SOLID));
 		Path framePath = new Path();
 		framePath.moveTo(leftP1, topP4 + lizhiCorner);
 		framePath.lineTo(leftP1 + lizhiCorner, topP4);
@@ -273,6 +322,7 @@ public class MjPanelView extends View {
 		canvas.drawLine(rightP2, topP4, rightP2, bottomP4, mPaint);
 		canvas.drawLine(leftP4, topP2, rightP4, topP2, mPaint);
 		canvas.drawLine(leftP4, bottomP2, rightP4, bottomP2, mPaint);
+		mPaint.setMaskFilter(lastMaskFilter);
 		/*************************************************************************/
 		/******************************** 绘制四个按钮 ********************************/
 		/*************************************************************************/
@@ -293,10 +343,10 @@ public class MjPanelView extends View {
 		leftTopPath.close();
 		canvas.drawPath(leftTopPath, mPaint);
 		if (mSelectPath == PathType.LeftTop) {
-			mBgPaint.setColor(Color.parseColor(SelectColor));
+			mBgPaint.setColor(mSelectColor);
 		}
 		canvas.drawPath(leftTopPath, mBgPaint);
-		mBgPaint.setColor(Color.parseColor(BackgroudColor));
+		mBgPaint.setColor(mBackgroundColor);
 		mLeftTopRegion = path2Region(leftTopPath);
 		centerX = (leftP2 + leftP4 - buttonPadding) / 2;
 		centerY = (topP2 + topP4 - buttonPadding) / 2;
@@ -314,10 +364,10 @@ public class MjPanelView extends View {
 		leftBottomPath.close();
 		canvas.drawPath(leftBottomPath, mPaint);
 		if (mSelectPath == PathType.LeftBottom) {
-			mBgPaint.setColor(Color.parseColor(SelectColor));
+			mBgPaint.setColor(mSelectColor);
 		}
 		canvas.drawPath(leftBottomPath, mBgPaint);
-		mBgPaint.setColor(Color.parseColor(BackgroudColor));
+		mBgPaint.setColor(mBackgroundColor);
 		mLeftBottomRegion = path2Region(leftBottomPath);
 		centerX = (leftP2 + leftP4 - buttonPadding) / 2;
 		centerY = (bottomP2 + bottomP4 + buttonPadding) / 2;
@@ -335,10 +385,10 @@ public class MjPanelView extends View {
 		rightTopPath.close();
 		canvas.drawPath(rightTopPath, mPaint);
 		if (mSelectPath == PathType.RightTop) {
-			mBgPaint.setColor(Color.parseColor(SelectColor));
+			mBgPaint.setColor(mSelectColor);
 		}
 		canvas.drawPath(rightTopPath, mBgPaint);
-		mBgPaint.setColor(Color.parseColor(BackgroudColor));
+		mBgPaint.setColor(mBackgroundColor);
 		mRightTopRegion = path2Region(rightTopPath);
 		centerX = (rightP2 + rightP4 + buttonPadding) / 2;
 		centerY = (topP2 + topP4 - buttonPadding) / 2;
@@ -356,10 +406,10 @@ public class MjPanelView extends View {
 		rightBottomPath.close();
 		canvas.drawPath(rightBottomPath, mPaint);
 		if (mSelectPath == PathType.RightBottom) {
-			mBgPaint.setColor(Color.parseColor(SelectColor));
+			mBgPaint.setColor(mSelectColor);
 		}
 		canvas.drawPath(rightBottomPath, mBgPaint);
-		mBgPaint.setColor(Color.parseColor(BackgroudColor));
+		mBgPaint.setColor(mBackgroundColor);
 		mRightBottomRegion = path2Region(rightBottomPath);
 		centerX = (rightP2 + rightP4 + buttonPadding) / 2;
 		centerY = (bottomP2 + bottomP4 + buttonPadding) / 2;
@@ -377,82 +427,86 @@ public class MjPanelView extends View {
 		textPadding = (fontMetrics.top + fontMetrics.bottom) / 2;
 		// 下方
 		index = mCurPlayer;
-//		score = mScores[index] + "";
-		score = getPointText(index);
-		isLizhi = mLizhis[index] > 0;
-		centerX = (leftP4 + rightP4) / 2;
-		centerY = (bottomP2 + bottomP3) / 2;
-		canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);
-		if (isLizhi) {
-			RectF bottomRectF = new RectF(leftP4 + lizhiCorner, bottomP2, 
-					rightP4 - lizhiCorner, bottomP1);
-			if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
-				mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-				mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, bottomRectF.width(), bottomRectF.height());
+		if (checkDrawScoreAndLizhi(index)) {
+			score = getPointText(index);
+			isLizhi = mLizhis[index] > 0;
+			centerX = (leftP4 + rightP4) / 2;
+			centerY = (bottomP2 + bottomP3) / 2;
+			canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);
+			if (isLizhi) {
+				RectF bottomRectF = new RectF(leftP4 + lizhiCorner, bottomP2, 
+						rightP4 - lizhiCorner, bottomP1);
+				if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
+					mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+					mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, bottomRectF.width(), bottomRectF.height());
+				}
+				canvas.drawBitmap(mImgLizhiH, null, bottomRectF, mBitmapPaint);
 			}
-			canvas.drawBitmap(mImgLizhiH, null, bottomRectF, mBitmapPaint);
 		}
 		mBottomPointRectF = new RectF(leftP4, bottomP3, rightP4, bottomP1);
 		// 右方 
 		index = (index + 1) % 4;
-//		score = mScores[index] + "";
-		score = getPointText(index);
-		isLizhi = mLizhis[index] > 0;
-		centerX = (rightP2 + rightP3) / 2;
-		centerY = (topP4 + bottomP4) / 2;
-		canvas.rotate(-90, centerX, centerY);
-		canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
-		canvas.rotate(90, centerX, centerY);
-		if (isLizhi) {
-			RectF rightRectF = new RectF(rightP2, topP4 + lizhiCorner, 
-					rightP1, bottomP4 - lizhiCorner);
-			if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
-				mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-				mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, rightRectF.width(), rightRectF.height());
-				mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+		if (checkDrawScoreAndLizhi(index)) {
+			score = getPointText(index);
+			isLizhi = mLizhis[index] > 0;
+			centerX = (rightP2 + rightP3) / 2;
+			centerY = (topP4 + bottomP4) / 2;
+			canvas.rotate(-90, centerX, centerY);
+			canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
+			canvas.rotate(90, centerX, centerY);
+			if (isLizhi) {
+				RectF rightRectF = new RectF(rightP2, topP4 + lizhiCorner, 
+						rightP1, bottomP4 - lizhiCorner);
+				if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
+					mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+					mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, rightRectF.width(), rightRectF.height());
+					mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+				}
+				canvas.drawBitmap(mImgLizhiV, null, rightRectF, mBitmapPaint);
 			}
-			canvas.drawBitmap(mImgLizhiV, null, rightRectF, mBitmapPaint);
 		}
 		mRightPointRectF = new RectF(rightP3, topP4, rightP1, bottomP4);
 		// 上方
 		index = (index + 1) % 4;
-//		score = mScores[index] + "";
-		score = getPointText(index);
-		isLizhi = mLizhis[index] > 0;
-		centerX = (leftP4 + rightP4) / 2;
-		centerY = (topP2 + topP3) / 2;
-		canvas.rotate(180, centerX, centerY);
-		canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
-		canvas.rotate(-180, centerX, centerY);
-		if (isLizhi) {
-			RectF topRectF = new RectF(leftP4 + lizhiCorner, topP1, 
-					rightP4 - lizhiCorner, topP2);
-			if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
-				mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-				mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, topRectF.width(), topRectF.height());
+		if (checkDrawScoreAndLizhi(index)) {
+			score = getPointText(index);
+			isLizhi = mLizhis[index] > 0;
+			centerX = (leftP4 + rightP4) / 2;
+			centerY = (topP2 + topP3) / 2;
+			canvas.rotate(180, centerX, centerY);
+			canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
+			canvas.rotate(-180, centerX, centerY);
+			if (isLizhi) {
+				RectF topRectF = new RectF(leftP4 + lizhiCorner, topP1, 
+						rightP4 - lizhiCorner, topP2);
+				if (mImgLizhiH == null || mImgLizhiH.isRecycled()) {
+					mImgLizhiH = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+					mImgLizhiH = ImageTool.scaleTo(mImgLizhiH, topRectF.width(), topRectF.height());
+				}
+				canvas.drawBitmap(mImgLizhiH, null, topRectF, mBitmapPaint);
 			}
-			canvas.drawBitmap(mImgLizhiH, null, topRectF, mBitmapPaint);
 		}
 		mTopPointRectF = new RectF(leftP4, topP1, rightP4, topP3);
 		// 左方
 		index = (index + 1) % 4;
-//		score = mScores[index] + "";
-		score = getPointText(index);
-		isLizhi = mLizhis[index] > 0;
-		centerX = (leftP2 + leftP3) / 2;
-		centerY = (topP4 + bottomP4) / 2;
-		canvas.rotate(90, centerX, centerY);
-		canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
-		canvas.rotate(-90, centerX, centerY);
-		if (isLizhi) {
-			RectF leftRectF = new RectF(leftP1, topP4 + lizhiCorner, 
-					leftP2, bottomP4 - lizhiCorner);
-			if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
-				mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
-				mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, leftRectF.width(), leftRectF.height());
-				mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+		if (checkDrawScoreAndLizhi(index)) {
+			score = getPointText(index);
+			isLizhi = mLizhis[index] > 0;
+			centerX = (leftP2 + leftP3) / 2;
+			centerY = (topP4 + bottomP4) / 2;
+			canvas.rotate(90, centerX, centerY);
+			canvas.drawText(score, centerX, centerY - textPadding, mTextPaint);		
+			canvas.rotate(-90, centerX, centerY);
+			if (isLizhi) {
+				RectF leftRectF = new RectF(leftP1, topP4 + lizhiCorner, 
+						leftP2, bottomP4 - lizhiCorner);
+				if (mImgLizhiV == null || mImgLizhiV.isRecycled()) {
+					mImgLizhiV = BitmapFactory.decodeResource(getResources(), R.drawable.mj_lizhi);
+					mImgLizhiV = ImageTool.scaleTo(mImgLizhiV, leftRectF.width(), leftRectF.height());
+					mImgLizhiV = ImageTool.rotateTo(90, mImgLizhiV);
+				}
+				canvas.drawBitmap(mImgLizhiV, null, leftRectF, mBitmapPaint);
 			}
-			canvas.drawBitmap(mImgLizhiV, null, leftRectF, mBitmapPaint);
 		}
 		mLeftPointRectF = new RectF(leftP1, topP4, leftP3, bottomP4);
 		/*************************************************************************/
@@ -495,11 +549,51 @@ public class MjPanelView extends View {
 		float top = topP3 + centerPadding + marginTop;
 		float rectLen = centerW / 3;
 		RectF windRectF = new RectF(left, top, left + rectLen, top + rectLen);
-		canvas.drawBitmap(mImgWinds[mFengCount], null, windRectF, mBitmapPaint);
 		RectF juNumRectF =  new RectF(left + rectLen, top, left + rectLen * 2, top + rectLen);
 		canvas.drawBitmap(mImgJuNums[mJuCount], null, juNumRectF, mBitmapPaint);
 		RectF juTextRectF = new RectF(left + rectLen * 2, top, left + rectLen * 3, top + rectLen);
 		canvas.drawBitmap(mImgJu, null, juTextRectF, mBitmapPaint);
+		if (is17Step) {
+			int tmpIndex = 0;
+			if (mFengType == 0) {
+				tmpIndex = 0;
+			} else {
+				switch (mMemberCount) {
+				case 2:
+					if (mFengCount % 2 == 0) tmpIndex = 0;
+					else tmpIndex = 2;
+					break;
+				case 3:
+					tmpIndex = mFengCount % 3;
+					break;
+				case 4:
+					tmpIndex = mFengCount % 4;
+					break;
+				default:
+					break;
+				}
+			}
+			canvas.drawBitmap(mImgWinds[tmpIndex], null, windRectF, mBitmapPaint);
+			// 绘制总场风次数
+			RectF windExtraRectF1 = new RectF(left + rectLen * 2 / 3, top - rectLen / 3, 
+					left + rectLen * 4 / 3, top + rectLen / 3);
+			RectF windExtraRectF2 = new RectF(left + rectLen * 4 / 3, top - rectLen / 3, 
+					left + rectLen * 2, top + rectLen / 3);
+			if (mFengCount < 9) {
+				canvas.drawBitmap(mImgRoundNums[mFengCount + 1], null, windExtraRectF1, mBitmapPaint);
+			} else if (mFengCount < 99) {
+				int highNum = (mFengCount + 1) / 10;
+				canvas.drawBitmap(mImgRoundNums[highNum], null, windExtraRectF1, mBitmapPaint);
+				int lowNum = (mFengCount + 1) % 10;
+				canvas.drawBitmap(mImgRoundNums[lowNum], null, windExtraRectF2, mBitmapPaint);
+			} else {
+				canvas.drawBitmap(mImgRoundNums[9], null, windExtraRectF1, mBitmapPaint);
+				canvas.drawBitmap(mImgRoundNums[9], null, windExtraRectF2, mBitmapPaint);
+			}
+		} else {
+			canvas.drawBitmap(mImgWinds[mFengCount], null, windRectF, mBitmapPaint);
+		}
+		
 		// 画本场数
 //		mTextPaint.setTextSize(ValueTool.sp2px(getContext(), 17));
 //		mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -568,6 +662,14 @@ public class MjPanelView extends View {
 		if (mLizhiCount > 99) lNum = 9;
 		RectF lLizhiRectF = new RectF(left, top, left + numWidth, top + rectLen);
 		canvas.drawBitmap(mImgRoundNums[lNum], null, lLizhiRectF, mBitmapPaint);
+	}
+	
+	private boolean checkDrawScoreAndLizhi(int index) {
+		if ((index == 1 && mMemberCount < 3)
+				|| (index == 3 && mMemberCount < 4)) {
+			return false;
+		}
+		return true;
 	}
 	
 	private String getPointText(int index) {

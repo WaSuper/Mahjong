@@ -6,14 +6,15 @@ import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjCard;
 import com.mahjong.common.MjCardPairs;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.BaseManager.SpectrumData;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.DoraDialog;
 import com.mahjong.dialog.DoraDialog.OnDoraDialogListener;
 import com.mahjong.dialog.RoundMenuDialog;
 import com.mahjong.dialog.RoundMenuDialog.OnRoundMenuDialogListener;
 import com.mahjong.dialog.SpectrumDialog;
 import com.mahjong.dialog.SpectrumDialog.OnSpectrumDialogListener;
-import com.mahjong.tools.ManageTool;
-import com.mahjong.tools.ManageTool.SpectrumData;
 import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.MahjongMainDora;
 import com.mahjong.ui.MahjongMainDora.MahjongMainDoraListener;
@@ -50,7 +51,7 @@ public class GameActivity extends BaseActivity
 	private ImageButton mMoreBtn;
 	private ImageButton mCalculateBtn;
 	
-	private ManageTool mManageTool = ManageTool.getInstance();
+	private BaseManager mManageTool = ManagerTool.getInstance().getManager();
 	private DoraDialog mDoraDialog;
 	private SpectrumDialog mSpectrumDialog;
 	private RoundMenuDialog mRoundMenuDialog;
@@ -194,7 +195,8 @@ public class GameActivity extends BaseActivity
 				public void onComplete(int index, List<MjCard> darkCards,
 						List<MjCardPairs> brightCardPairs, MjCard winCard,
 						boolean lizhi, boolean doublelizhi, boolean yifa, boolean zimo,
-						boolean firstround, boolean finalpick, boolean qianggang, boolean lingshang) {
+						boolean firstround, boolean finalpick, boolean qianggang, 
+						boolean lingshang,int doranorth) {
 //					SpectrumData sData = mManageTool.getSpectrumData(index);
 //					sData.setData(darkCards, brightCardPairs, winCard, 
 //							lizhi, doublelizhi, yifa, zimo, 

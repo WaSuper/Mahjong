@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_default"
-    android:orientation="vertical" >
-    
-    <RelativeLayout        
+    android:background="@drawable/bg_default" >
+
+    <RelativeLayout
         android:id="@+id/select_rl_top"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -19,344 +18,326 @@
             android:text="@string/app_title"
             android:textColor="@color/white"
             android:textSize="20sp" />
-        
+
         <TextView
             android:id="@+id/jpn_select_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/jpn_select_title"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
             android:padding="3dp"
             android:text="@string/about"
-            android:textSize="14sp"
             android:textColor="@color/white"
-            android:layout_alignBottom="@id/jpn_select_title"/>
-        
+            android:textSize="14sp" />
     </RelativeLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_below="@id/select_rl_top"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_battle_entrance"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_battle_entrance"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/battle_entrance"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_battle_record"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_history"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/battle_record"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_score_calc"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_calculator"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/score_calculator"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_ranking_list"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_rank"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/ranking_list"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_player_manage"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_player"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/player_manage"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_emoticon"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_emoticon"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/emoticon"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_sound_effect"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_sound_effect"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/sound_effect"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:visibility="invisible" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_wlan_battle"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_wlan_battle"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/wlan_battle"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:visibility="visible" >
-        
-	        <ImageButton
-	            android:id="@+id/jpn_select_btn_game34"
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/ic_game34"
-	            android:background="@drawable/selector_bg_function_radius" />
-	        
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center"
-	            android:layout_marginTop="3dp"
-	            android:text="@string/game34"
-	            android:textColor="@color/white"
-	            android:textSize="15sp" />
-            
-        </LinearLayout>
-        
-    </LinearLayout>
-    
-    <View
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal" >
-    
-        <View
-            android:layout_weight="1"
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="1dp" />
-        
-	    <TextView
-	        android:layout_weight="3"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"     
-	        android:layout_gravity="bottom" 
-	        android:gravity="center"
-	        android:padding="5dp"
-	        android:text="@string/power_by"
-	        android:textSize="14sp"
-	        android:textColor="@color/white" />
-	    
-	    <LinearLayout
-	        android:layout_weight="1"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:gravity="right"
-	        android:paddingRight="10dp"
-	        android:paddingBottom="5dp"
-	        android:orientation="vertical" >
-	        
-	        <Button
-	            android:id="@+id/jpn_select_btn_fan_type"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:paddingLeft="10dp"
-	            android:paddingRight="10dp"
-	            android:text="@string/fan_type"
-	            android:textColor="@color/light_blacktext"
-	            android:textSize="14sp"
-	            android:background="@drawable/selector_bg_text" />
-	        
-	        <Button
-	            android:id="@+id/jpn_select_btn_point_form"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="2dp"
-	            android:paddingLeft="10dp"
-	            android:paddingRight="10dp"
-	            android:text="@string/point_form"
-	            android:textColor="@color/light_blacktext"
-	            android:textSize="14sp"
-	            android:background="@drawable/selector_bg_text" />
-	        
-	    </LinearLayout>
-        
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_battle_entrance"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_battle_entrance" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/battle_entrance"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_battle_record"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_history" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/battle_record"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_score_calc"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_calculator" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/score_calculator"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_ranking_list"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_rank" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/ranking_list"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/main_choose_line" />
+
+            <TextView
+                android:id="@+id/jpn_select_main_4p"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_choose_light"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:text="@string/game4p"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/jpn_select_main_3p"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="110dp"
+                android:background="@drawable/main_choose_dark"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:text="@string/game3p"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/jpn_select_main_17step"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="210dp"
+                android:background="@drawable/main_choose_dark"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:text="@string/game17s"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_player_manage"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_player" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/player_manage"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_emoticon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_emoticon" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/emoticon"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/jpn_select_btn_sound_effect"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/selector_bg_function_radius"
+                    android:src="@drawable/ic_sound_effect" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="@string/sound_effect"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/power_by"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp" >
+
+            <Button
+                android:id="@+id/jpn_select_btn_fan_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bg_text"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/fan_type"
+                android:textColor="@color/light_blacktext"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/jpn_select_btn_point_form"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/selector_bg_text"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/point_form"
+                android:textColor="@color/light_blacktext"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-﻿package com.mahjong.fragment;
+package com.mahjong.fragment;
 
 import java.util.List;
 import java.util.Random;
@@ -7,14 +7,13 @@ import com.mahjong.R;
 import com.mahjong.activity.CreatePlayerActivity;
 import com.mahjong.adapter.PlayerCheckAdapter;
 import com.mahjong.adapter.PlayerSimpleAdapter;
-import com.mahjong.common.MjSetting;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.CardExtractDialog;
 import com.mahjong.dialog.CardExtractDialog.CardExtractListener;
 import com.mahjong.model.Character;
 import com.mahjong.model.Player;
 import com.mahjong.tools.EmoticonTool;
 import com.mahjong.tools.ImageTool;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
@@ -27,59 +26,69 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MemberFragment extends Fragment 
+public abstract class BaseMemberFragment extends Fragment 
 			implements OnClickListener, OnLongClickListener {
 
 	enum Direction {
 		east, south, west, north
 	}
 	
-	private View mView;
-	private Context mContext;
+	protected View mView;
+	protected Context mContext;
 
-	private ImageView mEastView;
-	private ImageView mSouthView;
-	private ImageView mWestView;
-	private ImageView mNorthView;
+	protected ImageView mEastView;
+	protected ImageView mSouthView;
+	protected ImageView mWestView;
+	protected ImageView mNorthView;
 
-	private TextView mEastText;
-	private TextView mSouthText;
-	private TextView mWestText;
-	private TextView mNorthText;
+	protected TextView mEastText;
+	protected TextView mSouthText;
+	protected TextView mWestText;
+	protected TextView mNorthText;
 
-	private Player mEastPlayer;
-	private Player mSouthPlayer;
-	private Player mWestPlayer;
-	private Player mNorthPlayer;
+	protected Player mEastPlayer;
+	protected Player mSouthPlayer;
+	protected Player mWestPlayer;
+	protected Player mNorthPlayer;
 	
-	private ImageView mCardBtn;
-	private ImageView mRandomBtn;
-	private ImageView mResetBtn;
+	protected ImageView mCardBtn;
+	protected ImageView mRandomBtn;
+	protected ImageView mResetBtn;
 	
-	private CardExtractDialog mCardDialog;
-	private Random random = new Random(System.currentTimeMillis());
-		
+	protected CardExtractDialog mCardDialog;
+	protected Random random = new Random(System.currentTimeMillis());
+	
+	protected int mMemberCount;
+	protected String KEY_MEMBER_COUNT;
+	protected String KEY_EAST;
+	protected String KEY_SOUTH;
+	protected String KEY_WEST;
+	protected String KEY_NORTH;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.fragment_member, container, false);
-		mContext = getActivity();
 		initUI();
-		initData();
+		initData(false);
 		return mView;
 	}
-	
+
+	/**
+	 * 进入游戏前调用
+	 */
 	public void initGameStart() {
-		ManageTool.getInstance().setPlayers(mEastPlayer, mSouthPlayer, mWestPlayer, mNorthPlayer);
+		ManagerTool.getInstance().getManager().setPlayers(mMemberCount, 
+				mEastPlayer, mSouthPlayer, mWestPlayer, mNorthPlayer);
 	}
 
 	private void initUI() {
@@ -112,10 +121,14 @@ public class MemberFragment extends Fragment
 		mResetBtn.setOnClickListener(this);
 	}
 	
-	private void initData() {
+	public void initData(boolean isReload) {
+		if (isReload) {
+			mMemberCount = ShareprefenceTool.getInstance()
+					.getInt(KEY_MEMBER_COUNT, mContext, mMemberCount);
+		}
 		List<Player> list = Player.getAllPlayer();
 		String eastId = ShareprefenceTool.getInstance()
-				.getString(MjSetting.PLAYER_EAST, mContext, null);
+				.getString(KEY_EAST, mContext, null);
 		if (eastId != null) {
 			for (Player player : list) {
 				if (player.getUuid().equals(eastId)) {
@@ -124,18 +137,26 @@ public class MemberFragment extends Fragment
 				}
 			}
 		}
-		String southId = ShareprefenceTool.getInstance()
-				.getString(MjSetting.PLAYER_SOUTH, mContext, null);
-		if (southId != null) {
-			for (Player player : list) {
-				if (player.getUuid().equals(southId)) {
-					setPlayer(player, Direction.south, false);
-					break;
+		if (mMemberCount > 2) {
+			mSouthView.setVisibility(View.VISIBLE);
+			mSouthText.setVisibility(View.VISIBLE);
+			String southId = ShareprefenceTool.getInstance()
+					.getString(KEY_SOUTH, mContext, null);
+			if (southId != null) {
+				for (Player player : list) {
+					if (player.getUuid().equals(southId)) {
+						setPlayer(player, Direction.south, false);
+						break;
+					}
 				}
 			}
+		} else {
+			mSouthView.setVisibility(View.INVISIBLE);
+			mSouthText.setVisibility(View.INVISIBLE);
+			setPlayer(null, Direction.south, false);
 		}
 		String westId = ShareprefenceTool.getInstance()
-				.getString(MjSetting.PLAYER_WEST, mContext, null);
+				.getString(KEY_WEST, mContext, null);
 		if (westId != null) {
 			for (Player player : list) {
 				if (player.getUuid().equals(westId)) {
@@ -144,18 +165,27 @@ public class MemberFragment extends Fragment
 				}
 			}
 		}
-		String northId = ShareprefenceTool.getInstance()
-				.getString(MjSetting.PLAYER_NORTH, mContext, null);
-		if (northId != null) {
-			for (Player player : list) {
-				if (player.getUuid().equals(northId)) {
-					setPlayer(player, Direction.north, false);
-					break;
+		if (mMemberCount > 3) {
+			mNorthView.setVisibility(View.VISIBLE);
+			mNorthText.setVisibility(View.VISIBLE);
+			String northId = ShareprefenceTool.getInstance()
+					.getString(KEY_NORTH, mContext, null);
+			if (northId != null) {
+				for (Player player : list) {
+					if (player.getUuid().equals(northId)) {
+						setPlayer(player, Direction.north, false);
+						break;
+					}
 				}
 			}
+		} else {
+			mNorthView.setVisibility(View.INVISIBLE);
+			mNorthText.setVisibility(View.INVISIBLE);
+			setPlayer(null, Direction.north, false);
 		}
 	}
 	
+
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.member_img_east:
@@ -233,20 +263,25 @@ public class MemberFragment extends Fragment
 			
 			public void onClick(View v) {
 				List<Player> checkList = mAdapter.getCheckPlayers();
-				if (checkList != null && checkList.size() == 4) {
-					int tmp = random.nextInt(4);
-					for (int i = 0; i < 5; i++) {
-						tmp = random.nextInt(4);
+				if (checkList != null && checkList.size() == mMemberCount) {
+					int count = mMemberCount;
+					int tmp = random.nextInt(count);
+					for (int i = 0; i < 5; i++) { // 多循环几次选定随机数
+						tmp = random.nextInt(count);
 					}
 					setPlayer(checkList.remove(tmp), Direction.east, true);
-					tmp = random.nextInt(3);
-					setPlayer(checkList.remove(tmp), Direction.south, true);
-					tmp = random.nextInt(2);
+					if (mMemberCount > 2) {
+						tmp = random.nextInt(--count);
+						setPlayer(checkList.remove(tmp), Direction.south, true);
+					}
+					tmp = random.nextInt(--count);
 					setPlayer(checkList.remove(tmp), Direction.west, true);
-					setPlayer(checkList.get(0), Direction.north, true);
+					if (mMemberCount > 3) {
+						setPlayer(checkList.get(0), Direction.north, true);
+					}
 					mDialog.dismiss();
 				} else {
-					ToastTool.showToast(mContext, R.string.please_select_four_players);
+					ToastTool.showToast(mContext, getString(R.string.please_select_count_players, mMemberCount));
 				}
 			}
 		});
@@ -281,6 +316,7 @@ public class MemberFragment extends Fragment
 				}
 			});
 		}
+		mCardDialog.setMemberCount(mMemberCount);
 		mCardDialog.show();
 	}
 	
@@ -356,12 +392,6 @@ public class MemberFragment extends Fragment
 	
 	private void setPlayer(Player player, Direction dir, boolean isSave) {
 		boolean isReset = (player == null);
-//		int icon = R.drawable.player_nor;
-//		if (!isReset) {
-//			icon = HeadIconTool.String2Id(player.getIcon());
-//			if (icon == -1) icon = R.drawable.head_none;			
-//		}		
-//		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), icon);
 		Bitmap bitmap;
 		if (!isReset) {
 			bitmap = EmoticonTool.getEmoticon(Character.getCharacter(mContext, player.getCharacterId()));
@@ -379,8 +409,7 @@ public class MemberFragment extends Fragment
 			mEastText.setText(text);
 			mEastView.setImageBitmap(bitmap);
 			if (isSave) {
-				ShareprefenceTool.getInstance().setString(
-						MjSetting.PLAYER_EAST, uuid, mContext);
+				ShareprefenceTool.getInstance().setString(KEY_EAST, uuid, mContext);
 			}
 			break;
 		case south:
@@ -389,8 +418,7 @@ public class MemberFragment extends Fragment
 			mSouthText.setText(text);
 			mSouthView.setImageBitmap(bitmap);
 			if (isSave) {
-				ShareprefenceTool.getInstance().setString(
-						MjSetting.PLAYER_SOUTH, uuid, mContext);
+				ShareprefenceTool.getInstance().setString(KEY_SOUTH, uuid, mContext);
 			}
 			break;
 		case west:
@@ -399,8 +427,7 @@ public class MemberFragment extends Fragment
 			mWestText.setText(text);
 			mWestView.setImageBitmap(bitmap);
 			if (isSave) {
-				ShareprefenceTool.getInstance().setString(
-						MjSetting.PLAYER_WEST, uuid, mContext);
+				ShareprefenceTool.getInstance().setString(KEY_WEST, uuid, mContext);
 			}
 			break;
 		case north:
@@ -409,8 +436,7 @@ public class MemberFragment extends Fragment
 			mNorthText.setText(text);
 			mNorthView.setImageBitmap(bitmap);
 			if (isSave) {
-				ShareprefenceTool.getInstance().setString(
-						MjSetting.PLAYER_NORTH, uuid, mContext);
+				ShareprefenceTool.getInstance().setString(KEY_NORTH, uuid, mContext);
 			}
 			break;
 		default:

@@ -6,8 +6,13 @@ import java.util.List;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.activity.PlayerSettingActivity;
+import com.mahjong.activity.jpn.game17s.Game17sCalculateActivity;
 import com.mahjong.adapter.PlayerSimpleAdapter;
 import com.mahjong.common.MjSetting;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.BaseManager.OnManageToolListener;
+import com.mahjong.control.Game4pManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.FinalRankDialog;
 import com.mahjong.dialog.RoundMenuDialog;
 import com.mahjong.dialog.FinalRankDialog.OnCancelListener;
@@ -20,8 +25,6 @@ import com.mahjong.model.RankItem;
 import com.mahjong.tools.AnalysisTool;
 import com.mahjong.tools.AudioTool;
 import com.mahjong.tools.LightTool;
-import com.mahjong.tools.ManageTool;
-import com.mahjong.tools.ManageTool.OnManageToolListener;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
@@ -86,7 +89,7 @@ public class GameSimpleActivity extends BaseActivity implements
 	private ImageView mNoviceView;
 	private ImageView mExpertView;
 	
-	private ManageTool mManageTool = ManageTool.getInstance();
+	private BaseManager mManageTool;
 	private int mMainVision = 0; // 主视觉玩家
 	
 	private CommonDialog mLiujuDialog;
@@ -138,6 +141,7 @@ public class GameSimpleActivity extends BaseActivity implements
 		setContentView(R.layout.activity_jpn_game_simple);
 		mContext = this;
 		mLightTool = new LightTool(this);
+		mManageTool = ManagerTool.getInstance().getManager();
 		winds[0] = mContext.getString(R.string.east);
 		winds[1] = mContext.getString(R.string.south);
 		winds[2] = mContext.getString(R.string.west);
@@ -200,7 +204,16 @@ public class GameSimpleActivity extends BaseActivity implements
 		mRightItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mPanelView.setOnMjPanelViewListener(mMjPanelViewListener);
 		mLiujuBtn.setOnClickListener(this);
-		mBaopaiBtn.setOnClickListener(this);		
+		mBaopaiBtn.setOnClickListener(this);	
+		if (!mManageTool.is4pMahjong()) {
+			mBaopaiBtn.setVisibility(View.INVISIBLE);
+			if (mManageTool.is17Step()) {
+				mBottomItem.setEnableZimo(false);
+				mRightItem.setEnableZimo(false);
+				mTopItem.setEnableZimo(false);
+				mLeftItem.setEnableZimo(false);
+			}
+		}
 		
 		mPlayerItemList = new ArrayList<PlayerFuncItem>();
 		mPlayerItemList.add(mBottomItem);
@@ -211,7 +224,18 @@ public class GameSimpleActivity extends BaseActivity implements
 		mRightItem.setPlayer(mManageTool.getPlayer(1), 1, 1);
 		mTopItem.setPlayer(mManageTool.getPlayer(2), 2, 2);
 		mLeftItem.setPlayer(mManageTool.getPlayer(3), 3, 3);
-		mPanelView.setBaseScore(mManageTool.getBaseScore(), true);
+		int memberCount = mManageTool.getMemberCount();
+		mPanelView.setBaseData(mManageTool.getBaseScore(), memberCount, true);
+		mPanelView.set17StepPanel(mManageTool.is17Step(), mManageTool.getFengType());
+		// 根据人数隐藏控件
+		if (memberCount < 4) {
+			mLeftItem.setVisibility(View.INVISIBLE);
+			mRankImageViews[3].setVisibility(View.INVISIBLE);
+			if (memberCount < 3) {
+				mRightItem.setVisibility(View.INVISIBLE);
+				mRankImageViews[1].setVisibility(View.INVISIBLE);
+			}
+		}
 		
 		mResultMode = ShareprefenceTool.getInstance()
 				.getBoolean(MjSetting.MODE_NOVICE_EXPERT, mContext, false);
@@ -445,6 +469,16 @@ public class GameSimpleActivity extends BaseActivity implements
 			for (int i = 0; i < mLiujuButtons.length; i++) {
 				mLiujuButtons[i].setOnClickListener(mLiujuListener);
 			}
+			switch (mManageTool.getMemberCount()) {
+			case 3:
+			case 2:
+				contentView.findViewById(R.id.liuju_layout_sifenglianda).setVisibility(View.GONE);
+				contentView.findViewById(R.id.liuju_layout_sijializhi).setVisibility(View.GONE);
+				contentView.findViewById(R.id.liuju_layout_sanjiaheliao).setVisibility(View.GONE);
+				break;
+			default:
+				break;
+			}
 		}
 		mLiujuDialog.show();
 		mAudioTool.stopPlayer();
@@ -568,6 +602,20 @@ public class GameSimpleActivity extends BaseActivity implements
 		mPlayerBoxs[1].setChecked(player1);
 		mPlayerBoxs[2].setChecked(player2);
 		mPlayerBoxs[3].setChecked(player3);
+		switch (mManageTool.getMemberCount()) { // 根据人数隐藏控件
+		case 2:
+			mPlayerBoxs[1].setVisibility(View.GONE);
+			mTingpaiBoxs[1].setVisibility(View.GONE);
+			mPlayerBoxs[3].setVisibility(View.GONE);
+			mTingpaiBoxs[3].setVisibility(View.GONE);
+			break;
+		case 3:
+			mPlayerBoxs[3].setVisibility(View.GONE);
+			mTingpaiBoxs[3].setVisibility(View.GONE);
+			break;
+		default:
+			break;
+		}
 		mPlayerChooseDialog.show();
 	}
 	
@@ -707,17 +755,37 @@ public class GameSimpleActivity extends BaseActivity implements
 	
 	private OnPlayerFuncItemListener mPlayerFuncItemListener = new OnPlayerFuncItemListener() {
 		
+		private int[] port_orientations = {0, -1, 2, 1};
+		private int[] land_orientations = {1, 0, -1, 2};
+		
+		private Intent getResultSetComplexActivity(int pos) {
+			Intent intent;
+			if ((landscapeMode && land_orientations[pos] == 1)
+					|| (!landscapeMode && port_orientations[pos] == 1)) {
+				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivityForLand.class);
+			} else if ((landscapeMode && land_orientations[pos] == -1)
+					|| (!landscapeMode && port_orientations[pos] == -1)) {
+				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivityForReLand.class);
+			} else if ((landscapeMode && land_orientations[pos] == 2)
+					|| (!landscapeMode && port_orientations[pos] == 2)) {
+				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivityForRePort.class);
+			} else {
+				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivity.class);
+			}
+			return intent;
+		}
+		
 		@Override
 		public void onClickZimo(Player player, int orgIndex, int pos) {
 			Intent intent;
 			if (mResultMode) {
 				intent = new Intent(GameSimpleActivity.this, ResultSetSimpleActivity.class);
 			} else {
-				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivity.class);
+				intent = getResultSetComplexActivity(pos);
 			}
-			intent.putExtra(ManageTool.PLAYER_ITEM_POSITION, pos);
-			intent.putExtra(ManageTool.PLAYER_IS_ZIMO, true);
-			intent.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, orgIndex);
+			intent.putExtra(Game4pManager.PLAYER_ITEM_POSITION, pos);
+			intent.putExtra(Game4pManager.PLAYER_IS_ZIMO, true);
+			intent.putExtra(Game4pManager.PLAYER_ORIGINAL_INDEX, orgIndex);
 			intent.putExtra(MAIN_VISION, mMainVision);
 			startActivity(intent);
 			mAudioTool.playZimo(orgIndex);
@@ -730,11 +798,11 @@ public class GameSimpleActivity extends BaseActivity implements
 			if (mResultMode) {
 				intent = new Intent(GameSimpleActivity.this, ResultSetSimpleActivity.class);
 			} else {
-				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivity.class);
+				intent = getResultSetComplexActivity(pos);
 			}
-			intent.putExtra(ManageTool.PLAYER_ITEM_POSITION, pos);
-			intent.putExtra(ManageTool.PLAYER_IS_ZIMO, false);
-			intent.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, orgIndex);
+			intent.putExtra(Game4pManager.PLAYER_ITEM_POSITION, pos);
+			intent.putExtra(Game4pManager.PLAYER_IS_ZIMO, false);
+			intent.putExtra(Game4pManager.PLAYER_ORIGINAL_INDEX, orgIndex);
 			intent.putExtra(MAIN_VISION, mMainVision);
 			startActivity(intent);
 			mAudioTool.playRonghe(orgIndex);
@@ -747,12 +815,12 @@ public class GameSimpleActivity extends BaseActivity implements
 			if (mResultMode) {
 				intent = new Intent(GameSimpleActivity.this, ResultSetBombSimpleActivity.class);
 			} else {
-				intent = new Intent(GameSimpleActivity.this, ResultSetComplexActivity.class);
+				intent = getResultSetComplexActivity(pos);
 			}
-			intent.putExtra(ManageTool.PLAYER_ITEM_POSITION, pos);
-			intent.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, orgIndex);
+			intent.putExtra(Game4pManager.PLAYER_ITEM_POSITION, pos);
+			intent.putExtra(Game4pManager.PLAYER_ORIGINAL_INDEX, orgIndex);
 			intent.putExtra(MAIN_VISION, mMainVision);
-			intent.putExtra(ManageTool.PLAYER_IS_BOMB, true);
+			intent.putExtra(Game4pManager.PLAYER_IS_BOMB, true);
 			startActivity(intent);
 			mAudioTool.stopPlayer();
 		}	
@@ -875,7 +943,8 @@ public class GameSimpleActivity extends BaseActivity implements
 		@Override
 		public void onClickHistory() {
 			MjHistoryDialog dialog = new MjHistoryDialog(mContext, 
-					mManageTool.getAllDetails(), mManageTool.getAllPlayer());
+					mManageTool.getAllDetails(), mManageTool.getAllPlayer(),
+					mManageTool.getResult());
 			dialog.show();
 		}
 		
@@ -896,7 +965,7 @@ public class GameSimpleActivity extends BaseActivity implements
 			for (int i = 0; i < mPlayerItemList.size(); i++) {
 				PlayerFuncItem item = mPlayerItemList.get(i);
 				if (item.getOriginalIndex() == dealer) {
-					intent.putExtra(ManageTool.PLAYER_ITEM_POSITION, item.getItemPosition());
+					intent.putExtra(Game4pManager.PLAYER_ITEM_POSITION, item.getItemPosition());
 					break;
 				}
 			}
@@ -1000,7 +1069,19 @@ public class GameSimpleActivity extends BaseActivity implements
 			public void onClick(View v) {
 				switch (v.getId()) {
 				case R.id.help_calculator:
-					startActivity(new Intent(GameSimpleActivity.this, CalculateActivity.class));
+					switch (mManageTool.getMainType()) {
+					case BaseManager.MainType_4p:
+						startActivity(new Intent(GameSimpleActivity.this, CalculateActivity.class));
+						break;
+					case BaseManager.MainType_3p:
+						startActivity(new Intent(GameSimpleActivity.this, CalculateActivity.class));
+						break;
+					case BaseManager.MainType_17s:
+						startActivity(new Intent(GameSimpleActivity.this, Game17sCalculateActivity.class));
+						break;
+					default:
+						break;
+					}
 					break;
 				case R.id.help_main_vision:
 					showRoundViewDialog();
@@ -1067,6 +1148,7 @@ public class GameSimpleActivity extends BaseActivity implements
 				mMainVision = mPlayerItemList.get(dir).getOriginalIndex();
 				mPanelView.setCurPlayer(mMainVision);
 				int orgIndex = mMainVision;
+				int memberCount = mManageTool.getMemberCount();
 				int[] ranks = mManageTool.analysisPlayerRanks(mManageTool.getPlayerScores());
 				for (int i = 0; i < mPlayerItemList.size(); i++) {
 					PlayerFuncItem item = mPlayerItemList.get(i);
@@ -1074,6 +1156,18 @@ public class GameSimpleActivity extends BaseActivity implements
 					refreshPlayerFuncItem(item, orgIndex);
 					item.setPlayerRank(ranks[orgIndex]);
 					mRankImageViews[i].setImageResource(rankDrawables[ranks[orgIndex]]);
+					// 根据人数隐藏控件
+					if (orgIndex == 1 && memberCount < 3) {
+						item.setVisibility(View.INVISIBLE);
+						mRankImageViews[i].setVisibility(View.INVISIBLE);
+					} else if (orgIndex == 3 && memberCount < 4) {
+						item.setVisibility(View.INVISIBLE);
+						mRankImageViews[i].setVisibility(View.INVISIBLE);
+					} else {
+						item.setVisibility(View.VISIBLE);
+						mRankImageViews[i].setVisibility(View.VISIBLE);
+					}
+					// 递增索引
 					orgIndex = (orgIndex + 1) % 4;
 				}
 			}
@@ -1110,7 +1204,19 @@ public class GameSimpleActivity extends BaseActivity implements
 		@Override
 		public void onResult(Player[] players, int[] scores, int[] ranks, float[] mas) {
 			showRankDialog(players, scores, ranks, mas);
-			ShareprefenceTool.getInstance().setBoolean(RankItem.IS_NEED_UPDATE, true, mContext);
+			switch (mManageTool.getMainType()) {
+			case BaseManager.MainType_4p:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, true, mContext);
+				break;
+			case BaseManager.MainType_3p:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, true, mContext);
+				break;
+			case BaseManager.MainType_17s:
+				ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, true, mContext);
+				break;
+			default:
+				break;
+			}
 		}
 		
 	};
@@ -1201,7 +1307,7 @@ public class GameSimpleActivity extends BaseActivity implements
 	private void showRankDialog(Player[] players, int[] scores, int[] ranks, float[] mas) {
 		final FinalRankDialog frDialog = new FinalRankDialog(mContext);
 		AnalysisTool aTool = new AnalysisTool(mManageTool.getResult(), mManageTool.getAllDetails());
-		frDialog.setData(players, scores, mas, ranks, aTool, mAudioTool);
+		frDialog.setData(players, scores, mas, ranks, aTool, mAudioTool, mManageTool.getMemberCount());
 		frDialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override

@@ -3,11 +3,12 @@ package com.mahjong.activity.jpn;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjSetting;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.item.ResultList;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ImageTool;
 import com.mahjong.tools.LightTool;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.ResultListView;
 import com.mahjong.ui.ResultView;
@@ -55,7 +56,7 @@ public class ResultShow extends BaseActivity implements OnClickListener {
 	private int[] mBombIndexs; // 多家和玩家
 	private ResultList[] mResultLists = new ResultList[4]; // 四个玩家分值变化详情
 	
-	private ManageTool mTool = ManageTool.getInstance();
+	private BaseManager mTool = ManagerTool.getInstance().getManager();
 	private LightTool mLightTool; // 控制屏幕亮度
 	
 	@Override
@@ -167,6 +168,30 @@ public class ResultShow extends BaseActivity implements OnClickListener {
 		mJuViews[0].setImageBitmap(mImgWinds[mTool.getFengCount()]);
 		mJuViews[1].setImageBitmap(mImgJuNums[mTool.getJuCount()]);
 		mJuViews[2].setImageBitmap(mImgJu);
+		if (mTool.is17Step()) {
+			int tmpIndex = 0;
+			if (mTool.getFengType() == 0) {
+				tmpIndex = 0;
+			} else {
+				switch (mTool.getMemberCount()) {
+				case 2:
+					if (mTool.getFengCount() % 2 == 0) tmpIndex = 0;
+					else tmpIndex = 2;
+					break;
+				case 3:
+					tmpIndex = mTool.getFengCount() % 3;
+					break;
+				case 4:
+					tmpIndex = mTool.getFengCount() % 4;
+					break;
+				default:
+					break;
+				}
+			}
+			mJuViews[0].setImageBitmap(mImgWinds[tmpIndex]);
+		} else {
+			mJuViews[0].setImageBitmap(mImgWinds[mTool.getFengCount()]);
+		}
 		// 本场数
 		mRoundViews[2].setImageBitmap(mImgBen);
 		mRoundViews[3].setImageBitmap(mImgChang);
@@ -201,6 +226,22 @@ public class ResultShow extends BaseActivity implements OnClickListener {
 			mIndexs[i] = mTool.getPlayerIndexByPosition(mMainVision, i);
 			mNameViews[i].setText(mTool.getPlayer(mIndexs[i]).getNickName());
 			mWindViews[i].setText(mWindStrings[mTool.getPlayerWind(mIndexs[i])]);
+			if (mTool.getMemberCount() < 4) {
+				if (mIndexs[i] == 3) {
+					mNameViews[i].setVisibility(View.INVISIBLE);
+					mWindViews[i].setVisibility(View.INVISIBLE);
+					mResultViews[i].setVisibility(View.INVISIBLE);
+					mResultListViews[i].setVisibility(View.INVISIBLE);
+				}
+				if (mTool.getMemberCount() < 3) {
+					if (mIndexs[i] == 1) {
+						mNameViews[i].setVisibility(View.INVISIBLE);
+						mWindViews[i].setVisibility(View.INVISIBLE);
+						mResultViews[i].setVisibility(View.INVISIBLE);
+						mResultListViews[i].setVisibility(View.INVISIBLE);
+					}
+				}
+			}
 		}		
 		
 		mOkBtn.setOnClickListener(this);
@@ -214,12 +255,12 @@ public class ResultShow extends BaseActivity implements OnClickListener {
 		}
 		switch (mActionType) {
 		case MjAction.ACTION_ZIMO:	
-			mMainPlayer = getIntent().getIntExtra(ManageTool.PLAYER_ORIGINAL_INDEX, 0);
+			mMainPlayer = getIntent().getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
 			changeScores = mTool.analysisZimo(mMainPlayer, mResultLists);
 			break;
 		case MjAction.ACTION_BOMB:			
-			mMainPlayer = getIntent().getIntExtra(ManageTool.PLAYER_ORIGINAL_INDEX, 0);
-			mBombIndexs = getIntent().getIntArrayExtra(ManageTool.RESULT_BOMB_INDEX);
+			mMainPlayer = getIntent().getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
+			mBombIndexs = getIntent().getIntArrayExtra(BaseManager.RESULT_BOMB_INDEX);
 			changeScores = mTool.analysisBomb(mMainPlayer, mBombIndexs, mResultLists);
 			break;
 		case MjAction.ACTION_HUANGPAILIUJU:	

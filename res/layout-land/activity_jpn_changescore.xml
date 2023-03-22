@@ -150,6 +150,7 @@
             android:gravity="center" >
             
             <com.mahjong.ui.RotateTextView
+                android:id="@+id/changescore_top_tv_x100"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:text="x100"
@@ -364,6 +365,7 @@
                 android:gravity="center" />
             
             <com.mahjong.ui.RotateTextView
+                android:id="@+id/changescore_bottom_tv_x100"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:text="x100"
@@ -567,6 +569,7 @@
                 app:rotateAngle="90" />
             
             <com.mahjong.ui.RotateTextView
+                android:id="@+id/changescore_left_tv_x100"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="x100"
@@ -699,6 +702,7 @@
             android:gravity="center" >
             
             <com.mahjong.ui.RotateTextView
+                android:id="@+id/changescore_right_tv_x100"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="x100"

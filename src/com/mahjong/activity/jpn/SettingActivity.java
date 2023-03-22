@@ -5,16 +5,25 @@ import java.util.List;
 
 import com.mahjong.R;
 import com.mahjong.activity.BaseFragmentActivity;
-import com.mahjong.fragment.MemberFragment;
-import com.mahjong.fragment.SettingFragment;
-import com.mahjong.tools.ManageTool;
+import com.mahjong.adapter.SettingGuideAdapter;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
+import com.mahjong.fragment.BaseMemberFragment;
+import com.mahjong.fragment.BaseSettingFragment;
+import com.mahjong.fragment.Game17sMemberFragment;
+import com.mahjong.fragment.Game17sSettingFragment;
+import com.mahjong.fragment.Game3pMemberFragment;
+import com.mahjong.fragment.Game3pSettingFragment;
+import com.mahjong.fragment.Game4pMemberFragment;
+import com.mahjong.fragment.Game4pSettingFragment;
 import com.mahjong.ui.CommonDialog;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -25,52 +34,100 @@ import android.widget.TextView;
 
 public class SettingActivity extends BaseFragmentActivity implements
 		OnClickListener {
+	
+	public static final String SETTING_MEMBER = "SETTING_MEMBER";
 
 	private ImageView mBack;
+	private TextView mTitle;
 	private Button mStartGame;
 	private ViewPager mGuide;
 	
-	private ImageView mPointMenber;
+	private ImageView mPointMember;
 	private ImageView mPointSetting;
 	private int mCurPage = 0;
 	
-	private MemberFragment mMemberFragment;
-	private SettingFragment mSettingFragment;
+	private BaseMemberFragment mMemberFragment;
+	private BaseSettingFragment mSettingFragment;
 
+	private SettingReceiver mSettingReceiver;
+	
+	private BaseManager mManager = ManagerTool.getInstance().getManager();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_jpn_setting);
-		// 设置临时保存地址
-		ManageTool.getInstance().init(getFilesDir().toString());
 		initUI();
 		checkGameRestore();
+		registerReceiver();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver();
+	}
+	
+	private void registerReceiver() {
+		IntentFilter intentFilter = new IntentFilter(SETTING_MEMBER);
+		mSettingReceiver = new SettingReceiver();
+		registerReceiver(mSettingReceiver, intentFilter);
+	}
+	
+	private void unregisterReceiver() {
+		unregisterReceiver(mSettingReceiver);
 	}
 
 	@SuppressWarnings("deprecation")
 	private void initUI() {
 		mBack = (ImageView) findViewById(R.id.mahjong_back);
+		mTitle = (TextView) findViewById(R.id.mahjong_tv_title);
 		mStartGame = (Button) findViewById(R.id.mahjong_start_game);
 		mGuide = (ViewPager) findViewById(R.id.mahjong_guide);
-		mPointMenber = (ImageView) findViewById(R.id.mahjong_point1);
+		mPointMember = (ImageView) findViewById(R.id.mahjong_point1);
 		mPointSetting = (ImageView) findViewById(R.id.mahjong_point2);
 
 		mBack.setOnClickListener(this);
 		mStartGame.setOnClickListener(this);
+		
+		if (mManager.is4pMahjong()) {
+			mTitle.setText(R.string.game4p);
+			mMemberFragment = new Game4pMemberFragment();
+			mSettingFragment = new Game4pSettingFragment();
+		} else if (mManager.is3pMahjong()) {
+			mTitle.setText(R.string.game3p);
+			mMemberFragment = new Game3pMemberFragment();
+			mSettingFragment = new Game3pSettingFragment();
+		} else if (mManager.is17Step()) {
+			mTitle.setText(R.string.game17s);
+			mMemberFragment = new Game17sMemberFragment();
+			mSettingFragment = new Game17sSettingFragment();
+		}
 
 		List<Fragment> mFragmentList = new ArrayList<Fragment>();
-		mMemberFragment = new MemberFragment();
-		mSettingFragment = new SettingFragment();
 		mFragmentList.add(mMemberFragment);
 		mFragmentList.add(mSettingFragment);
-		mGuide.setAdapter(new GuideAdapter(getSupportFragmentManager(),
+		mGuide.setAdapter(new SettingGuideAdapter(getSupportFragmentManager(),
 				mFragmentList));
 		mGuide.setOnPageChangeListener(new GuideListener());
 		mGuide.setCurrentItem(mCurPage);		
 	}
 	
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.mahjong_back: // 返回
+			this.finish();
+			break;
+		case R.id.mahjong_start_game:
+			checkStartGame();
+			break;
+		default:
+			break;
+		}
+	}
+	
 	private void checkGameRestore() {
-		if (ManageTool.getInstance().checkLastSaveStates()) {
+		if (mManager.checkLastSaveStates()) {
 			final CommonDialog dialog = new CommonDialog(this, R.style.MyDialogStyle);
 			dialog.titleTextView.setText(R.string.tip);
 			dialog.addView(R.layout.item_text);
@@ -81,7 +138,7 @@ public class SettingActivity extends BaseFragmentActivity implements
 				@Override
 				public void onClick(View v) {					
 					dialog.dismiss();			
-					if (ManageTool.getInstance().restoreStatesForTmp()) {
+					if (mManager.restoreStatesForTmp()) {
 						startActivity(new Intent(SettingActivity.this, GameSimpleActivity.class));
 						finish();
 					} else {
@@ -116,23 +173,10 @@ public class SettingActivity extends BaseFragmentActivity implements
 		});
 	}
 	
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.mahjong_back: // 返回
-			this.finish();
-			break;
-		case R.id.mahjong_start_game:
-			checkStartGame();
-			break;
-		default:
-			break;
-		}
-	}
-	
 	private void checkStartGame() {
 		mMemberFragment.initGameStart();
 		mSettingFragment.initGameStart();
-		ManageTool.getInstance().startNewGame();
+		mManager.startNewGame();
 		startActivity(new Intent(SettingActivity.this, GameSimpleActivity.class));
 		finish();
 	}
@@ -141,31 +185,6 @@ public class SettingActivity extends BaseFragmentActivity implements
 	public void onBackPressed() {
 		super.onBackPressed();
 		this.finish();
-	}
-
-	class GuideAdapter extends FragmentPagerAdapter {
-
-		List<Fragment> mList;
-
-		public GuideAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		public GuideAdapter(FragmentManager fm, List<Fragment> list) {
-			super(fm);
-			this.mList = list;
-		}
-
-		@Override
-		public Fragment getItem(int pos) {
-			return mList != null && mList.size() > pos ? mList.get(pos) : null;
-		}
-
-		@Override
-		public int getCount() {
-			return mList != null ? mList.size() : 0;
-		}
-
 	}
 
 	class GuideListener implements OnPageChangeListener {
@@ -191,14 +210,23 @@ public class SettingActivity extends BaseFragmentActivity implements
 		public void onPageSelected(int pos) {
 			mCurPage = pos;
 			if (pos == 0) {
-				mPointMenber.setBackgroundResource(R.drawable.ic_indicator_sel);
+				mPointMember.setBackgroundResource(R.drawable.ic_indicator_sel);
 				mPointSetting.setBackgroundResource(R.drawable.ic_indicator_nor);
 			} else {
-				mPointMenber.setBackgroundResource(R.drawable.ic_indicator_nor);
+				mPointMember.setBackgroundResource(R.drawable.ic_indicator_nor);
 				mPointSetting.setBackgroundResource(R.drawable.ic_indicator_sel);
 			}
 		}
 
+	}
+	
+	public class SettingReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			mMemberFragment.initData(true);
+		}
+		
 	}
 
 }

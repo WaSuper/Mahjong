@@ -43,6 +43,7 @@ import com.mahjong.data.jpn.yaku.Yaku34_SanSeLianKe;
 import com.mahjong.data.jpn.yaku.Yaku35_JingTongHe;
 import com.mahjong.data.jpn.yaku.Yaku36_ErTongKe;
 import com.mahjong.data.jpn.yaku.Yaku37_SanSeShuangLongHui;
+import com.mahjong.data.jpn.yaku.Yaku38_NorthDora;
 import com.mahjong.data.jpn.yaku.Yaku50_TianHe;
 import com.mahjong.data.jpn.yaku.Yaku51_DiHe;
 import com.mahjong.data.jpn.yaku.Yaku70_RenHe;
@@ -75,6 +76,8 @@ public class Game {
 			// 普通役（古役）
 			new Yaku31_ShiErLuoTai(), new Yaku32_SanLianKe(), new Yaku33_SanSeTongGuan(), new Yaku34_SanSeLianKe(),
 			new Yaku35_JingTongHe(), new Yaku36_ErTongKe(), new Yaku37_SanSeShuangLongHui(),
+			// 三麻役
+			new Yaku38_NorthDora(),
 			// 役满役
 			new Yaku50_TianHe(), new Yaku51_DiHe(), new Yaku52_GuoShuiWuShuang(), new Yaku53_JiuLianBaiDeng(), 
 			new Yaku54_SiAnKe(), new Yaku55_DaSanYuan(), new Yaku56_SiGangZi(), new Yaku57_LvYiSe(), 
@@ -201,11 +204,13 @@ public class Game {
 		if (group instanceof Pair) {
 			int fu = 0;
 			if (group.value() >= JpnSetting.TON) {
-				int val = group.value();
+				int val = 1 << (group.value() - JpnSetting.TON);
 				int val1 = ((int)env >> 6) & 0xf; // 场风
 				int val2 = ((int)env >> 10) & 0xf; // 自风
 				if (val == val1) fu += 2;
 				if (val == val2) fu += 2;
+				boolean isDoubleWind4 = (env & YakuEnvironment.DoubleWind4) == YakuEnvironment.DoubleWind4;
+				if (fu > 0 && val1 == val2 && !isDoubleWind4) fu -= 2; // 双风4符，否则2符
 				if (fu == 0 && group.value() >= JpnSetting.HAK) fu += 2;
 			}
 			if (group.state() == GroupState.HePai) fu += 2; // 单骑

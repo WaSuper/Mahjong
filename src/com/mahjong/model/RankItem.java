@@ -13,8 +13,10 @@ import com.activeandroid.query.Select;
 @Table(name = "RankItem")
 public class RankItem extends Model {
 	
-	public static final String IS_NEED_UPDATE = "IS_UPDATE";
-	public static final int MAX_RECENT_COUNT = 20;
+	public static final String IS_UPDATE 		= "IS_UPDATE";
+	public static final String IS_UPDATE_3P 	= "IS_UPDATE_3P";
+	public static final String IS_UPDATE_17S 	= "IS_UPDATE_17S";
+	public static final int MAX_RECENT_COUNT 	= 20;
 	
 	public static final String Col_PlayerId 		= "PlayerId";
 	public static final String Col_Spectrum 		= "Spectrum";
@@ -39,16 +41,17 @@ public class RankItem extends Model {
 	public static final String Col_BombCount 		= "BombCount";
 	public static final String Col_FlyCount 		= "FlyCount";
 	public static final String Col_ChickenCount 	= "ChickenCount";
+	public static final String Col_MainType			= "MainType";
 	
 	public static final String[] Columns = {
 		Col_PlayerId, Col_Spectrum, Col_Fan, Col_Fu, Col_StartTime, Col_LogTime, 
 		Col_RecentRanks, Col_RecentFlys, Col_RecentChickens,
 		Col_BattleCount, Col_Rank1Count, Col_Rank2Count, Col_Rank3Count, Col_Rank4Count, 
 		Col_MaxBanker, Col_TotalPoint, Col_RoundCount, Col_LizhiCount, Col_HepaiCount, 
-		Col_ZimoCount, Col_BombCount, Col_FlyCount, Col_ChickenCount
+		Col_ZimoCount, Col_BombCount, Col_FlyCount, Col_ChickenCount, Col_MainType
 	};
 	
-	@Column(name = "PlayerId", unique = true)
+	@Column(name = "PlayerId")
 	private String player_id;		// 玩家id
 	
 	@Column(name = "Spectrum")
@@ -67,7 +70,7 @@ public class RankItem extends Model {
 	private long log_time;			// 大牌的对局记录时间
 	
 	@Column(name = "RecentRanks")
-	private String recent_ranks;		// 最近排位（1-4），例：1,4,3,2,3,1
+	private String recent_ranks;	// 最近排位（1-4），例：1,4,3,2,3,1
 	
 	@Column(name = "RecentFlys")
 	private String recent_flys;		// 最近起飞，1：起飞，0：正常（对应排位），例：0,1,0,0,0,0
@@ -117,11 +120,14 @@ public class RankItem extends Model {
 	@Column(name = "ChickenCount")
 	private int chicken_count;		// 烧鸡次数
 	
+	@Column(name = "MainType")
+	private int main_type;			// 游戏主类型:0->四麻,1->三麻,2->17步
+	
 	public RankItem() {
 		super();
 	}
 	
-	public RankItem(String playerId) {
+	public RankItem(String playerId, int main_type) {
 		super();
 		this.player_id = playerId;
 		this.spectrum = "";
@@ -144,13 +150,14 @@ public class RankItem extends Model {
 		this.recent_ranks = "";
 		this.recent_flys = "";
 		this.recent_chickens = "";
+		this.main_type = main_type;
 	}
 	
 	public RankItem(String playerId, String spectrum, int fan, int fu, 
 			int[] recentRanks, boolean[] recentFlys, boolean[] recentChickens,
 			int battlecount, int rank1Count, int rank2Count, int rank3Count, int rank4Count,
 			int maxBanker, double totalPoint, int roundCount, int lizhiCount, int hepaiCount,
-			int zimoCount, int bombCount, int flyCount, int chickenCount) {
+			int zimoCount, int bombCount, int flyCount, int chickenCount, int main_type) {
 		super();
 		this.player_id = playerId;
 		this.spectrum = spectrum;
@@ -170,6 +177,7 @@ public class RankItem extends Model {
 		this.bomb_count = bombCount;
 		this.fly_count = flyCount;
 		this.chicken_count = chickenCount;
+		this.main_type = main_type;
 		if (recentRanks != null) {
 			this.recent_ranks = recentRanks[0] + "";
 			for (int i = 1; i < recentRanks.length; i++) {
@@ -190,18 +198,19 @@ public class RankItem extends Model {
 		}
 	}
 	
-	public static void resetTable() {
-		ActiveAndroid.execSQL("delete from RankItem");
-		ActiveAndroid.execSQL("update sqlite_sequence SET seq = 0 where name ='RankItem'");
+	public static void resetTable(int type) {
+		ActiveAndroid.execSQL("delete from RankItem where " + Col_MainType + "=" + type);
+		//ActiveAndroid.execSQL("update sqlite_sequence SET seq = 0 where name ='RankItem'");
 	}
 	
-	public static List<RankItem> getAllRankItem() {
-		List<RankItem> items = new Select().from(RankItem.class).execute();
+	public static List<RankItem> getAllRankItemByType(int type) {
+		List<RankItem> items = new Select().from(RankItem.class).where(Col_MainType + "=?", type).execute();
 		return items;
 	}
 	
-	public static RankItem getRankItem(String playerId) {
-		RankItem item = new Select().from(RankItem.class).where(Col_PlayerId + "=?", playerId).executeSingle();
+	public static RankItem getRankItem(String playerId, int type) {
+		RankItem item = new Select().from(RankItem.class).where(Col_PlayerId + "=? AND " + Col_MainType + "=?", 
+				playerId, type).executeSingle();
 		return item;
 	}
 	
@@ -333,6 +342,14 @@ public class RankItem extends Model {
 	
 	public double getChickenPercent() {
 		return (double) chicken_count / (double) battle_count;
+	}
+	
+	public int getMainType() {
+		return main_type;
+	}
+	
+	public void setMainType(int type) {
+		this.main_type = type;
 	}
 	
 	public void addResult(float ma, int rank, int point) {

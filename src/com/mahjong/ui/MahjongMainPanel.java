@@ -24,6 +24,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+/**
+ * （弃用）早期界面
+ * 
+ * @author Summer Lee
+ *
+ */
 public class MahjongMainPanel extends View {
 	
 	private static final float mMaxCameraRotate = 15; // z轴旋转角度

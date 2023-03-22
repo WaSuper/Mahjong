@@ -253,6 +253,22 @@
                 android:paddingTop="1dp"
                 android:text="@string/QiangKong"
                 android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_doranorth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/dora_north"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -308,6 +324,22 @@
                 android:paddingRight="5dp"
                 android:paddingTop="1dp"
                 android:text="@string/LingShangKaiHua"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/calculate_doublewind4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/selector_checkbox_swap"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:text="@string/double_wind_4"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

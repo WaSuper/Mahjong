@@ -19,6 +19,7 @@
             android:src="@drawable/selector_btn_back" />
 
         <TextView
+            android:id="@+id/mahjong_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

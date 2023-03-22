@@ -3,10 +3,11 @@ package com.mahjong.activity.jpn;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.common.MjSetting;
+import com.mahjong.control.BaseManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.dialog.FanfuDialog;
 import com.mahjong.dialog.FanfuDialog.OnFanfuListener;
 import com.mahjong.model.MjAction;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
 import com.mahjong.ui.CommonDialog;
@@ -30,6 +31,7 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 
 	private Context mContext;
 	
+	private LinearLayout[] mTitleLayouts = new LinearLayout[3]; // 包含选框的3个标题栏
 	private CheckBox[] mPosBoxs = new CheckBox[3]; // 玩家选择，0：上家，2：对家，2：下家
 	private LinearLayout[] mPosLayouts = new LinearLayout[3]; // 对应选择玩家的布局
 	private Button[] mFanBtns = new Button[3]; // 玩家对应的番数
@@ -55,12 +57,14 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 	
 	private boolean landscapeMode;
 	
+	private BaseManager mManager = ManagerTool.getInstance().getManager();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		// 设定方向
 		Intent intent = getIntent();
-		int pos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
+		int pos = intent.getIntExtra(BaseManager.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);
 		landscapeMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.LANDSCAPE_MODE, this, false);
 		int[] port_orientations = {ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
 				ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE};
@@ -73,12 +77,15 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 		}
 		setContentView(R.layout.activity_jpn_result_set_bomb_simple);
 		mContext = this;
-		mOrgPlayer = intent.getIntExtra(ManageTool.PLAYER_ORIGINAL_INDEX, 0);
+		mOrgPlayer = intent.getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
 		mMainVision = intent.getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
 		initUI();
 	}
 	
 	private void initUI() {
+		mTitleLayouts[0] = (LinearLayout) findViewById(R.id.result_set_bomb_simple_title_upper);
+		mTitleLayouts[1] = (LinearLayout) findViewById(R.id.result_set_bomb_simple_title_oppositer);
+		mTitleLayouts[2] = (LinearLayout) findViewById(R.id.result_set_bomb_simple_title_downer);
 		mPosBoxs[0] = (CheckBox) findViewById(R.id.result_set_bomb_simple_check_upper);
 		mPosBoxs[1] = (CheckBox) findViewById(R.id.result_set_bomb_simple_check_oppositer);
 		mPosBoxs[2] = (CheckBox) findViewById(R.id.result_set_bomb_simple_check_downer);
@@ -114,6 +121,18 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 		mFuBtns[0].setText(mFan1Texts[0]);
 		mFuBtns[1].setText(mFan1Texts[0]);
 		mFuBtns[2].setText(mFan1Texts[0]);
+		
+		switch (mManager.getMemberCount()) {
+		case 2:
+			mTitleLayouts[0].setVisibility(View.GONE);
+			mTitleLayouts[2].setVisibility(View.GONE);
+			break;
+		case 3:
+			mTitleLayouts[1].setVisibility(View.GONE);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -128,13 +147,21 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 				ToastTool.showToast(mContext, R.string.please_choose_hele_player);
 				return;
 			}
-			boolean isEnableFanfu = ManageTool.getInstance().getEnableFanFu();
-			int roundCount = ManageTool.getInstance().getRoundCount();
-			if (isEnableFanfu && roundCount >= 5) {
-				mCheckBoxIndex = 0;
-				checkFanfu();				
+			if (mManager.is17Step()) {
+				if (mManager.getFanfuType() == 2) {
+					sendData();
+				} else {
+					checkFanfu();
+				}
 			} else {
-				sendData();
+				boolean isEnableFanfu = mManager.getEnableFanFu();
+				int roundCount = mManager.getRoundCount();
+				if (isEnableFanfu && roundCount >= 5) {
+					mCheckBoxIndex = 0;
+					checkFanfu();				
+				} else {
+					sendData();
+				}
 			}
 			break;
 		case R.id.result_set_bomb_simple_cancel:
@@ -146,25 +173,55 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 	}
 	
 	private void checkFanfu() {
-		ManageTool tool = ManageTool.getInstance();
 		for (; mCheckBoxIndex < mPosBoxs.length; mCheckBoxIndex++) {
 			if (mPosBoxs[mCheckBoxIndex].isChecked()) {
 				int bombIndex = (mOrgPlayer + 3 - mCheckBoxIndex) % 4;
-				FanfuDialog dialog = new FanfuDialog(mContext, 
-						tool.getPlayer(bombIndex).getNickName(),
-						tool.getRoundCount(), fanIndex2Num(mFanIndex[mCheckBoxIndex]));
-				dialog.setOnFanfuListener(new OnFanfuListener() {
-					
-					@Override
-					public void onSuccess() {
-						if (mCheckBoxIndex < mPosBoxs.length) {
-							mCheckBoxIndex++;
-							checkFanfu();
-						} 					
+				if (mManager.getMemberCount() == 3) {
+					switch (mOrgPlayer) {
+					case 0:
+						if (mCheckBoxIndex == 0) bombIndex = 2;
+						break;
+					case 2:
+						if (mCheckBoxIndex == 2) bombIndex = 0;
+						break;
+					default:
+						break;
 					}
-				});
-				dialog.show();
-				break;
+				}
+				if (fanIndex2Num(mFanIndex[mCheckBoxIndex]) > 0) { // 检测非役满情况
+					FanfuDialog dialog;
+					if (mManager.is17Step()) {
+						dialog = new FanfuDialog(mContext, 
+								mManager.getPlayer(bombIndex).getNickName(),
+								fanIndex2Num(mFanIndex[mCheckBoxIndex]), 
+								fuIndex2Num(mFanIndex[mCheckBoxIndex], mFuIndex[mCheckBoxIndex]),
+								mManager.getFanfuType());
+					} else {
+						dialog = new FanfuDialog(mContext, 
+								mManager.getPlayer(bombIndex).getNickName(),
+								mManager.getRoundCount(), fanIndex2Num(mFanIndex[mCheckBoxIndex]));
+					}
+					dialog.setOnFanfuListener(new OnFanfuListener() {
+						
+						@Override
+						public void onSuccess() {
+							if (mCheckBoxIndex < mPosBoxs.length) {
+								mCheckBoxIndex++;
+								checkFanfu();
+							}			
+						}
+					});
+					dialog.show();
+					break;
+				} else {
+					if (mCheckBoxIndex < mPosBoxs.length) {
+						mCheckBoxIndex++;
+						checkFanfu();
+					} else {
+						sendData();
+					}
+					return;
+				}
 			}
 		}
 		if (mCheckBoxIndex >= mPosBoxs.length) {
@@ -173,7 +230,6 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 	}
 	
 	private void sendData() {
-		ManageTool mTool = ManageTool.getInstance();
 		Intent data;
 		if (landscapeMode) {
 			data = new Intent(ResultSetBombSimpleActivity.this, ResultShowForLand.class);
@@ -182,7 +238,7 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 		}
 		data.putExtra(GameSimpleActivity.MAIN_VISION, mMainVision);
 		data.putExtra(MjAction.Name, MjAction.ACTION_BOMB);
-		data.putExtra(ManageTool.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
+		data.putExtra(BaseManager.PLAYER_ORIGINAL_INDEX, mOrgPlayer);
 		int[] bombIndexs = new int[mHuCount];
 		int index = 0;
 		for (int i = 0; i < mPosBoxs.length; i++) {
@@ -190,20 +246,32 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 				int fan = fanIndex2Num(mFanIndex[i]);
 				int fu = fuIndex2Num(mFanIndex[i], mFuIndex[i]);
 				bombIndexs[index] = (mOrgPlayer + 3 - i) % 4;	
-				mTool.setResult(bombIndexs[index], fan, fu);
+				if (mManager.getMemberCount() == 3) {
+					switch (mOrgPlayer) {
+					case 0:
+						if (i == 0) bombIndexs[index] = 2;
+						break;
+					case 2:
+						if (i == 2) bombIndexs[index] = 0;
+						break;
+					default:
+						break;
+					}
+				}
+				mManager.setResult(bombIndexs[index], fan, fu);
 				index++;
 			}
 		}
-		data.putExtra(ManageTool.RESULT_BOMB_INDEX, bombIndexs);
+		data.putExtra(BaseManager.RESULT_BOMB_INDEX, bombIndexs);
 		startActivity(data);
 		this.finish();
 	}
 	
 	private int fanIndex2Num(int index) {
 		int num = 0;
-		if (index >= 0 && index <= 12) {
+		if (index >= 0 && index <= 11) {
 			num = index + 1;
-		} else if (index >= 13 && index <= 17) {
+		} else if (index >= 12 && index <= 17) {
 //			num = (index - 11) * 13;
 			num = 11 - index;
 		}		

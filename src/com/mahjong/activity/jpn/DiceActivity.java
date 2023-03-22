@@ -4,8 +4,8 @@ import java.util.Random;
 
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
+import com.mahjong.control.Game4pManager;
 import com.mahjong.tools.LightTool;
-import com.mahjong.tools.ManageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.MjDiceResultView;
 import com.mahjong.ui.PlayerFuncItem;
@@ -65,7 +65,7 @@ public class DiceActivity extends BaseActivity
 		mSoundBox.setChecked(enableSound);
 		// 设定方向
 		Intent intent = getIntent();
-		mDealerPos = intent.getIntExtra(ManageTool.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);	
+		mDealerPos = intent.getIntExtra(Game4pManager.PLAYER_ITEM_POSITION, PlayerFuncItem.POS_BOTTOM);	
 		switch (mDealerPos) {
 		case PlayerFuncItem.POS_BOTTOM:
 			mResultView.setAngle(0);

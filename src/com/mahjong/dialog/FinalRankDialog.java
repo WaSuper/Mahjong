@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class FinalRankDialog extends Dialog implements android.view.View.OnClickListener {	
@@ -45,6 +47,8 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 	private ImageView[] mChickenViews;
 	private ImageView[] mFlyViews;
 	private MjWinTextView mWinTextView;
+	private RelativeLayout[] mPlayerLayouts;
+	private LinearLayout[] mDetailLayouts;
 	
 	private OnCancelListener mListener;
 	
@@ -127,6 +131,16 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 		mFlyViews[3] = (ImageView) findViewById(R.id.rank_fly4);
 		mLineChart = (LineChart) findViewById(R.id.rank_chart);
 		mWinTextView = (MjWinTextView) findViewById(R.id.rank_wintext);
+		mPlayerLayouts = new RelativeLayout[4];
+		mPlayerLayouts[0] = (RelativeLayout) findViewById(R.id.rank_rl_1);
+		mPlayerLayouts[1] = (RelativeLayout) findViewById(R.id.rank_rl_2);
+		mPlayerLayouts[2] = (RelativeLayout) findViewById(R.id.rank_rl_3);
+		mPlayerLayouts[3] = (RelativeLayout) findViewById(R.id.rank_rl_4);
+		mDetailLayouts = new LinearLayout[4];
+		mDetailLayouts[0] = (LinearLayout) findViewById(R.id.rank_ll_1);
+		mDetailLayouts[1] = (LinearLayout) findViewById(R.id.rank_ll_2);
+		mDetailLayouts[2] = (LinearLayout) findViewById(R.id.rank_ll_3);
+		mDetailLayouts[3] = (LinearLayout) findViewById(R.id.rank_ll_4);
 		
 		mBackView.setOnClickListener(this);
 		mIconViews[0].setOnClickListener(this);
@@ -135,16 +149,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 	}
 
 	public void setData(Player[] players, int[] scores, float[] mapoint, int[] ranks,
-			AnalysisTool aTool, AudioTool audioTool) {
-//		String[] names = new String[4];
-//		for (int i = 0; i < names.length; i++) {
-//			names[i] = players[i].getNickName();
-//		}
-//		setData(names, scores, mapoint, ranks, aTool);
-//	}
-//	
-//	public void setData(String[] names, int[] scores, float[] mapoint, int[] ranks,
-//			AnalysisTool aTool) {
+			AnalysisTool aTool, AudioTool audioTool, int memberCount) {
 		int[] lizhiCounts = aTool.getLizhiCounts();
 		int[] heCounts = aTool.getHeCounts();
 		int[] bombCounts = aTool.getBombCounts();
@@ -153,6 +158,17 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 		int[] imgIds = {R.drawable.rank1_frame, R.drawable.rank2_frame, 
 				R.drawable.rank3_frame, R.drawable.rank4_frame};
 		for (int i = 0; i < 4; i++) {
+			if (memberCount == 2 && (i == 1 || i == 3)) {
+				mPlayerLayouts[2].setVisibility(View.INVISIBLE);
+				mDetailLayouts[2].setVisibility(View.INVISIBLE);
+				mPlayerLayouts[3].setVisibility(View.INVISIBLE);
+				mDetailLayouts[3].setVisibility(View.INVISIBLE);
+				continue; // 2人时只计算东西风
+			} else if (memberCount == 3 && i == 3) {
+				mPlayerLayouts[3].setVisibility(View.INVISIBLE);
+				mDetailLayouts[3].setVisibility(View.INVISIBLE);
+				continue; // 3人时只计算东南西风
+			}
 			int index = ranks[i] - 1;
 			// 胜利宣言
 			if (index == 0) {
@@ -206,7 +222,7 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 		for (int index : mvps) {
 			mBombMvps[ranks[index] - 1].setVisibility(View.VISIBLE);
 		}
-		mLineChart.setData(aTool.getBaseScore(), aTool.getDataLen(),
+		mLineChart.setData(aTool.getBaseScore(), aTool.getDataLen(), memberCount,
 				aTool.getScore1st(), aTool.getScore2nd(), 
 				aTool.getScore3rd(), aTool.getScore4th());
 	}

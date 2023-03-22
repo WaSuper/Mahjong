@@ -68,6 +68,18 @@ public class ScoreSystem {
 	}
 	
 	/**
+	 * 基本点乘以multiple，并按百进位。
+	 * 
+	 * @param basePoint
+	 * @param multiple
+	 * @return
+	 */
+	public static int GetPoint(int basePoint, double multiple) {
+		int point = (int) (basePoint * multiple);
+		return (point + 99) / 100 * 100;
+	}
+	
+	/**
 	 * 三位闲家各自支付庄家自摸点数
 	 * 
 	 * @param basePoint

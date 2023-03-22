@@ -1,12 +1,118 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mahjong.activity.StartActivity" >
 
-    <ImageView 
+    <ImageView
+        android:id="@+id/start_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/start_saki"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/start_saki"
+        android:scaleType="fitEnd"
+        android:layout_gravity="bottom|center_horizontal" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <ImageView
+        	android:id="@+id/start_text_wu"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            android:rotation="-15" />
+        
+        <ImageView
+        	android:id="@+id/start_text_xian"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:rotation="-7" />
+        
+        <ImageView
+        	android:id="@+id/start_text_li"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:rotation="7" />
+        
+        <ImageView
+        	android:id="@+id/start_text_zhi"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            android:rotation="15" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/default_cover"/>
-
-</RelativeLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp" >
+        
+        <ImageView
+        	android:id="@+id/start_lzb_1"
+        	android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/liqi_evil_0"
+            android:layout_marginTop="40dp" />
+        
+        <ImageView
+        	android:id="@+id/start_lzb_2"
+        	android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/liqi_jade_0"
+            android:layout_marginTop="20dp" />
+        
+        <ImageView
+        	android:id="@+id/start_lzb_3"
+        	android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/liqi_xhzy"/>
+        
+        <ImageView
+        	android:id="@+id/start_lzb_4"
+        	android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/liqi_red_0"
+            android:layout_marginTop="20dp" />
+        
+        <ImageView
+        	android:id="@+id/start_lzb_5"
+        	android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/liqi_rich_0"
+            android:layout_marginTop="40dp" />
+        
+    </LinearLayout>
+    
+</FrameLayout>

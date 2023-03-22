@@ -5,6 +5,7 @@ import java.util.List;
 import com.mahjong.data.jpn.yaku.Yaku02_YiFa;
 import com.mahjong.data.jpn.yaku.Yaku10_HaiDiLaoYue;
 import com.mahjong.data.jpn.yaku.Yaku11_HeDiMoYu;
+import com.mahjong.data.jpn.yaku.Yaku13_InDora;
 
 public class Score {
 
@@ -90,6 +91,51 @@ public class Score {
 			}
 		}
 		return FanValue - invalidYaku;
+	}
+	
+	public boolean check17StepFanfu(int type) {
+		switch (type) {
+		case 0: // 五番番缚
+			if (FullYaku > 0) {
+				return true;
+			} else {
+				int validYaku = get17StepFanfuValidYaku();
+				if (validYaku >= 5) {
+					return true;
+				}
+			}
+			break;
+		case 1: // 满贯番缚
+			if (FullYaku > 0) {
+				return true;
+			} else {
+				int validYaku = get17StepFanfuValidYaku();
+				if (validYaku >= 5) {
+					return true;
+				} else if (validYaku == 4 && Fu >= 40) {
+					return true;
+				} else if (validYaku == 3 && Fu >= 70) {
+					return true;
+				}
+			}
+			break;
+		case 2: // 无番缚
+			return true;
+		default:
+			break;
+		}
+		return false;
+	}
+	
+	public int get17StepFanfuValidYaku() {
+		int invalidYaku = 0;
+		for (YakuValue yaku : YakuValues) {
+			// 只排除掉所有里宝牌
+			if (yaku.getSource() instanceof Yaku13_InDora) {
+				invalidYaku++;
+			}
+		}
+		return AllFanValue() - invalidYaku;
 	}
 	
 	public String toFanString() {

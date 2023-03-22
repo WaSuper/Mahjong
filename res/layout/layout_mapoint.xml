@@ -6,6 +6,7 @@
     android:background="@color/white" >
     
     <TextView
+        android:id="@+id/mapoint_line1_title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/one"
@@ -14,6 +15,7 @@
         android:layout_gravity="center_horizontal" />
     
     <LinearLayout
+        android:id="@+id/mapoint_line1_layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -78,6 +80,7 @@
     </LinearLayout>
     
     <TextView
+        android:id="@+id/mapoint_line2_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/two"
@@ -86,6 +89,7 @@
         android:layout_gravity="center_horizontal" />
     
     <LinearLayout
+        android:id="@+id/mapoint_line2_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -150,6 +154,7 @@
     </LinearLayout>
     
     <TextView
+        android:id="@+id/mapoint_line3_title3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/three"
@@ -158,6 +163,7 @@
         android:layout_gravity="center_horizontal" />
     
     <LinearLayout
+        android:id="@+id/mapoint_line3_layout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -222,6 +228,7 @@
     </LinearLayout>
     
     <TextView
+        android:id="@+id/mapoint_line4_title4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/four"
@@ -230,6 +237,7 @@
         android:layout_gravity="center_horizontal" />
     
     <LinearLayout
+        android:id="@+id/mapoint_line4_layout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

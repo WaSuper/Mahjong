@@ -92,8 +92,12 @@ public class ExcelUtils {
 				// database ver.2
 				mainSheet.addCell(new Label(25, row, result.getTitle()));
 				mainSheet.addCell(new Label(26, row, result.getNote()));
-				// database ver.3
+				// database ver.6
 				mainSheet.addCell(new Number(27, row, result.getRetPoint()));
+				// database ver.7
+				mainSheet.addCell(new Number(28, row, result.getMemberCount()));
+				mainSheet.addCell(new Number(29, row, result.getMainType()));
+				mainSheet.addCell(new Number(30, row, result.getExtraData()));
 				// 写入detail数据
 				List<MjDetail> detailList = new Select().from(MjDetail.class)
 						.where(MjDetail.Col_StartTime + "=?", result.getStartTime())
@@ -258,10 +262,11 @@ public class ExcelUtils {
 	/**
 	 * 读取Excel表（历史清单 ）
 	 * 
-	 * @param filePath
+	 * @param filePath 文件路径
+	 * @param updateType 更新排位的种类（0：四麻，1：三麻， 2：17步）
 	 * @return
 	 */
-	public static int readExcelToResult(String filePath) {	        
+	public static int readExcelToResult(String filePath, boolean[] updateType) {	        
 		Workbook workbook = null;
 		int count = 0;
         try {
@@ -290,7 +295,7 @@ public class ExcelUtils {
         	List<List<MjDetail>> detaiList = new ArrayList<List<MjDetail>>();
         	for (int i = 1; i < mainSheet.getRows(); i++) { // 逐行解析主表
         		int gameType = Integer.parseInt(mainSheet.getCell(0, i).getContents());
-        		if (gameType > 4 || gameType < 0) continue;
+        		if (gameType < 0) continue;
         		int basePoint = Integer.parseInt(mainSheet.getCell(1, i).getContents());
         		if (basePoint < 0) continue;
         		String maPoint = mainSheet.getCell(2, i).getContents();
@@ -305,40 +310,28 @@ public class ExcelUtils {
         		String endTime = mainSheet.getCell(4, i).getContents();
         		long end_time = mDateFormat.parse(endTime).getTime();
         		String eastId = mainSheet.getCell(5, i).getContents();
-        		if (eastId == null || eastId.isEmpty()) continue;
         		String eastName = mainSheet.getCell(6, i).getContents();
-        		if (eastName == null || eastName.isEmpty()) continue;
         		int eastPoint = Integer.parseInt(mainSheet.getCell(7, i).getContents());
         		int eastRank = Integer.parseInt(mainSheet.getCell(8, i).getContents());
-        		if (eastRank < 1 || eastRank > 4) continue;
         		float eastMa = Float.parseFloat(mainSheet.getCell(9, i).getContents());
         		String southId = mainSheet.getCell(10, i).getContents();
-        		if (southId == null || southId.isEmpty()) continue;
         		String southName = mainSheet.getCell(11, i).getContents();
-        		if (southName == null || southName.isEmpty()) continue;
         		int southPoint = Integer.parseInt(mainSheet.getCell(12, i).getContents());
         		int southRank = Integer.parseInt(mainSheet.getCell(13, i).getContents());
-        		if (southRank < 1 || southRank > 4) continue;
         		float southMa = Float.parseFloat(mainSheet.getCell(14, i).getContents());
         		String westId = mainSheet.getCell(15, i).getContents();
-        		if (westId == null || westId.isEmpty()) continue;
         		String westName = mainSheet.getCell(16, i).getContents();
-        		if (westName == null || westName.isEmpty()) continue;
         		int westPoint = Integer.parseInt(mainSheet.getCell(17, i).getContents());
         		int westRank = Integer.parseInt(mainSheet.getCell(18, i).getContents());
-        		if (westRank < 1 || westRank > 4) continue;
         		float westMa = Float.parseFloat(mainSheet.getCell(19, i).getContents());
         		String northId = mainSheet.getCell(20, i).getContents();
-        		if (northId == null || northId.isEmpty()) continue;
         		String northName = mainSheet.getCell(21, i).getContents();
-        		if (northName == null || northName.isEmpty()) continue;
         		int northPoint = Integer.parseInt(mainSheet.getCell(22, i).getContents());
         		int northRank = Integer.parseInt(mainSheet.getCell(23, i).getContents());
-        		if (northRank < 1 || northRank > 4) continue;
         		float northMa = Float.parseFloat(mainSheet.getCell(24, i).getContents());        		
         		MjResult result = new MjResult(gameType, basePoint, ma_points, start_time, 
         				eastId, eastName, southId, southName, westId, westName, northId, northName,
-        				5000);
+        				5000, 4, 0, 0);
         		result.setEndGame(end_time, 
         				new int[] {eastPoint, southPoint, westPoint, northPoint}, 
         				new int[] {eastRank, southRank, westRank, northRank}, 
@@ -349,10 +342,45 @@ public class ExcelUtils {
         			result.setTitle(title);
             		result.setNote(note);
 				}        		
-        		if (mainSheet.getColumns() >= 28) { // database ver.3
+        		if (mainSheet.getColumns() >= 28) { // database ver.6
         			int retPoint = Integer.parseInt(mainSheet.getCell(27, i).getContents());
         			result.setRetPoint(retPoint);
-				}        		
+				}
+        		int member = 4;
+        		if (mainSheet.getColumns() >= 30) { // database ver.7
+        			member = Integer.parseInt(mainSheet.getCell(28, i).getContents());
+        			result.setMemberCount(member);
+        			
+        			int type = Integer.parseInt(mainSheet.getCell(29, i).getContents());
+        			result.setMainType(type);
+        			if (type >=0 && type <= 2) {
+						updateType[type] = true; // 需要通知对应的排位表进行更新
+					}
+        			int extra = Integer.parseInt(mainSheet.getCell(30, i).getContents());
+        			result.setExtraData(extra);
+				} else {
+					updateType[0] = true; // 默认更新四麻的排位表
+				}
+        		// 根据人数判断玩家数据是否正确
+        		switch (member) {
+				case 4:
+					if (northId == null || northId.isEmpty()) continue;
+					if (northName == null || northName.isEmpty()) continue;
+					if (northRank < 1 || northRank > 4) continue;
+				case 3:
+					if (southId == null || southId.isEmpty()) continue;
+					if (southName == null || southName.isEmpty()) continue;
+					if (southRank < 1 || southRank > 4) continue;
+				case 2:
+					if (eastId == null || eastId.isEmpty()) continue;
+					if (eastName == null || eastName.isEmpty()) continue;
+					if (eastRank < 1 || eastRank > 4) continue;
+					if (westId == null || westId.isEmpty()) continue;
+					if (westName == null || westName.isEmpty()) continue;
+					if (westRank < 1 || westRank > 4) continue;
+				default:
+					break;
+				}
         		Sheet timeSheet = sheetMap.get(startTime);
         		if (timeSheet == null) continue;
         		List<MjDetail> details = new ArrayList<MjDetail>();
