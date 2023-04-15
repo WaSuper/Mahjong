@@ -202,7 +202,7 @@ public class Game17sManager extends BaseManager {
 			ResultList[] resultLists) {
 		int[] changeScores = {0, 0, 0, 0};		
 		for (int i = 0; i < winIndexs.length; i++) {
-			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i]);
+			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i], mManguanUp);
 			int index = winIndexs[i];
 			if (index == bombIndex) continue; // 无此情况
 			// 全部按点庄家付点数
@@ -507,6 +507,7 @@ public class Game17sManager extends BaseManager {
 			json.put("double_wind_4", isDoubleWind4);
 			json.put("feng_type", mFengType);
 			json.put("fanfu_type", mFanfuType);
+			json.put("manguan_up", mManguanUp);
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < mDetails.size(); i++) {
 				MjDetail detail = mDetails.get(i);
@@ -621,6 +622,7 @@ public class Game17sManager extends BaseManager {
 					isDoubleWind4 = json.optBoolean("double_wind_4", false);
 					mFengType = json.optInt("feng_type", 0);
 					mFanfuType = json.optInt("fanfu_type", 0);
+					mManguanUp = json.optBoolean("manguan_up", false);
 					JSONArray jsonArray = json.getJSONArray("details");
 					mDetails.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {

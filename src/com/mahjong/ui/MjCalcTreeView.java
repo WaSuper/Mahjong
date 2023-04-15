@@ -36,6 +36,7 @@ public class MjCalcTreeView extends View {
 	private int mLizhiCount;
 	private boolean isDealer;
 	private boolean isZiMo;	
+	private boolean isManguanUp;
 	int mMaxCount = 0;			// 总番数条目
 	int mInvalidateCount = 0;	// 当前刷新的番数条目（实现逐个显示）
 
@@ -84,12 +85,13 @@ public class MjCalcTreeView extends View {
 	}
 	
 	public void setData(Score score, int roundCount, int lizhiCount,
-			boolean isDealer, boolean isZiMo) {
+			boolean isDealer, boolean isZiMo, boolean isManguanUp) {
 		this.mScore = score;
 		this.mRoundCount = roundCount;
 		this.mLizhiCount = lizhiCount;
 		this.isDealer = isDealer;
 		this.isZiMo = isZiMo;
+		this.isManguanUp = isManguanUp;
 		this.mMaxCount = 0;
 		if (mScore != null && mScore.hasYaku()) {
 			mMaxCount = mScore.YakuValues().length;
@@ -288,7 +290,7 @@ public class MjCalcTreeView extends View {
 		String textUp = getContext().getString(R.string.result_none);
 		String textDown = "";
 		if (mScore != null && mScore.hasYaku()) {
-			int basePoint = ScoreSystem.GetBasePoint(mScore);
+			int basePoint = ScoreSystem.GetBasePoint(mScore, isManguanUp);
 			if (isDealer) {
 				if (isZiMo) {
 					int point = ScoreSystem.GetPoint(basePoint, 2) + mRoundCount * 100;

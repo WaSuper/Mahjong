@@ -96,6 +96,10 @@ public class MahjongSpectrum extends MahjongBaseView {
 	 * 是否使能控件
 	 */
 	private boolean enable;
+	/**
+	 * 是否显示听牌
+	 */
+	private boolean isShowWinNum;
 	
 	public MahjongSpectrum(Context context) {
 		this(context, null);
@@ -114,6 +118,7 @@ public class MahjongSpectrum extends MahjongBaseView {
 		isShowAddRect = a.getBoolean(R.styleable.MahjongSpectrum_showAddRect, true);
 		enable = a.getBoolean(R.styleable.MahjongSpectrum_enable, true);
 		isMarkWinRect = false;
+		isShowWinNum = true;
 		a.recycle();
 		initPaint();
 		reset();
@@ -218,17 +223,36 @@ public class MahjongSpectrum extends MahjongBaseView {
 	}
 	
 	public void copy(List<MjCard> cards, List<MjCardPairs> pairs, MjCard winCard) {
-		this.mWinNum.setData(winCard);
-		this.mDarkNums.clear();
-		for (MjCard c : cards) {
-			mDarkNums.add(new MjCard(c));
+		if (winCard != null) {
+			mWinNum.setData(winCard);
+		} else {
+			mWinNum.reset();
 		}
-		this.mBrightNums.clear();
-		for (MjCardPairs p : pairs) {
-			mBrightNums.add(new MjCardPairs(p));
+		mDarkNums.clear();
+		mBrightNums.clear();
+		if (cards == null && pairs == null) {
+			for (int i = 0; i < 13; i++) {
+				mDarkNums.add(new MjCard());
+			}
+		} else {
+			if (cards != null) {
+				for (MjCard c : cards) {
+					mDarkNums.add(new MjCard(c));
+				}
+			}
+			if (pairs != null) {
+				for (MjCardPairs p : pairs) {
+					mBrightNums.add(new MjCardPairs(p));
+				}	
+			}
 		}
 		clearTouchItem();
 		invalidate();
+	}	
+	
+	public void copy(List<MjCard> cards, List<MjCardPairs> pairs, MjCard winCard, boolean isShowWinCard) {
+		isShowWinNum = isShowWinCard;
+		copy(cards, pairs, winCard);
 	}
 	
 	public void setData(List<MjCard> cards, List<MjCardPairs> pairs, MjCard winCard) {
@@ -252,7 +276,7 @@ public class MahjongSpectrum extends MahjongBaseView {
 		}
 		clearTouchItem();
 		invalidate();
-	}	
+	}
 	
 	public void sortDrakMjCards() {
 		MjSetting.sortMjCardList(mDarkNums);		
@@ -661,7 +685,7 @@ public class MahjongSpectrum extends MahjongBaseView {
 	}
 	
 	private int onDrawWinNum(Canvas canvas, int cTop, int leftPoint) {
-		if (mWinNum == null) {
+		if (mWinNum == null || !isShowWinNum) {
 			return leftPoint;
 		}
 		Bitmap winBitmap = BitmapFactory.decodeResource(getResources(), 

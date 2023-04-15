@@ -154,5 +154,18 @@
         android:button="@null"
         android:background="@drawable/selector_checkbox_sound"        
         android:checked="true" />
+    
+    <CheckBox
+        android:id="@+id/dice_mj3p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:button="@null"
+        android:drawableLeft="@drawable/selector_checkbox_rectangle"
+        android:drawablePadding="4dp"
+        android:text="@string/game3p" 
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:checked="true" />
 
 </RelativeLayout>

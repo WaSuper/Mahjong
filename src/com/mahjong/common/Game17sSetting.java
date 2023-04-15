@@ -20,5 +20,7 @@ public class Game17sSetting {
 	public static final String GAME17S_RET_POINT 			= "GAME17S_RET_POINT";
 	public static final String GAME17S_LANDSCAPE_MODE		= MjSetting.LANDSCAPE_MODE; // 横屏模式统一参数
 	public static final String GAME17S_DOUBLE_WIND_4		= "GAME17S_DOUBLE_WIND_4";
+	public static final String GAME17S_MANGUAN_UP			= "GAME17S_MANGUAN_UP";
+	public static final String GAME17S_NO_FLY				= "GAME17S_NO_FLY";
 	
 }

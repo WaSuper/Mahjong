@@ -123,7 +123,10 @@ public class Game3pManager extends BaseManager {
 			boolean isBao, int baoId, ResultList[] resultLists) {
 		int[] changeScores = {0, 0, 0, 0};
 		boolean isDealer = winIndex == juCount;
-		int basePoint = ScoreSystem.GetBasePoint(fan, fu);
+		int basePoint = ScoreSystem.GetBasePoint(fan, fu, mManguanUp);
+		int yiman = 0;
+		if (fan < 0) yiman = -fan;
+		else if (fan >= 13) yiman = fan / 13;
 		if (isDealer) { // 庄家自摸
 			int playerPay = ScoreSystem.Player_Pay_Dealer_Zimo(basePoint);
 			if (!mEnableZimoCut) { // 无自摸损，将第4人应付的分值平分给其他2人
@@ -132,16 +135,41 @@ public class Game3pManager extends BaseManager {
 			changeScores[winIndex] += (playerPay * 2 
 					+ roundCount * 200 + lizhiCount * 1000);
 			resultLists[winIndex].addBase(playerPay * 2)
-					.addRound(roundCount * 200).addLizhi(lizhiCount * 1000);			
-			// 一般情况
-			for (int i = 0; i < 3; i++) {
-				if (i == winIndex) { // 庄家赢家
-					continue;
-				} else { // 闲家
-					changeScores[i] -= (playerPay + roundCount * 100);
-					resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+					.addRound(roundCount * 200).addLizhi(lizhiCount * 1000);
+			if (yiman > 0 && isBao && baoId >= 0) { // 役满有包牌
+				if (yiman == 1) { // 普通役满：包牌者付全部（包括本场数）
+					changeScores[baoId] -= (playerPay * 2 
+							+ roundCount * 200);
+					resultLists[baoId].addBaopai(-playerPay * 2).addRound(-roundCount * 200);
+				} else { // 复合役满：包牌者付一个役满，剩余再平分，本场数两家付
+					int yimanScore = ScoreSystem.Player_Pay_Dealer_Zimo(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
+					if (!mEnableZimoCut) { // 无自摸损，付3人份的分值
+						yimanScore *= 3;
+					} else { // 自摸损，付2人份的分值
+						yimanScore *= 2;
+					}
+					changeScores[baoId] -= yimanScore;
+					resultLists[baoId].addBaopai(-yimanScore);
+					playerPay = (playerPay * 2 - yimanScore) / 2;
+					for (int i = 0; i < 3; i++) {
+						if (i == winIndex) { // 庄家赢家
+							continue;
+						} else { // 闲家
+							changeScores[i] -= (playerPay + roundCount * 100);
+							resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+						}
+					}
+				}				
+			} else { // 一般情况
+				for (int i = 0; i < 3; i++) {
+					if (i == winIndex) { // 庄家赢家
+						continue;
+					} else { // 闲家
+						changeScores[i] -= (playerPay + roundCount * 100);
+						resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+					}
 				}
-			}	
+			}
 		} else { // 闲家自摸
 			int dealerPay = ScoreSystem.Dealer_Pay_Player_Zimo(basePoint);
 			int playerPay = ScoreSystem.Player_Pay_Player_Zimo(basePoint);
@@ -154,18 +182,59 @@ public class Game3pManager extends BaseManager {
 					+ roundCount * 200 + lizhiCount * 1000);
 			resultLists[winIndex].addBase(dealerPay + playerPay)
 					.addRound(roundCount * 200).addLizhi(lizhiCount * 1000);
-			// 一般情况
-			for (int i = 0; i < 3; i++) {
-				if (i == winIndex) { // 闲家赢家
-					continue;
-				} else if (i == juCount) { // 庄家
-					changeScores[i] -= (dealerPay + roundCount * 100);
-					resultLists[i].addBase(-dealerPay).addRound(-roundCount * 100);
-				} else { // 闲家
-					changeScores[i] -= (playerPay + roundCount * 100);
-					resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+			if (yiman > 0 && isBao && baoId >= 0) { // 役满有包牌
+				if (yiman == 1) { // 普通役满：包牌者付全部（包括本场数）
+					changeScores[baoId] -= (dealerPay + playerPay
+							+ roundCount * 200);
+					resultLists[baoId].addBaopai(-dealerPay - playerPay)
+							.addRound(-roundCount * 200);
+				} else { // 复合役满：包牌者付一个役满，剩余的庄家付1/2，闲家付1/4，本场数两家付
+					int tmpBaseScore = ScoreSystem.GetBasePoint(13, 0, mManguanUp);
+					int tmpDealerPay = ScoreSystem.Dealer_Pay_Player_Zimo(tmpBaseScore);
+					int tmpPlayerPay = ScoreSystem.Player_Pay_Player_Zimo(tmpBaseScore);
+					int yimanScore;
+					if (!mEnableZimoCut) { // 无自摸损
+						yimanScore = tmpDealerPay + tmpPlayerPay * 2;
+					} else { // 自摸损
+						yimanScore = tmpDealerPay + tmpPlayerPay;
+					}
+					changeScores[baoId] -= yimanScore;
+					resultLists[baoId].addBaopai(-yimanScore);
+					int tmpPay = (dealerPay + playerPay - yimanScore);
+					if (!mEnableZimoCut) { // 无自摸损
+						tmpPay /= 8;
+						dealerPay = tmpPay * 5;
+						playerPay = tmpPay * 3;
+					} else { // 自摸损
+						tmpPay /= 3;
+						dealerPay = tmpPay * 2;
+						playerPay = tmpPay;
+					}
+					for (int i = 0; i < 3; i++) {
+						if (i == winIndex) { // 闲家赢家
+							continue;
+						} else if (i == juCount) { // 庄家
+							changeScores[i] -= (dealerPay + roundCount * 100);
+							resultLists[i].addBase(dealerPay).addRound(-roundCount * 100);
+						} else { // 闲家
+							changeScores[i] -= (playerPay + roundCount * 100);
+							resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+						}
+					}
 				}
-			}	
+			} else { // 一般情况
+				for (int i = 0; i < 3; i++) {
+					if (i == winIndex) { // 闲家赢家
+						continue;
+					} else if (i == juCount) { // 庄家
+						changeScores[i] -= (dealerPay + roundCount * 100);
+						resultLists[i].addBase(-dealerPay).addRound(-roundCount * 100);
+					} else { // 闲家
+						changeScores[i] -= (playerPay + roundCount * 100);
+						resultLists[i].addBase(-playerPay).addRound(-roundCount * 100);
+					}
+				}	
+			}
 		}
 		
 		return changeScores;
@@ -199,7 +268,8 @@ public class Game3pManager extends BaseManager {
 			mScores[i] += changeScores[i];
 		}
 		MjAction action = MjAction.createZimoAction(getPlayer(winIndex).getUuid(), 
-				spectrum, fan, fu, env, false, "",
+				spectrum, fan, fu, env, 
+				isBao, (isBao && baoId >= 0) ? getPlayer(baoId).getUuid() : "",
 				MjCalcTool.getSpecialYakusEnable2String());
 		MjDetail detail = new MjDetail(mResult.getStartTime(), System.currentTimeMillis(), 
 				getJuCountForAll(), getRoundCount(), getLizhiCount(), 
@@ -258,23 +328,54 @@ public class Game3pManager extends BaseManager {
 			ResultList[] resultLists) {
 		int[] changeScores = {0, 0, 0, 0};		
 		for (int i = 0; i < winIndexs.length; i++) {
-			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i]);
+			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i], mManguanUp);
 			int index = winIndexs[i];
+			int yiman = 0;
+			if (fan[i] < 0) yiman = -fan[i];
+			else if (fan[i] >= 13) yiman = fan[i] / 13;
 			if (index == bombIndex) continue; // 无此情况
 			else if (index == juCount) { // 闲家放铳庄家
 				int playerPay = ScoreSystem.All_Pay_Dealer_Ronghe(basePoint);
 				changeScores[index] += playerPay;
 				resultLists[index].addBase(playerPay);
-				// 一般情况
-				changeScores[bombIndex] -= playerPay;	
-				resultLists[bombIndex].addBase(-playerPay);	
+				if (yiman > 0 && isBaos[i] && baoIds[i] >= 0 && baoIds[i] != bombIndex) { // 役满有包牌
+					if (yiman == 1) { // 普通役满：包牌者付一半
+						changeScores[baoIds[i]] -= (playerPay / 2); 
+						changeScores[bombIndex] -= (playerPay / 2);
+						resultLists[baoIds[i]].addBaopai(-playerPay / 2);
+						resultLists[bombIndex].addBase(-playerPay / 2);
+					} else { // 复合役满：包牌者付一个役满，剩余的点炮者付
+						int yimanScore = ScoreSystem.All_Pay_Dealer_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
+						changeScores[baoIds[i]] -= yimanScore;
+						changeScores[bombIndex] -= (playerPay - yimanScore);
+						resultLists[baoIds[i]].addBaopai(-yimanScore);
+						resultLists[bombIndex].addBase(-playerPay + yimanScore);
+					}
+				} else { // 一般情况
+					changeScores[bombIndex] -= playerPay;	
+					resultLists[bombIndex].addBase(-playerPay);	
+				}
 			} else { // 庄、闲家放铳闲家
 				int pay = ScoreSystem.All_Pay_Player_Ronghe(basePoint);
 				changeScores[index] += pay;
 				resultLists[index].addBase(pay);
-				// 一般情况
-				changeScores[bombIndex] -= pay;
-				resultLists[bombIndex].addBase(-pay);
+				if (yiman > 0 && isBaos[i] && baoIds[i] >= 0 && baoIds[i] != bombIndex) { // 役满有包牌
+					if (yiman == 1) { // 普通役满：包牌者付一半
+						changeScores[baoIds[i]] -= (pay / 2); 
+						changeScores[bombIndex] -= (pay / 2);
+						resultLists[baoIds[i]].addBaopai(-pay / 2);
+						resultLists[bombIndex].addBase(-pay / 2);
+					} else { // 复合役满：包牌者付一个役满，剩余的点炮者付
+						int yimanScore = ScoreSystem.All_Pay_Player_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
+						changeScores[baoIds[i]] -= yimanScore;
+						changeScores[bombIndex] -= (pay - yimanScore);
+						resultLists[baoIds[i]].addBaopai(-yimanScore);
+						resultLists[bombIndex].addBase(-pay + yimanScore);
+					}
+				} else { // 一般情况
+					changeScores[bombIndex] -= pay;
+					resultLists[bombIndex].addBase(-pay);
+				}
 			}
 		}
 		// 本场数点炮者付
@@ -339,11 +440,17 @@ public class Game3pManager extends BaseManager {
 			mScores[i] += changeScores[i];
 		}
 		String[] winIds = new String[winIndexs.length];
+		String[] baoIds = new String[winIndexs.length];
 		for (int i = 0; i < winIndexs.length; i++) {
-			winIds[i] = getPlayer(winIndexs[i]).getUuid();			
+			winIds[i] = getPlayer(winIndexs[i]).getUuid();	
+			if (isBaos[i] && baoIndexs[i] >= 0) {
+				baoIds[i] = getPlayer(baoIndexs[i]).getUuid();
+			} else {
+				baoIds[i] = "";
+			}	
 		}
 		MjAction action = MjAction.createBombAction(getPlayer(bombIndex).getUuid(), 
-				winIndexs.length, winIds, spectrums, fans, fus, envs, 0, null,
+				winIndexs.length, winIds, spectrums, fans, fus, envs, isBaos.length, baoIds,
 				MjCalcTool.getSpecialYakusEnable2String());
 		MjDetail detail = new MjDetail(mResult.getStartTime(), System.currentTimeMillis(), 
 				getJuCountForAll(), getRoundCount(), getLizhiCount(), 
@@ -569,6 +676,7 @@ public class Game3pManager extends BaseManager {
 			json.put("ret_point", mRetPoint);
 			json.put("double_wind_4", isDoubleWind4);
 			json.put("zimo_cut", mEnableZimoCut);
+			json.put("manguan_up", mManguanUp);
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < mDetails.size(); i++) {
 				MjDetail detail = mDetails.get(i);
@@ -680,6 +788,7 @@ public class Game3pManager extends BaseManager {
 					mRetPoint = json.optInt("ret_point", 5000);
 					isDoubleWind4 = json.optBoolean("double_wind_4", false);
 					mEnableZimoCut = json.optBoolean("zimo_cut", false);
+					mManguanUp = json.optBoolean("manguan_up", false);
 					JSONArray jsonArray = json.getJSONArray("details");
 					mDetails.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {

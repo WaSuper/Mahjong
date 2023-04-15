@@ -423,7 +423,8 @@ public class FanTypeActivity extends BaseActivity implements OnClickListener {
 			holder.leftText.setText(bean.getLeftText());
 			holder.centerText.setText(bean.getCenterText());
 			holder.rightText.setText(bean.getRightText());
-			holder.mjSpectrum.setData(bean.getCardList(), bean.getPairsList(), bean.getWinCard());
+			holder.mjSpectrum.copy(bean.getCardList(), bean.getPairsList(), 
+					bean.getWinCard(), bean.isShowWinCard());
 			return convertView;
 		}
 		

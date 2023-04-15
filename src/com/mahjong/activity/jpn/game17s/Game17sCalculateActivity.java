@@ -126,7 +126,7 @@ public class Game17sCalculateActivity extends BaseActivity
 				Score mResultScore = mScoreIndex > -1 ? 
 						game17sResult.getScore(mScoreIndex) : null;
 				mResult.setData(mResultScore, mRollCount, mBangCount, 
-						mPlayerBox.isChecked(), false);
+						mPlayerBox.isChecked(), false, false);
 				List<MjCard> cards = mScoreIndex > -1 ? 
 						game17sResult.getHandCards(mScoreIndex) : null;
 				MjCard addedCard = mScoreIndex > -1 ? 
@@ -276,7 +276,7 @@ public class Game17sCalculateActivity extends BaseActivity
 		isShowEscapeDora = false;
 		mScoreIndex = -1;
 		
-		mResult.setData(null, 0, 0, true, true);
+		mResult.setData(null, 0, 0, true, true, false);
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override

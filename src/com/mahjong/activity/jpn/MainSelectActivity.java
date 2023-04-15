@@ -18,6 +18,7 @@ import com.mahjong.ui.CommonDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,6 +49,10 @@ public class MainSelectActivity extends BaseActivity implements OnClickListener 
 	private TextView aboutView;
 	
 	private int mGameType = -1;
+	private int animeCounter = 0;
+	private boolean isInit = false;
+	
+	private Handler mHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +172,30 @@ public class MainSelectActivity extends BaseActivity implements OnClickListener 
 			return;
 		}
 		mGameType = type;
+		if (!isInit) {
+			mHandler.post(mAnimeRunnable);
+			isInit = true;
+		} else {
+			showGameTypeView(type);
+			ShareprefenceTool.getInstance().setInt(GAME_TYPE, mGameType, this);
+		}
+	}
+	
+	private Runnable mAnimeRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			if (animeCounter != mGameType + 6) {
+				showGameTypeView(animeCounter % 3);
+				animeCounter++;
+				mHandler.postDelayed(mAnimeRunnable, 150);
+			} else {
+				showGameTypeView(mGameType);
+			}
+		}
+	};
+	
+	private void showGameTypeView(int type) {
 		switch (type) {
 		case GameType4P:
 			btnGame4P.setBackgroundResource(R.drawable.main_choose_light);
@@ -186,7 +215,6 @@ public class MainSelectActivity extends BaseActivity implements OnClickListener 
 		default:
 			break;
 		}
-		ShareprefenceTool.getInstance().setInt(GAME_TYPE, mGameType, this);
 	}
 	
 	@Override

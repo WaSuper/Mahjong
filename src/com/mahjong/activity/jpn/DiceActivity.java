@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
 import com.mahjong.control.Game4pManager;
+import com.mahjong.control.ManagerTool;
 import com.mahjong.tools.LightTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.ui.MjDiceResultView;
@@ -30,7 +31,8 @@ import android.widget.ImageView;
 public class DiceActivity extends BaseActivity 
 		implements OnClickListener, OnRippleCompleteListener, OnCheckedChangeListener {
 
-	private static final String ENABLE_DICE_SOUND = "ENABLE_DICE_SOUND";
+	private static final String ENABLE_DICE_SOUND 	= "ENABLE_DICE_SOUND";
+	private static final String ENABLE_DICE_MJ3P	= "ENABLE_DICE_MJ3P";
 	
 	private int mDealerPos;
 	
@@ -41,6 +43,7 @@ public class DiceActivity extends BaseActivity
 	private ImageView[] mLoactionViews;
 	private MjDiceResultView mResultView;
 	private CheckBox mSoundBox;
+	private CheckBox mMj3PBox;
 	
 	private Handler mDiceHandler = new Handler();
 	private boolean mDiceState = false;
@@ -92,6 +95,14 @@ public class DiceActivity extends BaseActivity
 		default:
 			break;
 		}
+		if (ManagerTool.getInstance().getManager().is3pMahjong()) {
+			boolean use3P = ShareprefenceTool.getInstance().getBoolean(ENABLE_DICE_MJ3P, this, true);
+			mMj3PBox.setChecked(use3P);
+			mResultView.setMahjng3P(use3P);
+		} else {
+			mMj3PBox.setVisibility(View.GONE);
+		}
+//		mResultView.setPoint(2);
 	}
 	
 	@Override
@@ -126,6 +137,8 @@ public class DiceActivity extends BaseActivity
 		mLoactionViews[1] = (ImageView) findViewById(R.id.dice_location_right);
 		mLoactionViews[2] = (ImageView) findViewById(R.id.dice_location_top);
 		mLoactionViews[3] = (ImageView) findViewById(R.id.dice_location_left);
+		mMj3PBox = (CheckBox) findViewById(R.id.dice_mj3p);
+		mMj3PBox.setOnCheckedChangeListener(this);
 		
 		mDiceBitmaps[0] = BitmapFactory.decodeResource(getResources(), R.drawable.game_dice1);
 		mDiceBitmaps[1] = BitmapFactory.decodeResource(getResources(), R.drawable.game_dice2);
@@ -156,7 +169,23 @@ public class DiceActivity extends BaseActivity
 
 	@Override
 	public void onCheckedChanged(CompoundButton btn, boolean checked) {
-		ShareprefenceTool.getInstance().setBoolean(ENABLE_DICE_SOUND, checked, this);
+		switch (btn.getId()) {
+		case R.id.dice_sound:
+			ShareprefenceTool.getInstance().setBoolean(ENABLE_DICE_SOUND, checked, this);
+			break;
+		case R.id.dice_mj3p:
+			ShareprefenceTool.getInstance().setBoolean(ENABLE_DICE_MJ3P, checked, this);
+			mResultView.setMahjng3P(checked);
+			if (checked) {
+				mMj3PBox.setText(getString(R.string.game3p));
+			} else {
+				mMj3PBox.setText(getString(R.string.game4p));
+			}
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	@Override

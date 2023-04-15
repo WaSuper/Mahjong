@@ -36,6 +36,8 @@ public class Game17sSettingFragment extends BaseSettingFragment {
 		KEY_LANDSCAPE_MODE = Game17sSetting.GAME17S_LANDSCAPE_MODE;
 		KEY_DOUBLE_WIND_4 = Game17sSetting.GAME17S_DOUBLE_WIND_4;
 		KEY_GROUND_WIND = Game17sSetting.GAME17S_GROUND_WIND;
+		KEY_MANGUAN_UP = Game17sSetting.GAME17S_MANGUAN_UP;
+		KEY_NO_FLY = Game17sSetting.GAME17S_NO_FLY;
 	}
 
 	@Override
@@ -46,9 +48,11 @@ public class Game17sSettingFragment extends BaseSettingFragment {
 		// 将马点统一转为4位
 		tool.setMaPoint(changeMaPointTo4());
 		tool.setRetPoint(mRetPoint);
-		tool.setEnableDoubleWind4(mDoubleWind4.isChecked());
+		tool.setEnableDoubleWind4(mDoubleWind4Box.isChecked());
 		tool.setFengType(mGroundWind);
 		tool.setFanfuType(mFanfu);
+		tool.setEnableManguanUp(mManguanUpBox.isChecked());
+		tool.setEnableNoFly(mNoFlyBox.isChecked());
 	}
 	
 	@Override

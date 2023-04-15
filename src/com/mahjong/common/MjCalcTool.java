@@ -378,7 +378,7 @@ public class MjCalcTool {
 			MjWind groundWind, MjWind selfWind, 
 			int lizhiCount, int roundCount,
 			List<MjCard> indicators, List<MjCard> indicatorsIns, 
-			boolean isDoubleWind4, int doraNorth) {
+			boolean isDoubleWind4, int doraNorth, boolean mManguanUp) {
 		Score score = calcToResultScore(darkNums, brightNums, winNum, 
 				isDealer, isLiZhi, isDoubleLiZhi, 
 				isFirstRound, isFinalPick, isZiMo, isYiFa, isQiangGang, isLingshang, 
@@ -388,7 +388,7 @@ public class MjCalcTool {
 			StringBuffer sBuffer = new StringBuffer();
 			sBuffer.append(score.toString());
 			if (score.hasYaku()) {
-				int basePoint = ScoreSystem.GetBasePoint(score);
+				int basePoint = ScoreSystem.GetBasePoint(score, mManguanUp);
 				String s;
 				if (isDealer) {
 					if (isZiMo) {

@@ -34,6 +34,8 @@ public class Game3pSettingFragment extends BaseSettingFragment {
 		KEY_RET_POINT = Game3pSetting.GAME3P_RET_POINT;
 		KEY_LANDSCAPE_MODE = Game3pSetting.GAME3P_LANDSCAPE_MODE;
 		KEY_DOUBLE_WIND_4 = Game3pSetting.GAME3P_DOUBLE_WIND_4;
+		KEY_MANGUAN_UP = Game3pSetting.GAME3P_MANGUAN_UP;
+		KEY_NO_FLY = Game3pSetting.GAME3P_NO_FLY;
 	}
 
 	@Override
@@ -45,8 +47,10 @@ public class Game3pSettingFragment extends BaseSettingFragment {
 		tool.setEnableFanFu(mFanfuBox.isChecked());
 		tool.setMaPoint(changeMaPointTo4());
 		tool.setRetPoint(mRetPoint);
-		tool.setEnableDoubleWind4(mDoubleWind4.isChecked());
+		tool.setEnableDoubleWind4(mDoubleWind4Box.isChecked());
 		tool.setEnableZimoCut(mZimoCutBox.isChecked());
+		tool.setEnableManguanUp(mManguanUpBox.isChecked());
+		tool.setEnableNoFly(mNoFlyBox.isChecked());
 	}
 	
 	@Override

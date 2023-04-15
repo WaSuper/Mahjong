@@ -72,6 +72,8 @@ public abstract class BaseManager {
 	protected int mFengType = 0; // 17步场风类型：0->固定东风,1->轮流场风
 	protected int mFanfuType = 0; // 17步番缚类型：0->五番番缚,1->满贯番缚,2->无番缚
 	protected boolean mEnableZimoCut = false; // 3麻：自摸损
+	protected boolean mManguanUp = false; // 切上满贯
+	protected boolean mNoFly = false; // 无击飞
 	
 	protected String mTmpFileDir; // 临时信息保存地址
 	protected static final String TAG_INTERRUPT = "interrupt";
@@ -166,6 +168,7 @@ public abstract class BaseManager {
 			mExtraData |= 0x80;
 		}
 		if (mEnableZimoCut) mExtraData |= 0x100;
+		if (mManguanUp) mExtraData |= 0x200;
 		return mExtraData;
 	}
 	
@@ -183,6 +186,7 @@ public abstract class BaseManager {
 		mFengType = ((mExtraData & 0x20) == 0x20) ? 1 : 0;
 		mFanfuType = (mExtraData >> 6) & 0x3;
 		mEnableZimoCut = ((mExtraData & 0x100) == 0x100);
+		mManguanUp = ((mExtraData & 0x200) == 0x200);
 	}
 	
 	/**
@@ -440,6 +444,33 @@ public abstract class BaseManager {
 	 */
 	public void setEnableZimoCut(boolean enable) {
 		this.mEnableZimoCut = enable;
+	}
+	
+	/**
+	 * 获取是否执行切上满贯
+	 * 
+	 * @return
+	 */
+	public boolean getEnableManguanUp() {
+		return mManguanUp;
+	}
+	
+	/**
+	 * 设置是否执行切上满贯
+	 * 
+	 * @param enable
+	 */
+	public void setEnableManguanUp(boolean enable) {
+		this.mManguanUp = enable;
+	}
+	
+	/**
+	 * 设置是否执行无击飞
+	 * 
+	 * @param enable
+	 */
+	public void setEnableNoFly(boolean enable) {
+		this.mNoFly = enable;
 	}
 	
 	/**
@@ -1609,6 +1640,9 @@ public abstract class BaseManager {
 	 * @return
 	 */
 	public boolean checkPlayerFly() {
+		if (mNoFly) { // 无击飞模式，分值负数继续游戏
+			return false;
+		}
 		for (int i = 0; i < mScores.length; i++) {
 			if (mScores[i] < 0) {
 				return true;

@@ -397,8 +397,14 @@
 	<string name="game4p">四麻</string>
 	<string name="game3p">三麻</string>
 	<string name="double_wind_4">雀头双风4符</string>
+	<string name="double_wind_4_explain">当胡牌时自风场风均匹配，部分规则可用4符结算，否则用2符结算</string>
 	<string name="dora_north">拨北</string>
 	<string name="zimo_cut">自摸损</string>
 	<string name="game17s_fanfu_invalid">当前处于%1$s，有效番数为%2$d，胡牌不能！</string>
+	<string name="storage_explain">本应用为日本麻将点数记录器，在即将使用的功能中，导入导出对战记录、玩家数据、表情及音频数据等均需要使用系统的读写存储权限，
+	     请在接下来的权限申请中选择允许，否则将无法正常使用本应用。</string>
+	<string name="manguan_up">切上满贯</string>
+	<string name="manguan_up_explain">因为3翻60符、4翻30符得点接近于满贯，所以部分规则下可以将其直接当成满贯结算</string>
+	<string name="no_fly">无击飞</string>
 	    
 </resources>

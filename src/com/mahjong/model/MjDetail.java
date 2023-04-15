@@ -279,26 +279,50 @@ public class MjDetail extends Model {
 			builder.append(names[index] + " ");
 			builder.append(context.getString(R.string.zimo) + " ");
 			builder.append(getFanString(context, action.fan0, action.fu0));
+			if (action.tag1 > 0) {
+				index = findPlayerOrgIndexById(ids, action.baoId0);
+				builder.append(" " + context.getString(R.string.baopai));
+				builder.append(": " + names[index]);
+			}
 			break;
 		case MjAction.ACTION_BOMB:
 			index = findPlayerOrgIndexById(ids, action.id3);
 			builder.append(names[index] + " ");
 			builder.append(context.getString(R.string.bomb) + " ");
 			int winCount = action.tag1;
+			int baoCount = action.tag2;
 			if (winCount > 0) {
 				index = findPlayerOrgIndexById(ids, action.id0);
 				builder.append(names[index]);
-				builder.append("(" + getFanString(context, action.fan0, action.fu0) + ")");
+				builder.append("(" + getFanString(context, action.fan0, action.fu0));
+				if (baoCount > 0 && action.baoId0 != null && !action.baoId0.isEmpty()) {
+					index = findPlayerOrgIndexById(ids, action.baoId0);
+					builder.append("," + context.getString(R.string.baopai));
+					builder.append(": " + names[index]);
+				}
+				builder.append(")");
 			}
 			if (winCount > 1) {
 				index = findPlayerOrgIndexById(ids, action.id1);
 				builder.append(", " + names[index]);
-				builder.append("(" + getFanString(context, action.fan1, action.fu1) + ")");
+				builder.append("(" + getFanString(context, action.fan1, action.fu1));
+				if (baoCount > 0 && action.baoId1 != null && !action.baoId1.isEmpty()) {
+					index = findPlayerOrgIndexById(ids, action.baoId1);
+					builder.append("," + context.getString(R.string.baopai));
+					builder.append(": " + names[index]);
+				}
+				builder.append(")");
 			}
 			if (winCount > 2) {
 				index = findPlayerOrgIndexById(ids, action.id2);
 				builder.append(", " + names[index]);
-				builder.append("(" + getFanString(context, action.fan2, action.fu2) + ")");
+				builder.append("(" + getFanString(context, action.fan2, action.fu2));
+				if (baoCount > 0 && action.baoId2 != null && !action.baoId2.isEmpty()) {
+					index = findPlayerOrgIndexById(ids, action.baoId2);
+					builder.append("," + context.getString(R.string.baopai));
+					builder.append(": " + names[index]);
+				}
+				builder.append(")");
 			}
 			break;
 		case MjAction.ACTION_HUANGPAILIUJU:
@@ -310,6 +334,19 @@ public class MjDetail extends Model {
 			break;
 		case MjAction.ACTION_SIGANGSANLE:
 			builder.append(context.getString(R.string.SiGangSanLe));
+			int gangCount = action.tag1;
+			index = findPlayerOrgIndexById(ids, action.id0);
+			builder.append(" (1)" +names[index]);
+			index = findPlayerOrgIndexById(ids, action.id1);
+			builder.append(" (2)" +names[index]);
+			if (gangCount > 2) {
+				index = findPlayerOrgIndexById(ids, action.id2);
+				builder.append(" (3)" +names[index]);
+			}
+			if (gangCount > 3) {
+				index = findPlayerOrgIndexById(ids, action.id3);
+				builder.append(" (4)" +names[index]);
+			}
 			break;
 		case MjAction.ACTION_JIUPAIJIUZHONG:
 			builder.append(context.getString(R.string.JiuPaiJiuZhong));

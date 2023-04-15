@@ -22,6 +22,8 @@ public class MjSetting {
 	public static final String RET_POINT 		= "RET_POINT";
 	public static final String LANDSCAPE_MODE	= "LANDSCAPE_MODE";
 	public static final String DOUBLE_WIND_4	= "DOUBLE_WIND_4";
+	public static final String MANGUAN_UP		= "MANGUAN_UP";
+	public static final String NO_FLY			= "NO_FLY";
 	
 	public static int UUID = 0;
 	

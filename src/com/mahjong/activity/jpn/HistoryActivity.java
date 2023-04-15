@@ -85,6 +85,8 @@ public class HistoryActivity extends BaseActivity
 	
 	private int mMainType;
 	
+	private Handler mHandler = new Handler();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,24 +103,39 @@ public class HistoryActivity extends BaseActivity
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case FileActivity.File_Excel_Only:
-				String filePath = data.getStringExtra(FileActivity.FileDir);
-				boolean[] updataType = {false, false, false}; // 导入数据可能有其他类型，应全部判断是否更新
-				int count = ExcelUtils.readExcelToResult(filePath, updataType);
-				if (count > 0) {
-					ToastTool.showToast(mContext, mContext.getString(R.string.add_log_success, count));
-					searchResultList(true);
-					if (updataType[0]) {
-						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, true, mContext);
+				ToastTool.showToast(mContext, R.string.dealing);
+				final String filePath = data.getStringExtra(FileActivity.FileDir);
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						boolean[] updataType = {false, false, false}; // 导入数据可能有其他类型，应全部判断是否更新
+						final int count = ExcelUtils.readExcelToResult(filePath, updataType);
+						if (count > 0) {
+							if (updataType[0]) {
+								ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE, true, mContext);
+							}
+							if (updataType[1]) {
+								ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, true, mContext);
+							}
+							if (updataType[2]) {
+								ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, true, mContext);
+							}
+						}
+						mHandler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								if (count > 0) {
+									ToastTool.showToast(mContext, mContext.getString(R.string.add_log_success, count));
+									searchResultList(true);
+								} else {
+									ToastTool.showToast(mContext, R.string.add_log_fail);
+								}
+							}
+						});
 					}
-					if (updataType[1]) {
-						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_3P, true, mContext);
-					}
-					if (updataType[2]) {
-						ShareprefenceTool.getInstance().setBoolean(RankItem.IS_UPDATE_17S, true, mContext);
-					}
-				} else {
-					ToastTool.showToast(mContext, R.string.add_log_fail);
-				}
+				}).start();
 				break;
 			case Data_Result_Done:
 				mAdapter.notifyDataSetChanged();

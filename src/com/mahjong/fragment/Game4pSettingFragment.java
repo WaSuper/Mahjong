@@ -34,6 +34,8 @@ public class Game4pSettingFragment extends BaseSettingFragment {
 		KEY_RET_POINT = MjSetting.RET_POINT;
 		KEY_LANDSCAPE_MODE = MjSetting.LANDSCAPE_MODE;
 		KEY_DOUBLE_WIND_4 = MjSetting.DOUBLE_WIND_4;
+		KEY_MANGUAN_UP = MjSetting.MANGUAN_UP;
+		KEY_NO_FLY = MjSetting.NO_FLY;
 	}
 
 	@Override
@@ -45,7 +47,9 @@ public class Game4pSettingFragment extends BaseSettingFragment {
 		tool.setEnableFanFu(mFanfuBox.isChecked());
 		tool.setMaPoint(mMaPoints);
 		tool.setRetPoint(mRetPoint);
-		tool.setEnableDoubleWind4(mDoubleWind4.isChecked());
+		tool.setEnableDoubleWind4(mDoubleWind4Box.isChecked());
+		tool.setEnableManguanUp(mManguanUpBox.isChecked());
+		tool.setEnableNoFly(mNoFlyBox.isChecked());
 	}
 		
 	@Override

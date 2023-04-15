@@ -117,7 +117,7 @@ public class CalculateActivity extends BaseActivity
 			case SHOW_RESULT:
 //				mResult.setText(mResultText);
 				mResult.setData(mResultScore, mRollCount, mBangCount, 
-						mPlayerBox.isChecked(), mZimoBox.isChecked());
+						mPlayerBox.isChecked(), mZimoBox.isChecked(), false);
 				if (mResultScore != null && mResultScore.hasYaku()) {
 					mKeyBoardUtil.hide();
 				}
@@ -283,7 +283,7 @@ public class CalculateActivity extends BaseActivity
 //		mResultText = "";
 //		mResult.setText(mResultText);
 		mResultScore = null;
-		mResult.setData(mResultScore, 0, 0, true, true);
+		mResult.setData(mResultScore, 0, 0, true, true, false);
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override

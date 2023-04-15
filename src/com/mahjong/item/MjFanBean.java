@@ -19,6 +19,7 @@ public class MjFanBean {
 	private List<MjCardPairs> pairsList;
 	private MjCard winCard;
 	private boolean canShowSpectrum;
+	private boolean isShowWinCard;
 
 	public MjFanBean(String left, String center, String right, String mj) {
 		this.leftText = left;
@@ -60,7 +61,12 @@ public class MjFanBean {
 		return canShowSpectrum;
 	}
 
+	public boolean isShowWinCard() {
+		return isShowWinCard;
+	}
+	
 	public boolean analysisMjString(String mjText) {
+		isShowWinCard = true;
 		if (mjText == null || mjText.isEmpty()) {
 			return false;
 		}
@@ -105,7 +111,7 @@ public class MjFanBean {
 			
 			}
 		}
-
+		if (winCard == null) isShowWinCard = false;
 		return true;
 	}
 	

@@ -19,5 +19,7 @@ public class Game3pSetting {
 	public static final String GAME3P_LANDSCAPE_MODE	= MjSetting.LANDSCAPE_MODE; // 横屏模式统一参数
 	public static final String GAME3P_DOUBLE_WIND_4		= "GAME3P_DOUBLE_WIND_4";
 	public static final String GAME3P_ZIMO_CUT			= "GAME3P_ZIMO_CUT";
+	public static final String GAME3P_MANGUAN_UP		= "GAME3P_MANGUAN_UP";
+	public static final String GAME3P_NO_FLY			= "GAME3P_NO_FLY";
 	
 }

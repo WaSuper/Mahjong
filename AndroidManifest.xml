@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahjong"
     android:versionCode="2"
-    android:versionName="2.0.0 build 230322" >
+    android:versionName="2.1.0 build 230415" >
 
     <uses-sdk
         android:minSdkVersion="11"

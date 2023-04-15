@@ -114,7 +114,7 @@ public class Game4pManager extends BaseManager {
 			boolean isBao, int baoId, ResultList[] resultLists) {
 		int[] changeScores = {0, 0, 0, 0};
 		boolean isDealer = winIndex == juCount;
-		int basePoint = ScoreSystem.GetBasePoint(fan, fu);
+		int basePoint = ScoreSystem.GetBasePoint(fan, fu, mManguanUp);
 		int yiman = 0;
 		if (fan < 0) yiman = -fan;
 		else if (fan >= 13) yiman = fan / 13;
@@ -130,7 +130,7 @@ public class Game4pManager extends BaseManager {
 							+ roundCount * 300);
 					resultLists[baoId].addBaopai(-playerPay * 3).addRound(-roundCount * 300);
 				} else { // 复合役满：包牌者付一个役满，剩余再平分，本场数三家付
-					int yimanScore = ScoreSystem.All_Pay_Dealer_Ronghe(ScoreSystem.GetBasePoint(13, 0));
+					int yimanScore = ScoreSystem.All_Pay_Dealer_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
 					changeScores[baoId] -= yimanScore;
 					resultLists[baoId].addBaopai(-yimanScore);
 					playerPay = (playerPay * 3 - yimanScore) / 3;
@@ -167,7 +167,7 @@ public class Game4pManager extends BaseManager {
 					resultLists[baoId].addBaopai(-dealerPay - playerPay * 2)
 							.addRound(-roundCount * 300);
 				} else { // 复合役满：包牌者付一个役满，剩余的庄家付1/2，闲家付1/4，本场数三家付
-					int yimanScore = ScoreSystem.All_Pay_Player_Ronghe(ScoreSystem.GetBasePoint(13, 0));
+					int yimanScore = ScoreSystem.All_Pay_Player_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
 					changeScores[baoId] -= yimanScore;
 					resultLists[baoId].addBaopai(-yimanScore);
 					playerPay = (dealerPay + playerPay * 2 - yimanScore) / 4;
@@ -290,7 +290,7 @@ public class Game4pManager extends BaseManager {
 			ResultList[] resultLists) {
 		int[] changeScores = {0, 0, 0, 0};		
 		for (int i = 0; i < winIndexs.length; i++) {
-			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i]);
+			int basePoint = ScoreSystem.GetBasePoint(fan[i], fu[i], mManguanUp);
 			int index = winIndexs[i];
 			int yiman = 0;
 			if (fan[i] < 0) yiman = -fan[i];
@@ -307,7 +307,7 @@ public class Game4pManager extends BaseManager {
 						resultLists[baoIds[i]].addBaopai(-playerPay / 2);
 						resultLists[bombIndex].addBase(-playerPay / 2);
 					} else { // 复合役满：包牌者付一个役满，剩余的点炮者付
-						int yimanScore = ScoreSystem.All_Pay_Dealer_Ronghe(ScoreSystem.GetBasePoint(13, 0));
+						int yimanScore = ScoreSystem.All_Pay_Dealer_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
 						changeScores[baoIds[i]] -= yimanScore;
 						changeScores[bombIndex] -= (playerPay - yimanScore);
 						resultLists[baoIds[i]].addBaopai(-yimanScore);
@@ -328,11 +328,11 @@ public class Game4pManager extends BaseManager {
 						resultLists[baoIds[i]].addBaopai(-pay / 2);
 						resultLists[bombIndex].addBase(-pay / 2);
 					} else { // 复合役满：包牌者付一个役满，剩余的点炮者付
-						int yimanScore = ScoreSystem.All_Pay_Player_Ronghe(ScoreSystem.GetBasePoint(13, 0));
+						int yimanScore = ScoreSystem.All_Pay_Player_Ronghe(ScoreSystem.GetBasePoint(13, 0, mManguanUp));
 						changeScores[baoIds[i]] -= yimanScore;
 						changeScores[bombIndex] -= (pay - yimanScore);
 						resultLists[baoIds[i]].addBaopai(-yimanScore);
-						resultLists[bombIndex].addBaopai(-pay + yimanScore);
+						resultLists[bombIndex].addBase(-pay + yimanScore);
 					}
 				} else { // 一般情况
 					changeScores[bombIndex] -= pay;
@@ -637,6 +637,7 @@ public class Game4pManager extends BaseManager {
 			json.put("note", note != null ? note : "");
 			json.put("ret_point", mRetPoint);
 			json.put("double_wind_4", isDoubleWind4);
+			json.put("manguan_up", mManguanUp);
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < mDetails.size(); i++) {
 				MjDetail detail = mDetails.get(i);
@@ -746,6 +747,7 @@ public class Game4pManager extends BaseManager {
 					note = json.optString("note", "");
 					mRetPoint = json.optInt("ret_point", 5000);
 					isDoubleWind4 = json.optBoolean("double_wind_4", false);
+					mManguanUp = json.optBoolean("manguan_up", false);
 					JSONArray jsonArray = json.getJSONArray("details");
 					mDetails.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {

@@ -1,6 +1,7 @@
 package com.mahjong.activity.jpn;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.mahjong.R;
@@ -101,6 +102,8 @@ public class GameSimpleActivity extends BaseActivity implements
 	private LinearLayout mAdditionLayout;
 	private CheckBox mAdditionBox;
 	private int mCurLiujuType; // 当前流局种类
+	private int mCheckedCount = 0; // mPlayerBoxs的选中数量
+	private int[] mPlayerIndexes = {0, 0, 0, 0}; // mPlayerBoxs的选中顺序
 	
 	private CommonDialog mBaopaiDialog;
 	private LinearLayout[] mBaopaiLayout = new LinearLayout[2];
@@ -205,14 +208,12 @@ public class GameSimpleActivity extends BaseActivity implements
 		mPanelView.setOnMjPanelViewListener(mMjPanelViewListener);
 		mLiujuBtn.setOnClickListener(this);
 		mBaopaiBtn.setOnClickListener(this);	
-		if (!mManageTool.is4pMahjong()) {
+		if (mManageTool.is17Step()) {
 			mBaopaiBtn.setVisibility(View.INVISIBLE);
-			if (mManageTool.is17Step()) {
-				mBottomItem.setEnableZimo(false);
-				mRightItem.setEnableZimo(false);
-				mTopItem.setEnableZimo(false);
-				mLeftItem.setEnableZimo(false);
-			}
+			mBottomItem.setEnableZimo(false);
+			mRightItem.setEnableZimo(false);
+			mTopItem.setEnableZimo(false);
+			mLeftItem.setEnableZimo(false);
 		}
 		
 		mPlayerItemList = new ArrayList<PlayerFuncItem>();
@@ -308,8 +309,14 @@ public class GameSimpleActivity extends BaseActivity implements
 			mBaopaiPlayers[3] = (TextView) contentView.findViewById(R.id.baopai_player_right4);
 			mBaopaiInPlayers[0] = (TextView) contentView.findViewById(R.id.baopai_tab2_player1);
 			mBaopaiInPlayers[1] = (TextView) contentView.findViewById(R.id.baopai_tab2_player2);
-			mBaopaiInPlayers[2] = (TextView) contentView.findViewById(R.id.baopai_tab2_player3);		
-			for (int i = 0; i < 4; i++) {
+			mBaopaiInPlayers[2] = (TextView) contentView.findViewById(R.id.baopai_tab2_player3);
+			final int memberCount = mManageTool.getMemberCount();
+			if (memberCount < 4) {
+				mBaopaiBoxs[3].setVisibility(View.GONE);
+				mBaopaiPlayers[3].setVisibility(View.GONE);
+				mBaopaiInPlayers[2].setVisibility(View.GONE);
+			}
+			for (int i = 0; i < memberCount; i++) {
 				mBaopaiBoxs[i].setText(mManageTool.getPlayer(i).getNickName());
 				mBaopaiBoxs[i].setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
@@ -336,7 +343,7 @@ public class GameSimpleActivity extends BaseActivity implements
 					}
 				});
 			}		
-			for (int i = 0; i < mBaopaiPlayers.length; i++) {
+			for (int i = 0; i < memberCount; i++) {
 				mBaopaiPlayers[i].setOnClickListener(new OnClickListener() {
 					
 					@Override
@@ -359,7 +366,7 @@ public class GameSimpleActivity extends BaseActivity implements
 						}
 						Player[] players = mManageTool.getAllPlayer();
 						int baoIndex = 0;
-						for (int j = 0; j < players.length; j++) {
+						for (int j = 0; j < memberCount; j++) {
 							if (j == mBaopaiSelectIndex) continue;
 							mBaopaiInPlayers[baoIndex++].setText(players[j].getNickName());
 						}
@@ -566,8 +573,13 @@ public class GameSimpleActivity extends BaseActivity implements
 			mTingpaiLayout = (LinearLayout) contentView.findViewById(R.id.choose_ll_tingpai);
 			mAdditionLayout = (LinearLayout) contentView.findViewById(R.id.choose_ll_bottom);
 			mAdditionBox = (CheckBox) contentView.findViewById(R.id.choose_additon);
+			for (CheckBox cBox : mPlayerBoxs) {
+				cBox.setOnCheckedChangeListener(mLiuJuDetailListener);
+			}
 		}
 		mCurLiujuType = id;
+		mCheckedCount = 0;
+		Arrays.fill(mPlayerIndexes, 0);
 		if (id == R.id.liuju_sifenglianda) {
 			mPlayerBoxs[0].setText(getString(R.string.east));
 			mPlayerBoxs[1].setText(getString(R.string.south));
@@ -619,6 +631,59 @@ public class GameSimpleActivity extends BaseActivity implements
 		mPlayerChooseDialog.show();
 	}
 	
+	private OnCheckedChangeListener mLiuJuDetailListener = new OnCheckedChangeListener() {
+		
+		@Override
+		public void onCheckedChanged(CompoundButton btn, boolean isCheck) {
+			if (mCurLiujuType == R.id.liuju_sigangsanle) {
+				int index = 0;
+				switch (btn.getId()) {
+				case R.id.choose_player1:
+					index = 0;
+					break;
+				case R.id.choose_player2:
+					index = 1;
+					break;
+				case R.id.choose_player3:
+					index = 2;
+					break;
+				case R.id.choose_player4:
+					index = 3;
+					break;
+				default:
+					break;
+				}
+				if (isCheck) {
+					if (mCheckedCount >= 0 && mCheckedCount < 4) {
+						mCheckedCount++;
+						mPlayerIndexes[index] = mCheckedCount;
+						mPlayerBoxs[index].setText("(" + mPlayerIndexes[index] + ")" 
+								+ mManageTool.getPlayerNameWithWind(index, winds));
+					}
+				} else {
+					if (mCheckedCount > 0 && mCheckedCount <= 4) {
+						int curIndex = mPlayerIndexes[index];
+						for (int i = 0; i < mPlayerBoxs.length; i++) {
+							if (i == index) {
+								mPlayerBoxs[i].setText(mManageTool.getPlayerNameWithWind(i, winds));
+								mPlayerIndexes[i] = 0;
+							} else {
+								if (mPlayerIndexes[i] < curIndex) {
+									continue;
+								} else {
+									mPlayerIndexes[i]--;
+									mPlayerBoxs[i].setText("(" + mPlayerIndexes[i] + ")" 
+											+ mManageTool.getPlayerNameWithWind(i, winds));
+								}
+							}
+						}
+						mCheckedCount--;
+					}
+				}
+			}
+		}
+	};
+	
 	private boolean doLiujuAction() {
 		int count = 0;
 		for (int i = 0; i < mPlayerBoxs.length; i++) {
@@ -660,10 +725,11 @@ public class GameSimpleActivity extends BaseActivity implements
 			// 连庄，判断是否本场+1
 			if (count > 1) {
 				String[] gangIds = new String[count];
-				int index = 0;
+//				int index = 0;
 				for (int i = 0; i < mPlayerBoxs.length; i++) {
-					if (mPlayerBoxs[i].isChecked()) {
-						gangIds[index++] = mManageTool.getPlayer(i).getUuid();
+					if (mPlayerBoxs[i].isChecked() && mPlayerIndexes[i] > 0) {
+						gangIds[--mPlayerIndexes[i]] = mManageTool.getPlayer(i).getUuid();
+//						gangIds[index++] = mManageTool.getPlayer(i).getUuid();
 					}
 				}
 				mManageTool.setSigangsanle(count, gangIds, mAdditionBox.isChecked());

@@ -5,17 +5,25 @@ public class ScoreSystem {
 	/**
 	 * 计算基本点（自动计算）
 	 * 设符数为m，翻数为n，基本点为a，根据式子a=m*2^(n+2)计算出a的数值。
-	 * @param score
+	 * @param score 结果集
+	 * @param manguanUp 切上满贯
 	 * @return
 	 */
-	public static int GetBasePoint(Score score) {
+	public static int GetBasePoint(Score score, boolean manguanUp) {
 		if (score.FullYaku() > 0) {
 			return 8000 * score.FullYaku();
 		}
 
 		int allFanValue = score.AllFanValue();
 		if (allFanValue <= 4) {
-			return Math.min(score.Fu() * (1 << allFanValue + 2), 2000);
+			int fu = score.Fu();
+			if (manguanUp 
+					&& ((allFanValue == 4 && fu == 30) || (allFanValue == 3 && fu == 60))) {
+				return 2000;
+			} else {
+				return Math.min(score.Fu() * (1 << allFanValue + 2), 2000);
+			}
+			
 		} else if (allFanValue == 5) {
 			return 2000;
 		} else if (allFanValue >= 6 && allFanValue <= 7) {
@@ -33,14 +41,21 @@ public class ScoreSystem {
 	/**
 	 * 计算基本点（手动输入）
 	 * 设符数为m，翻数为n，基本点为a，根据式子a=m*2^(n+2)计算出a的数值。
-	 * @param score
+	 * @param fan 番数
+	 * @param fu 符数
+	 * @param manguanUp 切上满贯
 	 * @return
 	 */
-	public static int GetBasePoint(int fan, int fu) {
+	public static int GetBasePoint(int fan, int fu, boolean manguanUp) {
 		if (fan < 0) {
 			return -fan * 8000;
 		} else if (fan <= 4) {
-			return Math.min(fu * (1 << fan + 2), 2000);
+			if (manguanUp 
+					&& ((fan == 4 && fu == 30) || (fan == 3 && fu == 60))) {
+				return 2000;
+			} else {
+				return Math.min(fu * (1 << fan + 2), 2000);
+			}
 		} else if (fan == 5) {
 			return 2000;
 		} else if (fan >= 6 && fan <= 7) {
@@ -130,7 +145,7 @@ public class ScoreSystem {
 	}
 
 	public static int compare(Score x, Score y) {
-		int cmp = GetBasePoint(x) - GetBasePoint(y);
+		int cmp = GetBasePoint(x, false) - GetBasePoint(y, false);
 //		System.out.println("x=" + GetBasePoint(x) + ", y=" + GetBasePoint(y));
 		if (cmp != 0)
 			return cmp;
@@ -142,7 +157,7 @@ public class ScoreSystem {
 	}
 	
 	public static int compareForGame34(Score x, Score y) {
-		int cmp = GetBasePoint(x) - GetBasePoint(y);
+		int cmp = GetBasePoint(x, false) - GetBasePoint(y, false);
 		return cmp;
 	}
 

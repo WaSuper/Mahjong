@@ -397,6 +397,70 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:id="@+id/setting_tv_manguan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/manguan_up"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/setting_cb_manguan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+	        <View
+	            android:layout_width="match_parent"
+	            android:layout_height="1px"
+	            android:background="@color/diver_color" />
+
+            <TextView
+                android:id="@+id/setting_tv_no_fly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/no_fly"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/setting_cb_no_fly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/selector_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/setting_rl_special_yaku"
             android:layout_width="match_parent"
             android:layout_height="50dp"

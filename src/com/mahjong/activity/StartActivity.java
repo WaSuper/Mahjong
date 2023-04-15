@@ -254,14 +254,33 @@ public class StartActivity extends BaseActivity
 					Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 				showFailDialog();
 			} else {
-				ActivityCompat.requestPermissions(this,
-						new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, }, 1);
+				showRequestDialog();
 			}
 		} else {
 			goToMain();
 		}
 	}
 
+	private void showRequestDialog() {
+		final CommonDialog dialog = new CommonDialog(this, R.style.MyDialogStyle, 0);		
+		dialog.addView(R.layout.item_text);
+		dialog.titleTextView.setText(R.string.tip);
+		TextView content = (TextView) dialog.getContentView().findViewById(R.id.item_text);
+		content.setText(R.string.storage_explain);
+		dialog.ok.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ActivityCompat.requestPermissions(StartActivity.this,
+						new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, }, 1);
+				dialog.dismiss();
+			}
+		});
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.show();
+	}
+	
 	private void showFailDialog() {
 		final CommonDialog dialog = new CommonDialog(this, R.style.MyDialogStyle, 0);		
 		dialog.addView(R.layout.item_text);

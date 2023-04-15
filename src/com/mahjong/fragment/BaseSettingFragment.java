@@ -55,8 +55,12 @@ public abstract class BaseSettingFragment extends Fragment
 	protected TextView mRetPointText;
 	protected RelativeLayout mSpYakuLayout;
 	protected CheckBox mLandscapeMode;	
-	protected CheckBox mDoubleWind4;
+	protected CheckBox mDoubleWind4Box;
+	protected TextView mDoubleWind4Text;
 	protected CheckBox mZimoCutBox; // 3p
+	protected CheckBox mManguanUpBox;
+	protected TextView mManguanUpText;
+	protected CheckBox mNoFlyBox;
 	
 	protected List<String> mBattleCountList;
 	protected int mMember;
@@ -93,6 +97,8 @@ public abstract class BaseSettingFragment extends Fragment
 	protected String KEY_DOUBLE_WIND_4;
 	protected String KEY_GROUND_WIND; // 17step
 	protected String KEY_ZIMO_CUT; // 3p
+	protected String KEY_MANGUAN_UP;
+	protected String KEY_NO_FLY;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -119,11 +125,15 @@ public abstract class BaseSettingFragment extends Fragment
 		mRetPointText = (TextView) mView.findViewById(R.id.setting_retpoint);
 		mSpYakuLayout = (RelativeLayout) mView.findViewById(R.id.setting_rl_special_yaku);
 		mLandscapeMode = (CheckBox) mView.findViewById(R.id.setting_cb_landscape_mode);
-		mDoubleWind4 =  (CheckBox) mView.findViewById(R.id.setting_cb_dwind4);
+		mDoubleWind4Box =  (CheckBox) mView.findViewById(R.id.setting_cb_dwind4);
+		mDoubleWind4Text = (TextView) mView.findViewById(R.id.setting_tv_dwind4);
 		mGroundWindText = (TextView) mView.findViewById(R.id.setting_tv_groundwind); // 17step
 		mFanfuBox = (CheckBox) mView.findViewById(R.id.setting_cb_fanfu); // 4p、3p
 		mFanfuItemText = (TextView) mView.findViewById(R.id.setting_game17s_tv_fanfu_item); // 17step
 		mZimoCutBox = (CheckBox) mView.findViewById(R.id.setting_cb_zimocut); // 3p
+		mManguanUpBox =  (CheckBox) mView.findViewById(R.id.setting_cb_manguan_up);
+		mManguanUpText = (TextView) mView.findViewById(R.id.setting_tv_manguan_up);
+		mNoFlyBox = (CheckBox) mView.findViewById(R.id.setting_cb_no_fly);
 		if (mManager.is17Step()) {
 			mView.findViewById(R.id.setting_rl_enter_sw).setVisibility(View.GONE);
 			mView.findViewById(R.id.setting_rl_fanfu).setVisibility(View.GONE);
@@ -149,11 +159,15 @@ public abstract class BaseSettingFragment extends Fragment
 		mRetPointText.setOnClickListener(this);
 		mSpYakuLayout.setOnClickListener(this);
 		mLandscapeMode.setOnCheckedChangeListener(this);
-		mDoubleWind4.setOnCheckedChangeListener(this);
+		mDoubleWind4Box.setOnCheckedChangeListener(this);
+		mDoubleWind4Text.setOnClickListener(this);
 		mGroundWindText.setOnClickListener(this);
 		mFanfuItemText.setOnClickListener(this);
 		mFanfuText.setOnClickListener(this);
 		mZimoCutBox.setOnCheckedChangeListener(this);
+		mManguanUpBox.setOnCheckedChangeListener(this);
+		mManguanUpText.setOnClickListener(this);
+		mNoFlyBox.setOnCheckedChangeListener(this);
 		
 		ShareprefenceTool tool = ShareprefenceTool.getInstance();
 		mMember = tool.getInt(KEY_MEMBER_COUNT, mContext, defaultMember);
@@ -181,7 +195,13 @@ public abstract class BaseSettingFragment extends Fragment
 		mLandscapeMode.setChecked(landscapeMode);
 		
 		boolean doubleWind4 = tool.getBoolean(KEY_DOUBLE_WIND_4, mContext, false);
-		mDoubleWind4.setChecked(doubleWind4);
+		mDoubleWind4Box.setChecked(doubleWind4);
+		
+		boolean manguanUp = tool.getBoolean(KEY_MANGUAN_UP, mContext, false);
+		mManguanUpBox.setChecked(manguanUp);
+
+		boolean noFly = tool.getBoolean(KEY_NO_FLY, mContext, false);
+		mNoFlyBox.setChecked(noFly);
 		
 		if (mManager.is17Step()) {
 			mGroundWind = tool.getInt(KEY_GROUND_WIND, mContext, 0);
@@ -197,7 +217,7 @@ public abstract class BaseSettingFragment extends Fragment
 			mFanfuBox.setChecked(isFanfu);
 			
 			if (mManager.is3pMahjong()) {
-				boolean zimoCut = tool.getBoolean(KEY_ZIMO_CUT, mContext, false);
+				boolean zimoCut = tool.getBoolean(KEY_ZIMO_CUT, mContext, true);
 				mZimoCutBox.setChecked(zimoCut);
 			}
 		}
@@ -334,6 +354,14 @@ public abstract class BaseSettingFragment extends Fragment
 			break;
 		case R.id.setting_game17s_tv_fanfu_item:
 			showListDialog(getResources().getString(R.string.game17s_FanFu), mFanfuSelectList);
+			break;
+		case R.id.setting_tv_dwind4:
+			showTextDialog(getResources().getString(R.string.double_wind_4), 
+					getResources().getString(R.string.double_wind_4_explain));
+			break;
+		case R.id.setting_tv_manguan_up:
+			showTextDialog(getResources().getString(R.string.manguan_up), 
+					getResources().getString(R.string.manguan_up_explain));
 			break;
 		default:
 			break;
@@ -629,6 +657,14 @@ public abstract class BaseSettingFragment extends Fragment
 		case R.id.setting_cb_zimocut:
 			ShareprefenceTool.getInstance().setBoolean(
 					KEY_ZIMO_CUT, isChecked, mContext);
+			break;
+		case R.id.setting_cb_manguan_up:
+			ShareprefenceTool.getInstance().setBoolean(
+					KEY_MANGUAN_UP, isChecked, mContext);
+			break;
+		case R.id.setting_cb_no_fly:
+			ShareprefenceTool.getInstance().setBoolean(
+					KEY_NO_FLY, isChecked, mContext);
 			break;
 		default:
 			break;
