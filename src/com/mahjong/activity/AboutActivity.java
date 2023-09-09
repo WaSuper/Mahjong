@@ -139,7 +139,8 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 		content.setTextSize(16);
 		content.setMovementMethod(new ScrollingMovementMethod());
 		StringBuffer sBuffer = new StringBuffer();
-		sBuffer.append("230415更新：\n1.补全三麻包牌功能；\n2.修复三麻摇骰子功能；\n3.增加切上满贯设置；\n4.增加无击飞设置；");
+		sBuffer.append("230909更新：\n1.修复特殊情况无法南入/西入问题；\n2.修复玩家太多选择框无法确认问题；\n3.修复流局终局时立直棒归属问题；\n4.修复无击飞模式负分无法立直问题；\n5.增加个人数据平均打点和平均铳点；\n6.增加终局时末位玩家第一无限连庄；\n7.增加正方形模式；");
+		sBuffer.append("\n\n230415更新：\n1.补全三麻包牌功能；\n2.修复三麻摇骰子功能；\n3.增加切上满贯设置；\n4.增加无击飞设置；");
 		sBuffer.append("\n\n230322更新：\n1.增加三麻、十七步玩法；\n2.全新开场动画；\n3.修复自风场风符数出错问题；\n4.增加5本场以上中间计数盘颜色变化；\n5.修复一系列Bug；");
 		sBuffer.append("\n\n220831更新：\n1.增加新玩法《十七步》（暂时只有计算器...）；\n2.增加横屏模式；\n3.修复部分手机立直崩溃问题；\n4.修复部分番种出错问题；\n5.新增崩溃记录（记录在/Mahjong/crash文件夹中，有问题可发送此文件给我）");
 		sBuffer.append("\n\n220429更新：\n1.增加自定义返点、基本分；\n2.增加部分非主流役种（可自行开启或关闭）；\n3.修复部分情况下没有计算平和；");

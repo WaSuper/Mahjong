@@ -22,5 +22,7 @@ public class Game17sSetting {
 	public static final String GAME17S_DOUBLE_WIND_4		= "GAME17S_DOUBLE_WIND_4";
 	public static final String GAME17S_MANGUAN_UP			= "GAME17S_MANGUAN_UP";
 	public static final String GAME17S_NO_FLY				= "GAME17S_NO_FLY";
+	public static final String GAME17S_SQUARE_MODE			= MjSetting.SQUARE_MODE; // 正方模式统一参数
+	public static final String GAME17S_FINAL_WINNER_UNLIMITED = "GAME17S_FINAL_WINNER_UNLIMITED";
 	
 }

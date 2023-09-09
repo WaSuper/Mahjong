@@ -10,8 +10,11 @@ import com.mahjong.dialog.FanfuDialog.OnFanfuListener;
 import com.mahjong.model.MjAction;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
+import com.mahjong.ui.CommonDialog;
 import com.mahjong.ui.FlowRadioGroup;
 import com.mahjong.ui.FlowRadioGroup.OnCheckedChangeListener;
+import com.mahjong.ui.ext.TextPicker;
+import com.mahjong.ui.ext.TextPicker.OnTextSelectedListener;
 import com.mahjong.ui.PlayerFuncItem;
 
 import android.content.Context;
@@ -37,11 +40,26 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 	private Button mDownerBtn;
 	private Button mOkBtn;
 	private Button mCancelBtn;
+	// 普通模式使用
 	private FlowRadioGroup mFanGroup;
 //	private FlowRadioGroup mFuGroup;
 	private RadioButton[] mFanButtons = new RadioButton[18];
 	private TextView[] mFuButtons = new TextView[11];
 	private OnFuCheckedChangeListener mFuCheckedChangeListener;
+	// 正方模式使用
+	private Button mFanBtn;
+	private Button mFuBtn;
+	private String[] mFanTexts = {
+			"1番", "2番", "3番", "4番", "5番", "6番",
+			"7番", "8番", "9番", "10番", "11番", "12番", 
+			"役满", "2倍役满", "3倍役满", "4倍役满", "5倍役满", "6倍役满",};
+	private String[] mFan1Texts = {"30符", "40符", "50符", "60符","70符", 
+			"80符", "90符", "100符", "110符"};
+	private String[] mFan2_4Texts = {"25符", "30符", "40符", "50符", "60符",
+			"70符", "80符", "90符", "100符", "110符"};
+	private String[] mFan5Texts = {"--"};
+	private int mFanIndex = 0;
+	private int mFuIndex = 0;
 	
 	private Drawable[] mRadioButtonDrawables = new Drawable[3];
 	
@@ -51,9 +69,10 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 	private int mMainVision; // 主视觉
 	
 	private int mFanCount = 1; // 番数
-	private int mFuCount = 0; // 符数
+	private int mFuCount = 30; // 符数
 	
-	private boolean landscapeMode;
+	private boolean landscapeMode; // 横屏模式
+	private boolean squareMode; // 正方模式
 	
 	private BaseManager mManager = ManagerTool.getInstance().getManager();
 	
@@ -73,7 +92,12 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		} else {
 			setRequestedOrientation(port_orientations[pos]);
 		}
-		setContentView(R.layout.activity_jpn_result_set_simple);
+		squareMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.SQUARE_MODE, this, false);
+		if (squareMode) {
+			setContentView(R.layout.activity_square_jpn_result_set_simple);
+		} else {
+			setContentView(R.layout.activity_jpn_result_set_simple);
+		}
 		mContext = this;
 		// 设定内容
 		isZimo = intent.getBooleanExtra(BaseManager.PLAYER_IS_ZIMO, false);
@@ -81,7 +105,13 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		mMainVision = intent.getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
 		initUI();
 //		if (!isZimo) setDianPaoPlayer(2); // 默认对家
-		mFanGroup.check(mFanButtons[0].getId()); // 默认1番
+		if (!squareMode) {
+			mFanGroup.check(mFanButtons[0].getId()); // 默认1番
+			showButtonChecked(mFuButtons[2], true); // 默认30符
+		} else {
+			mFanBtn.setText(mFanTexts[0]);
+			mFuBtn.setText(mFan1Texts[0]);
+		}
 	}
 	
 	private void initUI() {
@@ -92,37 +122,42 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		mDownerBtn = (Button) findViewById(R.id.result_set_simple_downer);
 		mOkBtn = (Button) findViewById(R.id.result_set_simple_ok);
 		mCancelBtn = (Button) findViewById(R.id.result_set_simple_cancel);
-		mFanGroup = (FlowRadioGroup) findViewById(R.id.result_set_simple_group_fan);
-//		mFuGroup = (FlowRadioGroup) findViewById(R.id.result_set_simple_group_fu);
-		mFanButtons[0] = (RadioButton) findViewById(R.id.result_set_simple_fan1);
-		mFanButtons[1] = (RadioButton) findViewById(R.id.result_set_simple_fan2);
-		mFanButtons[2] = (RadioButton) findViewById(R.id.result_set_simple_fan3);
-		mFanButtons[3] = (RadioButton) findViewById(R.id.result_set_simple_fan4);
-		mFanButtons[4] = (RadioButton) findViewById(R.id.result_set_simple_fan5);
-		mFanButtons[5] = (RadioButton) findViewById(R.id.result_set_simple_fan6);
-		mFanButtons[6] = (RadioButton) findViewById(R.id.result_set_simple_fan7);
-		mFanButtons[7] = (RadioButton) findViewById(R.id.result_set_simple_fan8);
-		mFanButtons[8] = (RadioButton) findViewById(R.id.result_set_simple_fan9);
-		mFanButtons[9] = (RadioButton) findViewById(R.id.result_set_simple_fan10);
-		mFanButtons[10] = (RadioButton) findViewById(R.id.result_set_simple_fan11);
-		mFanButtons[11] = (RadioButton) findViewById(R.id.result_set_simple_fan12);
-		mFanButtons[12] = (RadioButton) findViewById(R.id.result_set_simple_yiman1);
-		mFanButtons[13] = (RadioButton) findViewById(R.id.result_set_simple_yiman2);
-		mFanButtons[14] = (RadioButton) findViewById(R.id.result_set_simple_yiman3);
-		mFanButtons[15] = (RadioButton) findViewById(R.id.result_set_simple_yiman4);
-		mFanButtons[16] = (RadioButton) findViewById(R.id.result_set_simple_yiman5);
-		mFanButtons[17] = (RadioButton) findViewById(R.id.result_set_simple_yiman6);
-		mFuButtons[0] = (TextView) findViewById(R.id.result_set_simple_fu20);
-		mFuButtons[1] = (TextView) findViewById(R.id.result_set_simple_fu25);
-		mFuButtons[2] = (TextView) findViewById(R.id.result_set_simple_fu30);
-		mFuButtons[3] = (TextView) findViewById(R.id.result_set_simple_fu40);
-		mFuButtons[4] = (TextView) findViewById(R.id.result_set_simple_fu50);
-		mFuButtons[5] = (TextView) findViewById(R.id.result_set_simple_fu60);
-		mFuButtons[6] = (TextView) findViewById(R.id.result_set_simple_fu70);
-		mFuButtons[7] = (TextView) findViewById(R.id.result_set_simple_fu80);
-		mFuButtons[8] = (TextView) findViewById(R.id.result_set_simple_fu90);
-		mFuButtons[9] = (TextView) findViewById(R.id.result_set_simple_fu100);
-		mFuButtons[10] = (TextView) findViewById(R.id.result_set_simple_fu110);
+		if (!squareMode) {
+			mFanGroup = (FlowRadioGroup) findViewById(R.id.result_set_simple_group_fan);
+//			mFuGroup = (FlowRadioGroup) findViewById(R.id.result_set_simple_group_fu);
+			mFanButtons[0] = (RadioButton) findViewById(R.id.result_set_simple_fan1);
+			mFanButtons[1] = (RadioButton) findViewById(R.id.result_set_simple_fan2);
+			mFanButtons[2] = (RadioButton) findViewById(R.id.result_set_simple_fan3);
+			mFanButtons[3] = (RadioButton) findViewById(R.id.result_set_simple_fan4);
+			mFanButtons[4] = (RadioButton) findViewById(R.id.result_set_simple_fan5);
+			mFanButtons[5] = (RadioButton) findViewById(R.id.result_set_simple_fan6);
+			mFanButtons[6] = (RadioButton) findViewById(R.id.result_set_simple_fan7);
+			mFanButtons[7] = (RadioButton) findViewById(R.id.result_set_simple_fan8);
+			mFanButtons[8] = (RadioButton) findViewById(R.id.result_set_simple_fan9);
+			mFanButtons[9] = (RadioButton) findViewById(R.id.result_set_simple_fan10);
+			mFanButtons[10] = (RadioButton) findViewById(R.id.result_set_simple_fan11);
+			mFanButtons[11] = (RadioButton) findViewById(R.id.result_set_simple_fan12);
+			mFanButtons[12] = (RadioButton) findViewById(R.id.result_set_simple_yiman1);
+			mFanButtons[13] = (RadioButton) findViewById(R.id.result_set_simple_yiman2);
+			mFanButtons[14] = (RadioButton) findViewById(R.id.result_set_simple_yiman3);
+			mFanButtons[15] = (RadioButton) findViewById(R.id.result_set_simple_yiman4);
+			mFanButtons[16] = (RadioButton) findViewById(R.id.result_set_simple_yiman5);
+			mFanButtons[17] = (RadioButton) findViewById(R.id.result_set_simple_yiman6);
+			mFuButtons[0] = (TextView) findViewById(R.id.result_set_simple_fu20);
+			mFuButtons[1] = (TextView) findViewById(R.id.result_set_simple_fu25);
+			mFuButtons[2] = (TextView) findViewById(R.id.result_set_simple_fu30);
+			mFuButtons[3] = (TextView) findViewById(R.id.result_set_simple_fu40);
+			mFuButtons[4] = (TextView) findViewById(R.id.result_set_simple_fu50);
+			mFuButtons[5] = (TextView) findViewById(R.id.result_set_simple_fu60);
+			mFuButtons[6] = (TextView) findViewById(R.id.result_set_simple_fu70);
+			mFuButtons[7] = (TextView) findViewById(R.id.result_set_simple_fu80);
+			mFuButtons[8] = (TextView) findViewById(R.id.result_set_simple_fu90);
+			mFuButtons[9] = (TextView) findViewById(R.id.result_set_simple_fu100);
+			mFuButtons[10] = (TextView) findViewById(R.id.result_set_simple_fu110);
+		} else {
+			mFanBtn = (Button) findViewById(R.id.result_set_simple_fan);
+			mFuBtn = (Button) findViewById(R.id.result_set_simple_fu);
+		}
 		
 		if (isZimo) {
 			mZimoLayout.setVisibility(View.VISIBLE);
@@ -148,10 +183,15 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		mDownerBtn.setOnClickListener(this);
 		mOkBtn.setOnClickListener(this);
 		mCancelBtn.setOnClickListener(this);
-		mFanGroup.setOnCheckedChangeListener(new OnFanCheckedChangeListener());
-		mFuCheckedChangeListener = new OnFuCheckedChangeListener();
-		for (TextView btn : mFuButtons) {
-			btn.setOnClickListener(mFuCheckedChangeListener);
+		if (!squareMode) {
+			mFanGroup.setOnCheckedChangeListener(new OnFanCheckedChangeListener());
+			mFuCheckedChangeListener = new OnFuCheckedChangeListener();
+			for (TextView btn : mFuButtons) {
+				btn.setOnClickListener(mFuCheckedChangeListener);
+			}
+		} else {
+			mFanBtn.setOnClickListener(this);
+			mFuBtn.setOnClickListener(this);
 		}
 		
 		mRadioButtonDrawables[0] = getResources().getDrawable(R.drawable.ic_checkbox_circle2_nor);
@@ -212,6 +252,12 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 		case R.id.result_set_simple_cancel:
 			this.finish();
 			break;			
+		case R.id.result_set_simple_fan:
+			showSelectDialog(getResources().getString(R.string.please_select_fan), true);
+			break;		
+		case R.id.result_set_simple_fu:
+			showSelectDialog(getResources().getString(R.string.please_select_fu), false);
+			break;
 		default:
 			break;
 		}
@@ -525,6 +571,115 @@ public class ResultSetSimpleActivity extends BaseActivity implements OnClickList
 			}			
 		}
 		
+	}
+	
+	/**
+	 * 正方模式下的番数符数选择框
+	 * 
+	 * @param title
+	 * @param isFan
+	 */
+	private void showSelectDialog(String title, final boolean isFan) {
+		final CommonDialog mDialog = new CommonDialog(mContext, R.style.MyDialogStyle, 0);
+		mDialog.addView(R.layout.layout_textpicker);
+		mDialog.setCanceledOnTouchOutside(true);
+		mDialog.titleTextView.setText(title);
+		mDialog.ok.setText(getResources().getString(R.string.ok));
+		mDialog.ok.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				if (isFan) {
+					String lastText = mFanBtn.getText().toString();
+					String curText = mFanTexts[mFanIndex];
+					if (!lastText.equals(curText)) {
+						mFanBtn.setText(curText);
+						mFuIndex = 0;
+						if (mFanIndex == 0) {
+							mFuBtn.setText(mFan1Texts[0]);
+						} else if (mFanIndex > 0 && mFanIndex < 4) {
+							mFuBtn.setText(mFan2_4Texts[0]);
+						} else {
+							mFuBtn.setText(mFan5Texts[0]);
+						}	
+					}					
+				} else {
+					if (mFanIndex == 0) {
+						mFuBtn.setText(mFan1Texts[mFuIndex]);
+					} else if (mFanIndex > 0 && mFanIndex < 4) {
+						mFuBtn.setText(mFan2_4Texts[mFuIndex]);
+					} else {
+						mFuBtn.setText(mFan5Texts[mFuIndex]);
+					}					
+				}
+				mFanCount = fanIndex2Num(mFanIndex);
+				mFuCount = fuIndex2Num(mFanIndex, mFuIndex);
+				mDialog.dismiss();
+			}
+		});
+		TextPicker picker = (TextPicker) mDialog.getContentView().findViewById(R.id.textpicker);
+		if (isFan) {
+			picker.setText(mFanTexts);
+			picker.setCurrentPosition(mFanIndex);
+		} else {
+			if (mFanIndex == 0) {
+				picker.setText(mFan1Texts);
+			} else if (mFanIndex > 0 && mFanIndex < 4) {
+				picker.setText(mFan2_4Texts);
+			} else {
+				picker.setText(mFan5Texts);
+			}	
+			picker.setCurrentPosition(mFuIndex);
+		}
+		picker.setOnTextSelectedListener(new OnTextSelectedListener() {
+			
+			@Override
+			public void onTextSelected(String text, int position) {
+				if (isFan) {					
+					mFanIndex = position;
+				} else {
+					mFuIndex = position;
+				}
+			}
+		});
+		mDialog.show();
+	}
+	
+	/**
+	 * 正方模式下的索引转番数
+	 * 
+	 * @param index
+	 * @return
+	 */
+	private int fanIndex2Num(int index) {
+		int num = 0;
+		if (index >= 0 && index <= 11) {
+			num = index + 1;
+		} else if (index >= 12 && index <= 17) {
+//			num = (index - 11) * 13;
+			num = 11 - index;
+		}		
+		return num;
+	}
+	
+	/**
+	 * 正方模式下的索引转符数
+	 * 
+	 * @param fanIndex
+	 * @param fuIndex
+	 * @return
+	 */
+	private int fuIndex2Num(int fanIndex, int fuIndex) {
+		int num = 0;
+		if (fanIndex == 0) {
+			num = (fuIndex + 3) * 10;
+		} else if (fanIndex > 0 && fanIndex < 4) {
+			if (fuIndex == 0) {
+				num = 25;
+			} else {
+				num = (fuIndex + 2) * 10;
+			}
+		} 	
+		return num;
 	}
 	
 }

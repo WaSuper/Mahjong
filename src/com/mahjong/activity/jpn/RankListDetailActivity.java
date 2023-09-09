@@ -43,6 +43,8 @@ public class RankListDetailActivity extends BaseActivity implements OnClickListe
 	private TextView mBombView;
 	private TextView mFlyView;
 	private TextView mChickenView;
+	private TextView mAverageHepaiView;
+	private TextView mAverageBombView;
 	private RankChart mRankChart;
 	
 	private Player mPlayer;
@@ -100,6 +102,8 @@ public class RankListDetailActivity extends BaseActivity implements OnClickListe
 		mBombView = (TextView) findViewById(R.id.rank_detail_bomb);
 		mFlyView = (TextView) findViewById(R.id.rank_detail_fly);
 		mChickenView = (TextView) findViewById(R.id.rank_detail_chicken);
+		mAverageHepaiView = (TextView) findViewById(R.id.rank_detail_average_hepai);
+		mAverageBombView = (TextView) findViewById(R.id.rank_detail_average_bomb);
 		mRankChart = (RankChart) findViewById(R.id.rank_detail_chart);
 		
 		mBackView.setOnClickListener(this);
@@ -131,6 +135,8 @@ public class RankListDetailActivity extends BaseActivity implements OnClickListe
 			mBombView.setText(percentFormat.format(mRankItem.getBombPercent()));
 			mFlyView.setText(percentFormat.format(mRankItem.getFlyPercent()));
 			mChickenView.setText(percentFormat.format(mRankItem.getChickenPercent()));
+			mAverageHepaiView.setText(mRankItem.getAverageHepai() + "");
+			mAverageBombView.setText(mRankItem.getAverageBomb() + "");
 			mRankChart.setData(mRankItem.getRecentRanks(), 
 					mRankItem.getRecentChickens(), mRankItem.getRecentFlys());
 		}

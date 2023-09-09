@@ -406,5 +406,11 @@
 	<string name="manguan_up">切上满贯</string>
 	<string name="manguan_up_explain">因为3翻60符、4翻30符得点接近于满贯，所以部分规则下可以将其直接当成满贯结算</string>
 	<string name="no_fly">无击飞</string>
+	<string name="square_mode">正方模式</string>
+	<string name="cyan_skylight">青天井</string>
+	<string name="final_lizhi_to">终局立直棒归属</string>
+	<string name="average_hepai">平均打点</string>
+	<string name="average_bomb">平均铳点</string>
+	<string name="final_winner_unlimited">终局第一无限连庄</string>
 	    
 </resources>

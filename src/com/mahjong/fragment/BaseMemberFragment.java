@@ -13,6 +13,7 @@ import com.mahjong.dialog.CardExtractDialog.CardExtractListener;
 import com.mahjong.model.Character;
 import com.mahjong.model.Player;
 import com.mahjong.tools.EmoticonTool;
+import com.mahjong.tools.GetSize;
 import com.mahjong.tools.ImageTool;
 import com.mahjong.tools.ShareprefenceTool;
 import com.mahjong.tools.ToastTool;
@@ -252,6 +253,9 @@ public abstract class BaseMemberFragment extends Fragment
 		final List<Player> list = Player.getAllPlayer();
 		Player[] curPlayers = {mEastPlayer, mSouthPlayer, mWestPlayer, mNorthPlayer};
 		mAdapter.setData(list, curPlayers);
+		if (list != null && list.size() > 5) {
+			mDialog.setItemCount(list.size(), GetSize.dip2px(mContext, 170));
+		}
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -338,6 +342,9 @@ public abstract class BaseMemberFragment extends Fragment
 		listView.setAdapter(mAdapter);
 		final List<Player> list = getPlayersExceptUesd();
 		mAdapter.setData(list);
+		if (list != null && list.size() > 5) {
+			mDialog.setItemCount(list.size(), GetSize.dip2px(mContext, 170));
+		}
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,

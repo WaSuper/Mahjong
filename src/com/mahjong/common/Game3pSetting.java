@@ -21,5 +21,7 @@ public class Game3pSetting {
 	public static final String GAME3P_ZIMO_CUT			= "GAME3P_ZIMO_CUT";
 	public static final String GAME3P_MANGUAN_UP		= "GAME3P_MANGUAN_UP";
 	public static final String GAME3P_NO_FLY			= "GAME3P_NO_FLY";
+	public static final String GAME3P_SQUARE_MODE		= MjSetting.SQUARE_MODE; // 正方模式统一参数
+	public static final String GAME3P_FINAL_WINNER_UNLIMITED = "GAME3P_FINAL_WINNER_UNLIMITED";
 	
 }

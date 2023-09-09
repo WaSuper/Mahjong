@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default" >
+
+    <com.mahjong.ui.SquaredLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/result_set_simple_top_ronghe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="visible" >
+
+            <Button
+                android:id="@+id/result_set_simple_oppositer"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/oppositer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/result_set_simple_upper"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/upper"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/result_set_simple_downer"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/selector_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/downer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/result_set_simple_top_zimo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone" >
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_btn_player_dir"
+                android:gravity="center"
+                android:text="@string/zimo"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+	        android:id="@+id/result_set_simple_ll_result"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+	        android:orientation="horizontal"
+	        android:gravity="center" >
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/count_fan"
+	            android:textColor="@color/white"
+	            android:textSize="17sp" />
+	        
+	        <Button
+	            android:id="@+id/result_set_simple_fan"
+	            android:layout_width="80dp"
+	            android:layout_height="29dp"
+	            android:layout_marginLeft="3dp"
+	            android:gravity="center"
+	            android:text="--"
+	            android:textSize="15sp"
+	            android:textColor="@color/black"
+	            android:background="@drawable/selector_spinner" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="15dp"
+	            android:text="@string/count_fu"
+	            android:textColor="@color/white"
+	            android:textSize="17sp" />
+	        
+	        <Button
+	            android:id="@+id/result_set_simple_fu"
+	            android:layout_width="80dp"
+	            android:layout_height="29dp"
+	            android:layout_marginLeft="3dp"
+	            android:gravity="center"
+	            android:text="--"
+	            android:textSize="15sp"
+	            android:textColor="@color/black"
+	            android:background="@drawable/selector_spinner" />
+	        
+	    </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/result_set_simple_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_game_btn_left"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:paddingTop="6dp"
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/result_set_simple_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/selector_game_btn_right"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </com.mahjong.ui.SquaredLinearLayout>
+
+</RelativeLayout>

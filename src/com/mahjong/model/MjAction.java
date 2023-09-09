@@ -19,6 +19,7 @@ public class MjAction {
 	public static final int ACTION_SANJIAHELIAO 	= 9;	// 三家和了
 	public static final int ACTION_LIUJUMANGUAN 	= 10;	// 流局满贯
 	public static final int ACTION_CHANGESCORE 		= 11;	// 分数调整
+	public static final int ACTION_FINAL_LIZHI		= 12;	// 终局立直棒分配
 	
 	public int actionId;		// 动作id
 	public String id0;			// 玩家0
@@ -265,6 +266,20 @@ public class MjAction {
 		MjAction action = new MjAction(ACTION_CHANGESCORE);
 		return action;
 	}
+	
+	/**
+	 * 终局立直棒调整
+	 * 
+	 * @param lizhiCount 立直棒数量
+	 * @param winId 一位玩家id
+	 * @return
+	 */
+	public static MjAction createFinalLizhiAction(int lizhiCount, String winId) {
+		MjAction action = new MjAction(ACTION_FINAL_LIZHI);
+		action.id0 = winId;
+		action.tag1 = lizhiCount;
+		return action;
+	}
 
 	/**
 	 * 动作字符串转化为动作
@@ -371,6 +386,10 @@ public class MjAction {
 				if (action.tag1 > 3) action.id3 = jb.optString("id3", "");
 				break;
 			case ACTION_CHANGESCORE:
+				break;
+			case ACTION_FINAL_LIZHI:
+				action.tag1 = jb.optInt("tag1", 0);
+				action.id0 = jb.optString("id0", "");
 				break;
 			default:
 				break;
@@ -484,6 +503,10 @@ public class MjAction {
 				if (tag1 > 3) jb.put("id3", id3);
 				break;
 			case ACTION_CHANGESCORE:
+				break;
+			case ACTION_FINAL_LIZHI:
+				jb.put("tag1", tag1);
+				jb.put("id0", id0);
 				break;
 			default:
 				break;

@@ -388,6 +388,11 @@ public class MjDetail extends Model {
 		case MjAction.ACTION_CHANGESCORE:
 			builder.append(context.getString(R.string.change_score));
 			break;
+		case MjAction.ACTION_FINAL_LIZHI:
+			builder.append(context.getString(R.string.final_lizhi_to));
+			index = findPlayerOrgIndexById(ids, action.id0);
+			builder.append(" " + names[index]);
+			break;
 		default:
 			break;
 		}

@@ -50,6 +50,7 @@ public class RankListActivity extends BaseActivity
 	private RankListAdapter mAdapter;
 	private SmartPopupWindow popupWindow;
 	private ProgressDialog mProgressDialog;
+	private ImageView mResetView;
 	
 	private Map<String, RankListData> mResultList = new HashMap<String, RankListActivity.RankListData>();
 	private int mLastSelectRank;
@@ -91,12 +92,14 @@ public class RankListActivity extends BaseActivity
 		mBackView = (ImageView) findViewById(R.id.ranklist_back);
 		mMoreView = (TextView) findViewById(R.id.ranklist_more);
 		mListView = (ListView) findViewById(R.id.ranklist_listview);
+		mResetView = (ImageView) findViewById(R.id.ranklist_reset);
 		mAdapter = new RankListAdapter(this);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		
 		mBackView.setOnClickListener(this);
 		mMoreView.setOnClickListener(this);
+		mResetView.setOnClickListener(this);
 		
 		mProgressDialog = new ProgressDialog(mContext);
 	}
@@ -201,12 +204,15 @@ public class RankListActivity extends BaseActivity
 				String[] maxSepctrums = {"", "", "", ""};
 				long[] maxStartTimes = {0, 0, 0, 0};
 				long[] maxLogTimes = {0, 0, 0, 0};
+				int[] hepaiSums = {0, 0, 0, 0};
+				int[] bombSums = {0, 0, 0, 0};
 				if (details != null && details.size() > 0) {
 					for (int i = 0; i < details.size(); i++) {
 						MjDetail detail = details.get(i);
 						MjAction action = detail.getAction();
+						int[] changeScores = detail.getChangeScores();
 						// 记录最大连庄数
-						int ju = detail.getJuCount() % 4;
+						int ju = detail.getJuCount() % result.getMemberCount();
 						int round = detail.getRoundCount();
 						bankerCounts[ju] = Math.max(bankerCounts[ju], round);
 						// 记录总场数（减除立直）
@@ -226,6 +232,7 @@ public class RankListActivity extends BaseActivity
 							if (index != -1) {
 								zimoCounts[index]++; // 记录自摸数
 								hepaiCounts[index]++; // 记录和牌数
+								hepaiSums[index] += changeScores[index]; // 累加和牌点数
 								// 记录最大牌谱
 								checkLogMaxFan(action.fan0, action.fu0, action.spt0, 
 										detail, index, maxFans, maxFus, maxSepctrums, 
@@ -234,10 +241,14 @@ public class RankListActivity extends BaseActivity
 							break;
 						case MjAction.ACTION_BOMB:
 							index = searchId2Index(uuids, action.id3);
-							if (index != -1) { bombCounts[index]++; } // 记录放铳数
+							if (index != -1) { 
+								bombCounts[index]++;  // 记录放铳数
+								bombSums[index] -= changeScores[index]; // 累加放铳点数
+							}
 							index = searchId2Index(uuids, action.id0);
 							if (index != -1) {
 								hepaiCounts[index]++; // 记录和牌数
+								hepaiSums[index] += changeScores[index]; // 累加和牌点数
 								// 记录最大牌谱
 								checkLogMaxFan(action.fan0, action.fu0, action.spt0, 
 										detail, index, maxFans, maxFus, maxSepctrums, 
@@ -246,6 +257,7 @@ public class RankListActivity extends BaseActivity
 							index = searchId2Index(uuids, action.id1);
 							if (index != -1) {
 								hepaiCounts[index]++; // 记录和牌数
+								hepaiSums[index] += changeScores[index]; // 累加和牌点数
 								// 记录最大牌谱
 								checkLogMaxFan(action.fan1, action.fu1, action.spt1, 
 										detail, index, maxFans, maxFus, maxSepctrums, 
@@ -254,6 +266,7 @@ public class RankListActivity extends BaseActivity
 							index = searchId2Index(uuids, action.id2);
 							if (index != -1) {
 								hepaiCounts[index]++; // 记录和牌数
+								hepaiSums[index] += changeScores[index]; // 累加和牌点数
 								// 记录最大牌谱
 								checkLogMaxFan(action.fan2, action.fu2, action.spt2, 
 										detail, index, maxFans, maxFus, maxSepctrums, 
@@ -270,7 +283,9 @@ public class RankListActivity extends BaseActivity
 					rankItems[i].addDetail(roundCount, lizhiCounts[i], hepaiCounts[i], 
 							zimoCounts[i], bombCounts[i], bankerCounts[i], 
 							maxFans[i], maxFus[i], maxSepctrums[i], 
-							maxStartTimes[i], maxLogTimes[i]);
+							maxStartTimes[i], maxLogTimes[i], 
+							hepaiCounts[i] != 0 ? hepaiSums[i] / hepaiCounts[i] : 0, 
+							bombCounts[i] != 0 ? bombSums[i] / bombCounts[i] : 0);
 				}
 				// update dialog
 				Message message = new Message();
@@ -379,6 +394,16 @@ public class RankListActivity extends BaseActivity
 			ShareprefenceTool.getInstance().setInt(LAST_SELECT_RANK, mLastSelectRank, mContext);
 			showFirstRankList();
 			popupWindow.dismiss();
+			break;
+		case R.id.ranklist_reset:
+			mResultList.clear();
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					calcPlayerRankData();
+				}
+			}).start();
 			break;
 		default:
 			break;

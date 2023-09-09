@@ -278,6 +278,30 @@
 	                    
 	                </RelativeLayout>
 	                
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/average_hepai"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_average_hepai"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
 	            </LinearLayout>
 	            
 	            <LinearLayout
@@ -441,6 +465,29 @@
 	                        android:layout_width="wrap_content"
 	                        android:layout_height="wrap_content"
 	                        android:text="0%"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp"
+	                        android:layout_alignParentRight="true" />
+	                    
+	                </RelativeLayout>
+	                
+	                <RelativeLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginTop="10dp" >
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="@string/average_bomb"
+	                        android:textColor="@color/white"
+	                        android:textSize="16sp" />
+	                    
+	                    <TextView
+	                        android:id="@+id/rank_detail_average_bomb"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:text="0"
 	                        android:textColor="@color/white"
 	                        android:textSize="16sp"
 	                        android:layout_alignParentRight="true" />

@@ -130,7 +130,8 @@ public class GameSimpleActivity extends BaseActivity implements
 	
 	private Handler mHandler = new Handler();
 	
-	private boolean landscapeMode;
+	private boolean landscapeMode; // 横屏模式
+	private boolean squareMode; // 正方模式（使用老司机模式，隐藏流局和包牌按钮，转至帮助处）
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +142,12 @@ public class GameSimpleActivity extends BaseActivity implements
 		} else {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
-		setContentView(R.layout.activity_jpn_game_simple);
+		squareMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.SQUARE_MODE, this, false);
+		if (squareMode) {
+			setContentView(R.layout.activity_square_jpn_game_simple);
+		} else {
+			setContentView(R.layout.activity_jpn_game_simple);
+		}
 		mContext = this;
 		mLightTool = new LightTool(this);
 		mManageTool = ManagerTool.getInstance().getManager();
@@ -190,26 +196,30 @@ public class GameSimpleActivity extends BaseActivity implements
 		mTopItem = (PlayerFuncItem) findViewById(R.id.game_player_top);
 		mLeftItem = (PlayerFuncItem) findViewById(R.id.game_player_left);
 		mPanelView = (MjPanelView) findViewById(R.id.game_panel_center);
-		mLiujuBtn = (Button) findViewById(R.id.game_btn_liuju);
-		mBaopaiBtn = (Button) findViewById(R.id.game_btn_baopai);
-		mModeBox = (CheckBox) findViewById(R.id.game_switch_mode);
-		mModeText = (TextView) findViewById(R.id.game_tv_mode);
-		mNoviceView = (ImageView) findViewById(R.id.game_img_novice);
-		mExpertView = (ImageView) findViewById(R.id.game_img_expert);
 		mRankImageViews[0] = (ImageView) findViewById(R.id.game_player_rank_bottom);
 		mRankImageViews[1] = (ImageView) findViewById(R.id.game_player_rank_right);
 		mRankImageViews[2] = (ImageView) findViewById(R.id.game_player_rank_top);
 		mRankImageViews[3] = (ImageView) findViewById(R.id.game_player_rank_left);
+		if (!squareMode) {
+			mLiujuBtn = (Button) findViewById(R.id.game_btn_liuju);
+			mBaopaiBtn = (Button) findViewById(R.id.game_btn_baopai);
+			mModeBox = (CheckBox) findViewById(R.id.game_switch_mode);
+			mModeText = (TextView) findViewById(R.id.game_tv_mode);
+			mNoviceView = (ImageView) findViewById(R.id.game_img_novice);
+			mExpertView = (ImageView) findViewById(R.id.game_img_expert);
+		}
 		
 		mTopItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mLeftItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mBottomItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mRightItem.setOnPlayerFuncItemListener(mPlayerFuncItemListener);
 		mPanelView.setOnMjPanelViewListener(mMjPanelViewListener);
-		mLiujuBtn.setOnClickListener(this);
-		mBaopaiBtn.setOnClickListener(this);	
+		if (!squareMode) {
+			mLiujuBtn.setOnClickListener(this);
+			mBaopaiBtn.setOnClickListener(this);
+		}	
 		if (mManageTool.is17Step()) {
-			mBaopaiBtn.setVisibility(View.INVISIBLE);
+			if (!squareMode) mBaopaiBtn.setVisibility(View.INVISIBLE);
 			mBottomItem.setEnableZimo(false);
 			mRightItem.setEnableZimo(false);
 			mTopItem.setEnableZimo(false);
@@ -238,17 +248,21 @@ public class GameSimpleActivity extends BaseActivity implements
 			}
 		}
 		
-		mResultMode = ShareprefenceTool.getInstance()
-				.getBoolean(MjSetting.MODE_NOVICE_EXPERT, mContext, false);
-		showModeText(mResultMode);
-		mModeBox.setChecked(mResultMode);
-		mModeBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton button, boolean checked) {
-				showModeText(checked);
-			}
-		});		
+		if (squareMode) {
+			mResultMode = true;
+		} else {
+			mResultMode = ShareprefenceTool.getInstance()
+					.getBoolean(MjSetting.MODE_NOVICE_EXPERT, mContext, false);
+			showModeText(mResultMode);
+			mModeBox.setChecked(mResultMode);
+			mModeBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton button, boolean checked) {
+					showModeText(checked);
+				}
+			});	
+		}
 	}
 	
 	@Override
@@ -452,6 +466,7 @@ public class GameSimpleActivity extends BaseActivity implements
 	
 	private void showBaopaiState(boolean state) {
 		mBaopaiState = state;
+		if (squareMode) return;
 		if (state) {
 			mBaopaiBtn.setBackgroundResource(R.drawable.ic_game_btn_right);			
 		} else {
@@ -898,7 +913,8 @@ public class GameSimpleActivity extends BaseActivity implements
 		
 		@Override
 		public int onClickLizhi(Player player, int orgIndex, int pos, int lizhi) {
-			if (lizhi > 0 || mManageTool.getPlayerScore(orgIndex) < 1000) {
+			if (lizhi > 0 || 
+					(!mManageTool.getEnableNoFly() && mManageTool.getPlayerScore(orgIndex) < 1000)) {
 				ToastTool.showToast(mContext, R.string.lizhi_fail);
 				return 0;
 			}
@@ -1156,12 +1172,24 @@ public class GameSimpleActivity extends BaseActivity implements
 					mAudioTool.setAudioEnable(!mAudioTool.getAudioEnable());
 					break;
 				case R.id.help_change_score:
-					Intent intent = new Intent(GameSimpleActivity.this, ChangeScoreActivity.class);
+					Intent intent;
+					if (squareMode) {
+						intent = new Intent(GameSimpleActivity.this, 
+								com.mahjong.activity.jpn.square.ChangeScoreActivity.class);
+					} else {
+						intent = new Intent(GameSimpleActivity.this, ChangeScoreActivity.class);
+					}
 					intent.putExtra(MAIN_VISION, mMainVision);
 					startActivity(intent);
 					break;
 				case R.id.help_note:
 					editNote();
+					break;
+				case R.id.help_liuju:
+					showLiuJuDialog();
+					break;
+				case R.id.help_baopai:
+					showBaopaiDialog();
 					break;
 				default:
 					break;
@@ -1174,6 +1202,11 @@ public class GameSimpleActivity extends BaseActivity implements
 		audioView.setOnClickListener(listener);
 		scoreView.setOnClickListener(listener);
 		noteView.setOnClickListener(listener);
+		if (squareMode) {
+			view.findViewById(R.id.help_square_extra).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.help_liuju).setOnClickListener(listener);
+			view.findViewById(R.id.help_baopai).setOnClickListener(listener);
+		}
 		mHelpDialog.show();
 	}
 	
@@ -1373,7 +1406,9 @@ public class GameSimpleActivity extends BaseActivity implements
 	private void showRankDialog(Player[] players, int[] scores, int[] ranks, float[] mas) {
 		final FinalRankDialog frDialog = new FinalRankDialog(mContext);
 		AnalysisTool aTool = new AnalysisTool(mManageTool.getResult(), mManageTool.getAllDetails());
-		frDialog.setData(players, scores, mas, ranks, aTool, mAudioTool, mManageTool.getMemberCount());
+		frDialog.setData(players, scores, mas, ranks, aTool, 
+				mAudioTool, mManageTool.getMemberCount(),
+				!squareMode);
 		frDialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override

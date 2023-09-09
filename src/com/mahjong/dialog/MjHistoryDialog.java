@@ -170,6 +170,9 @@ public class MjHistoryDialog extends CommonDialog {
 				int index = MjDetail.findPlayerOrgIndexById(mIds, detail.getAction().id0);
 				content += (" " + changeScores[index] + "→" + finalScores[index]);
 				break;
+			case MjAction.ACTION_FINAL_LIZHI:
+				int index2 = MjDetail.findPlayerOrgIndexById(mIds, detail.getAction().id0);
+				content += (" " + changeScores[index2] + "→" + finalScores[index2]);
 			default:
 				break;
 			}

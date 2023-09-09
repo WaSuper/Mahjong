@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.mahjong.R;
 import com.mahjong.activity.BaseActivity;
+import com.mahjong.common.MjSetting;
 import com.mahjong.control.Game4pManager;
 import com.mahjong.control.ManagerTool;
 import com.mahjong.tools.LightTool;
@@ -60,7 +61,12 @@ public class DiceActivity extends BaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_jpn_dice);
+		boolean isSquareMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.SQUARE_MODE, this, false);
+		if (isSquareMode) {
+			setContentView(R.layout.activity_square_jpn_dice);
+		} else {
+			setContentView(R.layout.activity_jpn_dice);
+		}
 		mLightTool = new LightTool(this);
 		initUI();
 		initSoundEffect();

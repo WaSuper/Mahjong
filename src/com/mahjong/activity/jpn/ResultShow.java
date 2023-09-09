@@ -76,7 +76,12 @@ public class ResultShow extends BaseActivity implements OnClickListener {
 	}
 	
 	private void onCreateAction() {
-		setContentView(R.layout.activity_jpn_show_result);
+		boolean squareMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.SQUARE_MODE, this, false);
+		if (squareMode) {
+			setContentView(R.layout.activity_square_jpn_show_result);
+		} else {
+			setContentView(R.layout.activity_jpn_show_result);
+		}
 		mActionType = getIntent().getIntExtra(MjAction.Name, 0);
 		mMainVision = getIntent().getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
 		mLightTool = new LightTool(this);

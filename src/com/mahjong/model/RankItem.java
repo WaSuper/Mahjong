@@ -42,13 +42,16 @@ public class RankItem extends Model {
 	public static final String Col_FlyCount 		= "FlyCount";
 	public static final String Col_ChickenCount 	= "ChickenCount";
 	public static final String Col_MainType			= "MainType";
+	public static final String Col_AverageHepai		= "AverageHepai";
+	public static final String Col_AverageBomb		= "AverageBomb";
 	
 	public static final String[] Columns = {
 		Col_PlayerId, Col_Spectrum, Col_Fan, Col_Fu, Col_StartTime, Col_LogTime, 
 		Col_RecentRanks, Col_RecentFlys, Col_RecentChickens,
 		Col_BattleCount, Col_Rank1Count, Col_Rank2Count, Col_Rank3Count, Col_Rank4Count, 
 		Col_MaxBanker, Col_TotalPoint, Col_RoundCount, Col_LizhiCount, Col_HepaiCount, 
-		Col_ZimoCount, Col_BombCount, Col_FlyCount, Col_ChickenCount, Col_MainType
+		Col_ZimoCount, Col_BombCount, Col_FlyCount, Col_ChickenCount, Col_MainType,
+		Col_AverageHepai, Col_AverageBomb
 	};
 	
 	@Column(name = "PlayerId")
@@ -123,6 +126,12 @@ public class RankItem extends Model {
 	@Column(name = "MainType")
 	private int main_type;			// 游戏主类型:0->四麻,1->三麻,2->17步
 	
+	@Column(name = "AverageHepai")
+	private int average_hepai;		// 平均打点
+
+	@Column(name = "AverageBomb")
+	private int average_bomb;		// 平均铳点
+	
 	public RankItem() {
 		super();
 	}
@@ -151,13 +160,16 @@ public class RankItem extends Model {
 		this.recent_flys = "";
 		this.recent_chickens = "";
 		this.main_type = main_type;
+		this.average_hepai = 0;
+		this.average_bomb = 0;
 	}
 	
 	public RankItem(String playerId, String spectrum, int fan, int fu, 
 			int[] recentRanks, boolean[] recentFlys, boolean[] recentChickens,
 			int battlecount, int rank1Count, int rank2Count, int rank3Count, int rank4Count,
 			int maxBanker, double totalPoint, int roundCount, int lizhiCount, int hepaiCount,
-			int zimoCount, int bombCount, int flyCount, int chickenCount, int main_type) {
+			int zimoCount, int bombCount, int flyCount, int chickenCount, int main_type,
+			int average_hepai, int average_bomb) {
 		super();
 		this.player_id = playerId;
 		this.spectrum = spectrum;
@@ -178,6 +190,8 @@ public class RankItem extends Model {
 		this.fly_count = flyCount;
 		this.chicken_count = chickenCount;
 		this.main_type = main_type;
+		this.average_hepai = average_hepai;
+		this.average_bomb = average_bomb;
 		if (recentRanks != null) {
 			this.recent_ranks = recentRanks[0] + "";
 			for (int i = 1; i < recentRanks.length; i++) {
@@ -352,6 +366,14 @@ public class RankItem extends Model {
 		this.main_type = type;
 	}
 	
+	public int getAverageHepai() {
+		return average_hepai;
+	}
+	
+	public int getAverageBomb() {
+		return average_bomb;
+	}
+	
 	public void addResult(float ma, int rank, int point) {
 		total_point += ma;
 		switch (rank) {
@@ -385,7 +407,7 @@ public class RankItem extends Model {
 	
 	public void addDetail(int roundCount, int lizhiCount, int hepaiCount, int zimoCount,
 			int bombCount, int bankerCount, int maxFan, int maxFu, String maxSpectrum,
-			long maxStartTime, long maxLogTime) {
+			long maxStartTime, long maxLogTime, int averageHepai, int averageBomb) {
 		round_count += roundCount;
 		lizhi_count += lizhiCount;
 		hepai_count += hepaiCount;
@@ -410,6 +432,13 @@ public class RankItem extends Model {
 				recent_chickens = (hepaiCount == 0 ? "1" : "0") + "," + recent_chickens;
 			}
 		}
+		if (hepai_count > 0) {
+			average_hepai = (average_hepai * (hepai_count - hepaiCount)  + averageHepai * hepaiCount) / hepai_count;
+		}
+		if (bomb_count > 0) {
+			average_bomb = (average_bomb * (bomb_count - bombCount) + averageBomb * bombCount) / bomb_count;
+		}
+		
 	}
 	
 	public static boolean checkSaveMaxFan(int cmpFan, int cmpFu, int orgFan, int orgFu) {

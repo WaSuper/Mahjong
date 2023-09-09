@@ -25,14 +25,27 @@
         <enum name="right" value="1"/>
         <enum name="top" value="2"/>
         <enum name="left" value="3"/>
+        <enum name="center" value="4"/>
     </attr>   
     <attr name="rotateAngle" format="integer" />
     <attr name="transX" format="dimension" />
     <attr name="transY" format="dimension" />
+    <attr name="exText" format="string" />
+    <attr name="exTextSize" format="integer"/>
+    <attr name="exTextColor" format="color"/>    
     <declare-styleable name="RotateTextView">
         <attr name="rotateAngle" />
         <attr name="transX" />
         <attr name="transY" />
+    </declare-styleable>  
+    <declare-styleable name="RotateTextView2">
+        <attr name="rotateAngle" />
+        <attr name="transX" />
+        <attr name="transY" />
+        <attr name="position" />
+        <attr name="exText" />
+    	<attr name="exTextSize" />
+    	<attr name="exTextColor" />  
     </declare-styleable>
     <declare-styleable name="ResultListView">
         <attr name="position"/>

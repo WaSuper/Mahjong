@@ -61,6 +61,8 @@ public abstract class BaseSettingFragment extends Fragment
 	protected CheckBox mManguanUpBox;
 	protected TextView mManguanUpText;
 	protected CheckBox mNoFlyBox;
+	protected CheckBox mFinalWinnerUnlimitedBox;
+	protected CheckBox mSquareMode;	
 	
 	protected List<String> mBattleCountList;
 	protected int mMember;
@@ -99,6 +101,8 @@ public abstract class BaseSettingFragment extends Fragment
 	protected String KEY_ZIMO_CUT; // 3p
 	protected String KEY_MANGUAN_UP;
 	protected String KEY_NO_FLY;
+	protected String KEY_SQUARE_MODE;
+	protected String KEY_FINAL_WINNER_UNLIMITED;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -134,6 +138,8 @@ public abstract class BaseSettingFragment extends Fragment
 		mManguanUpBox =  (CheckBox) mView.findViewById(R.id.setting_cb_manguan_up);
 		mManguanUpText = (TextView) mView.findViewById(R.id.setting_tv_manguan_up);
 		mNoFlyBox = (CheckBox) mView.findViewById(R.id.setting_cb_no_fly);
+		mFinalWinnerUnlimitedBox = (CheckBox) mView.findViewById(R.id.setting_cb_final_winner_unlimited);
+		mSquareMode = (CheckBox) mView.findViewById(R.id.setting_cb_square_mode);
 		if (mManager.is17Step()) {
 			mView.findViewById(R.id.setting_rl_enter_sw).setVisibility(View.GONE);
 			mView.findViewById(R.id.setting_rl_fanfu).setVisibility(View.GONE);
@@ -168,6 +174,8 @@ public abstract class BaseSettingFragment extends Fragment
 		mManguanUpBox.setOnCheckedChangeListener(this);
 		mManguanUpText.setOnClickListener(this);
 		mNoFlyBox.setOnCheckedChangeListener(this);
+		mFinalWinnerUnlimitedBox.setOnCheckedChangeListener(this);
+		mSquareMode.setOnCheckedChangeListener(this);
 		
 		ShareprefenceTool tool = ShareprefenceTool.getInstance();
 		mMember = tool.getInt(KEY_MEMBER_COUNT, mContext, defaultMember);
@@ -202,6 +210,12 @@ public abstract class BaseSettingFragment extends Fragment
 
 		boolean noFly = tool.getBoolean(KEY_NO_FLY, mContext, false);
 		mNoFlyBox.setChecked(noFly);
+		
+		boolean unlimited = tool.getBoolean(KEY_FINAL_WINNER_UNLIMITED, mContext, false);
+		mFinalWinnerUnlimitedBox.setChecked(unlimited);
+		
+		boolean squareMode = tool.getBoolean(KEY_SQUARE_MODE, mContext, false);
+		mSquareMode.setChecked(squareMode);
 		
 		if (mManager.is17Step()) {
 			mGroundWind = tool.getInt(KEY_GROUND_WIND, mContext, 0);
@@ -665,6 +679,14 @@ public abstract class BaseSettingFragment extends Fragment
 		case R.id.setting_cb_no_fly:
 			ShareprefenceTool.getInstance().setBoolean(
 					KEY_NO_FLY, isChecked, mContext);
+			break;
+		case R.id.setting_cb_square_mode:
+			ShareprefenceTool.getInstance().setBoolean(
+					KEY_SQUARE_MODE, isChecked, mContext);
+			break;
+		case R.id.setting_cb_final_winner_unlimited:
+			ShareprefenceTool.getInstance().setBoolean(
+					KEY_FINAL_WINNER_UNLIMITED, isChecked, mContext);
 			break;
 		default:
 			break;

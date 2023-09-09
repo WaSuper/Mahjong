@@ -74,6 +74,7 @@ public abstract class BaseManager {
 	protected boolean mEnableZimoCut = false; // 3麻：自摸损
 	protected boolean mManguanUp = false; // 切上满贯
 	protected boolean mNoFly = false; // 无击飞
+	protected boolean mFinalWinnerUnlimited = false; // 终局末位玩家第一时无限连庄
 	
 	protected String mTmpFileDir; // 临时信息保存地址
 	protected static final String TAG_INTERRUPT = "interrupt";
@@ -169,6 +170,8 @@ public abstract class BaseManager {
 		}
 		if (mEnableZimoCut) mExtraData |= 0x100;
 		if (mManguanUp) mExtraData |= 0x200;
+		if (mNoFly) mExtraData |= 0x400;
+		if (mFinalWinnerUnlimited) mExtraData |= 0x800;
 		return mExtraData;
 	}
 	
@@ -187,6 +190,8 @@ public abstract class BaseManager {
 		mFanfuType = (mExtraData >> 6) & 0x3;
 		mEnableZimoCut = ((mExtraData & 0x100) == 0x100);
 		mManguanUp = ((mExtraData & 0x200) == 0x200);
+		mNoFly = ((mExtraData & 0x400) == 0x400);
+		mFinalWinnerUnlimited = ((mExtraData & 0x800) == 0x800);
 	}
 	
 	/**
@@ -465,12 +470,39 @@ public abstract class BaseManager {
 	}
 	
 	/**
+	 * 获取是否执行无击飞
+	 * 
+	 * @return
+	 */
+	public boolean getEnableNoFly() {
+		return mNoFly;
+	}
+	
+	/**
 	 * 设置是否执行无击飞
 	 * 
 	 * @param enable
 	 */
 	public void setEnableNoFly(boolean enable) {
 		this.mNoFly = enable;
+	}
+	
+	/**
+	 * 获取是否执行终局末位玩家第一时无限连庄
+	 * 
+	 * @return
+	 */
+	public boolean getEnableFinalWinnerUnlimited() {
+		return mFinalWinnerUnlimited;
+	}
+	
+	/**
+	 * 设置是否执行终局末位玩家第一时无限连庄
+	 * 
+	 * @param enable
+	 */
+	public void setEnableFinalWinnerUnlimited(boolean enable) {
+		this.mFinalWinnerUnlimited = enable;
 	}
 	
 	/**
@@ -1046,6 +1078,10 @@ public abstract class BaseManager {
 			ranks[i] = analysisPlayerRank(i, mScores);
 			switch (ranks[i]) {
 			case 1:
+				// 当终局时有立直棒在场上，应归一位者所有
+				if (getLizhiCount() > 0) {
+					setFinalLizhi(getLizhiCount(), i);
+				}
 				mas[i] += (mRetPoint / 1000 * mMemberCount); // 头名赏：（返点 - 原点） / 1000 * 人数; 
 			case 2:				
 			case 3:
@@ -1290,6 +1326,31 @@ public abstract class BaseManager {
 		addDetail(detail);
 		if (isAddRound) mRoundCount++; // 本场数+1
 		continueRound();
+		saveStatesForTmp();
+	}
+	
+	/**
+	 * 终局立直棒分配(流局终局时使用)
+	 * 
+	 * @param lizhiCount
+	 * @param winIndex
+	 */
+	public void setFinalLizhi(int lizhiCount, int winIndex) {
+		MjAction action = MjAction.createFinalLizhiAction(lizhiCount, mPlayers[winIndex].getUuid());
+		int changeScores[] = {0, 0, 0, 0};
+		for (int i = 0; i < changeScores.length; i++) {
+			if (i == winIndex) {
+				changeScores[i] = lizhiCount * 1000;
+				mScores[i] += changeScores[i];
+				break;
+			}
+		}
+		MjDetail detail = new MjDetail(mResult.getStartTime(), System.currentTimeMillis(), 
+				getJuCountForAll(), getRoundCount(), 0, 
+				changeScores[0], mScores[0], changeScores[1], mScores[1], 
+				changeScores[2], mScores[2], changeScores[3], mScores[3], 
+				"", "", action);
+		addDetail(detail);
 		saveStatesForTmp();
 	}
 	

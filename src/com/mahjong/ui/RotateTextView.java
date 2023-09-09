@@ -24,6 +24,11 @@ public class RotateTextView extends TextView {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+    
+    @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
         canvas.rotate(degree, getMeasuredWidth() / 2, getMeasuredHeight() / 2);

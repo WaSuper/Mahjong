@@ -55,7 +55,8 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 	private int mHuCount = 0; // 胡牌人数
 	private int mCheckBoxIndex = 0; // 当前查询位置
 	
-	private boolean landscapeMode;
+	private boolean landscapeMode; // 横屏模式
+	private boolean squareMode; // 正方模式
 	
 	private BaseManager mManager = ManagerTool.getInstance().getManager();
 	
@@ -75,7 +76,12 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 		} else {
 			setRequestedOrientation(port_orientations[pos]);
 		}
-		setContentView(R.layout.activity_jpn_result_set_bomb_simple);
+		squareMode = ShareprefenceTool.getInstance().getBoolean(MjSetting.SQUARE_MODE, this, false);
+		if (squareMode) {
+			setContentView(R.layout.activity_square_jpn_result_set_bomb_simple);
+		} else {
+			setContentView(R.layout.activity_jpn_result_set_bomb_simple);
+		}
 		mContext = this;
 		mOrgPlayer = intent.getIntExtra(BaseManager.PLAYER_ORIGINAL_INDEX, 0);
 		mMainVision = intent.getIntExtra(GameSimpleActivity.MAIN_VISION, 0);
@@ -368,7 +374,7 @@ public class ResultSetBombSimpleActivity extends BaseActivity implements OnClick
 			
 			public void onClick(View v) {
 				if (isFan) {
-					String lastText = mFuBtns[index].getText().toString();
+					String lastText = mFanBtns[index].getText().toString();
 					String curText = mFanTexts[mFanIndex[index]];
 					if (!lastText.equals(curText)) {
 						mFanBtns[index].setText(curText);

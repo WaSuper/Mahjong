@@ -187,7 +187,9 @@ public class HistoryDetailActivity extends BaseActivity implements OnClickListen
 				}
 			}
 			frDialog.setData(players, mResult.getPoints(), 
-					mResult.getMas(), mResult.getRanks(), analysisTool, null, mResult.getMemberCount());
+					mResult.getMas(), mResult.getRanks(), 
+					analysisTool, null, mResult.getMemberCount(),
+					true);
 		}			
 		frDialog.show();
 	}

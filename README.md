@@ -21,7 +21,7 @@
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/16_history.jpg)![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/17_history_detail.jpg)
 
 三.计分器
-最原始、最核心的功能，可以多用！！！
+最原始、最核心的功能！！！
 ![image](https://github.com/WaSuper/Mahjong/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/4_calculate.jpg)
 
 四.排行榜
@@ -42,7 +42,7 @@
 
 最后，祝各位日麻爱好者餐餐烧鸡，炮声长鸣，人人都会驾飞机！
 
-Saki_v2.1.0_build230415 安装包下载地址：
-链接: https://pan.baidu.com/s/1MWUNfyzAVuTJ009Qplow1A 提取码: jiin
+Saki_v2.2.0_build230909 安装包下载地址：
+链接: https://pan.baidu.com/s/1qZaGJvwVHmUJYSpYOJpjYQ 提取码: iyge
 素材下载地址：
 链接: https://pan.baidu.com/s/1qjlaVULnkxzDgXouUMc-tg 提取码: pagu

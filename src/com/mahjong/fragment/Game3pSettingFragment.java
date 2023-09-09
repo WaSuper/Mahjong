@@ -36,6 +36,8 @@ public class Game3pSettingFragment extends BaseSettingFragment {
 		KEY_DOUBLE_WIND_4 = Game3pSetting.GAME3P_DOUBLE_WIND_4;
 		KEY_MANGUAN_UP = Game3pSetting.GAME3P_MANGUAN_UP;
 		KEY_NO_FLY = Game3pSetting.GAME3P_NO_FLY;
+		KEY_SQUARE_MODE = Game3pSetting.GAME3P_SQUARE_MODE;
+		KEY_FINAL_WINNER_UNLIMITED = Game3pSetting.GAME3P_FINAL_WINNER_UNLIMITED;
 	}
 
 	@Override
@@ -51,6 +53,7 @@ public class Game3pSettingFragment extends BaseSettingFragment {
 		tool.setEnableZimoCut(mZimoCutBox.isChecked());
 		tool.setEnableManguanUp(mManguanUpBox.isChecked());
 		tool.setEnableNoFly(mNoFlyBox.isChecked());
+		tool.setEnableFinalWinnerUnlimited(mFinalWinnerUnlimitedBox.isChecked());
 	}
 	
 	@Override

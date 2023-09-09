@@ -36,6 +36,8 @@ public class Game4pSettingFragment extends BaseSettingFragment {
 		KEY_DOUBLE_WIND_4 = MjSetting.DOUBLE_WIND_4;
 		KEY_MANGUAN_UP = MjSetting.MANGUAN_UP;
 		KEY_NO_FLY = MjSetting.NO_FLY;
+		KEY_SQUARE_MODE = MjSetting.SQUARE_MODE;
+		KEY_FINAL_WINNER_UNLIMITED = MjSetting.FINAL_WINNER_UNLIMITED;
 	}
 
 	@Override
@@ -50,6 +52,7 @@ public class Game4pSettingFragment extends BaseSettingFragment {
 		tool.setEnableDoubleWind4(mDoubleWind4Box.isChecked());
 		tool.setEnableManguanUp(mManguanUpBox.isChecked());
 		tool.setEnableNoFly(mNoFlyBox.isChecked());
+		tool.setEnableFinalWinnerUnlimited(mFinalWinnerUnlimitedBox.isChecked());
 	}
 		
 	@Override

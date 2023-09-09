@@ -38,6 +38,8 @@ public class Game17sSettingFragment extends BaseSettingFragment {
 		KEY_GROUND_WIND = Game17sSetting.GAME17S_GROUND_WIND;
 		KEY_MANGUAN_UP = Game17sSetting.GAME17S_MANGUAN_UP;
 		KEY_NO_FLY = Game17sSetting.GAME17S_NO_FLY;
+		KEY_SQUARE_MODE = Game17sSetting.GAME17S_SQUARE_MODE;
+		KEY_FINAL_WINNER_UNLIMITED = Game17sSetting.GAME17S_FINAL_WINNER_UNLIMITED;
 	}
 
 	@Override
@@ -53,6 +55,7 @@ public class Game17sSettingFragment extends BaseSettingFragment {
 		tool.setFanfuType(mFanfu);
 		tool.setEnableManguanUp(mManguanUpBox.isChecked());
 		tool.setEnableNoFly(mNoFlyBox.isChecked());
+		tool.setEnableFinalWinnerUnlimited(mFinalWinnerUnlimitedBox.isChecked());
 	}
 	
 	@Override

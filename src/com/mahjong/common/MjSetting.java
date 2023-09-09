@@ -24,6 +24,8 @@ public class MjSetting {
 	public static final String DOUBLE_WIND_4	= "DOUBLE_WIND_4";
 	public static final String MANGUAN_UP		= "MANGUAN_UP";
 	public static final String NO_FLY			= "NO_FLY";
+	public static final String SQUARE_MODE		= "SQUARE_MODE";
+	public static final String FINAL_WINNER_UNLIMITED = "FINAL_WINNER_UNLIMITED";
 	
 	public static int UUID = 0;
 	

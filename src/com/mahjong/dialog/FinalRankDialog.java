@@ -149,7 +149,8 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 	}
 
 	public void setData(Player[] players, int[] scores, float[] mapoint, int[] ranks,
-			AnalysisTool aTool, AudioTool audioTool, int memberCount) {
+			AnalysisTool aTool, AudioTool audioTool, int memberCount,
+			boolean isShowLineChart) {
 		int[] lizhiCounts = aTool.getLizhiCounts();
 		int[] heCounts = aTool.getHeCounts();
 		int[] bombCounts = aTool.getBombCounts();
@@ -225,6 +226,9 @@ public class FinalRankDialog extends Dialog implements android.view.View.OnClick
 		mLineChart.setData(aTool.getBaseScore(), aTool.getDataLen(), memberCount,
 				aTool.getScore1st(), aTool.getScore2nd(), 
 				aTool.getScore3rd(), aTool.getScore4th());
+		if (!isShowLineChart) {
+			mLineChart.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

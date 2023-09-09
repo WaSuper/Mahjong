@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mahjong"
     android:versionCode="2"
-    android:versionName="2.1.0 build 230415" >
+    android:versionName="2.2.0 build 230909" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -33,7 +33,7 @@
 		</provider>
         
         <meta-data android:name="AA_DB_NAME" android:value="mahjong.db" />  
-        <meta-data android:name="AA_DB_VERSION" android:value="7" />  
+        <meta-data android:name="AA_DB_VERSION" android:value="8" />  
         <meta-data
     		android:name="AA_MODELS"
     		android:value="com.mahjong.model.Player,com.mahjong.model.MjResult,com.mahjong.model.MjDetail,com.mahjong.model.AudioItem,com.mahjong.model.Character,com.mahjong.model.CharacterIcon,com.mahjong.model.RankItem,com.mahjong.model.SoundBox" />
@@ -120,6 +120,8 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.mahjong.activity.jpn.game17s.Game17sCalculateActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.mahjong.activity.jpn.square.ChangeScoreActivity"
+            android:screenOrientation="behind" />
         
     </application>
 

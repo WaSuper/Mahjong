@@ -173,6 +173,9 @@ public class HistoryDetailAdapter extends BaseAdapter {
 			int index = MjDetail.findPlayerOrgIndexById(mIds, action.id0);
 			content += (" " + changeScores[index] + "→" + finalScores[index]);
 			break;
+		case MjAction.ACTION_FINAL_LIZHI:
+			int index2 = MjDetail.findPlayerOrgIndexById(mIds, action.id0);
+			content += (" " + changeScores[index2] + "→" + finalScores[index2]);
 		default:
 			break;
 		}

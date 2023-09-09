@@ -277,14 +277,14 @@ public class Game3pManager extends BaseManager {
 				changeScores[2], mScores[2], changeScores[3], mScores[3], 
 				"", "", action);
 		addDetail(detail);
+		mLizhiCount = 0; // 总立直数归零
+		if (mChickens[winIndex]) { // 取消烧鸡状态
+			mChickens[winIndex] = false;
+		}
 		if (checkPlayerFly()) {
 			if (mListener != null) 
 				mListener.onFinishByPlayerFly();
 			return;
-		}
-		mLizhiCount = 0; // 总立直数归零
-		if (mChickens[winIndex]) { // 取消烧鸡状态
-			mChickens[winIndex] = false;
 		}
 		if (winIndex == getDealer()) { // 庄家听牌，连庄
 			mRoundCount++; // 本场数+1
@@ -458,11 +458,6 @@ public class Game3pManager extends BaseManager {
 				changeScores[2], mScores[2], changeScores[3], mScores[3], 
 				"", "", action);
 		addDetail(detail);
-		if (checkPlayerFly()) {
-			if (mListener != null) 
-				mListener.onFinishByPlayerFly();
-			return;
-		}
 		mLizhiCount = 0; // 总立直数归零
 		boolean hasDealer = false;
 		for (int i = 0; i < winIndexs.length; i++) {
@@ -473,7 +468,12 @@ public class Game3pManager extends BaseManager {
 			if (winIndex == getDealer()) {
 				hasDealer = true;
 			}
-		}		
+		}	
+		if (checkPlayerFly()) {
+			if (mListener != null) 
+				mListener.onFinishByPlayerFly();
+			return;
+		}	
 		if (hasDealer) { // 庄家听牌，连庄
 			mRoundCount++; // 本场数+1
 			continueRound();
@@ -524,9 +524,12 @@ public class Game3pManager extends BaseManager {
 						break;
 					}
 				}
-				if (isMax && mListener != null) {
+				if (isEnterSW && isAllLower()) { // 继续南入\西入
+					result = Result_Enter_S_W;
+					if (mListener != null) mListener.onEnterSouthOrWest(mMaxFeng == 0);
+				} else if (isMax && !mFinalWinnerUnlimited) {
 					result = Result_Finish_All;
-					mListener.onFinishAll(); // 结束游戏
+					if (mListener != null) mListener.onFinishAll(); // 结束游戏
 				}
 			}
 		}
@@ -677,6 +680,8 @@ public class Game3pManager extends BaseManager {
 			json.put("double_wind_4", isDoubleWind4);
 			json.put("zimo_cut", mEnableZimoCut);
 			json.put("manguan_up", mManguanUp);
+			json.put("no_fly", mNoFly);
+			json.put("final_winner_unlimited", mFinalWinnerUnlimited);
 			JSONArray jsonArray = new JSONArray();
 			for (int i = 0; i < mDetails.size(); i++) {
 				MjDetail detail = mDetails.get(i);
@@ -789,6 +794,8 @@ public class Game3pManager extends BaseManager {
 					isDoubleWind4 = json.optBoolean("double_wind_4", false);
 					mEnableZimoCut = json.optBoolean("zimo_cut", false);
 					mManguanUp = json.optBoolean("manguan_up", false);
+					mNoFly = json.optBoolean("no_fly", false);
+					mFinalWinnerUnlimited = json.optBoolean("final_winner_unlimited", false);
 					JSONArray jsonArray = json.getJSONArray("details");
 					mDetails.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {
