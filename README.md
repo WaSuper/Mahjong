@@ -46,3 +46,7 @@ Saki_v2.2.0_build230909 安装包下载地址：
 链接: https://pan.baidu.com/s/1qZaGJvwVHmUJYSpYOJpjYQ 提取码: iyge
 素材下载地址：
 链接: https://pan.baidu.com/s/1qjlaVULnkxzDgXouUMc-tg 提取码: pagu
+
+## iOS 移植（MVP）
+
+原生 SwiftUI iPhone／iPad 版本位于 [`iOS/`](iOS/README.md)。现有 Android Java 项目保持原样；移植审查、范围和风险记录在 [`iOS/PORTING_AUDIT.md`](iOS/PORTING_AUDIT.md)。

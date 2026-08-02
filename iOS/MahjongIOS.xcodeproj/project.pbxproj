@@ -1,0 +1,49 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 77;
+	objects = {
+		A1 = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {A2 = {CreatedOnToolsVersion = 16.0;}; A3 = {CreatedOnToolsVersion = 16.0; TestTargetID = A2;};};}; buildConfigurationList = C1; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = G1; productRefGroup = G4; projectDirPath = ""; projectRoot = ""; targets = (A2, A3);};
+		A2 = {isa = PBXNativeTarget; buildConfigurationList = C2; buildPhases = (P1, P2, P3); buildRules = (); dependencies = (); name = MahjongIOS; productName = MahjongIOS; productReference = F20; productType = "com.apple.product-type.application";};
+		A3 = {isa = PBXNativeTarget; buildConfigurationList = C3; buildPhases = (P4, P5, P6); buildRules = (); dependencies = (D1); name = MahjongIOSTests; productName = MahjongIOSTests; productReference = F21; productType = "com.apple.product-type.bundle.unit-test";};
+		D1 = {isa = PBXTargetDependency; target = A2; targetProxy = D2;};
+		D2 = {isa = PBXContainerItemProxy; containerPortal = A1; proxyType = 1; remoteGlobalIDString = A2; remoteInfo = MahjongIOS;};
+		G1 = {isa = PBXGroup; children = (G2, G3, G4); sourceTree = "<group>";};
+		G2 = {isa = PBXGroup; children = (F1,F2,F3,F4,F5,F6,F7,F8,F9,F12); path = MahjongIOS; sourceTree = "<group>";};
+		G3 = {isa = PBXGroup; children = (F10,F11); path = MahjongIOSTests; sourceTree = "<group>";};
+		G4 = {isa = PBXGroup; children = (F20,F21); name = Products; sourceTree = "<group>";};
+		F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/MahjongIOSApp.swift; sourceTree = "<group>";};
+		F2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Models.swift; sourceTree = "<group>";};
+		F3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring/RiichiScoreCalculator.swift; sourceTree = "<group>";};
+		F4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence/LocalStore.swift; sourceTree = "<group>";};
+		F5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store/AppStore.swift; sourceTree = "<group>";};
+		F6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/RootView.swift; sourceTree = "<group>";};
+		F7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/PlayersView.swift; sourceTree = "<group>";};
+		F8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/HistoryView.swift; sourceTree = "<group>";};
+		F9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MatchDetailView.swift; sourceTree = "<group>";};
+		F12 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/CalculatorView.swift; sourceTree = "<group>";};
+		F10 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiichiScoreCalculatorTests.swift; sourceTree = "<group>";};
+		F11 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreTests.swift; sourceTree = "<group>";};
+		F20 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MahjongIOS.app; sourceTree = BUILT_PRODUCTS_DIR;};
+		F21 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MahjongIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR;};
+		B1 = {isa = PBXBuildFile; fileRef = F1;}; B2 = {isa = PBXBuildFile; fileRef = F2;}; B3 = {isa = PBXBuildFile; fileRef = F3;}; B4 = {isa = PBXBuildFile; fileRef = F4;}; B5 = {isa = PBXBuildFile; fileRef = F5;}; B6 = {isa = PBXBuildFile; fileRef = F6;}; B7 = {isa = PBXBuildFile; fileRef = F7;}; B8 = {isa = PBXBuildFile; fileRef = F8;}; B9 = {isa = PBXBuildFile; fileRef = F9;}; B12 = {isa = PBXBuildFile; fileRef = F12;};
+		B10 = {isa = PBXBuildFile; fileRef = F10;}; B11 = {isa = PBXBuildFile; fileRef = F11;};
+		P1 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (B1,B2,B3,B4,B5,B6,B7,B8,B9,B12); runOnlyForDeploymentPostprocessing = 0;};
+		P2 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+		P3 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+		P4 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (B10,B11); runOnlyForDeploymentPostprocessing = 0;};
+		P5 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+		P6 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+		C1 = {isa = XCConfigurationList; buildConfigurations = (Q1,Q2); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+		C2 = {isa = XCConfigurationList; buildConfigurations = (Q3,Q4); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+		C3 = {isa = XCConfigurationList; buildConfigurations = (Q5,Q6); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+		Q1 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 5.0;}; name = Debug;};
+		Q2 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 5.0;}; name = Release;};
+		Q3 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "日麻計分"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.kami0828.MahjongIOS; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2";}; name = Debug;};
+		Q4 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleDisplayName = "日麻計分"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MARKETING_VERSION = 0.1.0; PRODUCT_BUNDLE_IDENTIFIER = com.kami0828.MahjongIOS; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2";}; name = Release;};
+		Q5 = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.kami0828.MahjongIOSTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MahjongIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MahjongIOS";}; name = Debug;};
+		Q6 = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; PRODUCT_BUNDLE_IDENTIFIER = com.kami0828.MahjongIOSTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MahjongIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MahjongIOS";}; name = Release;};
+	};
+	rootObject = A1;
+}
